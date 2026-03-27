@@ -84,24 +84,33 @@ TYPE_COLORS = {
     "soy": "#84cc16",
 }
 
+FAO_ENDPOINTS = [
+    "https://faostat3.fao.org/api/en/data/TCL",
+    "https://fenixservices.fao.org/faostat/api/v1/en/data/TCL",
+]
+
 def fetch_fao_trade(item_code, year=2022, min_quantity=500):
-    """Fetch bilateral trade data from FAOSTAT for a given commodity"""
-    url = (
-        f"https://fenixservices.fao.org/faostat/api/v1/en/data/TCL"
-        f"?item_code={item_code}"
-        f"&element_code=5910"  # Export Quantity (tonnes)
-        f"&year={year}"
-        f"&output_type=json"
-        f"&limit=500"
-    )
-    try:
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            data = json.loads(resp.read().decode())
-        return data.get("data", [])
-    except Exception as e:
-        print(f"Error fetching FAO data for item {item_code}: {e}")
-        return []
+    """Fetch bilateral trade data from FAOSTAT, tries multiple endpoints"""
+    for base_url in FAO_ENDPOINTS:
+        url = (
+            f"{base_url}"
+            f"?item_code={item_code}"
+            f"&element_code=5910"
+            f"&year={year}"
+            f"&output_type=json"
+            f"&limit=500"
+        )
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                data = json.loads(resp.read().decode())
+            records = data.get("data", [])
+            if records:
+                print(f"  Got {len(records)} records from {base_url}")
+                return records
+        except Exception as e:
+            print(f"  Endpoint {base_url} failed: {e}")
+    return []
 
 def build_flows_from_fao(year=2022):
     flows = []
