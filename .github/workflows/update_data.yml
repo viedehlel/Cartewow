@@ -16,7 +16,9 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Fetch cereal data from FAO
+      - name: Fetch cereal data from UN Comtrade
+        env:
+          COMTRADE_KEY: ${{ secrets.COMTRADE_KEY }}
         run: python scripts/fetch_cereals.py
 
       - name: Commit if data changed
