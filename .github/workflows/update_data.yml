@@ -21,6 +21,9 @@ jobs:
           COMTRADE_KEY: ${{ secrets.COMTRADE_KEY }}
         run: python scripts/fetch_cereals.py
 
+      - name: Fetch cereal production from World Bank
+        run: python scripts/fetch_cereal_production.py
+
       - name: Commit if data changed
         run: |
           git config user.name "github-actions[bot]"
