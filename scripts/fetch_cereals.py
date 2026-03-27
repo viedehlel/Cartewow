@@ -7,36 +7,26 @@ Runs weekly via GitHub Actions
 import json
 import urllib.request
 import os
+import time
 from datetime import datetime
 
-# UN Comtrade M49 code → French name
 M49_TO_FR = {
     "4": "Afghanistan", "12": "Algérie", "32": "Argentine",
     "36": "Australie", "50": "Bangladesh", "76": "Brésil",
-    "100": "Bulgarie", "124": "Canada", "152": "Chili",
-    "156": "Chine", "170": "Colombie", "384": "Côte d'Ivoire",
-    "208": "Danemark", "818": "Égypte", "231": "Éthiopie",
-    "246": "Finlande", "250": "France", "276": "Allemagne",
-    "288": "Ghana", "300": "Grèce", "356": "Inde",
-    "360": "Indonésie", "364": "Iran", "368": "Irak",
-    "376": "Israël", "380": "Italie", "392": "Japon",
-    "400": "Jordanie", "398": "Kazakhstan", "404": "Kenya",
-    "410": "Corée du Sud", "414": "Koweït", "434": "Libye",
-    "458": "Malaisie", "484": "Mexique", "504": "Maroc",
-    "508": "Mozambique", "104": "Myanmar", "528": "Pays-Bas",
-    "554": "Nouvelle-Zélande", "566": "Nigeria", "578": "Norvège",
-    "586": "Pakistan", "604": "Pérou", "608": "Philippines",
-    "616": "Pologne", "620": "Portugal", "634": "Qatar",
-    "642": "Roumanie", "643": "Russie", "682": "Arabie Saoudite",
-    "686": "Sénégal", "710": "Afrique du Sud", "724": "Espagne",
-    "729": "Soudan", "752": "Suède", "756": "Suisse",
-    "158": "Taïwan", "764": "Thaïlande", "788": "Tunisie",
+    "124": "Canada", "156": "Chine", "170": "Colombie",
+    "818": "Égypte", "231": "Éthiopie", "250": "France",
+    "276": "Allemagne", "356": "Inde", "360": "Indonésie",
+    "364": "Iran", "368": "Irak", "376": "Israël",
+    "392": "Japon", "398": "Kazakhstan", "404": "Kenya",
+    "410": "Corée du Sud", "434": "Libye", "458": "Malaisie",
+    "484": "Mexique", "504": "Maroc", "104": "Myanmar",
+    "528": "Pays-Bas", "566": "Nigeria", "586": "Pakistan",
+    "608": "Philippines", "616": "Pologne", "634": "Qatar",
+    "643": "Russie", "682": "Arabie Saoudite", "710": "Afrique du Sud",
+    "724": "Espagne", "729": "Soudan", "764": "Thaïlande",
     "792": "Turquie", "804": "Ukraine", "784": "Émirats Arabes Unis",
-    "826": "Royaume-Uni", "840": "États-Unis", "858": "Uruguay",
-    "862": "Venezuela", "704": "Vietnam", "887": "Yémen",
-    "894": "Zambie", "716": "Zimbabwe", "218": "Équateur",
-    "320": "Guatemala", "204": "Bénin", "144": "Sri Lanka",
-    "760": "Syrie", "800": "Ouganda",
+    "826": "Royaume-Uni", "840": "États-Unis", "704": "Vietnam",
+    "887": "Yémen", "600": "Paraguay",
 }
 
 COORDS = {
@@ -50,89 +40,79 @@ COORDS = {
     "Mexique": [-102, 23], "Vietnam": [106, 16], "Thaïlande": [101, 15],
     "Pakistan": [70, 30], "Iran": [53, 33], "Arabie Saoudite": [45, 24],
     "Irak": [44, 33], "Allemagne": [10, 51], "Pologne": [20, 52],
-    "Royaume-Uni": [-2, 54], "Italie": [12, 43], "Espagne": [-4, 40],
-    "Pays-Bas": [5, 52], "Colombie": [-74, 4], "Kenya": [37, -1],
-    "Éthiopie": [40, 9], "Soudan": [31, 16], "Yémen": [48, 16],
-    "Malaisie": [110, 3], "Afrique du Sud": [25, -30],
+    "Royaume-Uni": [-2, 54], "Colombie": [-74, 4], "Kenya": [37, -1],
+    "Soudan": [31, 16], "Yémen": [48, 16], "Malaisie": [110, 3],
     "Émirats Arabes Unis": [54, 24], "Qatar": [51, 25],
-    "Israël": [35, 31], "Ghana": [-1, 8], "Sénégal": [-14, 14],
-    "Nouvelle-Zélande": [170, -42], "Bénin": [2, 9],
-    "Myanmar": [96, 17], "Sri Lanka": [81, 8],
+    "Israël": [35, 31], "Paraguay": [-58, -23],
 }
 
-# HS commodity codes
-COMMODITIES = {
-    "wheat": "1001",
-    "corn":  "1005",
-    "rice":  "1006",
-    "soy":   "1201",
+# Top exporters per commodity (M49 codes)
+EXPORTERS = {
+    "wheat": ["643","840","124","36","804","250","32","398"],   # RUS,USA,CAN,AUS,UKR,FRA,ARG,KAZ
+    "corn":  ["840","76","32","804","710"],                     # USA,BRA,ARG,UKR,ZAF
+    "rice":  ["356","764","704","586","840"],                   # IND,THA,VNM,PAK,USA
+    "soy":   ["76","840","32","600"],                          # BRA,USA,ARG,PRY
 }
 
 TYPE_COLORS = {
-    "wheat": "#f59e0b",
-    "corn":  "#eab308",
-    "rice":  "#22c55e",
-    "soy":   "#84cc16",
+    "wheat": "#f59e0b", "corn": "#eab308",
+    "rice": "#22c55e", "soy": "#84cc16",
 }
 
-def fetch_comtrade(cmd_code, api_key, year=2022):
-    """Fetch top export flows from UN Comtrade API v1"""
+HS_CODES = {"wheat": "1001", "corn": "1005", "rice": "1006", "soy": "1201"}
+
+def fetch_one(reporter_code, cmd_code, api_key, year):
     url = (
         f"https://comtradeapi.un.org/data/v1/get/C/A/HS"
-        f"?cmdCode={cmd_code}"
+        f"?reporterCode={reporter_code}"
+        f"&cmdCode={cmd_code}"
         f"&flowCode=X"
         f"&period={year}"
-        f"&reporterCode=0"
-        f"&partnerCode=0"
         f"&subscription-key={api_key}"
     )
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req, timeout=60) as resp:
+        with urllib.request.urlopen(req, timeout=30) as resp:
             data = json.loads(resp.read().decode())
         return data.get("data", [])
     except Exception as e:
-        print(f"  Error: {e}")
+        print(f"    Error: {e}")
         return []
 
 def build_flows(api_key, year=2022):
     flows = []
-    for cereal_type, cmd_code in COMMODITIES.items():
+    for cereal_type, reporters in EXPORTERS.items():
+        cmd_code = HS_CODES[cereal_type]
         print(f"Fetching {cereal_type} (HS {cmd_code})...")
-        records = fetch_comtrade(cmd_code, api_key, year)
-        print(f"  Got {len(records)} records")
-        for rec in records:
-            reporter = str(rec.get("reporterCode", ""))
-            partner  = str(rec.get("partnerCode", ""))
-            qty_kg   = rec.get("primaryValue") or 0
-            try:
-                qty_mt = float(qty_kg) / 1_000_000_000  # USD → on utilise netWgt
-            except:
+        for rep_code in reporters:
+            from_name = M49_TO_FR.get(rep_code)
+            if not from_name or from_name not in COORDS:
                 continue
-            # Use net weight in tonnes → convert to Mt
-            net_wgt = rec.get("netWgt") or 0
-            try:
-                val_mt = float(net_wgt) / 1_000_000
-            except:
-                continue
-            if val_mt < 0.3:
-                continue
-            from_name = M49_TO_FR.get(reporter)
-            to_name   = M49_TO_FR.get(partner)
-            if not from_name or not to_name:
-                continue
-            if from_name not in COORDS or to_name not in COORDS:
-                continue
-            flows.append({
-                "from":   from_name,
-                "fromC":  COORDS[from_name],
-                "to":     to_name,
-                "toC":    COORDS[to_name],
-                "type":   cereal_type,
-                "value":  round(val_mt, 1),
-                "year":   year,
-                "color":  TYPE_COLORS[cereal_type],
-            })
+            time.sleep(1.5)  # Respect rate limit
+            records = fetch_one(rep_code, cmd_code, api_key, year)
+            print(f"  {from_name}: {len(records)} partners")
+            for rec in records:
+                partner = str(rec.get("partnerCode", ""))
+                net_wgt = rec.get("netWgt") or 0
+                try:
+                    val_mt = float(net_wgt) / 1_000_000
+                except:
+                    continue
+                if val_mt < 0.3:
+                    continue
+                to_name = M49_TO_FR.get(partner)
+                if not to_name or to_name not in COORDS or to_name == from_name:
+                    continue
+                flows.append({
+                    "from":  from_name,
+                    "fromC": COORDS[from_name],
+                    "to":    to_name,
+                    "toC":   COORDS[to_name],
+                    "type":  cereal_type,
+                    "value": round(val_mt, 1),
+                    "year":  year,
+                    "color": TYPE_COLORS[cereal_type],
+                })
     return flows
 
 def main():
@@ -141,8 +121,8 @@ def main():
         print("No COMTRADE_KEY env var set, skipping.")
         return
 
-    year = datetime.now().year - 2  # Comtrade data has ~2yr lag
-    print(f"Fetching cereal trade data from UN Comtrade (year {year})...")
+    year = datetime.now().year - 2
+    print(f"Fetching cereal data from UN Comtrade (year {year})...")
     flows = build_flows(api_key, year)
 
     if not flows:
