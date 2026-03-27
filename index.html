@@ -4186,7 +4186,7 @@ function updateLegendVisibility() {
 // ============================================================
 function onMetricChange() {
   activeMetrics = [];
-  document.querySelectorAll('#metric-checks input[type=checkbox], #mc-re, #mc-re-res, #mc-re-conso, #mc-auto-therm, #mc-auto-ev, #mc-auto-sales, #mc-aero-civil, #mc-aero-mil, #mc-naval-civil, #mc-naval-mil').forEach(cb => {
+  document.querySelectorAll('#metric-checks input[type=checkbox], #mc-re, #mc-re-res, #mc-re-conso, #mc-auto-therm, #mc-auto-ev, #mc-auto-sales, #mc-aero-civil, #mc-aero-mil, #mc-naval-civil, #mc-naval-mil, #mc-cereal-prod').forEach(cb => {
     if (cb.checked) activeMetrics.push(cb.value);
   });
   updateCountriesStyle();
