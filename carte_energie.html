@@ -3367,6 +3367,8 @@ function updateFlowsForYear(year) {
 }
 
 function initTimeline() {
+  // Load cereal data from JSON
+  if (typeof loadCerealData === 'function') setTimeout(loadCerealData, 500);
   const slider = document.getElementById('year-slider');
   const playBtn = document.getElementById('timeline-play');
   if (!slider) return;
@@ -5801,105 +5803,7 @@ function rebuildArmsFlowsLayer() {
 const CEREAL_COLORS = { wheat:'#f59e0b', soy:'#84cc16', corn:'#eab308', rice:'#22c55e' };
 const CEREAL_LABELS = { wheat:'Blé', soy:'Soja', corn:'Maïs', rice:'Riz' };
 
-const CEREAL_FLOWS = [
-  // ══ BLÉ ════════════════════════════════════════════════════
-  // Russie (1er exportateur mondial depuis ~2016)
-  {from:"Russie",    fromC:[60,60],   to:"Égypte",        toC:[30,27],   type:"wheat", hist:{2000:1,2005:2,2010:4,2015:7,2020:8,2022:9,2025:10}},
-  {from:"Russie",    fromC:[60,60],   to:"Turquie",       toC:[35,39],   type:"wheat", hist:{2000:1,2005:2,2010:4,2015:6,2020:7,2022:8,2025:8}},
-  {from:"Russie",    fromC:[60,60],   to:"Nigeria",      toC:[8,10],    type:"wheat", hist:{2000:0,2005:0,2010:1,2015:2,2020:3,2022:4,2025:5}},
-  {from:"Russie",    fromC:[60,60],   to:"Bangladesh",   toC:[90,24],   type:"wheat", hist:{2000:0,2005:0,2010:1,2015:2,2020:3,2022:3,2025:3}},
-  {from:"Russie",    fromC:[60,60],   to:"Soudan",        toC:[31,16],   type:"wheat", hist:{2000:0,2005:1,2010:1,2015:2,2020:2,2022:3,2025:3}},
-  {from:"Russie",    fromC:[60,60],   to:"Iran",         toC:[53,33],   type:"wheat", hist:{2000:1,2005:2,2010:3,2015:3,2020:4,2022:4,2025:4}},
-  {from:"Russie",    fromC:[60,60],   to:"Yémen",        toC:[48,16],   type:"wheat", hist:{2000:0,2005:1,2010:2,2015:3,2020:3,2022:3,2025:3}},
-  {from:"Russie",    fromC:[60,60],   to:"Indonésie",    toC:[117,-2],  type:"wheat", hist:{2000:0,2005:1,2010:2,2015:3,2020:4,2022:5,2025:5}},
-  {from:"Russie",    fromC:[60,60],   to:"Kenya",        toC:[37,-1],   type:"wheat", hist:{2000:0,2005:0,2010:1,2015:1,2020:2,2022:2,2025:2}},
-  {from:"Russie",    fromC:[60,60],   to:"Algérie",      toC:[3,28],    type:"wheat", hist:{2000:0,2005:1,2010:2,2015:3,2020:3,2022:3,2025:3}},
-  {from:"Russie",    fromC:[60,60],   to:"Arabie Saoudite", toC:[45,24],   type:"wheat", hist:{2000:0,2005:1,2010:2,2015:2,2020:2,2022:2,2025:2}},
-  {from:"Russie",    fromC:[60,60],   to:"Vietnam",      toC:[106,16],  type:"wheat", hist:{2000:0,2005:0,2010:1,2015:2,2020:2,2022:3,2025:3}},
-  // Ukraine (avant 2022 ~20Mt/an, après ~8Mt)
-  {from:"Ukraine",   fromC:[32,49],   to:"Égypte",        toC:[30,27],   type:"wheat", hist:{2000:1,2005:2,2010:3,2015:5,2020:5,2022:1,2025:3}},
-  {from:"Ukraine",   fromC:[32,49],   to:"Indonésie",    toC:[117,-2],  type:"wheat", hist:{2000:0,2005:1,2010:2,2015:3,2020:4,2022:1,2025:2}},
-  {from:"Ukraine",   fromC:[32,49],   to:"Turquie",       toC:[35,39],   type:"wheat", hist:{2000:0,2005:1,2010:2,2015:3,2020:3,2022:1,2025:2}},
-  {from:"Ukraine",   fromC:[32,49],   to:"Nigeria",      toC:[8,10],    type:"wheat", hist:{2000:0,2005:0,2010:1,2015:2,2020:2,2022:0,2025:1}},
-  // USA
-  {from:"États-Unis",       fromC:[-100,38], to:"Japon",        toC:[138,36],  type:"wheat", hist:{2000:3,2005:3,2010:3,2015:3,2020:3,2022:3,2025:3}},
-  {from:"États-Unis",       fromC:[-100,38], to:"Philippines",  toC:[122,13],  type:"wheat", hist:{2000:2,2005:2,2010:3,2015:3,2020:3,2022:3,2025:3}},
-  {from:"États-Unis",       fromC:[-100,38], to:"Mexique",       toC:[-102,23], type:"wheat", hist:{2000:2,2005:2,2010:2,2015:2,2020:2,2022:2,2025:2}},
-  {from:"États-Unis",       fromC:[-100,38], to:"Corée du Sud",  toC:[127,36],  type:"wheat", hist:{2000:2,2005:2,2010:2,2015:2,2020:2,2022:2,2025:2}},
-  {from:"États-Unis",       fromC:[-100,38], to:"Nigeria",      toC:[8,10],    type:"wheat", hist:{2000:1,2005:1,2010:1,2015:1,2020:1,2022:1,2025:1}},
-  // Canada
-  {from:"Canada",    fromC:[-96,56],  to:"Indonésie",    toC:[117,-2],  type:"wheat", hist:{2000:1,2005:2,2010:2,2015:3,2020:3,2022:3,2025:3}},
-  {from:"Canada",    fromC:[-96,56],  to:"Japon",        toC:[138,36],  type:"wheat", hist:{2000:2,2005:2,2010:2,2015:2,2020:2,2022:2,2025:2}},
-  {from:"Canada",    fromC:[-96,56],  to:"Bangladesh",   toC:[90,24],   type:"wheat", hist:{2000:1,2005:1,2010:2,2015:2,2020:2,2022:2,2025:2}},
-  {from:"Canada",    fromC:[-96,56],  to:"Chine",        toC:[104,35],  type:"wheat", hist:{2000:1,2005:1,2010:2,2015:3,2020:4,2022:5,2025:5}},
-  {from:"Canada",    fromC:[-96,56],  to:"Algérie",      toC:[3,28],    type:"wheat", hist:{2000:1,2005:1,2010:2,2015:2,2020:2,2022:2,2025:2}},
-  // Australie
-  {from:"Australie", fromC:[134,-25], to:"Indonésie",    toC:[117,-2],  type:"wheat", hist:{2000:3,2005:3,2010:4,2015:4,2020:5,2022:5,2025:5}},
-  {from:"Australie", fromC:[134,-25], to:"Japon",        toC:[138,36],  type:"wheat", hist:{2000:3,2005:3,2010:3,2015:3,2020:3,2022:3,2025:3}},
-  {from:"Australie", fromC:[134,-25], to:"Corée du Sud",  toC:[127,36],  type:"wheat", hist:{2000:2,2005:2,2010:2,2015:2,2020:2,2022:2,2025:2}},
-  {from:"Australie", fromC:[134,-25], to:"Philippines",  toC:[122,13],  type:"wheat", hist:{2000:1,2005:1,2010:1,2015:2,2020:2,2022:2,2025:2}},
-  {from:"Australie", fromC:[134,-25], to:"Chine",        toC:[104,35],  type:"wheat", hist:{2000:1,2005:2,2010:3,2015:4,2020:5,2022:3,2025:4}},
-  {from:"Australie", fromC:[134,-25], to:"Vietnam",      toC:[106,16],  type:"wheat", hist:{2000:1,2005:1,2010:2,2015:2,2020:3,2022:3,2025:3}},
-  // France / UE
-  {from:"France",    fromC:[2,47],    to:"Algérie",      toC:[3,28],    type:"wheat", hist:{2000:2,2005:3,2010:3,2015:4,2020:4,2022:3,2025:3}},
-  {from:"France",    fromC:[2,47],    to:"Maroc",      toC:[-7,32],   type:"wheat", hist:{2000:1,2005:2,2010:2,2015:2,2020:2,2022:2,2025:2}},
-  {from:"France",    fromC:[2,47],    to:"Nigeria",      toC:[8,10],    type:"wheat", hist:{2000:1,2005:1,2010:1,2015:1,2020:1,2022:1,2025:1}},
-  // Argentine
-  {from:"Argentine", fromC:[-64,-34], to:"Brésil",       toC:[-55,-10], type:"wheat", hist:{2000:3,2005:4,2010:5,2015:5,2020:5,2022:5,2025:5}},
-  {from:"Argentine", fromC:[-64,-34], to:"Indonésie",    toC:[117,-2],  type:"wheat", hist:{2000:1,2005:1,2010:2,2015:2,2020:3,2022:3,2025:3}},
-  // Kazakhstan
-  {from:"Kazakhstan",fromC:[67,48],   to:"Iran",         toC:[53,33],   type:"wheat", hist:{2000:1,2005:2,2010:3,2015:3,2020:3,2022:3,2025:3}},
-  {from:"Kazakhstan",fromC:[67,48],   to:"Turquie",       toC:[35,39],   type:"wheat", hist:{2000:0,2005:1,2010:2,2015:2,2020:2,2022:2,2025:2}},
-
-  // ══ SOJA ═══════════════════════════════════════════════════
-  {from:"Brésil",    fromC:[-55,-10], to:"Chine",        toC:[104,35],  type:"soy",  hist:{2000:10,2005:20,2010:35,2015:55,2018:65,2020:72,2022:78,2025:85}},
-  {from:"Brésil",    fromC:[-55,-10], to:"Union Européenne",           toC:[10,51],   type:"soy",  hist:{2000:5,2005:10,2010:15,2015:18,2020:20,2022:22,2025:24}},
-  {from:"Brésil",    fromC:[-55,-10], to:"Thaïlande",     toC:[101,15],  type:"soy",  hist:{2000:1,2005:2,2010:3,2015:4,2020:5,2022:5,2025:6}},
-  {from:"Brésil",    fromC:[-55,-10], to:"Japon",        toC:[138,36],  type:"soy",  hist:{2000:2,2005:2,2010:3,2015:3,2020:3,2022:3,2025:3}},
-  {from:"États-Unis",       fromC:[-100,38], to:"Chine",        toC:[104,35],  type:"soy",  hist:{2000:10,2005:15,2010:25,2015:35,2018:10,2020:26,2022:30,2025:32}},
-  {from:"États-Unis",       fromC:[-100,38], to:"Union Européenne",           toC:[10,51],   type:"soy",  hist:{2000:8,2005:10,2010:12,2015:12,2020:14,2022:16,2025:15}},
-  {from:"États-Unis",       fromC:[-100,38], to:"Japon",        toC:[138,36],  type:"soy",  hist:{2000:3,2005:3,2010:3,2015:3,2020:3,2022:3,2025:3}},
-  {from:"États-Unis",       fromC:[-100,38], to:"Mexique",       toC:[-102,23], type:"soy",  hist:{2000:2,2005:3,2010:3,2015:3,2020:3,2022:3,2025:3}},
-  {from:"Argentine", fromC:[-64,-34], to:"Chine",        toC:[104,35],  type:"soy",  hist:{2000:2,2005:4,2010:6,2015:7,2020:7,2022:6,2025:7}},
-  {from:"Argentine", fromC:[-64,-34], to:"Union Européenne",           toC:[10,51],   type:"soy",  hist:{2000:2,2005:3,2010:4,2015:4,2020:3,2022:3,2025:3}},
-  {from:"Paraguay",  fromC:[-58,-23], to:"Chine",        toC:[104,35],  type:"soy",  hist:{2000:1,2005:2,2010:3,2015:4,2020:5,2022:5,2025:6}},
-  {from:"Paraguay",  fromC:[-58,-23], to:"Union Européenne",           toC:[10,51],   type:"soy",  hist:{2000:1,2005:2,2010:2,2015:3,2020:3,2022:3,2025:3}},
-
-  // ══ MAÏS ═══════════════════════════════════════════════════
-  {from:"États-Unis",       fromC:[-100,38], to:"Japon",        toC:[138,36],  type:"corn", hist:{2000:15,2005:15,2010:15,2015:14,2020:14,2022:13,2025:13}},
-  {from:"États-Unis",       fromC:[-100,38], to:"Mexique",       toC:[-102,23], type:"corn", hist:{2000:5,2005:8,2010:10,2015:14,2020:16,2022:17,2025:18}},
-  {from:"États-Unis",       fromC:[-100,38], to:"Corée du Sud",  toC:[127,36],  type:"corn", hist:{2000:7,2005:8,2010:9,2015:9,2020:10,2022:10,2025:10}},
-  {from:"États-Unis",       fromC:[-100,38], to:"Chine",        toC:[104,35],  type:"corn", hist:{2000:0,2005:0,2010:1,2015:3,2020:8,2022:10,2025:12}},
-  {from:"États-Unis",       fromC:[-100,38], to:"Colombie",     toC:[-74,4],   type:"corn", hist:{2000:2,2005:3,2010:4,2015:5,2020:5,2022:5,2025:5}},
-  {from:"États-Unis",       fromC:[-100,38], to:"Égypte",        toC:[30,27],   type:"corn", hist:{2000:2,2005:3,2010:4,2015:5,2020:5,2022:4,2025:4}},
-  {from:"Brésil",    fromC:[-55,-10], to:"Union Européenne",           toC:[10,51],   type:"corn", hist:{2000:1,2005:2,2010:3,2015:5,2020:7,2022:9,2025:10}},
-  {from:"Brésil",    fromC:[-55,-10], to:"Japon",        toC:[138,36],  type:"corn", hist:{2000:1,2005:2,2010:3,2015:4,2020:6,2022:7,2025:8}},
-  {from:"Brésil",    fromC:[-55,-10], to:"Corée du Sud",  toC:[127,36],  type:"corn", hist:{2000:0,2005:1,2010:2,2015:3,2020:4,2022:5,2025:5}},
-  {from:"Brésil",    fromC:[-55,-10], to:"Vietnam",      toC:[106,16],  type:"corn", hist:{2000:0,2005:1,2010:2,2015:3,2020:4,2022:5,2025:6}},
-  {from:"Ukraine",   fromC:[32,49],   to:"Union Européenne",           toC:[10,51],   type:"corn", hist:{2000:1,2005:2,2010:4,2015:8,2020:10,2022:3,2025:7}},
-  {from:"Ukraine",   fromC:[32,49],   to:"Chine",        toC:[104,35],  type:"corn", hist:{2000:0,2005:0,2010:1,2015:3,2020:6,2022:1,2025:4}},
-  {from:"Ukraine",   fromC:[32,49],   to:"Égypte",        toC:[30,27],   type:"corn", hist:{2000:0,2005:1,2010:2,2015:4,2020:5,2022:1,2025:3}},
-  {from:"Argentine", fromC:[-64,-34], to:"Union Européenne",           toC:[10,51],   type:"corn", hist:{2000:4,2005:6,2010:8,2015:8,2020:8,2022:7,2025:8}},
-  {from:"Argentine", fromC:[-64,-34], to:"Vietnam",      toC:[106,16],  type:"corn", hist:{2000:0,2005:1,2010:2,2015:3,2020:4,2022:4,2025:4}},
-
-  // ══ RIZ ════════════════════════════════════════════════════
-  {from:"Inde",     fromC:[78,20],   to:"Bangladesh",   toC:[90,24],   type:"rice", hist:{2000:1,2005:2,2010:3,2015:4,2020:5,2022:6,2025:5}},
-  {from:"Inde",     fromC:[78,20],   to:"Indonésie",    toC:[117,-2],  type:"rice", hist:{2000:1,2005:2,2010:2,2015:3,2020:4,2022:4,2025:3}},
-  {from:"Inde",     fromC:[78,20],   to:"Nigeria",      toC:[8,10],    type:"rice", hist:{2000:0,2005:1,2010:2,2015:3,2020:4,2022:4,2025:2}},
-  {from:"Inde",     fromC:[78,20],   to:"Bénin",        toC:[2,9],     type:"rice", hist:{2000:0,2005:0,2010:1,2015:2,2020:2,2022:2,2025:2}},
-  {from:"Inde",     fromC:[78,20],   to:"Arabie Saoudite", toC:[45,24],   type:"rice", hist:{2000:1,2005:1,2010:2,2015:2,2020:2,2022:2,2025:2}},
-  {from:"Inde",     fromC:[78,20],   to:"Iran",         toC:[53,33],   type:"rice", hist:{2000:1,2005:1,2010:1,2015:2,2020:2,2022:2,2025:2}},
-  {from:"Inde",     fromC:[78,20],   to:"Népal",        toC:[84,28],   type:"rice", hist:{2000:0,2005:1,2010:1,2015:2,2020:2,2022:2,2025:2}},
-  {from:"Thaïlande",  fromC:[101,15],  to:"Chine",        toC:[104,35],  type:"rice", hist:{2000:3,2005:4,2010:5,2015:4,2020:4,2022:4,2025:4}},
-  {from:"Thaïlande",  fromC:[101,15],  to:"Indonésie",    toC:[117,-2],  type:"rice", hist:{2000:1,2005:2,2010:2,2015:2,2020:2,2022:2,2025:2}},
-  {from:"Thaïlande",  fromC:[101,15],  to:"Nigeria",      toC:[8,10],    type:"rice", hist:{2000:1,2005:1,2010:2,2015:2,2020:2,2022:2,2025:2}},
-  {from:"Thaïlande",  fromC:[101,15],  to:"États-Unis",          toC:[-100,38], type:"rice", hist:{2000:1,2005:1,2010:1,2015:1,2020:1,2022:1,2025:1}},
-  {from:"Vietnam",   fromC:[106,16],  to:"Philippines",  toC:[122,13],  type:"rice", hist:{2000:2,2005:3,2010:4,2015:5,2020:6,2022:6,2025:7}},
-  {from:"Vietnam",   fromC:[106,16],  to:"Indonésie",    toC:[117,-2],  type:"rice", hist:{2000:1,2005:2,2010:3,2015:3,2020:4,2022:4,2025:4}},
-  {from:"Vietnam",   fromC:[106,16],  to:"Chine",        toC:[104,35],  type:"rice", hist:{2000:1,2005:1,2010:2,2015:2,2020:2,2022:2,2025:2}},
-  {from:"Pakistan",  fromC:[70,30],   to:"Afghanistan",  toC:[66,33],   type:"rice", hist:{2000:1,2005:1,2010:1,2015:2,2020:2,2022:2,2025:2}},
-  {from:"Pakistan",  fromC:[70,30],   to:"Kenya",        toC:[37,-1],   type:"rice", hist:{2000:0,2005:0,2010:1,2015:1,2020:2,2022:2,2025:2}},
-];
+let CEREAL_FLOWS = [];
 
 function getCerealValue(fl, year) {
   var h = fl.hist;
@@ -5961,6 +5865,26 @@ function buildCerealFlowsLayer() {
     var fakeGroup = { addLayer: function(item){ item.addTo(map); cerealFlowsLayerItems.push(item); } };
     addArrowHead(fakeGroup, segments, col, 0.85, {from:fl.from, to:fl.to});
   });
+}
+
+function loadCerealData() {
+  fetch('data/cereals.json')
+    .then(function(r){ return r.json(); })
+    .then(function(json){
+      CEREAL_FLOWS = (json.flows || []).map(function(f){
+        return {
+          from: f.from, fromC: f.fromC,
+          to: f.to,   toC: f.toC,
+          type: f.type, value: f.value,
+          hist: f.hist || {}
+        };
+      });
+      console.log('Loaded ' + CEREAL_FLOWS.length + ' cereal flows from JSON');
+      if (layerVis.cereal_flows) rebuildCerealFlowsLayer();
+    })
+    .catch(function(e){
+      console.warn('Could not load cereals.json, using static data:', e);
+    });
 }
 
 function toggleCerealFlowsLayer() {
