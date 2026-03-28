@@ -6432,7 +6432,8 @@ function buildMigrationFlowsLayer() {
     for (var i=0;i<=60;i++){var t=i/60;rawPts.push([(1-t)*(1-t)*y1+2*(1-t)*t*cy+t*t*y2,(1-t)*(1-t)*x1+2*(1-t)*t*cx+t*t*x2]);}
     var segments=splitArcAtAntimeridian(rawPts);
     var flowColor = fl.type === 'economic' ? '#22d3ee' : '#f97316';
-    var tip='<b>'+(fl.type==='economic'?'Migration économique':'Réfugiés')+' : '+fl.from+' → '+fl.to+'</b><br>'+val+' 000 personnes ('+year+')'+(fl.type==='economic'?' (UN DESA)':' (UNHCR)');
+    var valStr = val >= 1000 ? (val/1000).toFixed(1).replace('.',',')+' millions' : Math.round(val)+' 000';
+    var tip='<b>'+(fl.type==='economic'?'Migration économique':'Réfugiés')+' : '+fl.from+' → '+fl.to+'</b><br>'+valStr+' personnes ('+year+')'+(fl.type==='economic'?' (UN DESA)':' (UNHCR)');
     segments.forEach(function(seg){
       var pl=L.polyline(seg,{color:flowColor,weight:weight,opacity:0.75,className:'flow-anim'});
       pl.bindTooltip(tip,{sticky:true});
