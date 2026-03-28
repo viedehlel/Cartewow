@@ -3467,6 +3467,7 @@ function updateFlowsForYear(year) {
   buildPipelinesLayer('oil');
   if (typeof updateMetalProdForYear === 'function') updateMetalProdForYear(year);
   if (typeof updateMigrationForYear === 'function') updateMigrationForYear(year);
+  if (typeof updateEnergyForYear === 'function') updateEnergyForYear(year);
   if (typeof updateCerealProdForYear === 'function') updateCerealProdForYear(year);
   updateCountriesStyle();
   if (typeof rebuildArmsFlowsLayer === 'function') rebuildArmsFlowsLayer();
@@ -3485,6 +3486,7 @@ function initTimeline() {
   // Load cereal data from JSON
   if (typeof loadCerealData === 'function') setTimeout(loadCerealData, 500);
   if (typeof loadCerealProductionData === 'function') setTimeout(loadCerealProductionData, 700);
+  if (typeof loadEnergyData === 'function') setTimeout(loadEnergyData, 850);
   if (typeof updateMetalProdForYear === 'function') setTimeout(function(){ updateMetalProdForYear(currentYear || 2022); }, 800);
   if (typeof loadMigrationsData === 'function') setTimeout(loadMigrationsData, 900);
   if (typeof loadMigrationEconomicData === 'function') setTimeout(loadMigrationEconomicData, 1100);
@@ -6591,6 +6593,45 @@ function loadMigrationsData() {
       if (mc && mc.checked) updateCountriesStyle();
     })
     .catch(function(e){ console.warn('Could not load migrations.json:', e); });
+}
+
+function updateEnergyForYear(year) {
+  if (!window._ENERGY_HIST || Object.keys(window._ENERGY_HIST).length === 0) return;
+  var y = String(year);
+  function getNearestVal(hist, year) {
+    var keys = Object.keys(hist).map(Number).sort(function(a,b){return a-b;});
+    if (!keys.length) return undefined;
+    var nearest = keys.reduce(function(prev,cur){
+      return Math.abs(cur-year)<Math.abs(prev-year)?cur:prev;
+    });
+    return hist[String(nearest)];
+  }
+  Object.values(ENERGY_DATA).forEach(function(d) {
+    var h = d.iso3 ? window._ENERGY_HIST[d.iso3] : null;
+    if (!h) return;
+    if (h.oil_twh)        { var v=getNearestVal(h.oil_twh,year);        if(v!=null) d.oil_prod_mbd     = Math.round(v/620*100)/100; }
+    if (h.gas_twh)        { var v=getNearestVal(h.gas_twh,year);        if(v!=null) d.gas_prod_bcm     = Math.round(v/10.55); }
+    if (h.coal_twh)       { var v=getNearestVal(h.coal_twh,year);       if(v!=null) d.coal_mt          = Math.round(v/8.14); }
+    if (h.nuclear_twh)    { var v=getNearestVal(h.nuclear_twh,year);    if(v!=null) d.nuclear_twh      = Math.round(v); }
+    if (h.renewables_twh) { var v=getNearestVal(h.renewables_twh,year); if(v!=null) d.renewables_gw    = Math.round(v/2.19); }
+    if (h.co2_mt)         { var v=getNearestVal(h.co2_mt,year);         if(v!=null) d.co2_mt           = Math.round(v*10)/10; }
+    if (h.solar_twh)      { var v=getNearestVal(h.solar_twh,year);      if(v!=null) d.solar_twh        = Math.round(v); }
+    if (h.wind_twh)       { var v=getNearestVal(h.wind_twh,year);       if(v!=null) d.wind_twh         = Math.round(v); }
+    if (h.primary_twh)    { var v=getNearestVal(h.primary_twh,year);    if(v!=null) d.primary_twh      = Math.round(v); }
+    if (h.energy_per_capita_kwh) { var v=getNearestVal(h.energy_per_capita_kwh,year); if(v!=null) d.energy_per_capita_kwh = Math.round(v); }
+  });
+}
+
+function loadEnergyData() {
+  fetch('data/energy.json')
+    .then(function(r){ return r.json(); })
+    .then(function(json){
+      window._ENERGY_HIST = json.data || {};
+      console.log('OWID energy: ' + Object.keys(window._ENERGY_HIST).length + ' pays charges (' + json.updated + ')');
+      updateEnergyForYear(currentYear || 2022);
+      updateCountriesStyle();
+    })
+    .catch(function(e){ console.warn('Could not load energy.json:', e); });
 }
 
 function loadCerealProductionData() {
