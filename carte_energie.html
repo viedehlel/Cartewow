@@ -3512,6 +3512,7 @@ function initTimeline() {
   if (typeof updateMetalProdForYear === 'function') setTimeout(function(){ updateMetalProdForYear(currentYear || 2022); }, 800);
   if (typeof loadMigrationsData === 'function') setTimeout(loadMigrationsData, 900);
   if (typeof loadMigrationEconomicData === 'function') setTimeout(loadMigrationEconomicData, 1100);
+  if (typeof loadArmsData === 'function') setTimeout(loadArmsData, 1200);
   const slider = document.getElementById('year-slider');
   const playBtn = document.getElementById('timeline-play');
   if (!slider) return;
@@ -5754,109 +5755,109 @@ Object.entries(HISTORY_EXT).forEach(([iso, metrics]) => {
 // 0 = flux inexistant cette année → arc invisible (seuil < 80)
 const ARMS_FLOWS = [
   // ── USA ──────────────────────────────────────────────────────
-  {from:"États-Unis", fromC:[-100,38], to:"Arabie Saoudite", toC:[45,24],
+  {from_iso:"USA", from:"États-Unis", fromC:[-100,38], to_iso:"SAU", to:"Arabie Saoudite", toC:[45,24],
    hist:{2000:600,2005:900,2010:2200,2015:4500,2020:3800,2022:3800,2025:3200},
    note:"F-15SA, AH-64 Apache, Patriot PAC-3"},
-  {from:"États-Unis", fromC:[-100,38], to:"Israël", toC:[35,31],
+  {from_iso:"USA", from:"États-Unis", fromC:[-100,38], to_iso:"ISR", to:"Israël", toC:[35,31],
    hist:{2000:900,2005:1000,2010:1100,2015:1200,2020:1200,2022:1200,2025:1400},
    note:"F-35A, AH-64E, Iron Dome co-prod"},
-  {from:"États-Unis", fromC:[-100,38], to:"Taïwan", toC:[121,24],
+  {from_iso:"USA", from:"États-Unis", fromC:[-100,38], to_iso:"TWN", to:"Taïwan", toC:[121,24],
    hist:{2000:1200,2005:800,2010:600,2015:700,2020:900,2022:900,2025:1100},
    note:"F-16V, M1A2 Abrams, Patriot"},
-  {from:"États-Unis", fromC:[-100,38], to:"Corée du Sud", toC:[127,36],
+  {from_iso:"USA", from:"États-Unis", fromC:[-100,38], to_iso:"KOR", to:"Corée du Sud", toC:[127,36],
    hist:{2000:400,2005:500,2010:600,2015:700,2020:800,2022:800,2025:900},
    note:"F-35A, CH-47F, AH-64E"},
-  {from:"États-Unis", fromC:[-100,38], to:"Japon", toC:[138,36],
+  {from_iso:"USA", from:"États-Unis", fromC:[-100,38], to_iso:"JPN", to:"Japon", toC:[138,36],
    hist:{2000:400,2005:500,2010:600,2015:650,2020:700,2022:750,2025:900},
    note:"F-35A/B, E-2D, SM-3 Block IIA"},
-  {from:"États-Unis", fromC:[-100,38], to:"Australie", toC:[134,-25],
+  {from_iso:"USA", from:"États-Unis", fromC:[-100,38], to_iso:"AUS", to:"Australie", toC:[134,-25],
    hist:{2000:300,2005:400,2010:500,2015:600,2020:700,2022:700,2025:800},
    note:"F-35A, EA-18G, MH-60R"},
-  {from:"États-Unis", fromC:[-100,38], to:"Émirats Arabes Unis", toC:[54,24],
+  {from_iso:"USA", from:"États-Unis", fromC:[-100,38], to_iso:"ARE", to:"Émirats Arabes Unis", toC:[54,24],
    hist:{2000:200,2005:300,2010:450,2015:550,2020:600,2022:600,2025:650},
    note:"F-35, THAAD, AH-64E"},
-  {from:"États-Unis", fromC:[-100,38], to:"Inde", toC:[78,20],
+  {from_iso:"USA", from:"États-Unis", fromC:[-100,38], to_iso:"IND", to:"Inde", toC:[78,20],
    hist:{2000:0,2005:0,2010:150,2015:350,2020:450,2022:500,2025:600},
    note:"MH-60R, CH-47F — rapprochement post-2008"},
-  {from:"États-Unis", fromC:[-100,38], to_iso:"POL",to:"Pologne", toC:[20,52],
+  {from_iso:"USA", from:"États-Unis", fromC:[-100,38], to_iso:"POL", to:"Pologne", toC:[20,52],
    hist:{2000:0,2005:100,2010:150,2015:200,2020:400,2022:480,2025:700},
    note:"F-35A, M1A2 SEPv3, HIMARS"},
-  {from:"États-Unis", fromC:[-100,38], to:"Qatar", toC:[51,25],
+  {from_iso:"USA", from:"États-Unis", fromC:[-100,38], to_iso:"QAT", to:"Qatar", toC:[51,25],
    hist:{2000:0,2005:100,2010:200,2015:350,2020:420,2022:450,2025:480},
    note:"F-15QA, Apache, Patriot — base Al-Udeid"},
   // Pakistan: sanctions 1990-2001, suspensions 2011 et 2018
-  {from:"États-Unis", fromC:[-100,38], to_iso:"PAK",to:"Pakistan", toC:[70,30],
+  {from_iso:"USA", from:"États-Unis", fromC:[-100,38], to_iso:"PAK", to:"Pakistan", toC:[70,30],
    hist:{2000:0,2005:600,2010:700,2015:400,2020:100,2022:0,2025:0},
    note:"F-16 (bloqué 1990-2001), suspensions après 2011/2018"},
   // ── RUSSIE ───────────────────────────────────────────────────
-  {from:"Russie", fromC:[60,60], to:"Inde", toC:[78,20],
+  {from_iso:"RUS", from:"Russie", fromC:[60,60], to_iso:"IND", to:"Inde", toC:[78,20],
    hist:{2000:1800,2005:2800,2010:3200,2015:2800,2020:2400,2022:2200,2025:1600},
    note:"S-400, Su-30MKI — dominant avant diversification indienne"},
-  {from:"Russie", fromC:[60,60], to:"Chine", toC:[104,35],
+  {from_iso:"RUS", from:"Russie", fromC:[60,60], to_iso:"CHN", to:"Chine", toC:[104,35],
    hist:{2000:1200,2005:2000,2010:1200,2015:900,2020:850,2022:800,2025:600},
    note:"Su-35, S-400 — déclin car industrie chinoise autonome"},
-  {from:"Russie", fromC:[60,60], to_iso:"EGY",to:"Égypte", toC:[30,27],
+  {from_iso:"RUS", from:"Russie", fromC:[60,60], to_iso:"EGY", to:"Égypte", toC:[30,27],
    hist:{2000:0,2005:100,2010:350,2015:500,2020:600,2022:600,2025:400},
    note:"MiG-29M, Ka-52, S-300VM"},
-  {from:"Russie", fromC:[60,60], to:"Algérie", toC:[3,28],
+  {from_iso:"RUS", from:"Russie", fromC:[60,60], to_iso:"DZA", to:"Algérie", toC:[3,28],
    hist:{2000:200,2005:500,2010:700,2015:650,2020:580,2022:550,2025:400},
    note:"Su-30MKA, T-90, S-400"},
-  {from:"Russie", fromC:[60,60], to:"Vietnam", toC:[106,16],
+  {from_iso:"RUS", from:"Russie", fromC:[60,60], to_iso:"VNM", to:"Vietnam", toC:[106,16],
    hist:{2000:0,2005:150,2010:350,2015:450,2020:320,2022:300,2025:150},
    note:"Su-30MK2, sous-marins Kilo — diversification en cours"},
   // Irak : énorme héritage soviétique, effondré après invasion 2003
-  {from:"Russie", fromC:[60,60], to:"Irak", toC:[44,33],
+  {from_iso:"RUS", from:"Russie", fromC:[60,60], to_iso:"IRQ", to:"Irak", toC:[44,33],
    hist:{2000:800,2005:200,2010:0,2015:0,2020:0,2022:0,2025:0},
    note:"Héritage dettes soviétiques — effondré après invasion US 2003"},
   // Libye : actif jusqu'à embargo ONU résolution 1970 (2011)
-  {from:"Russie", fromC:[60,60], to:"Libye", toC:[17,27],
+  {from_iso:"RUS", from:"Russie", fromC:[60,60], to_iso:"LBY", to:"Libye", toC:[17,27],
    hist:{2000:300,2005:500,2010:600,2015:0,2020:0,2022:0,2025:0},
    note:"Embargo ONU depuis résolution 1970 (mars 2011)"},
   // Venezuela : pic 2005-2015, effondrement économique ensuite
-  {from:"Russie", fromC:[60,60], to:"Venezuela", toC:[-66,8],
+  {from_iso:"RUS", from:"Russie", fromC:[60,60], to_iso:"VEN", to:"Venezuela", toC:[-66,8],
    hist:{2000:0,2005:600,2010:1200,2015:800,2020:150,2022:0,2025:0},
    note:"Su-30MKV, T-72B — effondré avec crise économique 2015+"},
   // ── FRANCE ───────────────────────────────────────────────────
-  {from:"France", fromC:[2,47], to:"Inde", toC:[78,20],
+  {from_iso:"FRA", from:"France", fromC:[2,47], to_iso:"IND", to:"Inde", toC:[78,20],
    hist:{2000:100,2005:200,2010:300,2015:400,2020:1600,2022:1800,2025:1900},
    note:"Rafale (contrat 2016), Scorpene, SCALP-EG"},
-  {from:"France", fromC:[2,47], to_iso:"EGY",to:"Égypte", toC:[30,27],
+  {from_iso:"FRA", from:"France", fromC:[2,47], to_iso:"EGY", to:"Égypte", toC:[30,27],
    hist:{2000:100,2005:150,2010:250,2015:900,2020:1100,2022:1100,2025:1000},
    note:"Rafale (contrat 2015), frégates FREMM, Mistral"},
-  {from:"France", fromC:[2,47], to:"Qatar", toC:[51,25],
+  {from_iso:"FRA", from:"France", fromC:[2,47], to_iso:"QAT", to:"Qatar", toC:[51,25],
    hist:{2000:0,2005:0,2010:100,2015:700,2020:900,2022:950,2025:900},
    note:"Rafale (contrat 2015), canon CAESAR"},
-  {from:"France", fromC:[2,47], to:"Émirats Arabes Unis", toC:[54,24],
+  {from_iso:"FRA", from:"France", fromC:[2,47], to_iso:"ARE", to:"Émirats Arabes Unis", toC:[54,24],
    hist:{2000:300,2005:400,2010:450,2015:400,2020:380,2022:400,2025:500},
    note:"Leclerc, MILAN, Rafale (contrat 2021)"},
-  {from:"France", fromC:[2,47], to:"Grèce", toC:[22,39],
+  {from_iso:"FRA", from:"France", fromC:[2,47], to_iso:"GRC", to:"Grèce", toC:[22,39],
    hist:{2000:200,2005:250,2010:200,2015:180,2020:300,2022:350,2025:400},
    note:"Rafale (contrat 2021), frégates FDI"},
   // ── UK ────────────────────────────────────────────────────────
-  {from:"Royaume-Uni", fromC:[-2,54], to:"Arabie Saoudite", toC:[45,24],
+  {from_iso:"GBR", from:"Royaume-Uni", fromC:[-2,54], to_iso:"SAU", to:"Arabie Saoudite", toC:[45,24],
    hist:{2000:800,2005:1000,2010:1200,2015:1400,2020:1400,2022:1400,2025:1200},
    note:"Typhoon, Tornado, Brimstone — contrat Al-Yamamah"},
-  {from:"Royaume-Uni", fromC:[-2,54], to:"Qatar", toC:[51,25],
+  {from_iso:"GBR", from:"Royaume-Uni", fromC:[-2,54], to_iso:"QAT", to:"Qatar", toC:[51,25],
    hist:{2000:0,2005:0,2010:100,2015:300,2020:380,2022:400,2025:420},
    note:"Typhoon (contrat 2017), Hawk"},
   // ── ALLEMAGNE ────────────────────────────────────────────────
-  {from:"Allemagne", fromC:[10,51], to_iso:"EGY",to:"Égypte", toC:[30,27],
+  {from_iso:"DEU", from:"Allemagne", fromC:[10,51], to_iso:"EGY", to:"Égypte", toC:[30,27],
    hist:{2000:0,2005:150,2010:400,2015:550,2020:600,2022:600,2025:500},
    note:"Sous-marins Type 209, frégates MEKO"},
-  {from:"Allemagne", fromC:[10,51], to:"Algérie", toC:[3,28],
+  {from_iso:"DEU", from:"Allemagne", fromC:[10,51], to_iso:"DZA", to:"Algérie", toC:[3,28],
    hist:{2000:100,2005:200,2010:300,2015:340,2020:350,2022:350,2025:300},
    note:"Frégates MEKO, vehicules blindes"},
-  {from:"Allemagne", fromC:[10,51], to:"Corée du Sud", toC:[127,36],
+  {from_iso:"DEU", from:"Allemagne", fromC:[10,51], to_iso:"KOR", to:"Corée du Sud", toC:[127,36],
    hist:{2000:0,2005:0,2010:200,2015:280,2020:300,2022:300,2025:310},
    note:"Sous-marins U-214 (contrat 2011)"},
   // ── CHINE ────────────────────────────────────────────────────
-  {from:"Chine", fromC:[104,35], to_iso:"PAK",to:"Pakistan", toC:[70,30],
+  {from_iso:"CHN", from:"Chine", fromC:[104,35], to_iso:"PAK", to:"Pakistan", toC:[70,30],
    hist:{2000:100,2005:300,2010:600,2015:800,2020:880,2022:900,2025:950},
    note:"JF-17 (1er vol 2003), Z-9, frégates F-22P"},
-  {from:"Chine", fromC:[104,35], to_iso:"BGD",to:"Bangladesh", toC:[90,24],
+  {from_iso:"CHN", from:"Chine", fromC:[104,35], to_iso:"BGD", to:"Bangladesh", toC:[90,24],
    hist:{2000:0,2005:50,2010:150,2015:280,2020:340,2022:350,2025:360},
    note:"Sous-marins Type 035, Type 053H3"},
-  {from:"Chine", fromC:[104,35], to:"Myanmar", toC:[96,17],
+  {from_iso:"CHN", from:"Chine", fromC:[104,35], to_iso:"MMR", to:"Myanmar", toC:[96,17],
    hist:{2000:50,2005:80,2010:120,2015:160,2020:190,2022:200,2025:210},
    note:"K-8, BTR-3, drones armes"},
 ];
@@ -5874,6 +5875,35 @@ function getArmsValue(fl, year) {
     }
   }
   return h[years[0]];
+}
+
+function loadArmsData() {
+  fetch('data/arms.json')
+    .then(function(r){ return r.json(); })
+    .then(function(json){
+      var data = json.data || {};
+      var enriched = 0;
+      ARMS_FLOWS.forEach(function(fl) {
+        var sup = fl.from_iso;
+        var rec = fl.to_iso;
+        if (!sup || !rec) return;
+        var byYear = (data[sup] || {})[rec];
+        if (!byYear || !Object.keys(byYear).length) return;
+        // Remplacer hist par les données annuelles SIPRI complètes
+        var newHist = {};
+        Object.entries(byYear).forEach(function(e){
+          var yr = parseInt(e[0]);
+          if (!isNaN(yr)) newHist[yr] = e[1];
+        });
+        if (Object.keys(newHist).length > 0) {
+          fl.hist = newHist;
+          enriched++;
+        }
+      });
+      console.log('SIPRI arms: ' + enriched + ' flux enrichis (' + json.updated + ')');
+      if (layerVis.arms_flows) buildArmsFlowsLayer();
+    })
+    .catch(function(e){ console.warn('Could not load arms.json:', e); });
 }
 
 const armsFlowsLayerItems = [];
