@@ -608,43 +608,7 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
           </div>
         </div>
       </div>
-      <div class="layer-group">
-        <div class="layer-group-header" onclick="toggleGroup('grp-metals')">
-          <span class="layer-group-title">&#9935;&#65039; M&eacute;taux &amp; Mines</span>
-          <span class="layer-group-arrow" id="arr-grp-metals">&#9658;</span>
-        </div>
-        <div class="layer-group-body collapsed" id="grp-metals">
-          <div style="font-size:10px;color:#8b949e;margin-bottom:6px">Source : USGS Mineral Commodity Summaries</div>
-          <div class="toggle-row">
-            <span class="toggle-label"><span class="toggle-dot" style="background:#b45309"></span>Cuivre (kt/an)</span>
-            <label class="toggle-switch"><input type="checkbox" id="mc-copper" value="copper_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
-          </div>
-          <div class="toggle-row">
-            <span class="toggle-label"><span class="toggle-dot" style="background:#0ea5e9"></span>Lithium (kt/an)</span>
-            <label class="toggle-switch"><input type="checkbox" id="mc-lithium" value="lithium_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
-          </div>
-          <div class="toggle-row">
-            <span class="toggle-label"><span class="toggle-dot" style="background:#3b82f6"></span>Cobalt (kt/an)</span>
-            <label class="toggle-switch"><input type="checkbox" id="mc-cobalt" value="cobalt_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
-          </div>
-          <div class="toggle-row">
-            <span class="toggle-label"><span class="toggle-dot" style="background:#94a3b8"></span>Nickel (kt/an)</span>
-            <label class="toggle-switch"><input type="checkbox" id="mc-nickel" value="nickel_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
-          </div>
-          <div class="toggle-row">
-            <span class="toggle-label"><span class="toggle-dot" style="background:#78716c"></span>Minerai de fer (Mt/an)</span>
-            <label class="toggle-switch"><input type="checkbox" id="mc-iron" value="iron_ore_prod_mt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
-          </div>
-          <div class="toggle-row">
-            <span class="toggle-label"><span class="toggle-dot" style="background:#eab308"></span>Or (t/an)</span>
-            <label class="toggle-switch"><input type="checkbox" id="mc-gold" value="gold_prod_t" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
-          </div>
-          <div class="toggle-row">
-            <span class="toggle-label"><span style="display:inline-flex;gap:3px;margin-right:4px"><span class="toggle-dot" style="background:#b45309"></span><span class="toggle-dot" style="background:#0ea5e9"></span><span class="toggle-dot" style="background:#3b82f6"></span><span class="toggle-dot" style="background:#eab308"></span></span>Flux m&eacute;taux</span>
-            <label class="toggle-switch"><input type="checkbox" id="tog-metal-flows" onchange="toggleMetalFlowsLayer()"><span class="toggle-slider"></span></label>
-          </div>
-        </div>
-      </div>
+      
     </div>
 
     <div id="legend">
