@@ -6400,27 +6400,25 @@ var MIGRATION_FLOWS = [
 var migrationFlowsLayerItems = [];
 
 function getMigrationFlowValue(fl, year) {
-  if (!fl.hist) return 0;
+  if (!fl.hist) return {val:0, dataYear:year};
   var keys = Object.keys(fl.hist).map(Number).sort(function(a,b){return a-b;});
-  if (year <= keys[0]) return fl.hist[keys[0]];
-  if (year >= keys[keys.length-1]) return fl.hist[keys[keys.length-1]];
-  for (var i=0;i<keys.length-1;i++) {
-    if (year>=keys[i] && year<=keys[i+1]) {
-      var t=(year-keys[i])/(keys[i+1]-keys[i]);
-      return Math.round(fl.hist[keys[i]]*(1-t)+fl.hist[keys[i+1]]*t);
-    }
-  }
-  return 0;
+  // Hors plage : pas de donnee, fleche masquee
+  if (year < keys[0] || year > keys[keys.length-1]) return {val:0, dataYear:year};
+  // Snap a l annee disponible la plus proche (pas d interpolation)
+  var nearest = keys.reduce(function(prev, cur) {
+    return Math.abs(cur-year) < Math.abs(prev-year) ? cur : prev;
+  });
+  return {val: fl.hist[nearest], dataYear: nearest};
 }
 
 function buildMigrationFlowsLayer() {
   if (!layerVis.migration_flows) return;
   var year = typeof currentYear !== 'undefined' ? currentYear : 2022;
   var vals = MIGRATION_FLOWS.map(function(fl){ return getMigrationFlowValue(fl, year); });
-  var active = vals.filter(function(v){ return v >= 50; });
-  var maxV = active.length ? Math.max.apply(null, active) : 1;
+  var active = vals.filter(function(v){ return v.val >= 50; });
+  var maxV = active.length ? Math.max.apply(null, active.map(function(v){return v.val;})) : 1;
   MIGRATION_FLOWS.forEach(function(fl, idx) {
-    var val = vals[idx];
+    var res = vals[idx]; var val = res.val; var dataYear = res.dataYear;
     if (val < 50) return;
     var x1=fl.fromC[0],y1=fl.fromC[1],x2=fl.toC[0],y2=fl.toC[1];
     if (x2-x1>180) x2-=360; else if (x2-x1<-180) x2+=360;
@@ -6433,7 +6431,7 @@ function buildMigrationFlowsLayer() {
     var segments=splitArcAtAntimeridian(rawPts);
     var flowColor = fl.type === 'economic' ? '#22d3ee' : '#f97316';
     var valStr = val >= 1000 ? (val/1000).toFixed(1).replace('.',',')+' millions' : Math.round(val)+' 000';
-    var tip='<b>'+(fl.type==='economic'?'Migration économique':'Réfugiés')+' : '+fl.from+' → '+fl.to+'</b><br>'+valStr+' personnes ('+year+')'+(fl.type==='economic'?' (UN DESA)':' (UNHCR)');
+    var tip='<b>'+(fl.type==='economic'?'Migration économique':'Réfugiés')+' : '+fl.from+' → '+fl.to+'</b><br>'+valStr+' personnes ('+dataYear+')'+(fl.type==='economic'?' (UN DESA)':' (UNHCR)');
     segments.forEach(function(seg){
       var pl=L.polyline(seg,{color:flowColor,weight:weight,opacity:0.75,className:'flow-anim'});
       pl.bindTooltip(tip,{sticky:true});
