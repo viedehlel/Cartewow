@@ -3269,7 +3269,7 @@ function updateCountriesStyle() {
   if (!layers.countries) return;
   var cerealOnly = activeMetrics.length === 1 && activeMetrics[0] === 'cereal_prod_mt';
   layers.countries.eachLayer(layer => {
-    const key = String(layer.feature.id);
+    const key = String(parseInt(layer.feature.id));
     const d = getCountryDataForYear(key, currentYear);
     if (!d) {
       // Cereales supplemental
@@ -3321,7 +3321,7 @@ function selectCountry(key) {
   renderPanel();
   // highlight
   layers.countries && layers.countries.eachLayer(l => {
-    const k = String(l.feature.id);
+    const k = String(parseInt(l.feature.id));
     if (k === key) { l.setStyle({ weight: 2, color: '#58a6ff', fillOpacity: 0.92 }); }
     else { layers.countries.resetStyle(l); }
   });
@@ -4392,7 +4392,7 @@ function renderCountryPanel(key) {
   // Zoom adapté à la taille réelle du pays (corrige les DOM/TOM et très grands pays)
   if (layers.countries) {
     layers.countries.eachLayer(l => {
-      if (String(l.feature.id) !== key) return;
+      if (String(parseInt(l.feature.id)) !== key) return;
       try {
         const b = l.getBounds();
         const lngSpan = b.getEast() - b.getWest();
@@ -5173,7 +5173,7 @@ function computeSuffering(countryKey) {
 function updateCrisisColors() {
   if (!layers.countries) return;
   layers.countries.eachLayer(layer => {
-    const key = String(layer.feature.id);
+    const key = String(parseInt(layer.feature.id));
     const d = ENERGY_DATA[key];
     if (!d) return;
     const name = d.name;
