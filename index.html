@@ -571,6 +571,80 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
           </div>
         </div>
       </div>
+      <div class="layer-group">
+        <div class="layer-group-header" onclick="toggleGroup('grp-metals')">
+          <span class="layer-group-title">&#9935;&#65039; M&eacute;taux &amp; Mines</span>
+          <span class="layer-group-arrow" id="arr-grp-metals">&#9658;</span>
+        </div>
+        <div class="layer-group-body collapsed" id="grp-metals">
+          <div style="font-size:10px;color:#8b949e;margin-bottom:6px">Source : USGS Mineral Commodity Summaries</div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#b45309"></span>Cuivre (kt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-copper" value="copper_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#0ea5e9"></span>Lithium (kt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-lithium" value="lithium_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#3b82f6"></span>Cobalt (kt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-cobalt" value="cobalt_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#94a3b8"></span>Nickel (kt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-nickel" value="nickel_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#78716c"></span>Minerai de fer (Mt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-iron" value="iron_ore_prod_mt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#eab308"></span>Or (t/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-gold" value="gold_prod_t" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span style="display:inline-flex;gap:3px;margin-right:4px"><span class="toggle-dot" style="background:#b45309"></span><span class="toggle-dot" style="background:#0ea5e9"></span><span class="toggle-dot" style="background:#3b82f6"></span><span class="toggle-dot" style="background:#eab308"></span></span>Flux m&eacute;taux</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-metal-flows" onchange="toggleMetalFlowsLayer()"><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+      </div>
+      <div class="layer-group">
+        <div class="layer-group-header" onclick="toggleGroup('grp-metals')">
+          <span class="layer-group-title">&#9935;&#65039; M&eacute;taux &amp; Mines</span>
+          <span class="layer-group-arrow" id="arr-grp-metals">&#9658;</span>
+        </div>
+        <div class="layer-group-body collapsed" id="grp-metals">
+          <div style="font-size:10px;color:#8b949e;margin-bottom:6px">Source : USGS Mineral Commodity Summaries</div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#b45309"></span>Cuivre (kt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-copper" value="copper_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#0ea5e9"></span>Lithium (kt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-lithium" value="lithium_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#3b82f6"></span>Cobalt (kt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-cobalt" value="cobalt_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#94a3b8"></span>Nickel (kt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-nickel" value="nickel_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#78716c"></span>Minerai de fer (Mt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-iron" value="iron_ore_prod_mt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#eab308"></span>Or (t/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-gold" value="gold_prod_t" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span style="display:inline-flex;gap:3px;margin-right:4px"><span class="toggle-dot" style="background:#b45309"></span><span class="toggle-dot" style="background:#0ea5e9"></span><span class="toggle-dot" style="background:#3b82f6"></span><span class="toggle-dot" style="background:#eab308"></span></span>Flux m&eacute;taux</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-metal-flows" onchange="toggleMetalFlowsLayer()"><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="legend">
@@ -2969,7 +3043,7 @@ let layers = {
   re_mines: null, re_processing: null, re_magnets: null, re_flows: null,
   flows_auto: null, aero_sites: null, auto_sites: null, naval_yards: null, supply_links: null,
 };
-let layerVis = { countries:true, gas:false, oil:false, flows_gas:false, flows_lng:false, flows_oil:false, lng:false, nuclear:false, fields:false, operators:false, re_mines:false, re_processing:false, re_magnets:false, re_flows:false, flows_auto:false, aero_sites:false, auto_sites:false, naval_yards:false, submarine_cables:false, arms_flows:false, cereal_flows:false };
+let layerVis = { countries:true, gas:false, oil:false, flows_gas:false, flows_lng:false, flows_oil:false, lng:false, nuclear:false, fields:false, operators:false, re_mines:false, re_processing:false, re_magnets:false, re_flows:false, flows_auto:false, aero_sites:false, auto_sites:false, naval_yards:false, submarine_cables:false, arms_flows:false, cereal_flows:false, metal_flows:false };
 let aeroTierVis = { oem:true, t1:true, t2:true, t3:true };
 let autoTierVis = { oem:true, t1:true, t2:true, t3:true };
 let worldGeoJSON = null;
@@ -2994,6 +3068,13 @@ const METRIC_CONFIG = {
   naval_civil_kgt:   { label:"Construction navale civile",  unit:"kCGT/an", max:20000, key:"naval_civil_kgt", baseColor:'#06b6d4', colors:['#ecfeff','#a5f3fc','#22d3ee','#06b6d4','#0e7490','#164e63'], grad:"linear-gradient(to right,#ecfeff,#a5f3fc,#22d3ee,#06b6d4,#0e7490,#164e63)" },
   naval_mil_kt:      { label:"Construction navale militaire", unit:"kt dépl./an", max:200, key:"naval_mil_kt", baseColor:'#64748b', colors:['#f8fafc','#cbd5e1','#94a3b8','#64748b','#334155','#1e293b'], grad:"linear-gradient(to right,#f8fafc,#cbd5e1,#94a3b8,#64748b,#334155,#1e293b)" },
   cereal_prod_mt:    { label:"Production céréales",           unit:"Mt/an",      max:650, key:"cereal_prod_mt", baseColor:'#84cc16', colors:['#f7fee7','#d9f99d','#a3e635','#84cc16','#4d7c0f','#1a2e05'], grad:"linear-gradient(to right,#f7fee7,#d9f99d,#a3e635,#84cc16,#4d7c0f,#1a2e05)" },
+  // -- METAUX --
+  copper_prod_kt:   { label:"Production cuivre",         unit:"kt/an",  max:6000,   key:"copper_prod_kt",   baseColor:'#b45309', colors:['#fef3c7','#fde68a','#fbbf24','#d97706','#b45309','#7c2d12'], grad:"linear-gradient(to right,#fef3c7,#fde68a,#fbbf24,#d97706,#b45309,#7c2d12)" },
+  lithium_prod_kt:  { label:"Production lithium",         unit:"kt/an",  max:120,    key:"lithium_prod_kt",  baseColor:'#0ea5e9', colors:['#f0f9ff','#bae6fd','#38bdf8','#0ea5e9','#0369a1','#0c4a6e'], grad:"linear-gradient(to right,#f0f9ff,#bae6fd,#38bdf8,#0ea5e9,#0369a1,#0c4a6e)" },
+  cobalt_prod_kt:   { label:"Production cobalt",          unit:"kt/an",  max:200,    key:"cobalt_prod_kt",   baseColor:'#3b82f6', colors:['#eff6ff','#bfdbfe','#60a5fa','#3b82f6','#1d4ed8','#1e3a8a'], grad:"linear-gradient(to right,#eff6ff,#bfdbfe,#60a5fa,#3b82f6,#1d4ed8,#1e3a8a)" },
+  nickel_prod_kt:   { label:"Production nickel",          unit:"kt/an",  max:2000,   key:"nickel_prod_kt",   baseColor:'#94a3b8', colors:['#f8fafc','#e2e8f0','#94a3b8','#64748b','#334155','#0f172a'], grad:"linear-gradient(to right,#f8fafc,#e2e8f0,#94a3b8,#64748b,#334155,#0f172a)" },
+  iron_ore_prod_mt: { label:"Production minerai de fer",  unit:"Mt/an",  max:1000,   key:"iron_ore_prod_mt", baseColor:'#78716c', colors:['#fafaf9','#e7e5e4','#a8a29e','#78716c','#44403c','#1c1917'], grad:"linear-gradient(to right,#fafaf9,#e7e5e4,#a8a29e,#78716c,#44403c,#1c1917)" },
+  gold_prod_t:      { label:"Production or",              unit:"t/an",   max:500,    key:"gold_prod_t",      baseColor:'#eab308', colors:['#fefce8','#fef08a','#fde047','#eab308','#a16207','#713f12'], grad:"linear-gradient(to right,#fefce8,#fef08a,#fde047,#eab308,#a16207,#713f12)" },
   // ── CO2 & PRIX ──
   co2_mt:         { label:"Émissions CO2 énergie",  unit:"Mt CO2/an",  max:13000, key:"co2_mt",         baseColor:'#dc2626', colors:['#fff7f7','#fecaca','#f87171','#dc2626','#991b1b','#450a0a'], grad:"linear-gradient(to right,#fff7f7,#fecaca,#f87171,#dc2626,#991b1b,#450a0a)" },
   co2_per_capita: { label:"CO2 par habitant",       unit:"t/pers./an", max:40,    key:"co2_per_capita",  baseColor:'#ea580c', colors:['#fff7ed','#fed7aa','#fb923c','#ea580c','#9a3412','#431407'], grad:"linear-gradient(to right,#fff7ed,#fed7aa,#fb923c,#ea580c,#9a3412,#431407)" },
@@ -3346,6 +3427,16 @@ function filterFlowsByCountry(countryName) {
       try { layer.setStyle({ opacity: op, fillOpacity: op }); } catch(e) {}
     });
   }
+  // Métaux
+  if (typeof metalFlowsLayerItems !== 'undefined') {
+    metalFlowsLayerItems.forEach(layer => {
+      const from = layer._flowFrom, to = layer._flowTo;
+      if (!from || !to) return;
+      const match = !countryName || from === countryName || to === countryName;
+      const op = match ? 0.8 : 0;
+      try { layer.setStyle({ opacity: op, fillOpacity: op }); } catch(e) {}
+    });
+  }
 }
 
 // ============================================================
@@ -3373,10 +3464,12 @@ function updateFlowsForYear(year) {
   buildLngLayer();
   buildPipelinesLayer('gas');
   buildPipelinesLayer('oil');
+  if (typeof updateMetalProdForYear === 'function') updateMetalProdForYear(year);
   if (typeof updateCerealProdForYear === 'function') updateCerealProdForYear(year);
   updateCountriesStyle();
   if (typeof rebuildArmsFlowsLayer === 'function') rebuildArmsFlowsLayer();
   if (typeof rebuildCerealFlowsLayer === 'function') rebuildCerealFlowsLayer();
+  if (typeof rebuildMetalFlowsLayer === 'function') rebuildMetalFlowsLayer();
   // Mettre à jour le panneau ouvert si c'est un pays
   if (selectedFeature && selectedFeature.type === 'country') {
     renderCountryPanel(selectedFeature.key);
@@ -3387,6 +3480,7 @@ function initTimeline() {
   // Load cereal data from JSON
   if (typeof loadCerealData === 'function') setTimeout(loadCerealData, 500);
   if (typeof loadCerealProductionData === 'function') setTimeout(loadCerealProductionData, 700);
+  if (typeof updateMetalProdForYear === 'function') setTimeout(function(){ updateMetalProdForYear(currentYear || 2022); }, 800);
   const slider = document.getElementById('year-slider');
   const playBtn = document.getElementById('timeline-play');
   if (!slider) return;
@@ -4198,7 +4292,7 @@ function updateLegendVisibility() {
 // ============================================================
 function onMetricChange() {
   activeMetrics = [];
-  document.querySelectorAll('#metric-checks input[type=checkbox], #mc-re, #mc-re-res, #mc-re-conso, #mc-auto-therm, #mc-auto-ev, #mc-auto-sales, #mc-aero-civil, #mc-aero-mil, #mc-naval-civil, #mc-naval-mil, #mc-cereal-prod').forEach(cb => {
+  document.querySelectorAll('#metric-checks input[type=checkbox], #mc-re, #mc-re-res, #mc-re-conso, #mc-auto-therm, #mc-auto-ev, #mc-auto-sales, #mc-aero-civil, #mc-aero-mil, #mc-naval-civil, #mc-naval-mil, #mc-cereal-prod, #mc-copper, #mc-lithium, #mc-cobalt, #mc-nickel, #mc-iron, #mc-gold').forEach(cb => {
     if (cb.checked) activeMetrics.push(cb.value);
   });
   updateCountriesStyle();
@@ -5885,6 +5979,86 @@ function buildCerealFlowsLayer() {
   });
 }
 
+
+// ============================================================
+//  METAUX & MINES — Production data (USGS Mineral Commodity Summaries)
+// ============================================================
+var METAL_COLORS = {
+  copper:"#b45309", lithium:"#0ea5e9", cobalt:"#3b82f6",
+  nickel:"#94a3b8", iron_ore:"#78716c", gold:"#eab308"
+};
+
+var METAL_PROD_DATA = {
+  copper_prod_kt: {
+    "CHL":{2000:4600,2005:5320,2010:5420,2015:5760,2016:5550,2017:5510,2018:5830,2019:5990,2020:5720,2021:5610,2022:5320,2023:5300},
+    "PER":{2000:550,2005:1010,2010:1250,2015:1700,2016:2350,2017:2430,2018:2440,2019:2450,2020:2150,2021:2200,2022:2400,2023:2760},
+    "COD":{2000:20,2005:100,2010:430,2015:1020,2016:980,2017:1140,2018:1200,2019:1400,2020:1680,2021:1790,2022:2600,2023:3000},
+    "CHN":{2000:600,2005:760,2010:1200,2015:1750,2016:1750,2017:1780,2018:1780,2019:1780,2020:1780,2021:1780,2022:1830,2023:1900},
+    "USA":{2000:1450,2005:1140,2010:1110,2015:1250,2016:1430,2017:1270,2018:1230,2019:1300,2020:1200,2021:870,2022:920,2023:1000},
+    "AUS":{2000:830,2005:930,2010:870,2015:970,2016:1000,2017:920,2018:940,2019:930,2020:880,2021:870,2022:930,2023:900},
+    "RUS":{2000:570,2005:680,2010:700,2015:740,2016:760,2017:830,2018:870,2019:880,2020:870,2021:850,2022:900,2023:900},
+    "ZMB":{2000:250,2005:470,2010:690,2015:720,2016:760,2017:800,2018:860,2019:797,2020:820,2021:800,2022:800,2023:820},
+    "KAZ":{2000:440,2005:420,2010:380,2015:500,2016:520,2017:560,2018:590,2019:630,2020:650,2021:680,2022:710,2023:720},
+    "IDN":{2000:1010,2005:1040,2010:870,2015:490,2016:220,2017:320,2018:670,2019:820,2020:800,2021:640,2022:700,2023:670},
+    "MEX":{2000:340,2005:420,2010:270,2015:580,2016:680,2017:710,2018:750,2019:757,2020:700,2021:720,2022:760,2023:800},
+    "POL":{2000:454,2005:530,2010:432,2015:390,2016:400,2017:405,2018:420,2019:400,2020:410,2021:430,2022:480,2023:460},
+    "ARG":{2000:155,2005:186,2010:175,2015:192,2016:195,2017:200,2018:200,2019:200,2020:175,2021:195,2022:195,2023:200}
+  },
+  lithium_prod_kt: {
+    "AUS":{2000:25,2005:26,2010:36,2015:13,2016:14,2017:19,2018:58,2019:42,2020:40,2021:60,2022:86,2023:100},
+    "CHL":{2000:13,2005:17,2010:14,2015:12,2016:14,2017:15,2018:17,2019:18,2020:18,2021:26,2022:39,2023:44},
+    "CHN":{2000:2,2005:4,2010:4,2015:9,2016:9,2017:14,2018:13,2019:8,2020:14,2021:24,2022:33,2023:57},
+    "ARG":{2000:0,2005:0,2010:3,2015:3,2016:4,2017:4,2018:6,2019:6,2020:6,2021:6,2022:9,2023:9},
+    "BRA":{2000:0,2005:1,2010:1,2015:2,2016:2,2017:2,2018:2,2019:2,2020:2,2021:2,2022:2,2023:2}
+  },
+  cobalt_prod_kt: {
+    "COD":{2000:10,2005:19,2010:47,2015:63,2016:66,2017:72,2018:92,2019:100,2020:98,2021:120,2022:170,2023:180},
+    "RUS":{2000:4,2005:7,2010:6,2015:6,2016:6,2017:6,2018:7,2019:7,2020:8,2021:8,2022:8,2023:8},
+    "AUS":{2000:3,2005:6,2010:3,2015:6,2016:5,2017:5,2018:6,2019:5,2020:6,2021:6,2022:6,2023:6},
+    "PHL":{2000:0,2005:0,2010:4,2015:4,2016:3,2017:4,2018:4,2019:4,2020:5,2021:5,2022:6,2023:5},
+    "CUB":{2000:3,2005:4,2010:3,2015:3,2016:4,2017:4,2018:4,2019:4,2020:3,2021:4,2022:4,2023:4},
+    "CAN":{2000:5,2005:5,2010:4,2015:4,2016:4,2017:5,2018:4,2019:4,2020:3,2021:4,2022:4,2023:4},
+    "ZMB":{2000:5,2005:6,2010:5,2015:4,2016:4,2017:5,2018:6,2019:5,2020:4,2021:4,2022:4,2023:4}
+  },
+  nickel_prod_kt: {
+    "IDN":{2000:93,2005:153,2010:235,2015:130,2016:155,2017:345,2018:560,2019:800,2020:760,2021:1000,2022:1600,2023:1800},
+    "PHL":{2000:22,2005:27,2010:161,2015:520,2016:340,2017:340,2018:330,2019:400,2020:320,2021:330,2022:330,2023:400},
+    "RUS":{2000:290,2005:315,2010:270,2015:260,2016:235,2017:215,2018:220,2019:235,2020:236,2021:250,2022:220,2023:220},
+    "CAN":{2000:190,2005:182,2010:155,2015:235,2016:190,2017:175,2018:160,2019:167,2020:130,2021:150,2022:140,2023:137},
+    "AUS":{2000:195,2005:210,2010:170,2015:115,2016:180,2017:210,2018:215,2019:150,2020:140,2021:140,2022:150,2023:160},
+    "BRA":{2000:38,2005:41,2010:49,2015:77,2016:73,2017:62,2018:60,2019:60,2020:47,2021:79,2022:90,2023:100},
+    "ZAF":{2000:40,2005:38,2010:38,2015:60,2016:56,2017:58,2018:56,2019:56,2020:52,2021:50,2022:55,2023:55},
+    "CHN":{2000:52,2005:74,2010:80,2015:95,2016:90,2017:95,2018:100,2019:100,2020:110,2021:120,2022:130,2023:140}
+  },
+  iron_ore_prod_mt: {
+    "AUS":{2000:170,2005:260,2010:430,2015:810,2016:825,2017:885,2018:900,2019:870,2020:900,2021:900,2022:900,2023:950},
+    "BRA":{2000:205,2005:280,2010:370,2015:400,2016:390,2017:440,2018:390,2019:350,2020:400,2021:410,2022:410,2023:420},
+    "CHN":{2000:220,2005:420,2010:900,2015:1280,2016:1280,2017:1230,2018:940,2019:840,2020:870,2021:980,2022:960,2023:980},
+    "IND":{2000:80,2005:145,2010:218,2015:129,2016:170,2017:210,2018:210,2019:230,2020:190,2021:190,2022:240,2023:260},
+    "RUS":{2000:86,2005:97,2010:100,2015:100,2016:100,2017:99,2018:99,2019:100,2020:95,2021:100,2022:95,2023:95},
+    "ZAF":{2000:37,2005:40,2010:54,2015:76,2016:63,2017:73,2018:77,2019:77,2020:66,2021:75,2022:74,2023:70},
+    "UKR":{2000:60,2005:75,2010:76,2015:69,2016:59,2017:62,2018:62,2019:63,2020:63,2021:66,2022:27,2023:30},
+    "CAN":{2000:35,2005:33,2010:38,2015:47,2016:48,2017:52,2018:55,2019:57,2020:52,2021:57,2022:59,2023:60},
+    "SWE":{2000:18,2005:23,2010:25,2015:26,2016:26,2017:27,2018:27,2019:28,2020:27,2021:29,2022:27,2023:28},
+    "KAZ":{2000:19,2005:22,2010:23,2015:24,2016:23,2017:24,2018:25,2019:25,2020:25,2021:25,2022:25,2023:25}
+  },
+  gold_prod_t: {
+    "CHN":{2000:180,2005:224,2010:345,2015:490,2016:455,2017:426,2018:400,2019:380,2020:365,2021:370,2022:375,2023:380},
+    "RUS":{2000:143,2005:175,2010:202,2015:295,2016:297,2017:311,2018:314,2019:329,2020:340,2021:330,2022:320,2023:310},
+    "AUS":{2000:296,2005:263,2010:259,2015:278,2016:288,2017:296,2018:312,2019:325,2020:327,2021:320,2022:315,2023:300},
+    "CAN":{2000:155,2005:120,2010:103,2015:153,2016:165,2017:180,2018:193,2019:183,2020:170,2021:170,2022:170,2023:180},
+    "USA":{2000:355,2005:262,2010:232,2015:214,2016:221,2017:230,2018:221,2019:200,2020:186,2021:180,2022:170,2023:170},
+    "GHA":{2000:75,2005:68,2010:92,2015:90,2016:90,2017:100,2018:130,2019:142,2020:138,2021:130,2022:130,2023:120},
+    "ZAF":{2000:430,2005:296,2010:188,2015:167,2016:168,2017:156,2018:130,2019:118,2020:90,2021:90,2022:110,2023:100},
+    "UZB":{2000:85,2005:88,2010:90,2015:90,2016:92,2017:100,2018:100,2019:100,2020:100,2021:100,2022:110,2023:115},
+    "MEX":{2000:25,2005:31,2010:72,2015:117,2016:130,2017:130,2018:125,2019:111,2020:102,2021:120,2022:124,2023:120},
+    "PER":{2000:133,2005:208,2010:164,2015:173,2016:167,2017:162,2018:158,2019:128,2020:101,2021:128,2022:128,2023:120},
+    "IDN":{2000:110,2005:103,2010:121,2015:93,2016:84,2017:111,2018:104,2019:113,2020:73,2021:92,2022:83,2023:80},
+    "COD":{2000:9,2005:10,2010:15,2015:25,2016:28,2017:30,2018:33,2019:38,2020:40,2021:40,2022:40,2023:42},
+    "BRA":{2000:52,2005:38,2010:60,2015:80,2016:80,2017:90,2018:95,2019:106,2020:107,2021:107,2022:110,2023:115}
+  }
+};
+
 var CEREAL_PROD_DATA = {};  // {iso3: {year: value_mt}}
 var CEREAL_PROD_BY_M49 = {};  // {m49key: value_mt} — rebuilt each year change
 
@@ -5939,6 +6113,29 @@ var M49_TO_ISO3 = {
   "72":"BWA","174":"COM","174":"COM","132":"CPV","226":"GNQ","324":"GIN","624":"GNB"
 };
 
+
+function updateMetalProdForYear(year) {
+  function interp(byYear, y) {
+    var keys = Object.keys(byYear).map(Number).sort(function(a,b){return a-b;});
+    if (y <= keys[0]) return byYear[keys[0]];
+    if (y >= keys[keys.length-1]) return byYear[keys[keys.length-1]];
+    for (var i=0;i<keys.length-1;i++) {
+      if (y>=keys[i] && y<=keys[i+1]) {
+        var t=(y-keys[i])/(keys[i+1]-keys[i]);
+        return Math.round(byYear[keys[i]]*(1-t)+byYear[keys[i+1]]*t);
+      }
+    }
+    return byYear[keys[0]];
+  }
+  Object.keys(METAL_PROD_DATA).forEach(function(metric) {
+    var countryData = METAL_PROD_DATA[metric];
+    Object.values(ENERGY_DATA).forEach(function(d) {
+      var iso3 = d.iso3;
+      if (iso3 && countryData[iso3]) d[metric] = interp(countryData[iso3], year);
+    });
+  });
+}
+
 function updateCerealProdForYear(year) {
   if (!CEREAL_PROD_DATA || Object.keys(CEREAL_PROD_DATA).length === 0) return;
   var y = String(year);
@@ -5972,6 +6169,124 @@ function updateCerealProdForYear(year) {
     var val = getValForIso3(iso3);
     if (val !== undefined) CEREAL_PROD_BY_M49[m49] = val;
   });
+}
+
+
+var METAL_FLOWS = [
+  // CUIVRE (kt)
+  {from:"Chili",     fromC:[-71,-35], to:"Chine",        toC:[104,35],  type:"copper", unit:"kt", hist:{2000:400,2005:800,2010:1200,2015:1600,2018:2000,2020:2300,2022:2800,2023:2700}},
+  {from:"Chili",     fromC:[-71,-35], to:"Japon",         toC:[138,37],  type:"copper", unit:"kt", hist:{2000:400,2005:430,2010:440,2015:450,2022:400,2023:380}},
+  {from:"Chili",     fromC:[-71,-35], to:"Corée du Sud",  toC:[127,37],  type:"copper", unit:"kt", hist:{2000:150,2005:200,2010:220,2015:250,2022:250,2023:240}},
+  {from:"Pérou",     fromC:[-76,-10], to:"Chine",         toC:[104,35],  type:"copper", unit:"kt", hist:{2000:80,2005:200,2010:500,2015:700,2020:1000,2022:1200,2023:1200}},
+  {from:"Pérou",     fromC:[-76,-10], to:"Japon",         toC:[138,37],  type:"copper", unit:"kt", hist:{2000:180,2010:200,2015:220,2022:200,2023:190}},
+  {from:"Rép. démocratique du Congo", fromC:[24,-3], to:"Chine", toC:[104,35], type:"copper", unit:"kt", hist:{2000:5,2005:50,2010:300,2015:600,2020:1100,2022:1200,2023:1300}},
+  {from:"Australie", fromC:[133,-27], to:"Japon",         toC:[138,37],  type:"copper", unit:"kt", hist:{2000:350,2005:380,2010:400,2015:420,2022:400,2023:390}},
+  {from:"Australie", fromC:[133,-27], to:"Corée du Sud",  toC:[127,37],  type:"copper", unit:"kt", hist:{2000:130,2010:190,2015:200,2022:200,2023:195}},
+  {from:"Zambie",    fromC:[28,-14],  to:"Chine",         toC:[104,35],  type:"copper", unit:"kt", hist:{2000:30,2005:100,2010:250,2015:300,2022:400,2023:420}},
+  // LITHIUM (kt)
+  {from:"Australie", fromC:[133,-27], to:"Chine",         toC:[104,35],  type:"lithium", unit:"kt", hist:{2015:5,2017:15,2018:40,2019:30,2020:25,2021:45,2022:60,2023:70}},
+  {from:"Australie", fromC:[133,-27], to:"Japon",         toC:[138,37],  type:"lithium", unit:"kt", hist:{2015:4,2018:7,2020:8,2022:10,2023:11}},
+  {from:"Australie", fromC:[133,-27], to:"Corée du Sud",  toC:[127,37],  type:"lithium", unit:"kt", hist:{2015:3,2018:5,2020:6,2022:8,2023:9}},
+  {from:"Chili",     fromC:[-71,-35], to:"Chine",         toC:[104,35],  type:"lithium", unit:"kt", hist:{2015:5,2018:10,2020:12,2022:20,2023:22}},
+  {from:"Chili",     fromC:[-71,-35], to:"Corée du Sud",  toC:[127,37],  type:"lithium", unit:"kt", hist:{2015:4,2018:6,2020:7,2022:8,2023:8}},
+  {from:"Argentine", fromC:[-64,-34], to:"Chine",         toC:[104,35],  type:"lithium", unit:"kt", hist:{2018:1,2020:3,2022:5,2023:6}},
+  // COBALT (kt)
+  {from:"Rép. démocratique du Congo", fromC:[24,-3], to:"Chine",    toC:[104,35],  type:"cobalt", unit:"kt", hist:{2000:9,2005:17,2010:40,2015:57,2020:88,2022:140,2023:150}},
+  {from:"Rép. démocratique du Congo", fromC:[24,-3], to:"Finlande", toC:[26,62],   type:"cobalt", unit:"kt", hist:{2010:5,2015:9,2022:15,2023:14}},
+  {from:"Rép. démocratique du Congo", fromC:[24,-3], to:"Belgique", toC:[4.5,50.5],type:"cobalt", unit:"kt", hist:{2010:4,2015:7,2022:10,2023:9}},
+  {from:"Australie", fromC:[133,-27], to:"Chine",         toC:[104,35],  type:"cobalt", unit:"kt", hist:{2015:3,2022:5,2023:5}},
+  {from:"Russie",    fromC:[60,58],   to:"Finlande",      toC:[26,62],   type:"cobalt", unit:"kt", hist:{2015:4,2022:4,2023:3}},
+  // NICKEL (kt)
+  {from:"Indonésie", fromC:[117,-2],  to:"Chine",         toC:[104,35],  type:"nickel", unit:"kt", hist:{2010:50,2015:80,2017:200,2019:700,2022:800,2023:900}},
+  {from:"Philippines",fromC:[122,13], to:"Chine",         toC:[104,35],  type:"nickel", unit:"kt", hist:{2010:80,2015:150,2022:300,2023:310}},
+  {from:"Russie",    fromC:[60,58],   to:"Pays-Bas",      toC:[5,52],    type:"nickel", unit:"kt", hist:{2000:60,2010:80,2015:80,2022:80,2023:70}},
+  {from:"Canada",    fromC:[-96,56],  to:"États-Unis",    toC:[-95,38],  type:"nickel", unit:"kt", hist:{2000:50,2010:60,2015:70,2022:80,2023:80}},
+  // MINERAI DE FER (Mt)
+  {from:"Australie", fromC:[133,-27], to:"Chine",         toC:[104,35],  type:"iron_ore", unit:"Mt", hist:{2000:60,2005:130,2010:300,2015:540,2020:680,2022:700,2023:720}},
+  {from:"Australie", fromC:[133,-27], to:"Japon",         toC:[138,37],  type:"iron_ore", unit:"Mt", hist:{2000:55,2005:65,2010:70,2015:75,2022:80,2023:78}},
+  {from:"Australie", fromC:[133,-27], to:"Corée du Sud",  toC:[127,37],  type:"iron_ore", unit:"Mt", hist:{2000:30,2010:45,2015:50,2022:55,2023:54}},
+  {from:"Brésil",    fromC:[-55,-10], to:"Chine",         toC:[104,35],  type:"iron_ore", unit:"Mt", hist:{2000:40,2005:80,2010:150,2015:190,2020:210,2022:220,2023:225}},
+  {from:"Brésil",    fromC:[-55,-10], to:"Japon",         toC:[138,37],  type:"iron_ore", unit:"Mt", hist:{2000:20,2010:22,2015:25,2022:25,2023:24}},
+  {from:"Afrique du Sud", fromC:[25,-29], to:"Chine",     toC:[104,35],  type:"iron_ore", unit:"Mt", hist:{2000:10,2010:30,2015:45,2022:60,2023:62}},
+  {from:"Inde",      fromC:[78,22],   to:"Chine",         toC:[104,35],  type:"iron_ore", unit:"Mt", hist:{2000:5,2010:80,2015:15,2020:20,2022:25,2023:28}}
+];
+
+var metalFlowsLayerItems = [];
+
+function getMetalFlowValue(fl, year) {
+  if (!fl.hist) return fl.value || 0;
+  var keys = Object.keys(fl.hist).map(Number).sort(function(a,b){return a-b;});
+  if (year <= keys[0]) return fl.hist[keys[0]];
+  if (year >= keys[keys.length-1]) return fl.hist[keys[keys.length-1]];
+  for (var i=0; i<keys.length-1; i++) {
+    if (year >= keys[i] && year <= keys[i+1]) {
+      var t = (year-keys[i])/(keys[i+1]-keys[i]);
+      return Math.round(fl.hist[keys[i]]*(1-t) + fl.hist[keys[i+1]]*t);
+    }
+  }
+  return 0;
+}
+
+var METAL_THRESHOLD = {copper:50, lithium:0.5, cobalt:0.5, nickel:5, iron_ore:5};
+
+function buildMetalFlowsLayer() {
+  if (!layerVis.metal_flows) return;
+  var year = typeof currentYear !== 'undefined' ? currentYear : 2022;
+  var byType = {};
+  METAL_FLOWS.forEach(function(fl) {
+    var v = getMetalFlowValue(fl, year);
+    if (!byType[fl.type]) byType[fl.type] = [];
+    byType[fl.type].push({fl:fl, v:v});
+  });
+  Object.keys(byType).forEach(function(type) {
+    var items = byType[type];
+    var thresh = METAL_THRESHOLD[type] || 1;
+    var active = items.filter(function(x){return x.v >= thresh;});
+    if (!active.length) return;
+    var maxV = Math.max.apply(null, active.map(function(x){return x.v;}));
+    var col = METAL_COLORS[type] || '#aaa';
+    active.forEach(function(item) {
+      var fl = item.fl, val = item.v;
+      var x1=fl.fromC[0], y1=fl.fromC[1], x2=fl.toC[0], y2=fl.toC[1];
+      if (x2-x1>180) x2-=360; else if (x2-x1<-180) x2+=360;
+      var weight = 1.5 + (val/maxV)*4.5;
+      var mx=(x1+x2)/2, my=(y1+y2)/2;
+      var dx=x2-x1, dy=y2-y1, len=Math.sqrt(dx*dx+dy*dy)||1;
+      var nx=-dy/len, ny=dx/len;
+      var offset=Math.min(len*0.3,22);
+      var cx=mx+nx*offset, cy=my+ny*offset;
+      var rawPts=[];
+      for (var i=0;i<=60;i++) {
+        var t=i/60;
+        rawPts.push([(1-t)*(1-t)*y1+2*(1-t)*t*cy+t*t*y2,(1-t)*(1-t)*x1+2*(1-t)*t*cx+t*t*x2]);
+      }
+      var segments=splitArcAtAntimeridian(rawPts);
+      var typeLabel = {copper:'Cuivre',lithium:'Lithium',cobalt:'Cobalt',nickel:'Nickel',iron_ore:'Minerai de fer'}[type]||type;
+      var tip='<b>'+typeLabel+' : '+fl.from+' \u2192 '+fl.to+'</b><br>'+val+' '+fl.unit+' ('+year+')';
+      segments.forEach(function(seg){
+        var pl=L.polyline(seg,{color:col,weight:weight,opacity:0.8,className:'flow-anim'});
+        pl.bindTooltip(tip,{sticky:true});
+        pl._flowFrom=fl.from; pl._flowTo=fl.to;
+        pl.addTo(map);
+        metalFlowsLayerItems.push(pl);
+      });
+      var fakeGroup={addLayer:function(item){item.addTo(map);metalFlowsLayerItems.push(item);}};
+      addArrowHead(fakeGroup,segments,col,0.85,{from:fl.from,to:fl.to});
+    });
+  });
+}
+
+function toggleMetalFlowsLayer() {
+  layerVis.metal_flows = !layerVis.metal_flows;
+  metalFlowsLayerItems.forEach(function(item){try{map.removeLayer(item);}catch(e){}});
+  metalFlowsLayerItems.length = 0;
+  if (layerVis.metal_flows) buildMetalFlowsLayer();
+}
+
+function rebuildMetalFlowsLayer() {
+  metalFlowsLayerItems.forEach(function(item){try{map.removeLayer(item);}catch(e){}});
+  metalFlowsLayerItems.length = 0;
+  buildMetalFlowsLayer();
 }
 
 function loadCerealProductionData() {
