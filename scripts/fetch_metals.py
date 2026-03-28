@@ -151,7 +151,12 @@ DIVISORS = {
 
 
 def load_existing():
-    """Charge metals.json existant → {(from, to, type): {year_int: val}}"""
+    """Charge metals.json existant.
+    Retourne :
+      agg   : {(from, to, type): {year_int: val}}
+      meta  : {(from, to, type): {fromC, toC, unit, color}}
+      done  : set de (from_name, metal_type, year_int) déjà tentés (avec ou sans résultat)
+    """
     try:
         with open("data/metals.json", encoding="utf-8") as f:
             d = json.load(f)
@@ -162,15 +167,23 @@ def load_existing():
             agg[key] = {int(y): v for y, v in fl.get("hist", {}).items()}
             meta[key] = {"fromC": fl["fromC"], "toC": fl["toC"],
                          "unit": fl["unit"], "color": fl.get("color", "")}
+        # Combinaisons déjà tentées (stockées explicitement pour éviter les re-fetch inutiles)
+        done = set()
+        for entry in d.get("attempted", []):
+            done.add((entry[0], entry[1], int(entry[2])))
+        # Toute paire avec données = aussi "tentée"
+        for (frm, to, typ), hist in agg.items():
+            for yr in hist:
+                done.add((frm, typ, yr))
         total = sum(len(v) for v in agg.values())
-        print(f"Existant : {len(agg)} paires, {total} points de données")
-        return agg, meta
+        print(f"Existant : {len(agg)} paires, {total} points, {len(done)} combinaisons déjà tentées")
+        return agg, meta, done
     except FileNotFoundError:
         print("Pas de metals.json existant — fetch complet")
-        return {}, {}
+        return {}, {}, set()
     except Exception as e:
         print(f"Erreur lecture metals.json : {e} — fetch complet")
-        return {}, {}
+        return {}, {}, set()
 
 
 def fetch_one(reporter_code, cmd_code, api_key, year, max_retries=3):
@@ -200,9 +213,10 @@ def fetch_one(reporter_code, cmd_code, api_key, year, max_retries=3):
     return []
 
 
-def build_flows(api_key, existing_agg, existing_meta):
-    agg  = defaultdict(dict, {k: dict(v) for k, v in existing_agg.items()})
-    meta = dict(existing_meta)
+def build_flows(api_key, existing_agg, existing_meta, done):
+    agg      = defaultdict(dict, {k: dict(v) for k, v in existing_agg.items()})
+    meta     = dict(existing_meta)
+    new_done = set(done)   # sera enrichi au fil du fetch
 
     # Calcul des combinaisons manquantes
     todo = []
@@ -212,12 +226,7 @@ def build_flows(api_key, existing_agg, existing_meta):
             if not from_name or from_name not in COORDS:
                 continue
             for year in YEARS:
-                # Cherche si au moins un partenaire a déjà ce (from, type, year)
-                already = any(
-                    year in agg.get((from_name, to_name, metal_type), {})
-                    for to_name in COORDS
-                )
-                if not already:
+                if (from_name, metal_type, year) not in done:
                     todo.append((metal_type, rep_code, from_name, year))
 
     total = len(todo)
@@ -232,6 +241,7 @@ def build_flows(api_key, existing_agg, existing_meta):
         time.sleep(1.2)
         records = fetch_one(rep_code, cmd_code, api_key, year)
         print(f"{len(records)} partenaires")
+        new_done.add((from_name, metal_type, year))   # marque comme tenté même si 0 résultats
 
         for rec in records:
             partner = str(rec.get("partnerCode", ""))
@@ -277,7 +287,7 @@ def build_flows(api_key, existing_agg, existing_meta):
             "hist":  {str(y): v for y, v in sorted(hist.items())},
         })
 
-    return flows
+    return flows, new_done
 
 
 def main():
@@ -286,8 +296,8 @@ def main():
         print("Pas de COMTRADE_KEY — skip fetch_metals.")
         return
 
-    existing_agg, existing_meta = load_existing()
-    flows = build_flows(api_key, existing_agg, existing_meta)
+    existing_agg, existing_meta, done = load_existing()
+    flows, new_done = build_flows(api_key, existing_agg, existing_meta, done)
 
     if not flows:
         print("Aucune donnée.")
@@ -295,11 +305,13 @@ def main():
 
     os.makedirs("data", exist_ok=True)
     out = {
-        "updated": datetime.now().strftime("%Y-%m-%d"),
-        "years":   [YEARS[0], YEARS[-1]],
-        "source":  "UN Comtrade API v1",
-        "url":     "https://comtradeapi.un.org",
-        "flows":   flows,
+        "updated":   datetime.now().strftime("%Y-%m-%d"),
+        "years":     [YEARS[0], YEARS[-1]],
+        "source":    "UN Comtrade API v1",
+        "url":       "https://comtradeapi.un.org",
+        "flows":     flows,
+        # Combinaisons tentées (avec ou sans résultat) — évite les re-fetch inutiles
+        "attempted": [[f, t, y] for f, t, y in sorted(new_done)],
     }
     with open("data/metals.json", "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
