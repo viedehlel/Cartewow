@@ -1,15 +1,15 @@
 
 """
-Fetches cereal production data from World Bank API (free, no key)
+Fetches cereal production data (all years) from World Bank API
 Indicator: AG.PRD.CREL.MT — Cereal production (metric tons)
 """
 import json, urllib.request, os
 from datetime import datetime
 
-def fetch_world_bank():
+def fetch_all_years():
     url = (
         "https://api.worldbank.org/v2/country/all/indicator/AG.PRD.CREL.MT"
-        "?format=json&per_page=300&mrv=1"
+        "?format=json&per_page=20000&mrv=60"
     )
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
@@ -21,18 +21,22 @@ def fetch_world_bank():
         return []
 
 def main():
-    print("Fetching cereal production from World Bank...")
-    records = fetch_world_bank()
+    print("Fetching cereal production (all years) from World Bank...")
+    records = fetch_all_years()
     if not records:
         print("No data, skipping.")
         return
 
+    # Build: {iso3: {year: value_mt}}
     result = {}
     for rec in records:
         iso3 = rec.get("countryiso3code", "")
+        year = rec.get("date", "")
         val  = rec.get("value")
-        if iso3 and val:
-            result[iso3] = round(float(val) / 1_000_000, 1)  # tonnes → Mt
+        if iso3 and year and val:
+            if iso3 not in result:
+                result[iso3] = {}
+            result[iso3][year] = round(float(val) / 1_000_000, 1)  # tonnes → Mt
 
     print(f"Got {len(result)} countries")
     os.makedirs("data", exist_ok=True)

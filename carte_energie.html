@@ -554,7 +554,11 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
           <span class="layer-group-arrow" id="arr-grp-cereals">▶</span>
         </div>
         <div class="layer-group-body collapsed" id="grp-cereals">
-          <div style="font-size:10px;color:#8b949e;margin-bottom:6px">Source : FAO — Mt/an</div>
+          <div style="font-size:10px;color:#8b949e;margin-bottom:6px">Source : World Bank / UN Comtrade</div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#84cc16"></span>Production (Mt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-cereal-prod" value="cereal_prod_mt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
           <div class="toggle-row">
             <span class="toggle-label">
               <span style="display:inline-flex;gap:3px;margin-right:4px">
@@ -2989,6 +2993,7 @@ const METRIC_CONFIG = {
   // ── NAVAL ──
   naval_civil_kgt:   { label:"Construction navale civile",  unit:"kCGT/an", max:20000, key:"naval_civil_kgt", baseColor:'#06b6d4', colors:['#ecfeff','#a5f3fc','#22d3ee','#06b6d4','#0e7490','#164e63'], grad:"linear-gradient(to right,#ecfeff,#a5f3fc,#22d3ee,#06b6d4,#0e7490,#164e63)" },
   naval_mil_kt:      { label:"Construction navale militaire", unit:"kt dépl./an", max:200, key:"naval_mil_kt", baseColor:'#64748b', colors:['#f8fafc','#cbd5e1','#94a3b8','#64748b','#334155','#1e293b'], grad:"linear-gradient(to right,#f8fafc,#cbd5e1,#94a3b8,#64748b,#334155,#1e293b)" },
+  cereal_prod_mt:    { label:"Production céréales",           unit:"Mt/an",      max:650, key:"cereal_prod_mt", baseColor:'#84cc16', colors:['#f7fee7','#d9f99d','#a3e635','#84cc16','#4d7c0f','#1a2e05'], grad:"linear-gradient(to right,#f7fee7,#d9f99d,#a3e635,#84cc16,#4d7c0f,#1a2e05)" },
   // ── CO2 & PRIX ──
   co2_mt:         { label:"Émissions CO2 énergie",  unit:"Mt CO2/an",  max:13000, key:"co2_mt",         baseColor:'#dc2626', colors:['#fff7f7','#fecaca','#f87171','#dc2626','#991b1b','#450a0a'], grad:"linear-gradient(to right,#fff7f7,#fecaca,#f87171,#dc2626,#991b1b,#450a0a)" },
   co2_per_capita: { label:"CO2 par habitant",       unit:"t/pers./an", max:40,    key:"co2_per_capita",  baseColor:'#ea580c', colors:['#fff7ed','#fed7aa','#fb923c','#ea580c','#9a3412','#431407'], grad:"linear-gradient(to right,#fff7ed,#fed7aa,#fb923c,#ea580c,#9a3412,#431407)" },
@@ -3357,6 +3362,7 @@ function updateFlowsForYear(year) {
   buildLngLayer();
   buildPipelinesLayer('gas');
   buildPipelinesLayer('oil');
+  if (typeof updateCerealProdForYear === 'function') updateCerealProdForYear(year);
   updateCountriesStyle();
   if (typeof rebuildArmsFlowsLayer === 'function') rebuildArmsFlowsLayer();
   if (typeof rebuildCerealFlowsLayer === 'function') rebuildCerealFlowsLayer();
@@ -3369,6 +3375,7 @@ function updateFlowsForYear(year) {
 function initTimeline() {
   // Load cereal data from JSON
   if (typeof loadCerealData === 'function') setTimeout(loadCerealData, 500);
+  if (typeof loadCerealProductionData === 'function') setTimeout(loadCerealProductionData, 700);
   const slider = document.getElementById('year-slider');
   const playBtn = document.getElementById('timeline-play');
   if (!slider) return;
@@ -4180,7 +4187,7 @@ function updateLegendVisibility() {
 // ============================================================
 function onMetricChange() {
   activeMetrics = [];
-  document.querySelectorAll('#metric-checks input[type=checkbox], #mc-re, #mc-re-res, #mc-re-conso, #mc-auto-therm, #mc-auto-ev, #mc-auto-sales, #mc-aero-civil, #mc-aero-mil, #mc-naval-civil, #mc-naval-mil').forEach(cb => {
+  document.querySelectorAll('#metric-checks input[type=checkbox], #mc-re, #mc-re-res, #mc-re-conso, #mc-auto-therm, #mc-auto-ev, #mc-auto-sales, #mc-aero-civil, #mc-aero-mil, #mc-naval-civil, #mc-naval-mil, #mc-cereal-prod').forEach(cb => {
     if (cb.checked) activeMetrics.push(cb.value);
   });
   updateCountriesStyle();
@@ -5865,6 +5872,43 @@ function buildCerealFlowsLayer() {
     var fakeGroup = { addLayer: function(item){ item.addTo(map); cerealFlowsLayerItems.push(item); } };
     addArrowHead(fakeGroup, segments, col, 0.85, {from:fl.from, to:fl.to});
   });
+}
+
+var CEREAL_PROD_DATA = {};  // {iso3: {year: value_mt}}
+
+function updateCerealProdForYear(year) {
+  if (!CEREAL_PROD_DATA || Object.keys(CEREAL_PROD_DATA).length === 0) return;
+  var y = String(year);
+  Object.values(ENERGY_DATA).forEach(function(d) {
+    var iso3 = d.iso3;
+    if (!iso3 || !CEREAL_PROD_DATA[iso3]) return;
+    var byYear = CEREAL_PROD_DATA[iso3];
+    // exact year, or nearest available year
+    if (byYear[y] !== undefined) {
+      d.cereal_prod_mt = byYear[y];
+    } else {
+      // find nearest year with data
+      var years = Object.keys(byYear).map(Number).sort(function(a,b){return a-b;});
+      var nearest = years.reduce(function(prev, cur) {
+        return Math.abs(cur - year) < Math.abs(prev - year) ? cur : prev;
+      }, years[0]);
+      d.cereal_prod_mt = byYear[String(nearest)];
+    }
+  });
+}
+
+function loadCerealProductionData() {
+  fetch('data/cereal_production.json')
+    .then(function(r){ return r.json(); })
+    .then(function(json){
+      CEREAL_PROD_DATA = json.data || {};
+      updateCerealProdForYear(currentYear);
+      console.log('Loaded cereal production data from World Bank (' + Object.keys(CEREAL_PROD_DATA).length + ' countries)');
+      if (document.getElementById('mc-cereal-prod') && document.getElementById('mc-cereal-prod').checked) {
+        updateCountriesStyle();
+      }
+    })
+    .catch(function(e){ console.warn('Could not load cereal_production.json:', e); });
 }
 
 function loadCerealData() {
