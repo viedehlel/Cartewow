@@ -23,7 +23,7 @@ from collections import defaultdict
 YEARS = list(range(2015, 2024))   # 2015 → 2023
 
 M49_TO_FR = {
-    # Exportateurs
+    # Exportateurs minerais
     "152": "Chili",          "604": "Pérou",
     "180": "Congo RDC",      "36":  "Australie",
     "894": "Zambie",         "643": "Russie",
@@ -34,56 +34,120 @@ M49_TO_FR = {
     "484": "Mexique",        "616": "Pologne",
     "804": "Ukraine",        "716": "Zimbabwe",
     "598": "Papouasie-NG",
-    # Importateurs
+    # Exportateurs raffinés supplémentaires
+    "578": "Norvège",        "784": "Émirats Arabes Unis",
+    "792": "Turquie",
+    # Importateurs / destinations
     "156": "Chine",          "392": "Japon",
     "410": "Corée du Sud",   "528": "Pays-Bas",
     "246": "Finlande",       "56":  "Belgique",
     "276": "Allemagne",      "250": "France",
     "826": "Royaume-Uni",    "380": "Italie",
-    "724": "Espagne",        "792": "Turquie",
-    "764": "Thaïlande",      "704": "Vietnam",
-    "458": "Malaisie",       "840": "États-Unis",
+    "724": "Espagne",        "764": "Thaïlande",
+    "704": "Vietnam",        "458": "Malaisie",
+    "840": "États-Unis",
 }
 
 COORDS = {
-    "Chili":          [-71, -35],  "Pérou":          [-76, -10],
-    "Congo RDC":      [24,  -3],   "Australie":      [133, -27],
-    "Zambie":         [28,  -14],  "Russie":         [60,   58],
-    "Indonésie":      [117, -2],   "Philippines":    [122,  13],
-    "Canada":         [-96, 56],   "Brésil":         [-55, -10],
-    "Afrique du Sud": [25,  -29],  "Inde":           [78,   22],
-    "Argentine":      [-64, -34],  "Kazakhstan":     [67,   48],
-    "Mexique":        [-102, 23],  "Pologne":        [20,   52],
-    "Ukraine":        [32,  49],   "Zimbabwe":       [30,  -20],
-    "Papouasie-NG":   [145, -6],
-    "Chine":          [104,  35],  "Japon":          [138,  37],
-    "Corée du Sud":   [127,  37],  "Pays-Bas":       [5,    52],
-    "Finlande":       [26,   62],  "Belgique":       [4.5, 50.5],
-    "Allemagne":      [10,   51],  "France":         [2,    47],
-    "Royaume-Uni":    [-2,   54],  "Italie":         [12,   43],
-    "Espagne":        [-4,   40],  "Turquie":        [35,   39],
-    "Thaïlande":      [101,  15],  "Vietnam":        [106,  16],
-    "Malaisie":       [110,   3],  "États-Unis":     [-100, 38],
+    "Chili":              [-71, -35],  "Pérou":          [-76, -10],
+    "Congo RDC":          [24,  -3],   "Australie":      [133, -27],
+    "Zambie":             [28,  -14],  "Russie":         [60,   58],
+    "Indonésie":          [117, -2],   "Philippines":    [122,  13],
+    "Canada":             [-96, 56],   "Brésil":         [-55, -10],
+    "Afrique du Sud":     [25,  -29],  "Inde":           [78,   22],
+    "Argentine":          [-64, -34],  "Kazakhstan":     [67,   48],
+    "Mexique":            [-102, 23],  "Pologne":        [20,   52],
+    "Ukraine":            [32,  49],   "Zimbabwe":       [30,  -20],
+    "Papouasie-NG":       [145, -6],   "Norvège":        [10,   62],
+    "Émirats Arabes Unis":[54,  24],   "Turquie":        [35,   39],
+    "Chine":              [104,  35],  "Japon":          [138,  37],
+    "Corée du Sud":       [127,  37],  "Pays-Bas":       [5,    52],
+    "Finlande":           [26,   62],  "Belgique":       [4.5, 50.5],
+    "Allemagne":          [10,   51],  "France":         [2,    47],
+    "Royaume-Uni":        [-2,   54],  "Italie":         [12,   43],
+    "Espagne":            [-4,   40],  "Thaïlande":      [101,  15],
+    "Vietnam":            [106,  16],  "Malaisie":       [110,   3],
+    "États-Unis":         [-100, 38],
 }
 
 EXPORTERS = {
-    "iron_ore": ["36","76","710","356","643","804","124"],
-    #             AUS  BRA  ZAF  IND  RUS  UKR  CAN
-    "copper":   ["152","604","180","36","894","643","484","616","398"],
-    #             CHL  PER  COD  AUS  ZMB  RUS  MEX  POL  KAZ
-    "nickel":   ["360","608","643","124","36","598"],
-    #             IDN  PHL  RUS  CAN  AUS  PNG
-    "cobalt":   ["180","643","36","608","124"],
-    #             COD  RUS  AUS  PHL  CAN
-    "lithium":  ["36","152","32","716"],
-    #             AUS  CHL  ARG  ZWE
+    # ── Minerais bruts ──────────────────────────────────────────
+    "iron_ore":   ["36","76","710","356","643","804","124"],
+    #               AUS  BRA  ZAF  IND  RUS  UKR  CAN
+    "copper":     ["152","604","180","36","894","643","484","616","398"],
+    #               CHL  PER  COD  AUS  ZMB  RUS  MEX  POL  KAZ
+    "nickel":     ["360","608","643","124","36","598"],
+    #               IDN  PHL  RUS  CAN  AUS  PNG
+    "cobalt":     ["180","643","36","608","124"],
+    #               COD  RUS  AUS  PHL  CAN
+    "lithium":    ["36","152","32","716"],
+    #               AUS  CHL  ARG  ZWE
+    # ── Métaux raffinés ─────────────────────────────────────────
+    "copper_ref": ["156","276","392","152","410","643","616"],
+    #               CHN  DEU  JPN  CHL  KOR  RUS  POL
+    "steel":      ["156","392","410","276","643","804","356","792"],
+    #               CHN  JPN  KOR  DEU  RUS  UKR  IND  TUR
+    "aluminum":   ["156","643","124","578","784","36"],
+    #               CHN  RUS  CAN  NOR  UAE  AUS
+    "nickel_ref": ["643","124","578","246","36"],
+    #               RUS  CAN  NOR  FIN  AUS
 }
 
-HS_CODES    = {"iron_ore":"2601","copper":"2603","nickel":"2604","cobalt":"2605","lithium":"2530"}
-TYPE_COLORS = {"iron_ore":"#b45309","copper":"#ea580c","nickel":"#64748b","cobalt":"#3b82f6","lithium":"#0ea5e9"}
-UNITS       = {"iron_ore":"Mt","copper":"kt","nickel":"kt","cobalt":"kt","lithium":"kt"}
-THRESHOLDS  = {"iron_ore":5_000_000_000,"copper":50_000_000,"nickel":5_000_000,"cobalt":500_000,"lithium":500_000}
-DIVISORS    = {"iron_ore":1_000_000_000,"copper":1_000_000,"nickel":1_000_000,"cobalt":1_000_000,"lithium":1_000_000}
+HS_CODES = {
+    "iron_ore":   "2601",
+    "copper":     "2603",
+    "nickel":     "2604",
+    "cobalt":     "2605",
+    "lithium":    "2530",
+    "copper_ref": "7403",   # cuivre affiné non allié
+    "steel":      "7208",   # produits laminés plats fer/acier
+    "aluminum":   "7601",   # aluminium non allié
+    "nickel_ref": "7502",   # nickel non allié
+}
+TYPE_COLORS = {
+    "iron_ore":   "#b45309",
+    "copper":     "#ea580c",
+    "nickel":     "#64748b",
+    "cobalt":     "#3b82f6",
+    "lithium":    "#0ea5e9",
+    "copper_ref": "#dc2626",   # rouge — distingue du minerai
+    "steel":      "#6b7280",   # gris acier
+    "aluminum":   "#93c5fd",   # bleu pâle / argent
+    "nickel_ref": "#334155",   # gris foncé
+}
+UNITS = {
+    "iron_ore":   "Mt",
+    "copper":     "kt",
+    "nickel":     "kt",
+    "cobalt":     "kt",
+    "lithium":    "kt",
+    "copper_ref": "kt",
+    "steel":      "Mt",
+    "aluminum":   "kt",
+    "nickel_ref": "kt",
+}
+THRESHOLDS = {
+    "iron_ore":   5_000_000_000,
+    "copper":     50_000_000,
+    "nickel":     5_000_000,
+    "cobalt":     500_000,
+    "lithium":    500_000,
+    "copper_ref": 50_000_000,    # 50 kt
+    "steel":      1_000_000_000, # 1 Mt
+    "aluminum":   100_000_000,   # 100 kt
+    "nickel_ref": 5_000_000,     # 5 kt
+}
+DIVISORS = {
+    "iron_ore":   1_000_000_000,
+    "copper":     1_000_000,
+    "nickel":     1_000_000,
+    "cobalt":     1_000_000,
+    "lithium":    1_000_000,
+    "copper_ref": 1_000_000,
+    "steel":      1_000_000_000,
+    "aluminum":   1_000_000,
+    "nickel_ref": 1_000_000,
+}
 
 
 def load_existing():
