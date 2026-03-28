@@ -39,10 +39,15 @@ jobs:
       - name: Fetch arms transfer data from SIPRI
         run: python scripts/fetch_arms.py
 
+      - name: Fetch metal trade flows from UN Comtrade
+        env:
+          COMTRADE_KEY: ${{ secrets.COMTRADE_KEY }}
+        run: python scripts/fetch_metals.py
+
       - name: Commit if data changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/energy.json data/cereals.json data/cereal_production.json data/migrations.json data/migration_economic.json data/arms.json
+          git add data/energy.json data/cereals.json data/cereal_production.json data/migrations.json data/migration_economic.json data/arms.json data/metals.json
           git diff --cached --quiet || git commit -m "Auto-update data $(date +%Y-%m-%d)"
           git push

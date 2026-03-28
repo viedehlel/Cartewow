@@ -3513,6 +3513,7 @@ function initTimeline() {
   if (typeof loadMigrationsData === 'function') setTimeout(loadMigrationsData, 900);
   if (typeof loadMigrationEconomicData === 'function') setTimeout(loadMigrationEconomicData, 1100);
   if (typeof loadArmsData === 'function') setTimeout(loadArmsData, 1200);
+  if (typeof loadMetalFlowsData === 'function') setTimeout(loadMetalFlowsData, 1350);
   const slider = document.getElementById('year-slider');
   const playBtn = document.getElementById('timeline-play');
   if (!slider) return;
@@ -5904,6 +5905,42 @@ function loadArmsData() {
       if (layerVis.arms_flows) buildArmsFlowsLayer();
     })
     .catch(function(e){ console.warn('Could not load arms.json:', e); });
+}
+
+function loadMetalFlowsData() {
+  fetch('data/metals.json')
+    .then(function(r){ return r.json(); })
+    .then(function(json){
+      var incoming = json.flows || [];
+      var year = json.year || 2022;
+      var added = 0, updated = 0;
+      incoming.forEach(function(f){
+        // Cherche une entrée existante dans METAL_FLOWS (même from+to+type)
+        var existing = METAL_FLOWS.find(function(x){
+          return x.type === f.type &&
+            (x.from === f.from || (x.from_iso && x.from_iso === f.from_iso)) &&
+            (x.to   === f.to   || (x.to_iso   && x.to_iso   === f.to_iso));
+        });
+        if (existing) {
+          // Enrichit le hist avec la nouvelle valeur annuelle
+          if (!existing.hist) existing.hist = {};
+          existing.hist[year] = f.value;
+          updated++;
+        } else {
+          // Nouveau flux non présent dans les données statiques
+          METAL_FLOWS.push({
+            from: f.from, fromC: f.fromC,
+            to:   f.to,   toC:   f.toC,
+            type: f.type, unit: f.unit,
+            hist: { [year]: f.value }
+          });
+          added++;
+        }
+      });
+      console.log('UN Comtrade metals: ' + updated + ' flux mis à jour, ' + added + ' nouveaux (' + json.updated + ')');
+      if (layerVis.metal_flows) rebuildMetalFlowsLayer();
+    })
+    .catch(function(e){ console.warn('Could not load metals.json (normal si pas encore généré):', e); });
 }
 
 const armsFlowsLayerItems = [];
