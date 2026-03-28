@@ -1,0 +1,28 @@
+name: Update — Armements
+
+on:
+  schedule:
+    - cron: "0 5 1 * *"  # Le 1er de chaque mois à 5h UTC
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Fetch arms transfer data from SIPRI
+        run: python scripts/fetch_arms.py
+
+      - name: Commit if data changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/arms.json
+          git diff --cached --quiet || git commit -m "Auto-update arms $(date +%Y-%m-%d)"
+          git push
