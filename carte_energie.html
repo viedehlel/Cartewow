@@ -3246,13 +3246,13 @@ function buildCountriesLayer() {
   const cleanGeoJSON = clampGeoJSON(worldGeoJSON);
   layers.countries = L.geoJSON(cleanGeoJSON, {
     style: f => {
-      const key = String(f.id);
+      const key = String(parseInt(f.id));
       const d = getCountryDataForYear(key, currentYear);
       if (!d) return { fillColor: 'url(#hatch-no-data)', fillOpacity: 1, weight: 0.4, opacity: 0.5, color: '#3a4050' };
       return { fillColor: getCountryColor(d), weight: 0.5, opacity: 0.7, color: '#4a5568', fillOpacity: 0.82 };
     },
     onEachFeature: (f, layer) => {
-      const key = String(f.id);
+      const key = String(parseInt(f.id));
       const d = getCountryDataForYear(key, currentYear);
       if (d) {
         layer.bindTooltip(makeCountryTooltip(d, key), { sticky: true });
