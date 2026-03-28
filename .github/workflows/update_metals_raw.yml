@@ -1,14 +1,14 @@
-name: Update — Céréales (Comtrade)
+name: Update — Métaux bruts (Comtrade)
 
 on:
   schedule:
-    - cron: "0 6 * * 0"  # Dimanche 6h UTC
+    - cron: "0 6 * * 1"  # Lundi 6h UTC
   workflow_dispatch:
 
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -17,15 +17,15 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Fetch cereal trade flows from UN Comtrade
+      - name: Fetch raw metal trade flows from UN Comtrade
         env:
           COMTRADE_KEY: ${{ secrets.COMTRADE_KEY }}
-        run: python scripts/fetch_cereals.py
+        run: python scripts/fetch_metals.py
 
       - name: Commit if data changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/cereals.json
-          git diff --cached --quiet || git commit -m "Auto-update cereals $(date +%Y-%m-%d)"
+          git add data/metals.json
+          git diff --cached --quiet || git commit -m "Auto-update metals-raw $(date +%Y-%m-%d)"
           git push

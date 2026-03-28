@@ -203,6 +203,9 @@ def fetch_one(reporter_code, cmd_code, api_key, year, max_retries=3):
                 wait = 60 * (attempt + 1)
                 print(f"    429 — attente {wait}s (tentative {attempt+1}/{max_retries})...")
                 time.sleep(wait)
+            elif e.code == 403:
+                print(f"    403 Quota dépassé — arrêt du script")
+                raise
             else:
                 print(f"    HTTP {e.code}: {e}")
                 return []
@@ -239,7 +242,11 @@ def build_flows(api_key, existing_agg, existing_meta, done):
 
         print(f"  [{i}/{total}] {metal_type} {from_name} {year}...", end=" ", flush=True)
         time.sleep(1.2)
-        records = fetch_one(rep_code, cmd_code, api_key, year)
+        try:
+            records = fetch_one(rep_code, cmd_code, api_key, year)
+        except urllib.error.HTTPError:
+            print("Quota dépassé, sauvegarde de l'état actuel...")
+            break
         print(f"{len(records)} partenaires")
         new_done.add((from_name, metal_type, year))   # marque comme tenté même si 0 résultats
 
