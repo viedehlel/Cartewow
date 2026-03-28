@@ -560,14 +560,20 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
             <label class="toggle-switch"><input type="checkbox" id="mc-cereal-prod" value="cereal_prod_mt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
           </div>
           <div class="toggle-row">
-            <span class="toggle-label">
-              <span style="display:inline-flex;gap:3px;margin-right:4px">
-                <span class="toggle-dot" style="background:#f59e0b"></span>
-                <span class="toggle-dot" style="background:#84cc16"></span>
-                <span class="toggle-dot" style="background:#eab308"></span>
-                <span class="toggle-dot" style="background:#22c55e"></span>
-              </span>Blé · Soja · Maïs · Riz</span>
-            <label class="toggle-switch"><input type="checkbox" id="tog-cereal-flows" onchange="toggleCerealFlowsLayer()"><span class="toggle-slider"></span></label>
+            <span class="toggle-label"><span class="toggle-dot" style="background:#f59e0b"></span> Blé</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-cereal-wheat" onchange="toggleCerealType('wheat')"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#84cc16"></span> Soja</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-cereal-soy" onchange="toggleCerealType('soy')"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#eab308"></span> Maïs</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-cereal-corn" onchange="toggleCerealType('corn')"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#22c55e"></span> Riz</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-cereal-rice" onchange="toggleCerealType('rice')"><span class="toggle-slider"></span></label>
           </div>
         </div>
       </div>
@@ -3065,7 +3071,7 @@ let layers = {
   re_mines: null, re_processing: null, re_magnets: null, re_flows: null,
   flows_auto: null, aero_sites: null, auto_sites: null, naval_yards: null, supply_links: null,
 };
-let layerVis = { countries:true, gas:false, oil:false, flows_gas:false, flows_lng:false, flows_oil:false, lng:false, nuclear:false, fields:false, operators:false, re_mines:false, re_processing:false, re_magnets:false, re_flows:false, flows_auto:false, aero_sites:false, auto_sites:false, naval_yards:false, submarine_cables:false, arms_flows:false, cereal_flows:false, metal_copper:false, metal_lithium:false, metal_cobalt:false, metal_nickel:false, metal_iron_ore:false, metal_copper_ref:false, metal_steel:false, metal_aluminum:false, metal_nickel_ref:false, migration_flows:false };
+let layerVis = { countries:true, gas:false, oil:false, flows_gas:false, flows_lng:false, flows_oil:false, lng:false, nuclear:false, fields:false, operators:false, re_mines:false, re_processing:false, re_magnets:false, re_flows:false, flows_auto:false, aero_sites:false, auto_sites:false, naval_yards:false, submarine_cables:false, arms_flows:false, cereal_wheat:false, cereal_soy:false, cereal_corn:false, cereal_rice:false, metal_copper:false, metal_lithium:false, metal_cobalt:false, metal_nickel:false, metal_iron_ore:false, metal_copper_ref:false, metal_steel:false, metal_aluminum:false, metal_nickel_ref:false, migration_flows:false };
 let aeroTierVis = { oem:true, t1:true, t2:true, t3:true };
 let autoTierVis = { oem:true, t1:true, t2:true, t3:true };
 let worldGeoJSON = null;
@@ -6058,15 +6064,17 @@ function getCerealValue(fl, year) {
 
 const cerealFlowsLayerItems = [];
 
-function buildCerealFlowsLayer() {
-  if (!layerVis.cereal_flows) return;
+function buildCerealFlowsLayer(typeFilter) {
+  var activeTypes = typeFilter ? [typeFilter] : ['wheat','soy','corn','rice'].filter(function(t){ return layerVis['cereal_'+t]; });
+  if (!activeTypes.length) return;
   var year = typeof currentYear !== 'undefined' ? currentYear : 2022;
-  var values = CEREAL_FLOWS.map(function(f){ return getCerealValue(f, year); });
+  var filteredFlows = CEREAL_FLOWS.filter(function(f){ return activeTypes.indexOf(f.type) >= 0; });
+  var values = filteredFlows.map(function(f){ return getCerealValue(f, year); });
   var activeVals = values.filter(function(v){ return v >= 0.5; });
-  var maxVal = activeVals.length ? Math.max.apply(null, activeVals) : 1;
-  var logMaxVal = Math.log(maxVal + 1);
+  var sorted = activeVals.slice().sort(function(a,b){ return a-b; });
+  var capVal = sorted[Math.min(Math.floor(sorted.length * 0.9), sorted.length-1)] || 1;
 
-  CEREAL_FLOWS.forEach(function(fl, idx) {
+  filteredFlows.forEach(function(fl, idx) {
     var val = values[idx];
     if (!val || val < 0.5) return;
     var col = CEREAL_COLORS[fl.type] || '#94a3b8';
@@ -6074,7 +6082,7 @@ function buildCerealFlowsLayer() {
     var x2 = fl.toC[0],   y2 = fl.toC[1];
     if (x2 - x1 > 180) x2 -= 360;
     else if (x2 - x1 < -180) x2 += 360;
-    var weight = 1 + (Math.log(val + 1) / logMaxVal) * 5;
+    var weight = Math.min(1 + (val / capVal) * 3, 4);
     var mx = (x1+x2)/2, my = (y1+y2)/2;
     var dx = x2-x1, dy = y2-y1;
     var len = Math.sqrt(dx*dx+dy*dy) || 1;
@@ -6095,11 +6103,11 @@ function buildCerealFlowsLayer() {
     segments.forEach(function(seg) {
       var pl = L.polyline(seg, { color:col, weight:weight, opacity:0.8, className:'flow-anim' });
       pl.bindTooltip(tooltip, { sticky:true });
-      pl._flowFrom = fl.from; pl._flowTo = fl.to;
+      pl._flowFrom = fl.from; pl._flowTo = fl.to; pl._cerealType = fl.type;
       pl.addTo(map);
       cerealFlowsLayerItems.push(pl);
     });
-    var fakeGroup = { addLayer: function(item){ item.addTo(map); cerealFlowsLayerItems.push(item); } };
+    var fakeGroup = { addLayer: function(item){ item._cerealType = fl.type; item.addTo(map); cerealFlowsLayerItems.push(item); } };
     addArrowHead(fakeGroup, segments, col, 0.85, {from:fl.from, to:fl.to});
   });
 }
@@ -6813,22 +6821,28 @@ function loadCerealData() {
         };
       });
       console.log('Loaded ' + CEREAL_FLOWS.length + ' cereal flows from JSON');
-      if (layerVis.cereal_flows) rebuildCerealFlowsLayer();
+      var _anyCereal = ['wheat','soy','corn','rice'].some(function(t){ return layerVis['cereal_'+t]; });
+      if (_anyCereal) rebuildCerealFlowsLayer();
     })
     .catch(function(e){
       console.warn('Could not load cereals.json, using static data:', e);
     });
 }
 
-function toggleCerealFlowsLayer() {
-  layerVis.cereal_flows = !layerVis.cereal_flows;
-  cerealFlowsLayerItems.forEach(function(item){ try{ map.removeLayer(item); }catch(e){} });
-  cerealFlowsLayerItems.length = 0;
-  if (layerVis.cereal_flows) buildCerealFlowsLayer();
+function toggleCerealType(type) {
+  layerVis['cereal_'+type] = !layerVis['cereal_'+type];
+  for (var i = cerealFlowsLayerItems.length-1; i >= 0; i--) {
+    if (cerealFlowsLayerItems[i]._cerealType === type) {
+      try { map.removeLayer(cerealFlowsLayerItems[i]); } catch(e) {}
+      cerealFlowsLayerItems.splice(i, 1);
+    }
+  }
+  if (layerVis['cereal_'+type]) buildCerealFlowsLayer(type);
 }
 
 function rebuildCerealFlowsLayer() {
-  if (!layerVis.cereal_flows) return;
+  var anyCereal = ['wheat','soy','corn','rice'].some(function(t){ return layerVis['cereal_'+t]; });
+  if (!anyCereal) return;
   cerealFlowsLayerItems.forEach(function(item){ try{ map.removeLayer(item); }catch(e){} });
   cerealFlowsLayerItems.length = 0;
   buildCerealFlowsLayer();
