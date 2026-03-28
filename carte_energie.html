@@ -602,9 +602,26 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
             <span class="toggle-label"><span class="toggle-dot" style="background:#eab308"></span>Or (t/an)</span>
             <label class="toggle-switch"><input type="checkbox" id="mc-gold" value="gold_prod_t" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
           </div>
+          <div style="font-size:10px;color:#8b949e;margin:6px 0 4px">Flux commerciaux</div>
           <div class="toggle-row">
-            <span class="toggle-label"><span style="display:inline-flex;gap:3px;margin-right:4px"><span class="toggle-dot" style="background:#b45309"></span><span class="toggle-dot" style="background:#0ea5e9"></span><span class="toggle-dot" style="background:#3b82f6"></span><span class="toggle-dot" style="background:#eab308"></span></span>Flux m&eacute;taux</span>
-            <label class="toggle-switch"><input type="checkbox" id="tog-metal-flows" onchange="toggleMetalFlowsLayer()"><span class="toggle-slider"></span></label>
+            <span class="toggle-label"><span class="toggle-dot" style="background:#ea580c"></span>Flux cuivre</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-metal-copper" onchange="toggleMetalType('copper')"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#0ea5e9"></span>Flux lithium</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-metal-lithium" onchange="toggleMetalType('lithium')"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#3b82f6"></span>Flux cobalt</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-metal-cobalt" onchange="toggleMetalType('cobalt')"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#64748b"></span>Flux nickel</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-metal-nickel" onchange="toggleMetalType('nickel')"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#b45309"></span>Flux minerai de fer</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-metal-iron_ore" onchange="toggleMetalType('iron_ore')"><span class="toggle-slider"></span></label>
           </div>
         </div>
       </div>
@@ -3031,7 +3048,7 @@ let layers = {
   re_mines: null, re_processing: null, re_magnets: null, re_flows: null,
   flows_auto: null, aero_sites: null, auto_sites: null, naval_yards: null, supply_links: null,
 };
-let layerVis = { countries:true, gas:false, oil:false, flows_gas:false, flows_lng:false, flows_oil:false, lng:false, nuclear:false, fields:false, operators:false, re_mines:false, re_processing:false, re_magnets:false, re_flows:false, flows_auto:false, aero_sites:false, auto_sites:false, naval_yards:false, submarine_cables:false, arms_flows:false, cereal_flows:false, metal_flows:false, migration_flows:false };
+let layerVis = { countries:true, gas:false, oil:false, flows_gas:false, flows_lng:false, flows_oil:false, lng:false, nuclear:false, fields:false, operators:false, re_mines:false, re_processing:false, re_magnets:false, re_flows:false, flows_auto:false, aero_sites:false, auto_sites:false, naval_yards:false, submarine_cables:false, arms_flows:false, cereal_flows:false, metal_copper:false, metal_lithium:false, metal_cobalt:false, metal_nickel:false, metal_iron_ore:false, migration_flows:false };
 let aeroTierVis = { oem:true, t1:true, t2:true, t3:true };
 let autoTierVis = { oem:true, t1:true, t2:true, t3:true };
 let worldGeoJSON = null;
@@ -3494,7 +3511,10 @@ function updateFlowsForYear(year) {
   updateCountriesStyle();
   if (typeof rebuildArmsFlowsLayer === 'function') rebuildArmsFlowsLayer();
   if (typeof rebuildCerealFlowsLayer === 'function') rebuildCerealFlowsLayer();
-  if (typeof rebuildMetalFlowsLayer === 'function') rebuildMetalFlowsLayer();
+  if (typeof rebuildMetalFlowsLayer === 'function') {
+    var _anyMetal = ['copper','lithium','cobalt','nickel','iron_ore'].some(function(t){return layerVis['metal_'+t];});
+    if (_anyMetal) rebuildMetalFlowsLayer();
+  }
   if (typeof rebuildMigrationFlowsLayer === 'function') rebuildMigrationFlowsLayer();
   // Mettre à jour le panneau ouvert + re-appliquer le filtre pays
   if (selectedFeature && selectedFeature.type === 'country') {
@@ -5924,7 +5944,8 @@ function loadMetalFlowsData() {
         });
       });
       console.log('UN Comtrade metals: ' + METAL_FLOWS.length + ' flux chargés (' + json.updated + ')');
-      if (layerVis.metal_flows) rebuildMetalFlowsLayer();
+      var anyMetal = ['copper','lithium','cobalt','nickel','iron_ore'].some(function(t){return layerVis['metal_'+t];});
+      if (anyMetal) rebuildMetalFlowsLayer();
     })
     .catch(function(e){ console.warn('metals.json non disponible (sera généré au prochain workflow):', e); });
 }
@@ -6314,10 +6335,10 @@ function getMetalFlowValue(fl, year) {
 var METAL_THRESHOLD = {copper:50, lithium:0.5, cobalt:0.5, nickel:5, iron_ore:5};
 
 function buildMetalFlowsLayer() {
-  if (!layerVis.metal_flows) return;
   var year = typeof currentYear !== 'undefined' ? currentYear : 2022;
   var byType = {};
   METAL_FLOWS.forEach(function(fl) {
+    if (!layerVis['metal_' + fl.type]) return;
     var v = getMetalFlowValue(fl, year);
     if (!byType[fl.type]) byType[fl.type] = [];
     byType[fl.type].push({fl:fl, v:v});
@@ -6350,21 +6371,24 @@ function buildMetalFlowsLayer() {
       segments.forEach(function(seg){
         var pl=L.polyline(seg,{color:col,weight:weight,opacity:0.8,className:'flow-anim'});
         pl.bindTooltip(tip,{sticky:true});
-        pl._flowFrom=fl.from; pl._flowTo=fl.to;
+        pl._flowFrom=fl.from; pl._flowTo=fl.to; pl._metalType=type;
         pl.addTo(map);
         metalFlowsLayerItems.push(pl);
       });
-      var fakeGroup={addLayer:function(item){item.addTo(map);metalFlowsLayerItems.push(item);}};
+      var fakeGroup={addLayer:function(item){item._metalType=type;item.addTo(map);metalFlowsLayerItems.push(item);}};
       addArrowHead(fakeGroup,segments,col,0.85,{from:fl.from,to:fl.to});
     });
   });
 }
 
-function toggleMetalFlowsLayer() {
-  layerVis.metal_flows = !layerVis.metal_flows;
-  metalFlowsLayerItems.forEach(function(item){try{map.removeLayer(item);}catch(e){}});
-  metalFlowsLayerItems.length = 0;
-  if (layerVis.metal_flows) buildMetalFlowsLayer();
+function toggleMetalType(type) {
+  layerVis['metal_' + type] = !layerVis['metal_' + type];
+  // Retire les items du type togglé
+  metalFlowsLayerItems = metalFlowsLayerItems.filter(function(item){
+    if (item._metalType === type) { try{map.removeLayer(item);}catch(e){} return false; }
+    return true;
+  });
+  if (layerVis['metal_' + type]) buildMetalFlowsLayer();
 }
 
 function rebuildMetalFlowsLayer() {
