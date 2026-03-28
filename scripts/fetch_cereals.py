@@ -79,16 +79,38 @@ def fetch_one(reporter_code, cmd_code, api_key, year):
         print(f"    Error: {e}")
         return []
 
-def build_flows(api_key, year=2022):
-    flows = []
+def load_existing():
+    """Charge cereals.json existant → {(from,to,type): hist_dict}"""
+    try:
+        with open("data/cereals.json", encoding="utf-8") as f:
+            d = json.load(f)
+        agg, meta = {}, {}
+        for fl in d.get("flows", []):
+            key = (fl["from"], fl["to"], fl["type"])
+            agg[key] = {int(y): v for y, v in fl.get("hist", {}).items()}
+            meta[key] = {"fromC": fl["fromC"], "toC": fl["toC"], "color": fl.get("color", "")}
+        print(f"Existant : {len(agg)} paires")
+        return agg, meta
+    except FileNotFoundError:
+        return {}, {}
+    except Exception as e:
+        print(f"Erreur lecture : {e}")
+        return {}, {}
+
+
+def build_flows(api_key, year, existing_agg, existing_meta):
+    from collections import defaultdict
+    agg  = defaultdict(dict, {k: dict(v) for k, v in existing_agg.items()})
+    meta = dict(existing_meta)
+
     for cereal_type, reporters in EXPORTERS.items():
         cmd_code = HS_CODES[cereal_type]
-        print(f"Fetching {cereal_type} (HS {cmd_code})...")
+        print(f"Fetching {cereal_type} (HS {cmd_code}) année {year}...")
         for rep_code in reporters:
             from_name = M49_TO_FR.get(rep_code)
             if not from_name or from_name not in COORDS:
                 continue
-            time.sleep(1.5)  # Respect rate limit
+            time.sleep(1.5)
             records = fetch_one(rep_code, cmd_code, api_key, year)
             print(f"  {from_name}: {len(records)} partners")
             for rec in records:
@@ -103,17 +125,27 @@ def build_flows(api_key, year=2022):
                 to_name = M49_TO_FR.get(partner)
                 if not to_name or to_name not in COORDS or to_name == from_name:
                     continue
-                flows.append({
-                    "from":  from_name,
-                    "fromC": COORDS[from_name],
-                    "to":    to_name,
-                    "toC":   COORDS[to_name],
-                    "type":  cereal_type,
-                    "value": round(val_mt, 1),
-                    "year":  year,
-                    "color": TYPE_COLORS[cereal_type],
-                })
+                key = (from_name, to_name, cereal_type)
+                agg[key][year] = round(val_mt, 1)
+                if key not in meta:
+                    meta[key] = {"fromC": COORDS[from_name], "toC": COORDS[to_name],
+                                 "color": TYPE_COLORS[cereal_type]}
+
+    flows = []
+    for (frm, to, typ), hist in agg.items():
+        if not hist:
+            continue
+        m = meta.get((frm, to, typ), {})
+        if not m:
+            continue
+        flows.append({
+            "from":  frm, "fromC": m["fromC"],
+            "to":    to,  "toC":   m["toC"],
+            "type":  typ, "color": m["color"],
+            "hist":  {str(y): v for y, v in sorted(hist.items())},
+        })
     return flows
+
 
 def main():
     api_key = os.environ.get("COMTRADE_KEY", "")
@@ -123,7 +155,8 @@ def main():
 
     year = datetime.now().year - 2
     print(f"Fetching cereal data from UN Comtrade (year {year})...")
-    flows = build_flows(api_key, year)
+    existing_agg, existing_meta = load_existing()
+    flows = build_flows(api_key, year, existing_agg, existing_meta)
 
     if not flows:
         print("No data fetched, keeping existing data.")
@@ -132,12 +165,11 @@ def main():
     os.makedirs("data", exist_ok=True)
     out = {
         "updated": datetime.now().strftime("%Y-%m-%d"),
-        "year": year,
         "source": "UN Comtrade API v1 — mise à jour automatique chaque dimanche",
         "flows": flows,
     }
     with open("data/cereals.json", "w", encoding="utf-8") as f:
-        json.dump(out, f, ensure_ascii=False, indent=2)
+        json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
     print(f"Saved {len(flows)} flows to data/cereals.json")
 
 if __name__ == "__main__":

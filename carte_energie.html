@@ -6041,8 +6041,10 @@ let CEREAL_FLOWS = [];
 
 function getCerealValue(fl, year) {
   var h = fl.hist;
-  if (h[year] !== undefined) return h[year];
+  if (!h) return 0;
   var years = Object.keys(h).map(Number).sort(function(a,b){return a-b;});
+  if (!years.length) return fl.value || 0;
+  if (h[year] !== undefined) return h[year];
   if (year <= years[0]) return h[years[0]];
   if (year >= years[years.length-1]) return h[years[years.length-1]];
   for (var i=0; i<years.length-1; i++) {
@@ -6062,16 +6064,17 @@ function buildCerealFlowsLayer() {
   var values = CEREAL_FLOWS.map(function(f){ return getCerealValue(f, year); });
   var activeVals = values.filter(function(v){ return v >= 0.5; });
   var maxVal = activeVals.length ? Math.max.apply(null, activeVals) : 1;
+  var logMaxVal = Math.log(maxVal + 1);
 
   CEREAL_FLOWS.forEach(function(fl, idx) {
     var val = values[idx];
-    if (val < 0.5) return;
+    if (!val || val < 0.5) return;
     var col = CEREAL_COLORS[fl.type] || '#94a3b8';
     var x1 = fl.fromC[0], y1 = fl.fromC[1];
     var x2 = fl.toC[0],   y2 = fl.toC[1];
     if (x2 - x1 > 180) x2 -= 360;
     else if (x2 - x1 < -180) x2 += 360;
-    var weight = 1 + (val / maxVal) * 5;
+    var weight = 1 + (Math.log(val + 1) / logMaxVal) * 5;
     var mx = (x1+x2)/2, my = (y1+y2)/2;
     var dx = x2-x1, dy = y2-y1;
     var len = Math.sqrt(dx*dx+dy*dy) || 1;
@@ -6521,8 +6524,10 @@ var migrationFlowsLayerItems = [];
 function getMigrationFlowValue(fl, year) {
   if (!fl.hist) return {val:0, dataYear:year};
   var keys = Object.keys(fl.hist).map(Number).sort(function(a,b){return a-b;});
-  // Hors plage : pas de donnee, fleche masquee
-  if (year < keys[0] || year > keys[keys.length-1]) return {val:0, dataYear:year};
+  // Hors plage inférieure : pas de données
+  if (year < keys[0]) return {val:0, dataYear:year};
+  // Hors plage supérieure : utilise la dernière valeur connue (ex: UN DESA 2020 visible en 2022)
+  if (year > keys[keys.length-1]) year = keys[keys.length-1];
   // Snap a l annee disponible la plus proche (pas d interpolation)
   var nearest = keys.reduce(function(prev, cur) {
     return Math.abs(cur-year) < Math.abs(prev-year) ? cur : prev;
@@ -6804,7 +6809,7 @@ function loadCerealData() {
           from: f.from, fromC: f.fromC,
           to: f.to,   toC: f.toC,
           type: f.type, value: f.value,
-          hist: f.hist || {}
+          hist: f.hist || (f.year != null ? {[f.year]: f.value} : {})
         };
       });
       console.log('Loaded ' + CEREAL_FLOWS.length + ' cereal flows from JSON');
