@@ -5911,36 +5911,22 @@ function loadMetalFlowsData() {
   fetch('data/metals.json')
     .then(function(r){ return r.json(); })
     .then(function(json){
-      var incoming = json.flows || [];
-      var year = json.year || 2022;
-      var added = 0, updated = 0;
-      incoming.forEach(function(f){
-        // Cherche une entrée existante dans METAL_FLOWS (même from+to+type)
-        var existing = METAL_FLOWS.find(function(x){
-          return x.type === f.type &&
-            (x.from === f.from || (x.from_iso && x.from_iso === f.from_iso)) &&
-            (x.to   === f.to   || (x.to_iso   && x.to_iso   === f.to_iso));
+      var flows = json.flows || [];
+      if (!flows.length) return;
+      // Remplace complètement METAL_FLOWS par les données Comtrade
+      METAL_FLOWS.length = 0;
+      flows.forEach(function(f){
+        METAL_FLOWS.push({
+          from: f.from, fromC: f.fromC,
+          to:   f.to,   toC:   f.toC,
+          type: f.type, unit:  f.unit,
+          hist: f.hist || {}
         });
-        if (existing) {
-          // Enrichit le hist avec la nouvelle valeur annuelle
-          if (!existing.hist) existing.hist = {};
-          existing.hist[year] = f.value;
-          updated++;
-        } else {
-          // Nouveau flux non présent dans les données statiques
-          METAL_FLOWS.push({
-            from: f.from, fromC: f.fromC,
-            to:   f.to,   toC:   f.toC,
-            type: f.type, unit: f.unit,
-            hist: { [year]: f.value }
-          });
-          added++;
-        }
       });
-      console.log('UN Comtrade metals: ' + updated + ' flux mis à jour, ' + added + ' nouveaux (' + json.updated + ')');
+      console.log('UN Comtrade metals: ' + METAL_FLOWS.length + ' flux chargés (' + json.updated + ')');
       if (layerVis.metal_flows) rebuildMetalFlowsLayer();
     })
-    .catch(function(e){ console.warn('Could not load metals.json (normal si pas encore généré):', e); });
+    .catch(function(e){ console.warn('metals.json non disponible (sera généré au prochain workflow):', e); });
 }
 
 const armsFlowsLayerItems = [];
