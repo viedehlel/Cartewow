@@ -1,0 +1,31 @@
+name: Update — Flux technologiques (Comtrade)
+
+on:
+  schedule:
+    - cron: "0 6 * * 3"  # Mercredi 6h UTC
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Fetch tech trade flows from UN Comtrade
+        env:
+          COMTRADE_KEY: ${{ secrets.COMTRADE_KEY }}
+        run: python scripts/fetch_tech_flows.py
+
+      - name: Commit if data changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/tech_flows.json
+          git diff --cached --quiet || git commit -m "Auto-update tech-flows $(date +%Y-%m-%d)"
+          git push

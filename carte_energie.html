@@ -578,6 +578,22 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
         </div>
       </div>
       <div class="layer-group">
+        <div class="layer-group-header" onclick="toggleGroup('grp-tech')">
+          <span class="layer-group-title">💻 Technologie &amp; Industrie</span>
+          <span class="layer-group-arrow" id="arr-grp-tech">&#9658;</span>
+        </div>
+        <div class="layer-group-body collapsed" id="grp-tech">
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#818cf8"></span> Semiconducteurs</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-tech-electronics" onchange="toggleTechType('electronics')"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#a78bfa"></span> Machines industrielles</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-tech-machinery" onchange="toggleTechType('machinery')"><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+      </div>
+      <div class="layer-group">
         <div class="layer-group-header" onclick="toggleGroup('grp-metals')">
           <span class="layer-group-title">&#9935;&#65039; M&eacute;taux &amp; Mines</span>
           <span class="layer-group-arrow" id="arr-grp-metals">&#9658;</span>
@@ -3071,7 +3087,7 @@ let layers = {
   re_mines: null, re_processing: null, re_magnets: null, re_flows: null,
   flows_auto: null, aero_sites: null, auto_sites: null, naval_yards: null, supply_links: null,
 };
-let layerVis = { countries:true, gas:false, oil:false, flows_gas:false, flows_lng:false, flows_oil:false, lng:false, nuclear:false, fields:false, operators:false, re_mines:false, re_processing:false, re_magnets:false, re_flows:false, flows_auto:false, aero_sites:false, auto_sites:false, naval_yards:false, submarine_cables:false, arms_flows:false, cereal_wheat:false, cereal_soy:false, cereal_corn:false, cereal_rice:false, metal_copper:false, metal_lithium:false, metal_cobalt:false, metal_nickel:false, metal_iron_ore:false, metal_copper_ref:false, metal_steel:false, metal_aluminum:false, metal_nickel_ref:false, migration_flows:false };
+let layerVis = { countries:true, gas:false, oil:false, flows_gas:false, flows_lng:false, flows_oil:false, lng:false, nuclear:false, fields:false, operators:false, re_mines:false, re_processing:false, re_magnets:false, re_flows:false, flows_auto:false, aero_sites:false, auto_sites:false, naval_yards:false, submarine_cables:false, arms_flows:false, cereal_wheat:false, cereal_soy:false, cereal_corn:false, cereal_rice:false, tech_electronics:false, tech_machinery:false, metal_copper:false, metal_lithium:false, metal_cobalt:false, metal_nickel:false, metal_iron_ore:false, metal_copper_ref:false, metal_steel:false, metal_aluminum:false, metal_nickel_ref:false, migration_flows:false };
 let aeroTierVis = { oem:true, t1:true, t2:true, t3:true };
 let autoTierVis = { oem:true, t1:true, t2:true, t3:true };
 let worldGeoJSON = null;
@@ -3501,6 +3517,15 @@ function filterFlowsByCountry(countryName) {
       try { layer.setStyle({ opacity: op, fillOpacity: op }); } catch(e) {}
     });
   }
+  if (typeof techFlowsLayerItems !== 'undefined') {
+    techFlowsLayerItems.forEach(layer => {
+      const from = layer._flowFrom, to = layer._flowTo;
+      if (!from || !to) return;
+      const match = !countryName || from === countryName || to === countryName;
+      const op = match ? 0.8 : 0;
+      try { layer.setStyle({ opacity: op, fillOpacity: op }); } catch(e) {}
+    });
+  }
 }
 
 // ============================================================
@@ -3539,6 +3564,7 @@ function updateFlowsForYear(year) {
     if (_anyMetal) rebuildMetalFlowsLayer();
   }
   if (typeof rebuildMigrationFlowsLayer === 'function') rebuildMigrationFlowsLayer();
+  if (typeof rebuildTechFlowsLayer === 'function') rebuildTechFlowsLayer();
   // Mettre à jour le panneau ouvert + re-appliquer le filtre pays
   if (selectedFeature && selectedFeature.type === 'country') {
     renderCountryPanel(selectedFeature.key);
@@ -3557,6 +3583,7 @@ function initTimeline() {
   if (typeof loadMigrationEconomicData === 'function') setTimeout(loadMigrationEconomicData, 1100);
   if (typeof loadArmsData === 'function') setTimeout(loadArmsData, 1200);
   if (typeof loadMetalFlowsData === 'function') setTimeout(loadMetalFlowsData, 1350);
+  if (typeof loadTechFlowsData === 'function') setTimeout(loadTechFlowsData, 1500);
   const slider = document.getElementById('year-slider');
   const playBtn = document.getElementById('timeline-play');
   if (!slider) return;
@@ -6850,6 +6877,107 @@ function rebuildCerealFlowsLayer() {
     var d = ENERGY_DATA[selectedFeature.key];
     if (d) filterFlowsByCountry(d.name);
   }
+}
+
+// ============================================================
+//  TECHNOLOGIE — Flux commerciaux (UN Comtrade HS 84-85)
+// ============================================================
+var TECH_FLOWS = [];
+var techFlowsLayerItems = [];
+
+const TECH_COLORS = { electronics:'#818cf8', machinery:'#a78bfa' };
+const TECH_LABELS = { electronics:'Semiconducteurs', machinery:'Machines industrielles' };
+const TECH_UNITS  = { electronics:'Md$', machinery:'Md$' };
+
+function getTechFlowValue(fl, year) {
+  if (!fl.hist) return fl.value || 0;
+  var keys = Object.keys(fl.hist).map(Number).sort(function(a,b){return a-b;});
+  if (!keys.length) return fl.value || 0;
+  if (year <= keys[0]) return fl.hist[keys[0]];
+  if (year >= keys[keys.length-1]) return fl.hist[keys[keys.length-1]];
+  for (var i=0; i<keys.length-1; i++) {
+    if (year >= keys[i] && year <= keys[i+1]) {
+      var t=(year-keys[i])/(keys[i+1]-keys[i]);
+      return Math.round((fl.hist[keys[i]]*(1-t)+fl.hist[keys[i+1]]*t)*10)/10;
+    }
+  }
+  return fl.hist[keys[0]];
+}
+
+function buildTechFlowsLayer(typeFilter) {
+  var activeTypes = typeFilter ? [typeFilter] : ['electronics','machinery'].filter(function(t){ return layerVis['tech_'+t]; });
+  if (!activeTypes.length) return;
+  var year = typeof currentYear !== 'undefined' ? currentYear : 2022;
+  var filteredFlows = TECH_FLOWS.filter(function(f){ return activeTypes.indexOf(f.type) >= 0; });
+  var values = filteredFlows.map(function(f){ return getTechFlowValue(f, year); });
+  var activeVals = values.filter(function(v){ return v > 0; });
+  var sorted = activeVals.slice().sort(function(a,b){return a-b;});
+  var capVal = sorted[Math.min(Math.floor(sorted.length*0.9), sorted.length-1)] || 1;
+
+  filteredFlows.forEach(function(fl, idx) {
+    var val = values[idx];
+    if (!val || val <= 0) return;
+    var col = TECH_COLORS[fl.type] || '#818cf8';
+    var x1=fl.fromC[0], y1=fl.fromC[1], x2=fl.toC[0], y2=fl.toC[1];
+    if (x2-x1>180) x2-=360; else if (x2-x1<-180) x2+=360;
+    var weight = Math.min(1+(val/capVal)*3, 4);
+    var mx=(x1+x2)/2, my=(y1+y2)/2, dx=x2-x1, dy=y2-y1;
+    var len=Math.sqrt(dx*dx+dy*dy)||1;
+    var nx=-dy/len, ny=dx/len;
+    var offset=Math.min(len*0.28,20);
+    var cx=mx+nx*offset, cy=my+ny*offset;
+    var rawPts=[];
+    for (var i=0;i<=60;i++){var t=i/60;rawPts.push([(1-t)*(1-t)*y1+2*(1-t)*t*cy+t*t*y2,(1-t)*(1-t)*x1+2*(1-t)*t*cx+t*t*x2]);}
+    var segments=splitArcAtAntimeridian(rawPts);
+    var label=TECH_LABELS[fl.type]||fl.type;
+    var unit=TECH_UNITS[fl.type]||'';
+    var tooltip='<b>💻 '+fl.from+' → '+fl.to+'</b><br>'+label+': <b>'+val+' '+unit+' ('+year+')</b>';
+    segments.forEach(function(seg){
+      var pl=L.polyline(seg,{color:col,weight:weight,opacity:0.8,className:'flow-anim'});
+      pl.bindTooltip(tooltip,{sticky:true});
+      pl._flowFrom=fl.from; pl._flowTo=fl.to; pl._techType=fl.type;
+      pl.addTo(map); techFlowsLayerItems.push(pl);
+    });
+    var fg={addLayer:function(item){item._techType=fl.type;item.addTo(map);techFlowsLayerItems.push(item);}};
+    addArrowHead(fg,segments,col,0.85,{from:fl.from,to:fl.to});
+  });
+}
+
+function toggleTechType(type) {
+  layerVis['tech_'+type] = !layerVis['tech_'+type];
+  for (var i=techFlowsLayerItems.length-1;i>=0;i--) {
+    if (techFlowsLayerItems[i]._techType===type) {
+      try{map.removeLayer(techFlowsLayerItems[i]);}catch(e){}
+      techFlowsLayerItems.splice(i,1);
+    }
+  }
+  if (layerVis['tech_'+type]) buildTechFlowsLayer(type);
+}
+
+function rebuildTechFlowsLayer() {
+  var anyTech=['electronics','machinery'].some(function(t){return layerVis['tech_'+t];});
+  if (!anyTech) return;
+  techFlowsLayerItems.forEach(function(item){try{map.removeLayer(item);}catch(e){}});
+  techFlowsLayerItems.length=0;
+  buildTechFlowsLayer();
+  if (typeof selectedFeature!=='undefined' && selectedFeature && selectedFeature.type==='country') {
+    var d=ENERGY_DATA[selectedFeature.key];
+    if (d) filterFlowsByCountry(d.name);
+  }
+}
+
+function loadTechFlowsData() {
+  fetch('data/tech_flows.json')
+    .then(function(r){return r.json();})
+    .then(function(json){
+      TECH_FLOWS=(json.flows||[]).map(function(f){
+        return {from:f.from,fromC:f.fromC,to:f.to,toC:f.toC,type:f.type,hist:f.hist||{}};
+      });
+      console.log('Loaded '+TECH_FLOWS.length+' tech flows ('+json.updated+')');
+      var anyTech=['electronics','machinery'].some(function(t){return layerVis['tech_'+t];});
+      if (anyTech) rebuildTechFlowsLayer();
+    })
+    .catch(function(e){console.warn('Could not load tech_flows.json:',e);});
 }
 </script>
 
