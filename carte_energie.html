@@ -3272,11 +3272,28 @@ function updateCountriesStyle() {
     const key = String(layer.feature.id);
     const d = getCountryDataForYear(key, currentYear);
     if (!d) {
-      // For countries not in ENERGY_DATA, check cereal supplemental data
+      // Cereales supplemental
       if (cerealOnly && CEREAL_PROD_BY_M49[key] !== undefined) {
         var fakeD = { cereal_prod_mt: CEREAL_PROD_BY_M49[key] };
         var col = getMetricColor(fakeD.cereal_prod_mt, 'cereal_prod_mt');
         layer.setStyle({ fillColor: col || '#1a2e05', fillOpacity: 0.82, weight: 0.5, opacity: 0.7, color: '#4a5568' });
+      // Energie OWID supplemental
+      } else if (window._OWID_HIST_M49 && window._OWID_HIST_M49[key] && activeMetrics.length === 1) {
+        var metric = activeMetrics[0];
+        var hist = window._OWID_HIST_M49[key][metric];
+        if (hist) {
+          var years = Object.keys(hist).map(Number).sort(function(a,b){return a-b;});
+          var nearest = years.reduce(function(p,c){return Math.abs(c-currentYear)<Math.abs(p-currentYear)?c:p;});
+          var val = hist[String(nearest)];
+          var col2 = getMetricColor(val, metric);
+          if (col2) {
+            layer.setStyle({ fillColor: col2, fillOpacity: 0.82, weight: 0.5, opacity: 0.7, color: '#4a5568' });
+          } else {
+            layer.setStyle({ fillColor: 'url(#hatch-no-data)', fillOpacity: 1, weight: 0.4, opacity: 0.5, color: '#3a4050' });
+          }
+        } else {
+          layer.setStyle({ fillColor: 'url(#hatch-no-data)', fillOpacity: 1, weight: 0.4, opacity: 0.5, color: '#3a4050' });
+        }
       } else {
         layer.setStyle({ fillColor: 'url(#hatch-no-data)', fillOpacity: 1, weight: 0.4, opacity: 0.5, color: '#3a4050' });
       }
@@ -6619,27 +6636,43 @@ function loadEnergyData() {
         primary_twh:    function(v){ return {key:'primary_twh',    val: Math.round(v)}; },
         energy_per_capita_kwh: function(v){ return {key:'energy_per_capita_kwh', val: Math.round(v)}; }
       };
+      // Index ISO3->M49 etendu : depuis ENERGY_DATA + M49_TO_ISO3 global
+      if (typeof M49_TO_ISO3 !== 'undefined') {
+        Object.entries(M49_TO_ISO3).forEach(function(e){ iso3ToM49[e[1]] = e[0]; });
+      }
+
+      // Stocker l'historique complet dans COUNTRY_HISTORY (pays ENERGY_DATA)
+      // ET construire _OWID_HIST_M49 pour tous les pays OWID
+      window._OWID_HIST_M49 = {};  // {m49: {metric_app: {year: val}}}
       var enriched = 0;
       Object.entries(owid).forEach(function(e){
         var iso3 = e[0]; var metrics = e[1];
         var m49 = iso3ToM49[iso3];
         if (!m49) return;
-        if (!COUNTRY_HISTORY[m49]) COUNTRY_HISTORY[m49] = {};
+        if (!window._OWID_HIST_M49[m49]) window._OWID_HIST_M49[m49] = {};
+        // Injecter dans COUNTRY_HISTORY pour les pays existants
+        if (ENERGY_DATA[m49]) {
+          if (!COUNTRY_HISTORY[m49]) COUNTRY_HISTORY[m49] = {};
+        }
         Object.entries(metrics).forEach(function(me){
           var owid_metric = me[0]; var byYear = me[1];
           var c = conv[owid_metric];
           if (!c) return;
-          var converted = {};
           Object.entries(byYear).forEach(function(ye){
             var r = c(parseFloat(ye[1]));
-            converted[ye[0]] = r.val;
-            if (!COUNTRY_HISTORY[m49][r.key]) COUNTRY_HISTORY[m49][r.key] = {};
-            COUNTRY_HISTORY[m49][r.key][ye[0]] = r.val;
+            // COUNTRY_HISTORY pour pays existants
+            if (ENERGY_DATA[m49]) {
+              if (!COUNTRY_HISTORY[m49][r.key]) COUNTRY_HISTORY[m49][r.key] = {};
+              COUNTRY_HISTORY[m49][r.key][ye[0]] = r.val;
+            }
+            // _OWID_HIST_M49 pour tous les pays
+            if (!window._OWID_HIST_M49[m49][r.key]) window._OWID_HIST_M49[m49][r.key] = {};
+            window._OWID_HIST_M49[m49][r.key][ye[0]] = r.val;
           });
         });
         enriched++;
       });
-      console.log('OWID energy: ' + enriched + ' pays injectes dans COUNTRY_HISTORY (' + json.updated + ')');
+      console.log('OWID energy: ' + enriched + ' pays charges (' + json.updated + ')');
       updateCountriesStyle();
     })
     .catch(function(e){ console.warn('Could not load energy.json:', e); });
