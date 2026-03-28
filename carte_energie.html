@@ -296,8 +296,8 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
     <button id="sidebar-toggle" onclick="toggleSidebar()" title="Afficher / masquer le panneau">‹</button>
 
     <div id="timeline-bar" style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:1000;background:rgba(22,27,34,0.92);border:1px solid #30363d;border-radius:10px;padding:10px 20px;display:flex;align-items:center;gap:14px;min-width:480px;backdrop-filter:blur(4px)">
-      <span style="font-size:11px;color:#8b949e;white-space:nowrap">2000</span>
-      <input type="range" id="year-slider" min="2000" max="2025" value="2022" step="1" style="flex:1;accent-color:#58a6ff;cursor:pointer">
+      <span style="font-size:11px;color:#8b949e;white-space:nowrap">1964</span>
+      <input type="range" id="year-slider" min="1964" max="2025" value="2022" step="1" style="flex:1;accent-color:#58a6ff;cursor:pointer">
       <span style="font-size:11px;color:#8b949e;white-space:nowrap">2023</span>
       <span style="font-size:13px;font-weight:700;color:#58a6ff;min-width:36px;text-align:center" id="year-label">2022</span>
       <button id="timeline-play" title="Lecture automatique" style="background:none;border:1px solid #30363d;border-radius:4px;color:#e6edf3;cursor:pointer;padding:2px 8px;font-size:14px">▶</button>
@@ -3473,9 +3473,11 @@ function updateFlowsForYear(year) {
   if (typeof rebuildCerealFlowsLayer === 'function') rebuildCerealFlowsLayer();
   if (typeof rebuildMetalFlowsLayer === 'function') rebuildMetalFlowsLayer();
   if (typeof rebuildMigrationFlowsLayer === 'function') rebuildMigrationFlowsLayer();
-  // Mettre à jour le panneau ouvert si c'est un pays
+  // Mettre à jour le panneau ouvert + re-appliquer le filtre pays
   if (selectedFeature && selectedFeature.type === 'country') {
     renderCountryPanel(selectedFeature.key);
+    var _d = ENERGY_DATA[selectedFeature.key];
+    if (_d) filterFlowsByCountry(_d.name);
   }
 }
 
@@ -3485,6 +3487,7 @@ function initTimeline() {
   if (typeof loadCerealProductionData === 'function') setTimeout(loadCerealProductionData, 700);
   if (typeof updateMetalProdForYear === 'function') setTimeout(function(){ updateMetalProdForYear(currentYear || 2022); }, 800);
   if (typeof loadMigrationsData === 'function') setTimeout(loadMigrationsData, 900);
+  if (typeof loadMigrationEconomicData === 'function') setTimeout(loadMigrationEconomicData, 1100);
   const slider = document.getElementById('year-slider');
   const playBtn = document.getElementById('timeline-play');
   if (!slider) return;
@@ -3501,7 +3504,7 @@ function initTimeline() {
     playBtn.textContent = '⏸';
     let y = parseInt(slider.value);
     timelineInterval = setInterval(() => {
-      y = y >= 2023 ? 2015 : y + 1;
+      y = y >= 2023 ? 1964 : y + 1;
       slider.value = y;
       updateFlowsForYear(y);
       if (y === 2023) {
@@ -6486,6 +6489,75 @@ var MIGRATION_ISO_FR = {
   "AGO":"Angola","EGY":"Égypte","CHD":"Tchad","CZE":"Tchéquie",
   "IND":"Inde","AUS":"Australie"
 };
+
+var ISO_ECON_FR = {
+  "USA":"États-Unis","DEU":"Allemagne","FRA":"France","GBR":"Royaume-Uni",
+  "CAN":"Canada","AUS":"Australie","SAU":"Arabie Saoudite","ARE":"Émirats Arabes Unis",
+  "IND":"Inde","CHN":"Chine","PAK":"Pakistan","BGD":"Bangladesh",
+  "MEX":"Mexique","COL":"Colombie","TUR":"Turquie","RUS":"Russie",
+  "UKR":"Ukraine","POL":"Pologne","ROU":"Roumanie","ITA":"Italie",
+  "ESP":"Espagne","NLD":"Pays-Bas","BEL":"Belgique","SWE":"Suède",
+  "CHE":"Suisse","AUT":"Autriche","NOR":"Norvège","DNK":"Danemark",
+  "FIN":"Finlande","PRT":"Portugal","GRC":"Grèce","HUN":"Hongrie",
+  "CZE":"Tchéquie","MYS":"Malaisie","IDN":"Indonésie","PHL":"Philippines",
+  "THA":"Thaïlande","JPN":"Japon","KOR":"Corée du Sud","SGP":"Singapour",
+  "ZAF":"Afrique du Sud","NGA":"Nigeria","GHA":"Ghana","KEN":"Kenya",
+  "ETH":"Éthiopie","EGY":"Égypte","MAR":"Maroc","DZA":"Algérie",
+  "TUN":"Tunisie","SEN":"Sénégal","ZWE":"Zimbabwe","MOZ":"Mozambique",
+  "CIV":"Côte d'Ivoire","BRA":"Brésil","ARG":"Argentine","PER":"Pérou",
+  "VEN":"Venezuela","CHL":"Chili","ECU":"Équateur","BOL":"Bolivie",
+  "CUB":"Cuba","HTI":"Haïti","GTM":"Guatemala","HND":"Honduras",
+  "SLV":"El Salvador","KAZ":"Kazakhstan","UZB":"Ouzbékistan",
+  "TJK":"Tadjikistan","KGZ":"Kirghizistan","AFG":"Afghanistan",
+  "SYR":"Syrie","IRQ":"Irak","IRN":"Iran","JOR":"Jordanie",
+  "LBN":"Liban","ISR":"Israël","MMR":"Myanmar","NPL":"Népal",
+  "LKA":"Sri Lanka","SDN":"Soudan","SSD":"Soudan du Sud","UGA":"Ouganda",
+  "COD":"Rép. dém. du Congo","SOM":"Somalie","BFA":"Burkina Faso",
+  "MLI":"Mali","NER":"Niger","TCD":"Tchad","NZL":"Nouvelle-Zélande",
+  "QAT":"Qatar","KWT":"Koweït","BHR":"Bahrën","OMN":"Oman",
+  "IRL":"Irlande","RWA":"Rwanda","TZA":"Tanzanie","ZMB":"Zambie",
+  "AGO":"Angola","CMR":"Cameroun","BLR":"Biélorussie","BGR":"Bulgarie",
+  "SRB":"Serbie","HRV":"Croatie","BIH":"Bosnie","ALB":"Albanie",
+  "MKD":"Macédoine","SVK":"Slovaquie","LTU":"Lituanie","LVA":"Lettonie",
+  "EST":"Estonie","MDA":"Moldavie","ARM":"Arménie","GEO":"Géorgie",
+  "AZE":"Azerbaïdjan","VNM":"Vietnam","YEM":"Yémen","KHM":"Cambodge",
+  "LAO":"Laos","BEN":"Bénin","BDI":"Burundi","CAF":"Centrafrique",
+  "COG":"Congo","CRI":"Costa Rica","DOM":"Rép. Dominicaine",
+  "ERI":"Érythrée","GIN":"Guinée","HTI":"Haïti",
+  "JAM":"Jamaïque","LSO":"Lesotho","LBR":"Libéria","LBY":"Libye",
+  "MWI":"Malawi","NIC":"Nicaragua","PRY":"Paraguay","SLE":"Sierra Leone",
+  "PSE":"Palestine","SUR":"Suriname","TGO":"Togo","TTO":"Trinité",
+  "TKM":"Turkménistan","ESH":"Sahara Occidental",
+  "HKG":"Hong Kong","MAC":"Macao","PRI":"Porto Rico"
+};
+
+function loadMigrationEconomicData() {
+  fetch('data/migration_economic.json')
+    .then(function(r){ return r.json(); })
+    .then(function(json){
+      // Remove existing hardcoded economic flows
+      for (var i = MIGRATION_FLOWS.length - 1; i >= 0; i--) {
+        if (MIGRATION_FLOWS[i].type === 'economic') MIGRATION_FLOWS.splice(i, 1);
+      }
+      // Add UN DESA corridors
+      var flows = json.flows || [];
+      flows.forEach(function(fl) {
+        MIGRATION_FLOWS.push({
+          from_iso: fl.from_iso,
+          from: ISO_ECON_FR[fl.from_iso] || fl.from_name,
+          fromC: fl.from_coords,
+          to_iso: fl.to_iso,
+          to: ISO_ECON_FR[fl.to_iso] || fl.to_name,
+          toC: fl.to_coords,
+          type: 'economic',
+          hist: fl.hist
+        });
+      });
+      console.log('UN DESA: ' + flows.length + ' corridors chargés (' + json.updated + ')');
+      if (layerVis.migration_flows) rebuildMigrationFlowsLayer();
+    })
+    .catch(function(e){ console.warn('Could not load migration_economic.json:', e); });
+}
 
 function loadMigrationsData() {
   fetch('data/migrations.json')

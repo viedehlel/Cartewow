@@ -1,0 +1,8224 @@
+{
+  "updated": "2026-03-28",
+  "source": "UN DESA International Migrant Stock 2020",
+  "threshold_k": 150.0,
+  "flows": [
+    {
+      "from_name": "Mexico",
+      "from_iso": "MEX",
+      "from_coords": [
+        -102,
+        24
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 4298.0,
+        "1995": 6827.9,
+        "2000": 9410.5,
+        "2005": 10611.1,
+        "2010": 12168.7,
+        "2015": 11643.3,
+        "2020": 10853.1
+      },
+      "peak_k": 12168.7
+    },
+    {
+      "from_name": "Russian Federation",
+      "from_iso": "RUS",
+      "from_coords": [
+        60,
+        58
+      ],
+      "to_name": "Ukraine",
+      "to_iso": "UKR",
+      "to_coords": [
+        32,
+        49
+      ],
+      "hist": {
+        "1990": 5018.1,
+        "1995": 4355.4,
+        "2000": 3745.8,
+        "2005": 3422.7,
+        "2010": 3265.8,
+        "2015": 3275.8,
+        "2020": 3330.6
+      },
+      "peak_k": 5018.1
+    },
+    {
+      "from_name": "Bangladesh",
+      "from_iso": "BGD",
+      "from_coords": [
+        90,
+        23
+      ],
+      "to_name": "India",
+      "to_iso": "IND",
+      "to_coords": [
+        78,
+        22
+      ],
+      "hist": {
+        "1990": 4375.2,
+        "1995": 4127.1,
+        "2000": 3879.1,
+        "2005": 3298.8,
+        "2010": 2855.3,
+        "2015": 2660.6,
+        "2020": 2488.5
+      },
+      "peak_k": 4375.2
+    },
+    {
+      "from_name": "Afghanistan",
+      "from_iso": "AFG",
+      "from_coords": [
+        67,
+        33
+      ],
+      "to_name": "Iran (Islamic Republic of)",
+      "to_iso": "IRN",
+      "to_coords": [
+        53,
+        33
+      ],
+      "hist": {
+        "1990": 3980.3,
+        "1995": 2660.5,
+        "2000": 2232.3,
+        "2005": 2376.3,
+        "2010": 2572.6,
+        "2015": 2621.2,
+        "2020": 2710.6
+      },
+      "peak_k": 3980.3
+    },
+    {
+      "from_name": "Syrian Arab Republic",
+      "from_iso": "SYR",
+      "from_coords": [
+        38,
+        35
+      ],
+      "to_name": "Turkey",
+      "to_iso": "TUR",
+      "to_coords": [
+        35,
+        39
+      ],
+      "hist": {
+        "2015": 2714.8,
+        "2020": 3792.5
+      },
+      "peak_k": 3792.5
+    },
+    {
+      "from_name": "Ukraine",
+      "from_iso": "UKR",
+      "from_coords": [
+        32,
+        49
+      ],
+      "to_name": "Russian Federation",
+      "to_iso": "RUS",
+      "to_coords": [
+        60,
+        58
+      ],
+      "hist": {
+        "1990": 3301.9,
+        "1995": 3485.1,
+        "2000": 3541.8,
+        "2005": 3293.9,
+        "2010": 2978.2,
+        "2015": 3270.0,
+        "2020": 3268.3
+      },
+      "peak_k": 3541.8
+    },
+    {
+      "from_name": "India",
+      "from_iso": "IND",
+      "from_coords": [
+        78,
+        22
+      ],
+      "to_name": "United Arab Emirates",
+      "to_iso": "ARE",
+      "to_coords": [
+        54,
+        24
+      ],
+      "hist": {
+        "1990": 458.3,
+        "1995": 667.9,
+        "2000": 915.9,
+        "2005": 1287.0,
+        "2010": 2913.9,
+        "2015": 3184.0,
+        "2020": 3471.3
+      },
+      "peak_k": 3471.3
+    },
+    {
+      "from_name": "Afghanistan",
+      "from_iso": "AFG",
+      "from_coords": [
+        67,
+        33
+      ],
+      "to_name": "Pakistan",
+      "to_iso": "PAK",
+      "to_coords": [
+        68,
+        30
+      ],
+      "hist": {
+        "1990": 3375.0,
+        "1995": 1291.9,
+        "2000": 2070.0,
+        "2005": 1166.2,
+        "2010": 1990.6,
+        "2015": 1710.4,
+        "2020": 1598.2
+      },
+      "peak_k": 3375.0
+    },
+    {
+      "from_name": "India",
+      "from_iso": "IND",
+      "from_coords": [
+        78,
+        22
+      ],
+      "to_name": "Pakistan",
+      "to_iso": "PAK",
+      "to_coords": [
+        68,
+        30
+      ],
+      "hist": {
+        "1990": 2818.2,
+        "1995": 2365.9,
+        "2000": 2101.0,
+        "2005": 1998.8,
+        "2010": 1943.3,
+        "2015": 1709.2,
+        "2020": 1597.1
+      },
+      "peak_k": 2818.2
+    },
+    {
+      "from_name": "India",
+      "from_iso": "IND",
+      "from_coords": [
+        78,
+        22
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 450.4,
+        "1995": 746.3,
+        "2000": 1048.5,
+        "2005": 1390.6,
+        "2010": 1784.3,
+        "2015": 2389.6,
+        "2020": 2723.8
+      },
+      "peak_k": 2723.8
+    },
+    {
+      "from_name": "China",
+      "from_iso": "CHN",
+      "from_coords": [
+        104,
+        35
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 773.9,
+        "1995": 1058.5,
+        "2000": 1348.5,
+        "2005": 1607.7,
+        "2010": 1923.0,
+        "2015": 2676.7,
+        "2020": 2184.1
+      },
+      "peak_k": 2676.7
+    },
+    {
+      "from_name": "Kazakhstan",
+      "from_iso": "KAZ",
+      "from_coords": [
+        66,
+        48
+      ],
+      "to_name": "Russian Federation",
+      "to_iso": "RUS",
+      "to_coords": [
+        60,
+        58
+      ],
+      "hist": {
+        "1990": 2349.7,
+        "1995": 2506.1,
+        "2000": 2571.7,
+        "2005": 2568.4,
+        "2010": 2512.3,
+        "2015": 2560.3,
+        "2020": 2558.9
+      },
+      "peak_k": 2571.7
+    },
+    {
+      "from_name": "India",
+      "from_iso": "IND",
+      "from_coords": [
+        78,
+        22
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "1990": 906.5,
+        "1995": 929.7,
+        "2000": 979.0,
+        "2005": 1216.5,
+        "2010": 1579.2,
+        "2015": 2003.3,
+        "2020": 2502.3
+      },
+      "peak_k": 2502.3
+    },
+    {
+      "from_name": "Russian Federation",
+      "from_iso": "RUS",
+      "from_coords": [
+        60,
+        58
+      ],
+      "to_name": "Kazakhstan",
+      "to_iso": "KAZ",
+      "to_coords": [
+        66,
+        48
+      ],
+      "hist": {
+        "1990": 2474.1,
+        "1995": 2253.5,
+        "2000": 2032.9,
+        "2005": 2122.4,
+        "2010": 2211.9,
+        "2015": 2352.6,
+        "2020": 2476.0
+      },
+      "peak_k": 2476.0
+    },
+    {
+      "from_name": "China",
+      "from_iso": "CHN",
+      "from_coords": [
+        104,
+        35
+      ],
+      "to_name": "China, Hong Kong SAR",
+      "to_iso": "HKG",
+      "to_coords": [
+        114.2,
+        22.3
+      ],
+      "hist": {
+        "1990": 1659.2,
+        "1995": 1772.6,
+        "2000": 1886.0,
+        "2005": 2070.5,
+        "2010": 2260.0,
+        "2015": 2309.8,
+        "2020": 2408.4
+      },
+      "peak_k": 2408.4
+    },
+    {
+      "from_name": "State of Palestine",
+      "from_iso": "PSE",
+      "from_coords": [
+        35.3,
+        31.9
+      ],
+      "to_name": "Jordan",
+      "to_iso": "JOR",
+      "to_coords": [
+        36.5,
+        31
+      ],
+      "hist": {
+        "1990": 851.9,
+        "1995": 1140.0,
+        "2000": 1428.3,
+        "2005": 1827.9,
+        "2010": 1983.7,
+        "2015": 2117.4,
+        "2020": 2272.4
+      },
+      "peak_k": 2272.4
+    },
+    {
+      "from_name": "Poland",
+      "from_iso": "POL",
+      "from_coords": [
+        20,
+        52
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "1990": 412.6,
+        "1995": 459.6,
+        "2000": 670.7,
+        "2005": 1157.8,
+        "2010": 1528.5,
+        "2015": 1561.8,
+        "2020": 2141.7
+      },
+      "peak_k": 2141.7
+    },
+    {
+      "from_name": "Philippines",
+      "from_iso": "PHL",
+      "from_coords": [
+        122,
+        13
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 912.7,
+        "1995": 1156.1,
+        "2000": 1403.8,
+        "2005": 1596.5,
+        "2010": 1843.1,
+        "2015": 1982.4,
+        "2020": 2061.2
+      },
+      "peak_k": 2061.2
+    },
+    {
+      "from_name": "Pakistan",
+      "from_iso": "PAK",
+      "from_coords": [
+        68,
+        30
+      ],
+      "to_name": "India",
+      "to_iso": "IND",
+      "to_coords": [
+        78,
+        22
+      ],
+      "hist": {
+        "1990": 1921.3,
+        "1995": 1637.3,
+        "2000": 1353.2,
+        "2005": 1128.2,
+        "2010": 956.2,
+        "2015": 891.0,
+        "2020": 833.3
+      },
+      "peak_k": 1921.3
+    },
+    {
+      "from_name": "Myanmar",
+      "from_iso": "MMR",
+      "from_coords": [
+        96,
+        20
+      ],
+      "to_name": "Thailand",
+      "to_iso": "THA",
+      "to_coords": [
+        101,
+        15
+      ],
+      "hist": {
+        "1990": 229.5,
+        "1995": 436.8,
+        "2000": 734.1,
+        "2005": 1182.1,
+        "2010": 1658.6,
+        "2015": 1760.5,
+        "2020": 1848.3
+      },
+      "peak_k": 1848.3
+    },
+    {
+      "from_name": "Turkey",
+      "from_iso": "TUR",
+      "from_coords": [
+        35,
+        39
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "1990": 1459.2,
+        "1995": 1617.9,
+        "2000": 1605.0,
+        "2005": 1315.7,
+        "2010": 1314.2,
+        "2015": 1343.5,
+        "2020": 1837.3
+      },
+      "peak_k": 1837.3
+    },
+    {
+      "from_name": "Puerto Rico",
+      "from_iso": "PRI",
+      "from_coords": [
+        -66.5,
+        18.2
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 1180.4,
+        "1995": 1384.1,
+        "2000": 1576.4,
+        "2005": 1618.2,
+        "2010": 1710.7,
+        "2015": 1695.6,
+        "2020": 1829.3
+      },
+      "peak_k": 1829.3
+    },
+    {
+      "from_name": "Venezuela (Bolivarian Republic of)",
+      "from_iso": "VEN",
+      "from_coords": [
+        -65,
+        7
+      ],
+      "to_name": "Colombia",
+      "to_iso": "COL",
+      "to_coords": [
+        -74,
+        4
+      ],
+      "hist": {
+        "2020": 1780.5
+      },
+      "peak_k": 1780.5
+    },
+    {
+      "from_name": "Indonesia",
+      "from_iso": "IDN",
+      "from_coords": [
+        117,
+        -2
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "1990": 635.0,
+        "1995": 650.8,
+        "2000": 668.7,
+        "2005": 826.0,
+        "2010": 1071.0,
+        "2015": 1368.4,
+        "2020": 1709.3
+      },
+      "peak_k": 1709.3
+    },
+    {
+      "from_name": "Algeria",
+      "from_iso": "DZA",
+      "from_coords": [
+        3,
+        28
+      ],
+      "to_name": "France",
+      "to_iso": "FRA",
+      "to_coords": [
+        2,
+        47
+      ],
+      "hist": {
+        "1990": 788.9,
+        "1995": 814.4,
+        "2000": 839.9,
+        "2005": 1337.2,
+        "2010": 1343.6,
+        "2015": 1489.2,
+        "2020": 1637.2
+      },
+      "peak_k": 1637.2
+    },
+    {
+      "from_name": "Pakistan",
+      "from_iso": "PAK",
+      "from_coords": [
+        68,
+        30
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "1990": 556.7,
+        "1995": 570.6,
+        "2000": 586.2,
+        "2005": 724.2,
+        "2010": 938.9,
+        "2015": 1187.8,
+        "2020": 1483.7
+      },
+      "peak_k": 1483.7
+    },
+    {
+      "from_name": "El Salvador",
+      "from_iso": "SLV",
+      "from_coords": [
+        -89,
+        13
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 465.4,
+        "1995": 650.0,
+        "2000": 838.1,
+        "2005": 997.9,
+        "2010": 1192.4,
+        "2015": 1352.4,
+        "2020": 1410.7
+      },
+      "peak_k": 1410.7
+    },
+    {
+      "from_name": "Viet Nam",
+      "from_iso": "VNM",
+      "from_coords": [
+        108,
+        14
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 543.3,
+        "1995": 776.0,
+        "2000": 1013.3,
+        "2005": 1106.4,
+        "2010": 1236.0,
+        "2015": 1300.6,
+        "2020": 1403.2
+      },
+      "peak_k": 1403.2
+    },
+    {
+      "from_name": "Burkina Faso",
+      "from_iso": "BFA",
+      "from_coords": [
+        -2,
+        12
+      ],
+      "to_name": "Côte d'Ivoire",
+      "to_iso": "CIV",
+      "to_coords": [
+        -6,
+        7
+      ],
+      "hist": {
+        "1990": 927.8,
+        "1995": 1114.2,
+        "2000": 1161.1,
+        "2005": 1215.5,
+        "2010": 1269.9,
+        "2015": 1325.8,
+        "2020": 1376.3
+      },
+      "peak_k": 1376.3
+    },
+    {
+      "from_name": "Cuba",
+      "from_iso": "CUB",
+      "from_coords": [
+        -79.5,
+        22
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 737.0,
+        "1995": 815.6,
+        "2000": 894.9,
+        "2005": 959.5,
+        "2010": 1055.2,
+        "2015": 1210.7,
+        "2020": 1376.2
+      },
+      "peak_k": 1376.2
+    },
+    {
+      "from_name": "India",
+      "from_iso": "IND",
+      "from_coords": [
+        78,
+        22
+      ],
+      "to_name": "Oman",
+      "to_iso": "OMN",
+      "to_coords": [
+        57,
+        21
+      ],
+      "hist": {
+        "1990": 152.6,
+        "1995": 283.0,
+        "2000": 333.9,
+        "2005": 373.4,
+        "2010": 473.2,
+        "2015": 1076.2,
+        "2020": 1375.7
+      },
+      "peak_k": 1375.7
+    },
+    {
+      "from_name": "United Kingdom",
+      "from_iso": "GBR",
+      "from_coords": [
+        -2,
+        54
+      ],
+      "to_name": "Australia",
+      "to_iso": "AUS",
+      "to_coords": [
+        133,
+        -27
+      ],
+      "hist": {
+        "1990": 1111.2,
+        "1995": 1100.2,
+        "2000": 1128.5,
+        "2005": 1116.7,
+        "2010": 1185.1,
+        "2015": 1206.1,
+        "2020": 1285.1
+      },
+      "peak_k": 1285.1
+    },
+    {
+      "from_name": "Bangladesh",
+      "from_iso": "BGD",
+      "from_coords": [
+        90,
+        23
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "1990": 479.4,
+        "1995": 491.3,
+        "2000": 504.8,
+        "2005": 623.6,
+        "2010": 808.5,
+        "2015": 1022.8,
+        "2020": 1277.6
+      },
+      "peak_k": 1277.6
+    },
+    {
+      "from_name": "Russian Federation",
+      "from_iso": "RUS",
+      "from_coords": [
+        60,
+        58
+      ],
+      "to_name": "Uzbekistan",
+      "to_iso": "UZB",
+      "to_coords": [
+        63,
+        41
+      ],
+      "hist": {
+        "1990": 1267.2,
+        "1995": 1162.0,
+        "2000": 1067.2,
+        "2005": 980.7,
+        "2010": 913.7,
+        "2015": 877.7,
+        "2020": 871.0
+      },
+      "peak_k": 1267.2
+    },
+    {
+      "from_name": "Indonesia",
+      "from_iso": "IDN",
+      "from_coords": [
+        117,
+        -2
+      ],
+      "to_name": "Malaysia",
+      "to_iso": "MYS",
+      "to_coords": [
+        109,
+        3
+      ],
+      "hist": {
+        "1990": 252.7,
+        "1995": 421.4,
+        "2000": 727.0,
+        "2005": 864.0,
+        "2010": 960.8,
+        "2015": 1171.7,
+        "2020": 1241.6
+      },
+      "peak_k": 1241.6
+    },
+    {
+      "from_name": "Guatemala",
+      "from_iso": "GTM",
+      "from_coords": [
+        -90,
+        15
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 225.7,
+        "1995": 357.9,
+        "2000": 492.9,
+        "2005": 643.3,
+        "2010": 817.5,
+        "2015": 991.5,
+        "2020": 1226.8
+      },
+      "peak_k": 1226.8
+    },
+    {
+      "from_name": "Russian Federation",
+      "from_iso": "RUS",
+      "from_coords": [
+        60,
+        58
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "1995": 490.5,
+        "2000": 903.8,
+        "2005": 889.3,
+        "2010": 857.2,
+        "2015": 876.3,
+        "2020": 1198.8
+      },
+      "peak_k": 1198.8
+    },
+    {
+      "from_name": "Syrian Arab Republic",
+      "from_iso": "SYR",
+      "from_coords": [
+        38,
+        35
+      ],
+      "to_name": "Lebanon",
+      "to_iso": "LBN",
+      "to_coords": [
+        35.5,
+        33.8
+      ],
+      "hist": {
+        "2015": 1194.0,
+        "2020": 1042.8
+      },
+      "peak_k": 1194.0
+    },
+    {
+      "from_name": "Dominican Republic",
+      "from_iso": "DOM",
+      "from_coords": [
+        -70,
+        19
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 347.9,
+        "1995": 524.7,
+        "2000": 705.1,
+        "2005": 762.0,
+        "2010": 843.7,
+        "2015": 1086.8,
+        "2020": 1167.7
+      },
+      "peak_k": 1167.7
+    },
+    {
+      "from_name": "India",
+      "from_iso": "IND",
+      "from_coords": [
+        78,
+        22
+      ],
+      "to_name": "Kuwait",
+      "to_iso": "KWT",
+      "to_coords": [
+        47.5,
+        29
+      ],
+      "hist": {
+        "1990": 375.2,
+        "1995": 332.4,
+        "2000": 418.7,
+        "2005": 485.9,
+        "2010": 675.3,
+        "2015": 1061.8,
+        "2020": 1152.2
+      },
+      "peak_k": 1152.2
+    },
+    {
+      "from_name": "Uzbekistan",
+      "from_iso": "UZB",
+      "from_coords": [
+        63,
+        41
+      ],
+      "to_name": "Russian Federation",
+      "to_iso": "RUS",
+      "to_coords": [
+        60,
+        58
+      ],
+      "hist": {
+        "1990": 890.9,
+        "1995": 918.9,
+        "2000": 913.3,
+        "2005": 1030.0,
+        "2010": 1125.3,
+        "2015": 1146.8,
+        "2020": 1146.2
+      },
+      "peak_k": 1146.8
+    },
+    {
+      "from_name": "Malaysia",
+      "from_iso": "MYS",
+      "from_coords": [
+        109,
+        3
+      ],
+      "to_name": "Singapore",
+      "to_iso": "SGP",
+      "to_coords": [
+        104,
+        1
+      ],
+      "hist": {
+        "1990": 195.1,
+        "1995": 431.9,
+        "2000": 710.4,
+        "2005": 818.3,
+        "2010": 971.8,
+        "2015": 1114.9,
+        "2020": 1132.9
+      },
+      "peak_k": 1132.9
+    },
+    {
+      "from_name": "Rwanda",
+      "from_iso": "RWA",
+      "from_coords": [
+        30,
+        -2
+      ],
+      "to_name": "Democratic Republic of the Congo",
+      "to_iso": "COD",
+      "to_coords": [
+        24,
+        -3
+      ],
+      "hist": {
+        "1995": 1132.8,
+        "2015": 275.1,
+        "2020": 251.3
+      },
+      "peak_k": 1132.8
+    },
+    {
+      "from_name": "Kazakhstan",
+      "from_iso": "KAZ",
+      "from_coords": [
+        66,
+        48
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "1995": 248.6,
+        "2000": 487.1,
+        "2005": 671.0,
+        "2010": 812.5,
+        "2015": 832.1,
+        "2020": 1128.2
+      },
+      "peak_k": 1128.2
+    },
+    {
+      "from_name": "Republic of Korea",
+      "from_iso": "KOR",
+      "from_coords": [
+        127,
+        37
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 568.4,
+        "1995": 725.8,
+        "2000": 886.1,
+        "2005": 990.1,
+        "2010": 1127.3,
+        "2015": 1060.0,
+        "2020": 1038.8
+      },
+      "peak_k": 1127.3
+    },
+    {
+      "from_name": "Iraq",
+      "from_iso": "IRQ",
+      "from_coords": [
+        44,
+        33
+      ],
+      "to_name": "Syrian Arab Republic",
+      "to_iso": "SYR",
+      "to_coords": [
+        38,
+        35
+      ],
+      "hist": {
+        "2005": 337.8,
+        "2010": 1110.6,
+        "2015": 195.2,
+        "2020": 203.0
+      },
+      "peak_k": 1110.6
+    },
+    {
+      "from_name": "Bangladesh",
+      "from_iso": "BGD",
+      "from_coords": [
+        90,
+        23
+      ],
+      "to_name": "United Arab Emirates",
+      "to_iso": "ARE",
+      "to_coords": [
+        54,
+        24
+      ],
+      "hist": {
+        "1990": 154.9,
+        "1995": 219.9,
+        "2000": 297.6,
+        "2005": 409.0,
+        "2010": 919.4,
+        "2015": 1004.6,
+        "2020": 1095.2
+      },
+      "peak_k": 1095.2
+    },
+    {
+      "from_name": "Mozambique",
+      "from_iso": "MOZ",
+      "from_coords": [
+        35,
+        -18
+      ],
+      "to_name": "Malawi",
+      "to_iso": "MWI",
+      "to_coords": [
+        34,
+        -13
+      ],
+      "hist": {
+        "1990": 1075.4
+      },
+      "peak_k": 1075.4
+    },
+    {
+      "from_name": "Morocco",
+      "from_iso": "MAR",
+      "from_coords": [
+        -7,
+        32
+      ],
+      "to_name": "France",
+      "to_iso": "FRA",
+      "to_coords": [
+        2,
+        47
+      ],
+      "hist": {
+        "1990": 714.0,
+        "1995": 737.1,
+        "2000": 760.1,
+        "2005": 832.6,
+        "2010": 870.0,
+        "2015": 964.2,
+        "2020": 1059.9
+      },
+      "peak_k": 1059.9
+    },
+    {
+      "from_name": "Romania",
+      "from_iso": "ROU",
+      "from_coords": [
+        25,
+        46
+      ],
+      "to_name": "Italy",
+      "to_iso": "ITA",
+      "to_coords": [
+        12,
+        43
+      ],
+      "hist": {
+        "2005": 570.1,
+        "2010": 1016.9,
+        "2015": 1012.2,
+        "2020": 1048.9
+      },
+      "peak_k": 1048.9
+    },
+    {
+      "from_name": "South Sudan",
+      "from_iso": "SSD",
+      "from_coords": [
+        31,
+        7
+      ],
+      "to_name": "Uganda",
+      "to_iso": "UGA",
+      "to_coords": [
+        32,
+        1
+      ],
+      "hist": {
+        "2015": 262.3,
+        "2020": 1022.4
+      },
+      "peak_k": 1022.4
+    },
+    {
+      "from_name": "Pakistan",
+      "from_iso": "PAK",
+      "from_coords": [
+        68,
+        30
+      ],
+      "to_name": "United Arab Emirates",
+      "to_iso": "ARE",
+      "to_coords": [
+        54,
+        24
+      ],
+      "hist": {
+        "1990": 158.7,
+        "1995": 225.8,
+        "2000": 305.8,
+        "2005": 383.8,
+        "2010": 836.3,
+        "2015": 913.9,
+        "2020": 996.3
+      },
+      "peak_k": 996.3
+    },
+    {
+      "from_name": "Colombia",
+      "from_iso": "COL",
+      "from_coords": [
+        -74,
+        4
+      ],
+      "to_name": "Venezuela (Bolivarian Republic of)",
+      "to_iso": "VEN",
+      "to_coords": [
+        -65,
+        7
+      ],
+      "hist": {
+        "1990": 555.6,
+        "1995": 588.3,
+        "2000": 617.3,
+        "2005": 672.3,
+        "2010": 929.9,
+        "2015": 973.3,
+        "2020": 917.8
+      },
+      "peak_k": 973.3
+    },
+    {
+      "from_name": "Egypt",
+      "from_iso": "EGY",
+      "from_coords": [
+        30,
+        27
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "1990": 357.5,
+        "1995": 366.4,
+        "2000": 376.5,
+        "2005": 465.1,
+        "2010": 603.0,
+        "2015": 770.5,
+        "2020": 962.4
+      },
+      "peak_k": 962.4
+    },
+    {
+      "from_name": "Ethiopia",
+      "from_iso": "ETH",
+      "from_coords": [
+        39,
+        9
+      ],
+      "to_name": "Sudan",
+      "to_iso": "SDN",
+      "to_coords": [
+        31,
+        16
+      ],
+      "hist": {
+        "1990": 942.3,
+        "1995": 496.7
+      },
+      "peak_k": 942.3
+    },
+    {
+      "from_name": "Venezuela (Bolivarian Republic of)",
+      "from_iso": "VEN",
+      "from_coords": [
+        -65,
+        7
+      ],
+      "to_name": "Peru",
+      "to_iso": "PER",
+      "to_coords": [
+        -76,
+        -10
+      ],
+      "hist": {
+        "2020": 941.9
+      },
+      "peak_k": 941.9
+    },
+    {
+      "from_name": "Lao People's Democratic Republic",
+      "from_iso": "LAO",
+      "from_coords": [
+        103,
+        18
+      ],
+      "to_name": "Thailand",
+      "to_iso": "THA",
+      "to_coords": [
+        101,
+        15
+      ],
+      "hist": {
+        "1990": 165.0,
+        "1995": 206.0,
+        "2000": 289.4,
+        "2005": 540.2,
+        "2010": 829.4,
+        "2015": 899.7,
+        "2020": 941.3
+      },
+      "peak_k": 941.3
+    },
+    {
+      "from_name": "Azerbaijan",
+      "from_iso": "AZE",
+      "from_coords": [
+        47,
+        40
+      ],
+      "to_name": "Russian Federation",
+      "to_iso": "RUS",
+      "to_coords": [
+        60,
+        58
+      ],
+      "hist": {
+        "1990": 936.9,
+        "1995": 905.7,
+        "2000": 841.8,
+        "2005": 805.7,
+        "2010": 753.0,
+        "2015": 767.3,
+        "2020": 766.9
+      },
+      "peak_k": 936.9
+    },
+    {
+      "from_name": "Belarus",
+      "from_iso": "BLR",
+      "from_coords": [
+        28,
+        53
+      ],
+      "to_name": "Russian Federation",
+      "to_iso": "RUS",
+      "to_coords": [
+        60,
+        58
+      ],
+      "hist": {
+        "1990": 809.4,
+        "1995": 886.2,
+        "2000": 931.0,
+        "2005": 849.2,
+        "2010": 750.0,
+        "2015": 764.3,
+        "2020": 763.9
+      },
+      "peak_k": 931.0
+    },
+    {
+      "from_name": "Myanmar",
+      "from_iso": "MMR",
+      "from_coords": [
+        96,
+        20
+      ],
+      "to_name": "Bangladesh",
+      "to_iso": "BGD",
+      "to_coords": [
+        90,
+        23
+      ],
+      "hist": {
+        "1990": 225.9,
+        "1995": 228.1,
+        "2000": 230.4,
+        "2010": 235.0,
+        "2015": 237.4,
+        "2020": 907.4
+      },
+      "peak_k": 907.4
+    },
+    {
+      "from_name": "Egypt",
+      "from_iso": "EGY",
+      "from_coords": [
+        30,
+        27
+      ],
+      "to_name": "United Arab Emirates",
+      "to_iso": "ARE",
+      "to_coords": [
+        54,
+        24
+      ],
+      "hist": {
+        "1990": 166.0,
+        "1995": 207.9,
+        "2000": 261.9,
+        "2005": 341.8,
+        "2010": 755.2,
+        "2015": 825.2,
+        "2020": 899.6
+      },
+      "peak_k": 899.6
+    },
+    {
+      "from_name": "Canada",
+      "from_iso": "CAN",
+      "from_coords": [
+        -96,
+        56
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 744.8,
+        "1995": 793.3,
+        "2000": 841.6,
+        "2005": 842.3,
+        "2010": 869.0,
+        "2015": 830.6,
+        "2020": 793.9
+      },
+      "peak_k": 869.0
+    },
+    {
+      "from_name": "South Sudan",
+      "from_iso": "SSD",
+      "from_coords": [
+        31,
+        7
+      ],
+      "to_name": "Sudan",
+      "to_iso": "SDN",
+      "to_coords": [
+        31,
+        16
+      ],
+      "hist": {
+        "2010": 212.9,
+        "2015": 256.0,
+        "2020": 867.6
+      },
+      "peak_k": 867.6
+    },
+    {
+      "from_name": "Nepal",
+      "from_iso": "NPL",
+      "from_coords": [
+        84,
+        28
+      ],
+      "to_name": "India",
+      "to_iso": "IND",
+      "to_coords": [
+        78,
+        22
+      ],
+      "hist": {
+        "1990": 518.2,
+        "1995": 591.2,
+        "2000": 664.2,
+        "2005": 764.9,
+        "2010": 841.9,
+        "2015": 784.5,
+        "2020": 733.7
+      },
+      "peak_k": 841.9
+    },
+    {
+      "from_name": "Poland",
+      "from_iso": "POL",
+      "from_coords": [
+        20,
+        52
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "2005": 328.1,
+        "2010": 537.9,
+        "2015": 804.5,
+        "2020": 836.0
+      },
+      "peak_k": 836.0
+    },
+    {
+      "from_name": "India",
+      "from_iso": "IND",
+      "from_coords": [
+        78,
+        22
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "1990": 399.5,
+        "1995": 422.3,
+        "2000": 452.1,
+        "2005": 548.1,
+        "2010": 684.1,
+        "2015": 807.8,
+        "2020": 835.4
+      },
+      "peak_k": 835.4
+    },
+    {
+      "from_name": "Portugal",
+      "from_iso": "PRT",
+      "from_coords": [
+        -8,
+        39
+      ],
+      "to_name": "France",
+      "to_iso": "FRA",
+      "to_coords": [
+        2,
+        47
+      ],
+      "hist": {
+        "1990": 781.4,
+        "1995": 806.6,
+        "2000": 831.9,
+        "2005": 586.2,
+        "2010": 669.7,
+        "2015": 649.3,
+        "2020": 639.9
+      },
+      "peak_k": 831.9
+    },
+    {
+      "from_name": "Syrian Arab Republic",
+      "from_iso": "SYR",
+      "from_coords": [
+        38,
+        35
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "1990": 305.8,
+        "1995": 313.4,
+        "2000": 322.1,
+        "2005": 397.8,
+        "2010": 515.8,
+        "2015": 659.1,
+        "2020": 823.3
+      },
+      "peak_k": 823.3
+    },
+    {
+      "from_name": "Colombia",
+      "from_iso": "COL",
+      "from_coords": [
+        -74,
+        4
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 286.1,
+        "1995": 403.3,
+        "2000": 522.8,
+        "2005": 581.0,
+        "2010": 658.5,
+        "2015": 699.4,
+        "2020": 817.6
+      },
+      "peak_k": 817.6
+    },
+    {
+      "from_name": "China",
+      "from_iso": "CHN",
+      "from_coords": [
+        104,
+        35
+      ],
+      "to_name": "Republic of Korea",
+      "to_iso": "KOR",
+      "to_coords": [
+        127,
+        37
+      ],
+      "hist": {
+        "2005": 243.2,
+        "2010": 490.4,
+        "2015": 759.2,
+        "2020": 803.0
+      },
+      "peak_k": 803.0
+    },
+    {
+      "from_name": "United States of America",
+      "from_iso": "USA",
+      "from_coords": [
+        -95,
+        38
+      ],
+      "to_name": "Mexico",
+      "to_iso": "MEX",
+      "to_coords": [
+        -102,
+        24
+      ],
+      "hist": {
+        "1990": 198.2,
+        "1995": 272.5,
+        "2000": 358.4,
+        "2005": 520.2,
+        "2010": 742.0,
+        "2015": 728.5,
+        "2020": 799.2
+      },
+      "peak_k": 799.2
+    },
+    {
+      "from_name": "Jamaica",
+      "from_iso": "JAM",
+      "from_coords": [
+        -77.5,
+        18
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 334.1,
+        "1995": 449.9,
+        "2000": 567.9,
+        "2005": 611.6,
+        "2010": 675.2,
+        "2015": 711.1,
+        "2020": 792.4
+      },
+      "peak_k": 792.4
+    },
+    {
+      "from_name": "Russian Federation",
+      "from_iso": "RUS",
+      "from_coords": [
+        60,
+        58
+      ],
+      "to_name": "Belarus",
+      "to_iso": "BLR",
+      "to_coords": [
+        28,
+        53
+      ],
+      "hist": {
+        "1990": 791.5,
+        "1995": 749.8,
+        "2000": 708.0,
+        "2005": 698.2,
+        "2010": 688.4,
+        "2015": 682.4,
+        "2020": 672.5
+      },
+      "peak_k": 791.5
+    },
+    {
+      "from_name": "Morocco",
+      "from_iso": "MAR",
+      "from_coords": [
+        -7,
+        32
+      ],
+      "to_name": "Spain",
+      "to_iso": "ESP",
+      "to_coords": [
+        -4,
+        40
+      ],
+      "hist": {
+        "1995": 165.2,
+        "2000": 266.7,
+        "2005": 521.9,
+        "2010": 763.7,
+        "2015": 699.9,
+        "2020": 785.9
+      },
+      "peak_k": 785.9
+    },
+    {
+      "from_name": "China",
+      "from_iso": "CHN",
+      "from_coords": [
+        104,
+        35
+      ],
+      "to_name": "Japan",
+      "to_iso": "JPN",
+      "to_coords": [
+        138,
+        37
+      ],
+      "hist": {
+        "1990": 150.4,
+        "1995": 222.3,
+        "2000": 335.6,
+        "2005": 648.1,
+        "2010": 687.2,
+        "2015": 714.6,
+        "2020": 775.9
+      },
+      "peak_k": 775.9
+    },
+    {
+      "from_name": "Honduras",
+      "from_iso": "HND",
+      "from_coords": [
+        -87,
+        15
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1995": 198.5,
+        "2000": 290.0,
+        "2005": 383.8,
+        "2010": 491.8,
+        "2015": 607.5,
+        "2020": 773.0
+      },
+      "peak_k": 773.0
+    },
+    {
+      "from_name": "Yemen",
+      "from_iso": "YEM",
+      "from_coords": [
+        48,
+        15
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "1990": 286.0,
+        "1995": 293.1,
+        "2000": 301.2,
+        "2005": 372.1,
+        "2010": 482.4,
+        "2015": 616.4,
+        "2020": 769.9
+      },
+      "peak_k": 769.9
+    },
+    {
+      "from_name": "Romania",
+      "from_iso": "ROU",
+      "from_coords": [
+        25,
+        46
+      ],
+      "to_name": "Spain",
+      "to_iso": "ESP",
+      "to_coords": [
+        -4,
+        40
+      ],
+      "hist": {
+        "2005": 292.4,
+        "2010": 727.5,
+        "2015": 646.2,
+        "2020": 613.3
+      },
+      "peak_k": 727.5
+    },
+    {
+      "from_name": "Germany",
+      "from_iso": "DEU",
+      "from_coords": [
+        10,
+        51
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 711.9,
+        "1995": 718.8,
+        "2000": 724.6,
+        "2005": 682.5,
+        "2010": 660.2,
+        "2015": 585.3,
+        "2020": 534.2
+      },
+      "peak_k": 724.6
+    },
+    {
+      "from_name": "United Kingdom",
+      "from_iso": "GBR",
+      "from_coords": [
+        -2,
+        54
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 640.1,
+        "1995": 667.8,
+        "2000": 695.0,
+        "2005": 697.0,
+        "2010": 720.4,
+        "2015": 683.5,
+        "2020": 673.7
+      },
+      "peak_k": 720.4
+    },
+    {
+      "from_name": "India",
+      "from_iso": "IND",
+      "from_coords": [
+        78,
+        22
+      ],
+      "to_name": "Canada",
+      "to_iso": "CAN",
+      "to_coords": [
+        -96,
+        56
+      ],
+      "hist": {
+        "1990": 166.6,
+        "1995": 240.0,
+        "2000": 319.1,
+        "2005": 424.9,
+        "2010": 517.9,
+        "2015": 664.5,
+        "2020": 720.1
+      },
+      "peak_k": 720.1
+    },
+    {
+      "from_name": "Syrian Arab Republic",
+      "from_iso": "SYR",
+      "from_coords": [
+        38,
+        35
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "2015": 197.2,
+        "2020": 707.5
+      },
+      "peak_k": 707.5
+    },
+    {
+      "from_name": "Haiti",
+      "from_iso": "HTI",
+      "from_coords": [
+        -72,
+        19
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 225.4,
+        "1995": 326.7,
+        "2000": 430.0,
+        "2005": 491.8,
+        "2010": 570.3,
+        "2015": 682.5,
+        "2020": 705.4
+      },
+      "peak_k": 705.4
+    },
+    {
+      "from_name": "India",
+      "from_iso": "IND",
+      "from_coords": [
+        78,
+        22
+      ],
+      "to_name": "Qatar",
+      "to_iso": "QAT",
+      "to_coords": [
+        51.5,
+        25
+      ],
+      "hist": {
+        "2005": 193.4,
+        "2010": 540.9,
+        "2015": 645.6,
+        "2020": 702.0
+      },
+      "peak_k": 702.0
+    },
+    {
+      "from_name": "China",
+      "from_iso": "CHN",
+      "from_coords": [
+        104,
+        35
+      ],
+      "to_name": "Canada",
+      "to_iso": "CAN",
+      "to_coords": [
+        -96,
+        56
+      ],
+      "hist": {
+        "1990": 168.1,
+        "1995": 286.7,
+        "2000": 412.2,
+        "2005": 509.0,
+        "2010": 612.0,
+        "2015": 645.3,
+        "2020": 699.2
+      },
+      "peak_k": 699.2
+    },
+    {
+      "from_name": "Syrian Arab Republic",
+      "from_iso": "SYR",
+      "from_coords": [
+        38,
+        35
+      ],
+      "to_name": "Jordan",
+      "to_iso": "JOR",
+      "to_coords": [
+        36.5,
+        31
+      ],
+      "hist": {
+        "2015": 674.7,
+        "2020": 698.7
+      },
+      "peak_k": 698.7
+    },
+    {
+      "from_name": "Italy",
+      "from_iso": "ITA",
+      "from_coords": [
+        12,
+        43
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "1990": 486.5,
+        "1995": 492.3,
+        "2000": 498.1,
+        "2005": 410.2,
+        "2010": 333.8,
+        "2015": 342.6,
+        "2020": 694.5
+      },
+      "peak_k": 694.5
+    },
+    {
+      "from_name": "Cambodia",
+      "from_iso": "KHM",
+      "from_coords": [
+        105,
+        12
+      ],
+      "to_name": "Thailand",
+      "to_iso": "THA",
+      "to_coords": [
+        101,
+        15
+      ],
+      "hist": {
+        "2000": 153.4,
+        "2005": 369.2,
+        "2010": 611.5,
+        "2015": 666.1,
+        "2020": 691.8
+      },
+      "peak_k": 691.8
+    },
+    {
+      "from_name": "Zimbabwe",
+      "from_iso": "ZWE",
+      "from_coords": [
+        30,
+        -20
+      ],
+      "to_name": "South Africa",
+      "to_iso": "ZAF",
+      "to_coords": [
+        25,
+        -29
+      ],
+      "hist": {
+        "2005": 169.9,
+        "2010": 306.5,
+        "2015": 676.4,
+        "2020": 690.2
+      },
+      "peak_k": 690.2
+    },
+    {
+      "from_name": "United Kingdom",
+      "from_iso": "GBR",
+      "from_coords": [
+        -2,
+        54
+      ],
+      "to_name": "Canada",
+      "to_iso": "CAN",
+      "to_coords": [
+        -96,
+        56
+      ],
+      "hist": {
+        "1990": 688.7,
+        "1995": 641.1,
+        "2000": 608.7,
+        "2005": 559.3,
+        "2010": 537.0,
+        "2015": 496.1,
+        "2020": 537.5
+      },
+      "peak_k": 688.7
+    },
+    {
+      "from_name": "Republic of Korea",
+      "from_iso": "KOR",
+      "from_coords": [
+        127,
+        37
+      ],
+      "to_name": "Japan",
+      "to_iso": "JPN",
+      "to_coords": [
+        138,
+        37
+      ],
+      "hist": {
+        "1990": 687.8,
+        "1995": 660.6,
+        "2000": 635.2,
+        "2005": 532.5,
+        "2010": 566.0,
+        "2015": 457.8,
+        "2020": 456.2
+      },
+      "peak_k": 687.8
+    },
+    {
+      "from_name": "Paraguay",
+      "from_iso": "PRY",
+      "from_coords": [
+        -58,
+        -23
+      ],
+      "to_name": "Argentina",
+      "to_iso": "ARG",
+      "to_coords": [
+        -64,
+        -34
+      ],
+      "hist": {
+        "1990": 257.2,
+        "1995": 286.2,
+        "2000": 315.1,
+        "2005": 451.8,
+        "2010": 588.5,
+        "2015": 679.0,
+        "2020": 685.7
+      },
+      "peak_k": 685.7
+    },
+    {
+      "from_name": "Bulgaria",
+      "from_iso": "BGR",
+      "from_coords": [
+        25,
+        43
+      ],
+      "to_name": "Turkey",
+      "to_iso": "TUR",
+      "to_coords": [
+        35,
+        39
+      ],
+      "hist": {
+        "1990": 462.8,
+        "1995": 454.5,
+        "2000": 447.9,
+        "2005": 463.3,
+        "2010": 477.9,
+        "2015": 473.5,
+        "2020": 661.4
+      },
+      "peak_k": 661.4
+    },
+    {
+      "from_name": "Georgia",
+      "from_iso": "GEO",
+      "from_coords": [
+        43,
+        42
+      ],
+      "to_name": "Russian Federation",
+      "to_iso": "RUS",
+      "to_coords": [
+        60,
+        58
+      ],
+      "hist": {
+        "1990": 656.9,
+        "1995": 653.2,
+        "2000": 625.7,
+        "2005": 539.3,
+        "2010": 441.8,
+        "2015": 450.2,
+        "2020": 450.0
+      },
+      "peak_k": 656.9
+    },
+    {
+      "from_name": "Romania",
+      "from_iso": "ROU",
+      "from_coords": [
+        25,
+        46
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "1990": 176.9,
+        "1995": 249.9,
+        "2000": 322.9,
+        "2005": 407.8,
+        "2010": 475.3,
+        "2015": 487.9,
+        "2020": 654.8
+      },
+      "peak_k": 654.8
+    },
+    {
+      "from_name": "China",
+      "from_iso": "CHN",
+      "from_coords": [
+        104,
+        35
+      ],
+      "to_name": "Australia",
+      "to_iso": "AUS",
+      "to_coords": [
+        133,
+        -27
+      ],
+      "hist": {
+        "2005": 227.6,
+        "2010": 371.6,
+        "2015": 508.9,
+        "2020": 653.2
+      },
+      "peak_k": 653.2
+    },
+    {
+      "from_name": "Philippines",
+      "from_iso": "PHL",
+      "from_coords": [
+        122,
+        13
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "1990": 239.6,
+        "1995": 245.5,
+        "2000": 252.2,
+        "2005": 311.6,
+        "2010": 404.0,
+        "2015": 516.2,
+        "2020": 644.8
+      },
+      "peak_k": 644.8
+    },
+    {
+      "from_name": "Philippines",
+      "from_iso": "PHL",
+      "from_coords": [
+        122,
+        13
+      ],
+      "to_name": "Canada",
+      "to_iso": "CAN",
+      "to_coords": [
+        -96,
+        56
+      ],
+      "hist": {
+        "1995": 175.5,
+        "2000": 236.9,
+        "2005": 351.8,
+        "2010": 454.3,
+        "2015": 584.7,
+        "2020": 633.5
+      },
+      "peak_k": 633.5
+    },
+    {
+      "from_name": "Burundi",
+      "from_iso": "BDI",
+      "from_coords": [
+        29.9,
+        -3.4
+      ],
+      "to_name": "United Republic of Tanzania",
+      "to_iso": "TZA",
+      "to_coords": [
+        35,
+        -6
+      ],
+      "hist": {
+        "1990": 232.2,
+        "1995": 310.6,
+        "2000": 628.6,
+        "2005": 461.2,
+        "2015": 175.3,
+        "2020": 222.1
+      },
+      "peak_k": 628.6
+    },
+    {
+      "from_name": "Somalia",
+      "from_iso": "SOM",
+      "from_coords": [
+        46,
+        5
+      ],
+      "to_name": "Ethiopia",
+      "to_iso": "ETH",
+      "to_coords": [
+        39,
+        9
+      ],
+      "hist": {
+        "1990": 616.9,
+        "1995": 459.6,
+        "2000": 389.4,
+        "2005": 285.6,
+        "2010": 346.6,
+        "2015": 442.5,
+        "2020": 411.2
+      },
+      "peak_k": 616.9
+    },
+    {
+      "from_name": "Ireland",
+      "from_iso": "IRL",
+      "from_coords": [
+        -8,
+        53
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "1990": 611.9,
+        "1995": 559.0,
+        "2000": 515.5,
+        "2005": 461.9,
+        "2010": 398.2,
+        "2015": 389.7,
+        "2020": 370.2
+      },
+      "peak_k": 611.9
+    },
+    {
+      "from_name": "New Zealand",
+      "from_iso": "NZL",
+      "from_coords": [
+        172,
+        -42
+      ],
+      "to_name": "Australia",
+      "to_iso": "AUS",
+      "to_coords": [
+        133,
+        -27
+      ],
+      "hist": {
+        "1990": 298.3,
+        "1995": 310.9,
+        "2000": 365.1,
+        "2005": 423.5,
+        "2010": 517.8,
+        "2015": 575.4,
+        "2020": 611.3
+      },
+      "peak_k": 611.3
+    },
+    {
+      "from_name": "Czechia",
+      "from_iso": "CZE",
+      "from_coords": [
+        16,
+        50
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "1990": 315.5,
+        "1995": 351.5,
+        "2000": 423.4,
+        "2005": 431.7,
+        "2010": 437.8,
+        "2015": 449.3,
+        "2020": 603.0
+      },
+      "peak_k": 603.0
+    },
+    {
+      "from_name": "Rwanda",
+      "from_iso": "RWA",
+      "from_coords": [
+        30,
+        -2
+      ],
+      "to_name": "United Republic of Tanzania",
+      "to_iso": "TZA",
+      "to_coords": [
+        35,
+        -6
+      ],
+      "hist": {
+        "1995": 600.7
+      },
+      "peak_k": 600.7
+    },
+    {
+      "from_name": "Serbia",
+      "from_iso": "SRB",
+      "from_coords": [
+        21,
+        44
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "1990": 428.3,
+        "1995": 512.8,
+        "2000": 597.3,
+        "2005": 319.7,
+        "2020": 199.7
+      },
+      "peak_k": 597.3
+    },
+    {
+      "from_name": "State of Palestine",
+      "from_iso": "PSE",
+      "from_coords": [
+        35.3,
+        31.9
+      ],
+      "to_name": "Syrian Arab Republic",
+      "to_iso": "SYR",
+      "to_coords": [
+        38,
+        35
+      ],
+      "hist": {
+        "1990": 244.7,
+        "1995": 289.5,
+        "2000": 385.2,
+        "2005": 443.0,
+        "2010": 495.8,
+        "2015": 573.4,
+        "2020": 596.4
+      },
+      "peak_k": 596.4
+    },
+    {
+      "from_name": "Kyrgyzstan",
+      "from_iso": "KGZ",
+      "from_coords": [
+        74,
+        41
+      ],
+      "to_name": "Russian Federation",
+      "to_iso": "RUS",
+      "to_coords": [
+        60,
+        58
+      ],
+      "hist": {
+        "1990": 433.6,
+        "1995": 455.6,
+        "2000": 461.1,
+        "2005": 526.1,
+        "2010": 580.3,
+        "2015": 591.3,
+        "2020": 591.0
+      },
+      "peak_k": 591.3
+    },
+    {
+      "from_name": "Sudan",
+      "from_iso": "SDN",
+      "from_coords": [
+        31,
+        16
+      ],
+      "to_name": "South Sudan",
+      "to_iso": "SSD",
+      "to_coords": [
+        31,
+        7
+      ],
+      "hist": {
+        "2015": 562.4,
+        "2020": 587.7
+      },
+      "peak_k": 587.7
+    },
+    {
+      "from_name": "Nepal",
+      "from_iso": "NPL",
+      "from_coords": [
+        84,
+        28
+      ],
+      "to_name": "Malaysia",
+      "to_iso": "MYS",
+      "to_coords": [
+        109,
+        3
+      ],
+      "hist": {
+        "2010": 276.6,
+        "2015": 552.9,
+        "2020": 585.9
+      },
+      "peak_k": 585.9
+    },
+    {
+      "from_name": "Italy",
+      "from_iso": "ITA",
+      "from_coords": [
+        12,
+        43
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 580.6,
+        "1995": 534.0,
+        "2000": 485.4,
+        "2005": 438.9,
+        "2010": 404.7,
+        "2015": 352.5,
+        "2020": 310.0
+      },
+      "peak_k": 580.6
+    },
+    {
+      "from_name": "India",
+      "from_iso": "IND",
+      "from_coords": [
+        78,
+        22
+      ],
+      "to_name": "Australia",
+      "to_iso": "AUS",
+      "to_coords": [
+        133,
+        -27
+      ],
+      "hist": {
+        "2010": 329.5,
+        "2015": 449.0,
+        "2020": 579.3
+      },
+      "peak_k": 579.3
+    },
+    {
+      "from_name": "Philippines",
+      "from_iso": "PHL",
+      "from_coords": [
+        122,
+        13
+      ],
+      "to_name": "United Arab Emirates",
+      "to_iso": "ARE",
+      "to_coords": [
+        54,
+        24
+      ],
+      "hist": {
+        "2005": 202.7,
+        "2010": 474.1,
+        "2015": 518.0,
+        "2020": 564.8
+      },
+      "peak_k": 564.8
+    },
+    {
+      "from_name": "Côte d'Ivoire",
+      "from_iso": "CIV",
+      "from_coords": [
+        -6,
+        7
+      ],
+      "to_name": "Burkina Faso",
+      "to_iso": "BFA",
+      "to_coords": [
+        -2,
+        12
+      ],
+      "hist": {
+        "1990": 243.8,
+        "1995": 303.2,
+        "2000": 383.7,
+        "2005": 458.1,
+        "2010": 517.2,
+        "2015": 540.8,
+        "2020": 562.1
+      },
+      "peak_k": 562.1
+    },
+    {
+      "from_name": "Azerbaijan",
+      "from_iso": "AZE",
+      "from_coords": [
+        47,
+        40
+      ],
+      "to_name": "Armenia",
+      "to_iso": "ARM",
+      "to_coords": [
+        45,
+        40
+      ],
+      "hist": {
+        "1990": 464.5,
+        "1995": 560.5,
+        "2000": 525.2,
+        "2005": 376.2
+      },
+      "peak_k": 560.5
+    },
+    {
+      "from_name": "Italy",
+      "from_iso": "ITA",
+      "from_coords": [
+        12,
+        43
+      ],
+      "to_name": "France",
+      "to_iso": "FRA",
+      "to_coords": [
+        2,
+        47
+      ],
+      "hist": {
+        "1990": 521.8,
+        "1995": 538.7,
+        "2000": 555.5,
+        "2005": 373.8,
+        "2010": 345.2,
+        "2015": 324.6,
+        "2020": 325.9
+      },
+      "peak_k": 555.5
+    },
+    {
+      "from_name": "India",
+      "from_iso": "IND",
+      "from_coords": [
+        78,
+        22
+      ],
+      "to_name": "Nepal",
+      "to_iso": "NPL",
+      "to_coords": [
+        84,
+        28
+      ],
+      "hist": {
+        "1990": 369.4,
+        "1995": 515.6,
+        "2000": 543.6,
+        "2005": 514.6,
+        "2010": 461.2,
+        "2015": 446.1,
+        "2020": 426.9
+      },
+      "peak_k": 543.6
+    },
+    {
+      "from_name": "Pakistan",
+      "from_iso": "PAK",
+      "from_coords": [
+        68,
+        30
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "1990": 228.3,
+        "1995": 267.2,
+        "2000": 310.5,
+        "2005": 379.5,
+        "2010": 460.5,
+        "2015": 532.5,
+        "2020": 537.0
+      },
+      "peak_k": 537.0
+    },
+    {
+      "from_name": "Armenia",
+      "from_iso": "ARM",
+      "from_coords": [
+        45,
+        40
+      ],
+      "to_name": "Russian Federation",
+      "to_iso": "RUS",
+      "to_coords": [
+        60,
+        58
+      ],
+      "hist": {
+        "1990": 535.3,
+        "1995": 516.4,
+        "2000": 478.9,
+        "2005": 503.3,
+        "2010": 517.4,
+        "2015": 527.3,
+        "2020": 527.0
+      },
+      "peak_k": 535.3
+    },
+    {
+      "from_name": "Sri Lanka",
+      "from_iso": "LKA",
+      "from_coords": [
+        80,
+        7
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "1990": 200.6,
+        "1995": 205.6,
+        "2000": 211.2,
+        "2005": 260.9,
+        "2010": 338.3,
+        "2015": 423.8,
+        "2020": 529.3
+      },
+      "peak_k": 529.3
+    },
+    {
+      "from_name": "Venezuela (Bolivarian Republic of)",
+      "from_iso": "VEN",
+      "from_coords": [
+        -65,
+        7
+      ],
+      "to_name": "Chile",
+      "to_iso": "CHL",
+      "to_coords": [
+        -71,
+        -35
+      ],
+      "hist": {
+        "2020": 523.6
+      },
+      "peak_k": 523.6
+    },
+    {
+      "from_name": "Mali",
+      "from_iso": "MLI",
+      "from_coords": [
+        -2,
+        17
+      ],
+      "to_name": "Côte d'Ivoire",
+      "to_iso": "CIV",
+      "to_coords": [
+        -6,
+        7
+      ],
+      "hist": {
+        "1990": 422.5,
+        "1995": 445.6,
+        "2000": 443.2,
+        "2005": 464.0,
+        "2010": 484.8,
+        "2015": 505.5,
+        "2020": 522.1
+      },
+      "peak_k": 522.1
+    },
+    {
+      "from_name": "Brazil",
+      "from_iso": "BRA",
+      "from_coords": [
+        -55,
+        -10
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2000": 217.8,
+        "2005": 280.3,
+        "2010": 353.0,
+        "2015": 361.4,
+        "2020": 517.5
+      },
+      "peak_k": 517.5
+    },
+    {
+      "from_name": "State of Palestine",
+      "from_iso": "PSE",
+      "from_coords": [
+        35.3,
+        31.9
+      ],
+      "to_name": "Lebanon",
+      "to_iso": "LBN",
+      "to_coords": [
+        35.5,
+        33.8
+      ],
+      "hist": {
+        "1990": 389.2,
+        "1995": 428.1,
+        "2000": 467.0,
+        "2005": 489.2,
+        "2010": 512.8,
+        "2015": 500.6,
+        "2020": 476.0
+      },
+      "peak_k": 512.8
+    },
+    {
+      "from_name": "Bosnia and Herzegovina",
+      "from_iso": "BIH",
+      "from_coords": [
+        17.5,
+        44
+      ],
+      "to_name": "Croatia",
+      "to_iso": "HRV",
+      "to_coords": [
+        16,
+        45
+      ],
+      "hist": {
+        "1990": 312.8,
+        "1995": 506.4,
+        "2000": 430.4,
+        "2005": 416.4,
+        "2010": 402.3,
+        "2015": 404.9,
+        "2020": 381.1
+      },
+      "peak_k": 506.4
+    },
+    {
+      "from_name": "Mozambique",
+      "from_iso": "MOZ",
+      "from_coords": [
+        35,
+        -18
+      ],
+      "to_name": "South Africa",
+      "to_iso": "ZAF",
+      "to_coords": [
+        25,
+        -29
+      ],
+      "hist": {
+        "1990": 346.4,
+        "1995": 320.7,
+        "2000": 237.8,
+        "2005": 323.0,
+        "2010": 505.8,
+        "2015": 315.5,
+        "2020": 350.5
+      },
+      "peak_k": 505.8
+    },
+    {
+      "from_name": "Venezuela (Bolivarian Republic of)",
+      "from_iso": "VEN",
+      "from_coords": [
+        -65,
+        7
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2010": 180.9,
+        "2015": 236.3,
+        "2020": 505.6
+      },
+      "peak_k": 505.6
+    },
+    {
+      "from_name": "Nepal",
+      "from_iso": "NPL",
+      "from_coords": [
+        84,
+        28
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "1990": 177.7,
+        "1995": 182.1,
+        "2000": 187.1,
+        "2005": 231.1,
+        "2010": 299.6,
+        "2015": 403.0,
+        "2020": 503.4
+      },
+      "peak_k": 503.4
+    },
+    {
+      "from_name": "Ecuador",
+      "from_iso": "ECU",
+      "from_coords": [
+        -78,
+        -2
+      ],
+      "to_name": "Spain",
+      "to_iso": "ESP",
+      "to_coords": [
+        -4,
+        40
+      ],
+      "hist": {
+        "2005": 456.4,
+        "2010": 496.7,
+        "2015": 416.4,
+        "2020": 430.3
+      },
+      "peak_k": 496.7
+    },
+    {
+      "from_name": "Haiti",
+      "from_iso": "HTI",
+      "from_coords": [
+        -72,
+        19
+      ],
+      "to_name": "Dominican Republic",
+      "to_iso": "DOM",
+      "to_coords": [
+        -70,
+        19
+      ],
+      "hist": {
+        "1990": 187.2,
+        "1995": 207.9,
+        "2000": 228.7,
+        "2005": 270.9,
+        "2010": 313.4,
+        "2015": 475.1,
+        "2020": 496.1
+      },
+      "peak_k": 496.1
+    },
+    {
+      "from_name": "Somalia",
+      "from_iso": "SOM",
+      "from_coords": [
+        46,
+        5
+      ],
+      "to_name": "Kenya",
+      "to_iso": "KEN",
+      "to_coords": [
+        37,
+        -1
+      ],
+      "hist": {
+        "1995": 172.2,
+        "2000": 159.2,
+        "2005": 208.2,
+        "2010": 392.1,
+        "2015": 488.5,
+        "2020": 425.3
+      },
+      "peak_k": 488.5
+    },
+    {
+      "from_name": "Poland",
+      "from_iso": "POL",
+      "from_coords": [
+        20,
+        52
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 388.3,
+        "1995": 433.3,
+        "2000": 478.6,
+        "2005": 475.7,
+        "2010": 487.3,
+        "2015": 419.3,
+        "2020": 406.8
+      },
+      "peak_k": 487.3
+    },
+    {
+      "from_name": "Peru",
+      "from_iso": "PER",
+      "from_coords": [
+        -76,
+        -10
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1995": 214.0,
+        "2000": 285.2,
+        "2005": 350.7,
+        "2010": 428.6,
+        "2015": 486.6,
+        "2020": 435.9
+      },
+      "peak_k": 486.6
+    },
+    {
+      "from_name": "Albania",
+      "from_iso": "ALB",
+      "from_coords": [
+        20,
+        41
+      ],
+      "to_name": "Italy",
+      "to_iso": "ITA",
+      "to_coords": [
+        12,
+        43
+      ],
+      "hist": {
+        "1995": 159.7,
+        "2000": 274.4,
+        "2005": 361.0,
+        "2010": 440.6,
+        "2015": 444.9,
+        "2020": 486.2
+      },
+      "peak_k": 486.2
+    },
+    {
+      "from_name": "Mozambique",
+      "from_iso": "MOZ",
+      "from_coords": [
+        35,
+        -18
+      ],
+      "to_name": "Zimbabwe",
+      "to_iso": "ZWE",
+      "to_coords": [
+        30,
+        -20
+      ],
+      "hist": {
+        "1990": 482.9,
+        "1995": 266.3,
+        "2000": 197.8
+      },
+      "peak_k": 482.9
+    },
+    {
+      "from_name": "Afghanistan",
+      "from_iso": "AFG",
+      "from_coords": [
+        67,
+        33
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "1990": 166.3,
+        "1995": 170.4,
+        "2000": 175.1,
+        "2005": 216.3,
+        "2010": 280.4,
+        "2015": 385.2,
+        "2020": 481.2
+      },
+      "peak_k": 481.2
+    },
+    {
+      "from_name": "Sudan",
+      "from_iso": "SDN",
+      "from_coords": [
+        31,
+        16
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "1990": 178.8,
+        "1995": 183.2,
+        "2000": 188.2,
+        "2005": 232.5,
+        "2010": 301.5,
+        "2015": 385.2,
+        "2020": 481.2
+      },
+      "peak_k": 481.2
+    },
+    {
+      "from_name": "Ecuador",
+      "from_iso": "ECU",
+      "from_coords": [
+        -78,
+        -2
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1995": 223.9,
+        "2000": 306.2,
+        "2005": 364.4,
+        "2010": 435.2,
+        "2015": 478.0,
+        "2020": 425.3
+      },
+      "peak_k": 478.0
+    },
+    {
+      "from_name": "Russian Federation",
+      "from_iso": "RUS",
+      "from_coords": [
+        60,
+        58
+      ],
+      "to_name": "Latvia",
+      "to_iso": "LVA",
+      "to_coords": [
+        25,
+        57
+      ],
+      "hist": {
+        "1990": 473.2,
+        "1995": 354.0,
+        "2000": 234.8,
+        "2005": 201.7,
+        "2010": 163.6
+      },
+      "peak_k": 473.2
+    },
+    {
+      "from_name": "Angola",
+      "from_iso": "AGO",
+      "from_coords": [
+        18,
+        -12
+      ],
+      "to_name": "Democratic Republic of the Congo",
+      "to_iso": "COD",
+      "to_coords": [
+        24,
+        -3
+      ],
+      "hist": {
+        "1990": 468.5,
+        "1995": 276.4,
+        "2000": 325.7,
+        "2005": 262.1,
+        "2010": 259.6,
+        "2015": 182.0,
+        "2020": 177.0
+      },
+      "peak_k": 468.5
+    },
+    {
+      "from_name": "Tajikistan",
+      "from_iso": "TJK",
+      "from_coords": [
+        71,
+        39
+      ],
+      "to_name": "Russian Federation",
+      "to_iso": "RUS",
+      "to_coords": [
+        60,
+        58
+      ],
+      "hist": {
+        "1990": 424.7,
+        "1995": 410.3,
+        "2000": 381.1,
+        "2005": 423.8,
+        "2010": 457.8,
+        "2015": 466.5,
+        "2020": 466.3
+      },
+      "peak_k": 466.5
+    },
+    {
+      "from_name": "Albania",
+      "from_iso": "ALB",
+      "from_coords": [
+        20,
+        41
+      ],
+      "to_name": "Greece",
+      "to_iso": "GRC",
+      "to_coords": [
+        22,
+        39
+      ],
+      "hist": {
+        "1995": 230.2,
+        "2000": 400.3,
+        "2005": 423.6,
+        "2010": 463.2,
+        "2015": 436.6,
+        "2020": 446.6
+      },
+      "peak_k": 463.2
+    },
+    {
+      "from_name": "Spain",
+      "from_iso": "ESP",
+      "from_coords": [
+        -4,
+        40
+      ],
+      "to_name": "France",
+      "to_iso": "FRA",
+      "to_coords": [
+        2,
+        47
+      ],
+      "hist": {
+        "1990": 433.7,
+        "1995": 447.8,
+        "2000": 461.8,
+        "2005": 306.1,
+        "2010": 285.9,
+        "2015": 286.8,
+        "2020": 282.4
+      },
+      "peak_k": 461.8
+    },
+    {
+      "from_name": "Ethiopia",
+      "from_iso": "ETH",
+      "from_coords": [
+        39,
+        9
+      ],
+      "to_name": "Somalia",
+      "to_iso": "SOM",
+      "to_coords": [
+        46,
+        5
+      ],
+      "hist": {
+        "1990": 460.0
+      },
+      "peak_k": 460.0
+    },
+    {
+      "from_name": "Morocco",
+      "from_iso": "MAR",
+      "from_coords": [
+        -7,
+        32
+      ],
+      "to_name": "Italy",
+      "to_iso": "ITA",
+      "to_coords": [
+        12,
+        43
+      ],
+      "hist": {
+        "1990": 169.3,
+        "1995": 227.4,
+        "2000": 285.6,
+        "2005": 355.4,
+        "2010": 416.8,
+        "2015": 422.5,
+        "2020": 452.0
+      },
+      "peak_k": 452.0
+    },
+    {
+      "from_name": "Colombia",
+      "from_iso": "COL",
+      "from_coords": [
+        -74,
+        4
+      ],
+      "to_name": "Spain",
+      "to_iso": "ESP",
+      "to_coords": [
+        -4,
+        40
+      ],
+      "hist": {
+        "2005": 270.0,
+        "2010": 376.2,
+        "2015": 347.5,
+        "2020": 450.4
+      },
+      "peak_k": 450.4
+    },
+    {
+      "from_name": "Liberia",
+      "from_iso": "LBR",
+      "from_coords": [
+        -9.5,
+        6.5
+      ],
+      "to_name": "Guinea",
+      "to_iso": "GIN",
+      "to_coords": [
+        -11,
+        11
+      ],
+      "hist": {
+        "1990": 342.7,
+        "1995": 449.6
+      },
+      "peak_k": 449.6
+    },
+    {
+      "from_name": "Tunisia",
+      "from_iso": "TUN",
+      "from_coords": [
+        9,
+        34
+      ],
+      "to_name": "France",
+      "to_iso": "FRA",
+      "to_coords": [
+        2,
+        47
+      ],
+      "hist": {
+        "1990": 276.2,
+        "1995": 285.2,
+        "2000": 294.2,
+        "2005": 362.1,
+        "2010": 364.9,
+        "2015": 404.4,
+        "2020": 444.6
+      },
+      "peak_k": 444.6
+    },
+    {
+      "from_name": "Ukraine",
+      "from_iso": "UKR",
+      "from_coords": [
+        32,
+        49
+      ],
+      "to_name": "Poland",
+      "to_iso": "POL",
+      "to_coords": [
+        20,
+        52
+      ],
+      "hist": {
+        "1990": 438.7,
+        "1995": 375.3,
+        "2000": 321.0,
+        "2005": 263.5,
+        "2010": 214.2,
+        "2015": 204.1,
+        "2020": 272.6
+      },
+      "peak_k": 438.7
+    },
+    {
+      "from_name": "Eritrea",
+      "from_iso": "ERI",
+      "from_coords": [
+        39,
+        15
+      ],
+      "to_name": "Sudan",
+      "to_iso": "SDN",
+      "to_coords": [
+        31,
+        16
+      ],
+      "hist": {
+        "1995": 287.5,
+        "2000": 435.2,
+        "2005": 196.6,
+        "2015": 159.7,
+        "2020": 221.0
+      },
+      "peak_k": 435.2
+    },
+    {
+      "from_name": "China",
+      "from_iso": "CHN",
+      "from_coords": [
+        104,
+        35
+      ],
+      "to_name": "Singapore",
+      "to_iso": "SGP",
+      "to_coords": [
+        104,
+        1
+      ],
+      "hist": {
+        "1990": 150.4,
+        "1995": 191.1,
+        "2000": 250.2,
+        "2005": 299.7,
+        "2010": 365.8,
+        "2015": 419.6,
+        "2020": 426.4
+      },
+      "peak_k": 426.4
+    },
+    {
+      "from_name": "Bolivia (Plurinational State of)",
+      "from_iso": "BOL",
+      "from_coords": [
+        -65,
+        -17
+      ],
+      "to_name": "Argentina",
+      "to_iso": "ARG",
+      "to_coords": [
+        -64,
+        -34
+      ],
+      "hist": {
+        "1995": 186.7,
+        "2000": 226.1,
+        "2005": 294.7,
+        "2010": 363.1,
+        "2015": 419.0,
+        "2020": 423.1
+      },
+      "peak_k": 423.1
+    },
+    {
+      "from_name": "Egypt",
+      "from_iso": "EGY",
+      "from_coords": [
+        30,
+        27
+      ],
+      "to_name": "Kuwait",
+      "to_iso": "KWT",
+      "to_coords": [
+        47.5,
+        29
+      ],
+      "hist": {
+        "2010": 168.6,
+        "2015": 388.0,
+        "2020": 421.0
+      },
+      "peak_k": 421.0
+    },
+    {
+      "from_name": "Bangladesh",
+      "from_iso": "BGD",
+      "from_coords": [
+        90,
+        23
+      ],
+      "to_name": "Malaysia",
+      "to_iso": "MYS",
+      "to_coords": [
+        109,
+        3
+      ],
+      "hist": {
+        "2005": 202.9,
+        "2010": 351.4,
+        "2015": 392.3,
+        "2020": 415.7
+      },
+      "peak_k": 415.7
+    },
+    {
+      "from_name": "South Sudan",
+      "from_iso": "SSD",
+      "from_coords": [
+        31,
+        7
+      ],
+      "to_name": "Ethiopia",
+      "to_iso": "ETH",
+      "to_coords": [
+        39,
+        9
+      ],
+      "hist": {
+        "1990": 384.3,
+        "1995": 235.5,
+        "2015": 394.8,
+        "2020": 409.9
+      },
+      "peak_k": 409.9
+    },
+    {
+      "from_name": "Pakistan",
+      "from_iso": "PAK",
+      "from_coords": [
+        68,
+        30
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1995": 159.8,
+        "2000": 229.2,
+        "2005": 261.5,
+        "2010": 302.8,
+        "2015": 376.4,
+        "2020": 408.4
+      },
+      "peak_k": 408.4
+    },
+    {
+      "from_name": "Russian Federation",
+      "from_iso": "RUS",
+      "from_coords": [
+        60,
+        58
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 190.7,
+        "1995": 269.0,
+        "2000": 348.8,
+        "2005": 371.3,
+        "2010": 405.7,
+        "2015": 386.5,
+        "2020": 397.1
+      },
+      "peak_k": 405.7
+    },
+    {
+      "from_name": "Belarus",
+      "from_iso": "BLR",
+      "from_coords": [
+        28,
+        53
+      ],
+      "to_name": "Ukraine",
+      "to_iso": "UKR",
+      "to_coords": [
+        32,
+        49
+      ],
+      "hist": {
+        "1990": 403.4,
+        "1995": 340.0,
+        "2000": 280.7,
+        "2005": 256.5,
+        "2010": 244.7,
+        "2015": 245.5,
+        "2020": 249.6
+      },
+      "peak_k": 403.4
+    },
+    {
+      "from_name": "Nigeria",
+      "from_iso": "NGA",
+      "from_coords": [
+        8,
+        10
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2005": 174.1,
+        "2010": 216.2,
+        "2015": 286.8,
+        "2020": 402.2
+      },
+      "peak_k": 402.2
+    },
+    {
+      "from_name": "Democratic Republic of the Congo",
+      "from_iso": "COD",
+      "from_coords": [
+        24,
+        -3
+      ],
+      "to_name": "Uganda",
+      "to_iso": "UGA",
+      "to_coords": [
+        32,
+        1
+      ],
+      "hist": {
+        "2010": 159.5,
+        "2015": 286.2,
+        "2020": 397.6
+      },
+      "peak_k": 397.6
+    },
+    {
+      "from_name": "Iraq",
+      "from_iso": "IRQ",
+      "from_coords": [
+        44,
+        33
+      ],
+      "to_name": "Jordan",
+      "to_iso": "JOR",
+      "to_coords": [
+        36.5,
+        31
+      ],
+      "hist": {
+        "2010": 397.0,
+        "2015": 159.0,
+        "2020": 206.0
+      },
+      "peak_k": 397.0
+    },
+    {
+      "from_name": "Iran (Islamic Republic of)",
+      "from_iso": "IRN",
+      "from_coords": [
+        53,
+        33
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 210.9,
+        "1995": 250.4,
+        "2000": 290.4,
+        "2005": 314.2,
+        "2010": 348.2,
+        "2015": 394.2,
+        "2020": 387.2
+      },
+      "peak_k": 394.2
+    },
+    {
+      "from_name": "Romania",
+      "from_iso": "ROU",
+      "from_coords": [
+        25,
+        46
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "2010": 173.0,
+        "2015": 173.0,
+        "2020": 393.6
+      },
+      "peak_k": 393.6
+    },
+    {
+      "from_name": "Greece",
+      "from_iso": "GRC",
+      "from_coords": [
+        22,
+        39
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "1990": 337.5,
+        "1995": 345.4,
+        "2000": 353.3,
+        "2005": 256.1,
+        "2010": 173.2,
+        "2015": 177.8,
+        "2020": 391.5
+      },
+      "peak_k": 391.5
+    },
+    {
+      "from_name": "Venezuela (Bolivarian Republic of)",
+      "from_iso": "VEN",
+      "from_coords": [
+        -65,
+        7
+      ],
+      "to_name": "Ecuador",
+      "to_iso": "ECU",
+      "to_coords": [
+        -78,
+        -2
+      ],
+      "hist": {
+        "2020": 388.9
+      },
+      "peak_k": 388.9
+    },
+    {
+      "from_name": "Croatia",
+      "from_iso": "HRV",
+      "from_coords": [
+        16,
+        45
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "1990": 150.3,
+        "1995": 180.0,
+        "2000": 209.6,
+        "2005": 188.1,
+        "2010": 168.7,
+        "2015": 173.2,
+        "2020": 385.8
+      },
+      "peak_k": 385.8
+    },
+    {
+      "from_name": "Ukraine",
+      "from_iso": "UKR",
+      "from_coords": [
+        32,
+        49
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 154.2,
+        "1995": 217.6,
+        "2000": 282.1,
+        "2005": 298.8,
+        "2010": 325.0,
+        "2015": 383.6,
+        "2020": 370.3
+      },
+      "peak_k": 383.6
+    },
+    {
+      "from_name": "Bosnia and Herzegovina",
+      "from_iso": "BIH",
+      "from_coords": [
+        17.5,
+        44
+      ],
+      "to_name": "Serbia",
+      "to_iso": "SRB",
+      "to_coords": [
+        21,
+        44
+      ],
+      "hist": {
+        "1995": 266.9,
+        "2000": 380.5,
+        "2005": 351.7,
+        "2010": 343.7,
+        "2015": 336.0,
+        "2020": 342.5
+      },
+      "peak_k": 380.5
+    },
+    {
+      "from_name": "Bangladesh",
+      "from_iso": "BGD",
+      "from_coords": [
+        90,
+        23
+      ],
+      "to_name": "Kuwait",
+      "to_iso": "KWT",
+      "to_coords": [
+        47.5,
+        29
+      ],
+      "hist": {
+        "2005": 175.0,
+        "2010": 258.1,
+        "2015": 350.2,
+        "2020": 380.0
+      },
+      "peak_k": 380.0
+    },
+    {
+      "from_name": "Turkey",
+      "from_iso": "TUR",
+      "from_coords": [
+        35,
+        39
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2015": 379.2
+      },
+      "peak_k": 379.2
+    },
+    {
+      "from_name": "Benin",
+      "from_iso": "BEN",
+      "from_coords": [
+        2,
+        9
+      ],
+      "to_name": "Nigeria",
+      "to_iso": "NGA",
+      "to_coords": [
+        8,
+        10
+      ],
+      "hist": {
+        "2005": 284.6,
+        "2010": 290.7,
+        "2015": 352.0,
+        "2020": 377.2
+      },
+      "peak_k": 377.2
+    },
+    {
+      "from_name": "Germany",
+      "from_iso": "DEU",
+      "from_coords": [
+        10,
+        51
+      ],
+      "to_name": "Turkey",
+      "to_iso": "TUR",
+      "to_coords": [
+        35,
+        39
+      ],
+      "hist": {
+        "1990": 176.8,
+        "1995": 215.4,
+        "2000": 254.8,
+        "2005": 263.6,
+        "2010": 271.9,
+        "2015": 269.4,
+        "2020": 376.3
+      },
+      "peak_k": 376.3
+    },
+    {
+      "from_name": "Sudan",
+      "from_iso": "SDN",
+      "from_coords": [
+        31,
+        16
+      ],
+      "to_name": "Chad",
+      "to_iso": "TCD",
+      "to_coords": [
+        18,
+        15
+      ],
+      "hist": {
+        "2005": 247.6,
+        "2010": 293.2,
+        "2015": 321.0,
+        "2020": 372.6
+      },
+      "peak_k": 372.6
+    },
+    {
+      "from_name": "Japan",
+      "from_iso": "JPN",
+      "from_coords": [
+        138,
+        37
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 290.1,
+        "1995": 323.1,
+        "2000": 356.4,
+        "2005": 356.0,
+        "2010": 366.5,
+        "2015": 335.8,
+        "2020": 320.0
+      },
+      "peak_k": 366.5
+    },
+    {
+      "from_name": "Sierra Leone",
+      "from_iso": "SLE",
+      "from_coords": [
+        -11.5,
+        8.5
+      ],
+      "to_name": "Guinea",
+      "to_iso": "GIN",
+      "to_coords": [
+        -11,
+        11
+      ],
+      "hist": {
+        "1995": 273.1,
+        "2000": 365.8
+      },
+      "peak_k": 365.8
+    },
+    {
+      "from_name": "India",
+      "from_iso": "IND",
+      "from_coords": [
+        78,
+        22
+      ],
+      "to_name": "Bahrain",
+      "to_iso": "BHR",
+      "to_coords": [
+        50.5,
+        26
+      ],
+      "hist": {
+        "2005": 157.1,
+        "2010": 259.9,
+        "2015": 281.8,
+        "2020": 365.1
+      },
+      "peak_k": 365.1
+    },
+    {
+      "from_name": "Russian Federation",
+      "from_iso": "RUS",
+      "from_coords": [
+        60,
+        58
+      ],
+      "to_name": "Tajikistan",
+      "to_iso": "TJK",
+      "to_coords": [
+        71,
+        39
+      ],
+      "hist": {
+        "1990": 363.6,
+        "1995": 294.4,
+        "2000": 252.1,
+        "2005": 238.7,
+        "2010": 238.1,
+        "2015": 234.2,
+        "2020": 235.0
+      },
+      "peak_k": 363.6
+    },
+    {
+      "from_name": "Germany",
+      "from_iso": "DEU",
+      "from_coords": [
+        10,
+        51
+      ],
+      "to_name": "Switzerland",
+      "to_iso": "CHE",
+      "to_coords": [
+        8,
+        47
+      ],
+      "hist": {
+        "1990": 161.4,
+        "1995": 201.0,
+        "2000": 241.4,
+        "2005": 272.2,
+        "2010": 318.5,
+        "2015": 343.8,
+        "2020": 357.1
+      },
+      "peak_k": 357.1
+    },
+    {
+      "from_name": "Ukraine",
+      "from_iso": "UKR",
+      "from_coords": [
+        32,
+        49
+      ],
+      "to_name": "Kazakhstan",
+      "to_iso": "KAZ",
+      "to_coords": [
+        66,
+        48
+      ],
+      "hist": {
+        "1990": 356.1,
+        "1995": 302.2,
+        "2000": 248.3,
+        "2005": 283.0,
+        "2010": 317.8,
+        "2015": 338.0,
+        "2020": 355.8
+      },
+      "peak_k": 356.1
+    },
+    {
+      "from_name": "Nicaragua",
+      "from_iso": "NIC",
+      "from_coords": [
+        -85,
+        13
+      ],
+      "to_name": "Costa Rica",
+      "to_iso": "CRI",
+      "to_coords": [
+        -84,
+        10
+      ],
+      "hist": {
+        "2000": 230.1,
+        "2005": 268.2,
+        "2010": 288.0,
+        "2015": 292.2,
+        "2020": 350.9
+      },
+      "peak_k": 350.9
+    },
+    {
+      "from_name": "Myanmar",
+      "from_iso": "MMR",
+      "from_coords": [
+        96,
+        20
+      ],
+      "to_name": "Malaysia",
+      "to_iso": "MYS",
+      "to_coords": [
+        109,
+        3
+      ],
+      "hist": {
+        "2010": 226.4,
+        "2015": 330.9,
+        "2020": 350.6
+      },
+      "peak_k": 350.6
+    },
+    {
+      "from_name": "Russian Federation",
+      "from_iso": "RUS",
+      "from_coords": [
+        60,
+        58
+      ],
+      "to_name": "Kyrgyzstan",
+      "to_iso": "KGZ",
+      "to_coords": [
+        74,
+        41
+      ],
+      "hist": {
+        "1990": 349.2,
+        "1995": 284.7,
+        "2000": 212.4,
+        "2005": 171.0
+      },
+      "peak_k": 349.2
+    },
+    {
+      "from_name": "Sudan",
+      "from_iso": "SDN",
+      "from_coords": [
+        31,
+        16
+      ],
+      "to_name": "Uganda",
+      "to_iso": "UGA",
+      "to_coords": [
+        32,
+        1
+      ],
+      "hist": {
+        "1995": 268.7,
+        "2000": 341.6,
+        "2005": 337.7
+      },
+      "peak_k": 341.6
+    },
+    {
+      "from_name": "Turkey",
+      "from_iso": "TUR",
+      "from_coords": [
+        35,
+        39
+      ],
+      "to_name": "France",
+      "to_iso": "FRA",
+      "to_coords": [
+        2,
+        47
+      ],
+      "hist": {
+        "1990": 241.1,
+        "1995": 248.9,
+        "2000": 256.7,
+        "2005": 229.7,
+        "2010": 279.3,
+        "2015": 309.6,
+        "2020": 340.3
+      },
+      "peak_k": 340.3
+    },
+    {
+      "from_name": "Pakistan",
+      "from_iso": "PAK",
+      "from_coords": [
+        68,
+        30
+      ],
+      "to_name": "Kuwait",
+      "to_iso": "KWT",
+      "to_coords": [
+        47.5,
+        29
+      ],
+      "hist": {
+        "2005": 162.4,
+        "2010": 225.8,
+        "2015": 312.4,
+        "2020": 339.0
+      },
+      "peak_k": 339.0
+    },
+    {
+      "from_name": "Italy",
+      "from_iso": "ITA",
+      "from_coords": [
+        12,
+        43
+      ],
+      "to_name": "Canada",
+      "to_iso": "CAN",
+      "to_coords": [
+        -96,
+        56
+      ],
+      "hist": {
+        "1990": 337.4,
+        "1995": 322.4,
+        "2000": 315.1,
+        "2005": 275.7,
+        "2010": 240.8,
+        "2015": 235.2,
+        "2020": 254.8
+      },
+      "peak_k": 337.4
+    },
+    {
+      "from_name": "Italy",
+      "from_iso": "ITA",
+      "from_coords": [
+        12,
+        43
+      ],
+      "to_name": "Argentina",
+      "to_iso": "ARG",
+      "to_coords": [
+        -64,
+        -34
+      ],
+      "hist": {
+        "1990": 336.0,
+        "1995": 273.4,
+        "2000": 210.8,
+        "2005": 171.4,
+        "2015": 152.3,
+        "2020": 153.8
+      },
+      "peak_k": 336.0
+    },
+    {
+      "from_name": "Viet Nam",
+      "from_iso": "VNM",
+      "from_coords": [
+        108,
+        14
+      ],
+      "to_name": "Japan",
+      "to_iso": "JPN",
+      "to_coords": [
+        138,
+        37
+      ],
+      "hist": {
+        "2020": 335.7
+      },
+      "peak_k": 335.7
+    },
+    {
+      "from_name": "Uganda",
+      "from_iso": "UGA",
+      "from_coords": [
+        32,
+        1
+      ],
+      "to_name": "Kenya",
+      "to_iso": "KEN",
+      "to_coords": [
+        37,
+        -1
+      ],
+      "hist": {
+        "2000": 261.5,
+        "2005": 291.8,
+        "2010": 327.0,
+        "2015": 333.8,
+        "2020": 290.6
+      },
+      "peak_k": 333.8
+    },
+    {
+      "from_name": "Kazakhstan",
+      "from_iso": "KAZ",
+      "from_coords": [
+        66,
+        48
+      ],
+      "to_name": "Ukraine",
+      "to_iso": "UKR",
+      "to_coords": [
+        32,
+        49
+      ],
+      "hist": {
+        "1990": 330.9,
+        "1995": 290.7,
+        "2000": 254.1,
+        "2005": 232.1,
+        "2010": 221.5,
+        "2015": 222.2,
+        "2020": 226.0
+      },
+      "peak_k": 330.9
+    },
+    {
+      "from_name": "Venezuela (Bolivarian Republic of)",
+      "from_iso": "VEN",
+      "from_coords": [
+        -65,
+        7
+      ],
+      "to_name": "Spain",
+      "to_iso": "ESP",
+      "to_coords": [
+        -4,
+        40
+      ],
+      "hist": {
+        "2015": 160.5,
+        "2020": 325.7
+      },
+      "peak_k": 325.7
+    },
+    {
+      "from_name": "Croatia",
+      "from_iso": "HRV",
+      "from_coords": [
+        16,
+        45
+      ],
+      "to_name": "Serbia",
+      "to_iso": "SRB",
+      "to_coords": [
+        21,
+        44
+      ],
+      "hist": {
+        "1995": 255.7,
+        "2000": 325.4,
+        "2005": 296.5,
+        "2010": 289.8,
+        "2015": 283.2,
+        "2020": 288.7
+      },
+      "peak_k": 325.4
+    },
+    {
+      "from_name": "Central African Republic",
+      "from_iso": "CAF",
+      "from_coords": [
+        20,
+        6
+      ],
+      "to_name": "Democratic Republic of the Congo",
+      "to_iso": "COD",
+      "to_coords": [
+        24,
+        -3
+      ],
+      "hist": {
+        "2015": 253.4,
+        "2020": 323.3
+      },
+      "peak_k": 323.3
+    },
+    {
+      "from_name": "United Kingdom",
+      "from_iso": "GBR",
+      "from_coords": [
+        -2,
+        54
+      ],
+      "to_name": "Spain",
+      "to_iso": "ESP",
+      "to_coords": [
+        -4,
+        40
+      ],
+      "hist": {
+        "2005": 222.4,
+        "2010": 319.1,
+        "2015": 306.0,
+        "2020": 303.2
+      },
+      "peak_k": 319.1
+    },
+    {
+      "from_name": "Indonesia",
+      "from_iso": "IDN",
+      "from_coords": [
+        117,
+        -2
+      ],
+      "to_name": "United Arab Emirates",
+      "to_iso": "ARE",
+      "to_coords": [
+        54,
+        24
+      ],
+      "hist": {
+        "2010": 267.6,
+        "2015": 292.4,
+        "2020": 318.8
+      },
+      "peak_k": 318.8
+    },
+    {
+      "from_name": "Bangladesh",
+      "from_iso": "BGD",
+      "from_coords": [
+        90,
+        23
+      ],
+      "to_name": "Oman",
+      "to_iso": "OMN",
+      "to_coords": [
+        57,
+        21
+      ],
+      "hist": {
+        "2015": 247.6,
+        "2020": 316.5
+      },
+      "peak_k": 316.5
+    },
+    {
+      "from_name": "Bulgaria",
+      "from_iso": "BGR",
+      "from_coords": [
+        25,
+        43
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "2020": 314.9
+      },
+      "peak_k": 314.9
+    },
+    {
+      "from_name": "Germany",
+      "from_iso": "DEU",
+      "from_coords": [
+        10,
+        51
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "1990": 213.1,
+        "1995": 233.2,
+        "2000": 257.3,
+        "2005": 260.8,
+        "2010": 298.3,
+        "2015": 306.0,
+        "2020": 310.0
+      },
+      "peak_k": 310.0
+    },
+    {
+      "from_name": "State of Palestine",
+      "from_iso": "PSE",
+      "from_coords": [
+        35.3,
+        31.9
+      ],
+      "to_name": "Libya",
+      "to_iso": "LBY",
+      "to_coords": [
+        17,
+        27
+      ],
+      "hist": {
+        "1990": 152.3,
+        "1995": 179.9,
+        "2000": 210.5,
+        "2005": 232.1,
+        "2010": 254.7,
+        "2015": 285.1,
+        "2020": 305.5
+      },
+      "peak_k": 305.5
+    },
+    {
+      "from_name": "United Kingdom",
+      "from_iso": "GBR",
+      "from_coords": [
+        -2,
+        54
+      ],
+      "to_name": "Ireland",
+      "to_iso": "IRL",
+      "to_coords": [
+        -8,
+        53
+      ],
+      "hist": {
+        "1990": 184.7,
+        "2005": 207.8,
+        "2010": 249.4,
+        "2015": 267.4,
+        "2020": 305.2
+      },
+      "peak_k": 305.2
+    },
+    {
+      "from_name": "Viet Nam",
+      "from_iso": "VNM",
+      "from_coords": [
+        108,
+        14
+      ],
+      "to_name": "China",
+      "to_iso": "CHN",
+      "to_coords": [
+        104,
+        35
+      ],
+      "hist": {
+        "1990": 285.8,
+        "1995": 289.7,
+        "2000": 293.7,
+        "2005": 300.9,
+        "2010": 300.9,
+        "2015": 300.9,
+        "2020": 303.1
+      },
+      "peak_k": 303.1
+    },
+    {
+      "from_name": "Central African Republic",
+      "from_iso": "CAF",
+      "from_coords": [
+        20,
+        6
+      ],
+      "to_name": "Cameroon",
+      "to_iso": "CMR",
+      "to_coords": [
+        12,
+        6
+      ],
+      "hist": {
+        "2015": 271.3,
+        "2020": 303.0
+      },
+      "peak_k": 303.0
+    },
+    {
+      "from_name": "El Salvador",
+      "from_iso": "SLV",
+      "from_coords": [
+        -89,
+        13
+      ],
+      "to_name": "Mexico",
+      "to_iso": "MEX",
+      "to_coords": [
+        -102,
+        24
+      ],
+      "hist": {
+        "1990": 301.1
+      },
+      "peak_k": 301.1
+    },
+    {
+      "from_name": "China",
+      "from_iso": "CHN",
+      "from_coords": [
+        104,
+        35
+      ],
+      "to_name": "China, Macao SAR",
+      "to_iso": "MAC",
+      "to_coords": [
+        113.5,
+        22.2
+      ],
+      "hist": {
+        "1990": 172.3,
+        "1995": 189.1,
+        "2000": 204.3,
+        "2005": 237.0,
+        "2010": 251.2,
+        "2015": 280.1,
+        "2020": 300.6
+      },
+      "peak_k": 300.6
+    },
+    {
+      "from_name": "Guyana",
+      "from_iso": "GUY",
+      "from_coords": [
+        -59,
+        5
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1995": 168.2,
+        "2000": 216.6,
+        "2005": 236.8,
+        "2010": 264.9,
+        "2015": 299.1,
+        "2020": 241.6
+      },
+      "peak_k": 299.1
+    },
+    {
+      "from_name": "Uzbekistan",
+      "from_iso": "UZB",
+      "from_coords": [
+        63,
+        41
+      ],
+      "to_name": "Kazakhstan",
+      "to_iso": "KAZ",
+      "to_coords": [
+        66,
+        48
+      ],
+      "hist": {
+        "1995": 150.1,
+        "2000": 168.2,
+        "2005": 216.5,
+        "2010": 264.9,
+        "2015": 281.7,
+        "2020": 296.5
+      },
+      "peak_k": 296.5
+    },
+    {
+      "from_name": "Morocco",
+      "from_iso": "MAR",
+      "from_coords": [
+        -7,
+        32
+      ],
+      "to_name": "Belgium",
+      "to_iso": "BEL",
+      "to_coords": [
+        4.5,
+        50.5
+      ],
+      "hist": {
+        "1990": 295.5,
+        "1995": 267.8,
+        "2000": 232.4,
+        "2005": 174.1,
+        "2010": 178.8,
+        "2015": 208.1,
+        "2020": 225.2
+      },
+      "peak_k": 295.5
+    },
+    {
+      "from_name": "Republic of Moldova",
+      "from_iso": "MDA",
+      "from_coords": [
+        28.5,
+        47
+      ],
+      "to_name": "Russian Federation",
+      "to_iso": "RUS",
+      "to_coords": [
+        60,
+        58
+      ],
+      "hist": {
+        "1990": 292.8,
+        "1995": 289.7,
+        "2000": 276.1,
+        "2005": 285.4,
+        "2010": 288.8,
+        "2015": 294.3,
+        "2020": 294.2
+      },
+      "peak_k": 294.3
+    },
+    {
+      "from_name": "Iraq",
+      "from_iso": "IRQ",
+      "from_coords": [
+        44,
+        33
+      ],
+      "to_name": "Iran (Islamic Republic of)",
+      "to_iso": "IRN",
+      "to_coords": [
+        53,
+        33
+      ],
+      "hist": {
+        "1990": 290.3,
+        "1995": 257.6,
+        "2000": 204.8
+      },
+      "peak_k": 290.3
+    },
+    {
+      "from_name": "Ukraine",
+      "from_iso": "UKR",
+      "from_coords": [
+        32,
+        49
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "2000": 155.3,
+        "2005": 186.1,
+        "2010": 210.3,
+        "2015": 215.9,
+        "2020": 289.7
+      },
+      "peak_k": 289.7
+    },
+    {
+      "from_name": "Egypt",
+      "from_iso": "EGY",
+      "from_coords": [
+        30,
+        27
+      ],
+      "to_name": "Jordan",
+      "to_iso": "JOR",
+      "to_coords": [
+        36.5,
+        31
+      ],
+      "hist": {
+        "1990": 171.4,
+        "1995": 229.4,
+        "2000": 287.4
+      },
+      "peak_k": 287.4
+    },
+    {
+      "from_name": "United Kingdom",
+      "from_iso": "GBR",
+      "from_coords": [
+        -2,
+        54
+      ],
+      "to_name": "New Zealand",
+      "to_iso": "NZL",
+      "to_coords": [
+        172,
+        -42
+      ],
+      "hist": {
+        "1990": 227.9,
+        "1995": 217.7,
+        "2000": 211.5,
+        "2005": 233.0,
+        "2010": 251.0,
+        "2015": 265.0,
+        "2020": 286.7
+      },
+      "peak_k": 286.7
+    },
+    {
+      "from_name": "Philippines",
+      "from_iso": "PHL",
+      "from_coords": [
+        122,
+        13
+      ],
+      "to_name": "Australia",
+      "to_iso": "AUS",
+      "to_coords": [
+        133,
+        -27
+      ],
+      "hist": {
+        "2010": 183.8,
+        "2015": 241.1,
+        "2020": 286.3
+      },
+      "peak_k": 286.3
+    },
+    {
+      "from_name": "Austria",
+      "from_iso": "AUT",
+      "from_coords": [
+        14,
+        47
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "1990": 189.3,
+        "1995": 185.4,
+        "2000": 181.5,
+        "2005": 196.5,
+        "2010": 207.5,
+        "2015": 212.9,
+        "2020": 285.8
+      },
+      "peak_k": 285.8
+    },
+    {
+      "from_name": "Republic of Moldova",
+      "from_iso": "MDA",
+      "from_coords": [
+        28.5,
+        47
+      ],
+      "to_name": "Romania",
+      "to_iso": "ROU",
+      "to_coords": [
+        25,
+        46
+      ],
+      "hist": {
+        "2020": 285.4
+      },
+      "peak_k": 285.4
+    },
+    {
+      "from_name": "Argentina",
+      "from_iso": "ARG",
+      "from_coords": [
+        -64,
+        -34
+      ],
+      "to_name": "Spain",
+      "to_iso": "ESP",
+      "to_coords": [
+        -4,
+        40
+      ],
+      "hist": {
+        "2005": 244.0,
+        "2010": 282.6,
+        "2015": 251.8,
+        "2020": 284.9
+      },
+      "peak_k": 284.9
+    },
+    {
+      "from_name": "Russian Federation",
+      "from_iso": "RUS",
+      "from_coords": [
+        60,
+        58
+      ],
+      "to_name": "Estonia",
+      "to_iso": "EST",
+      "to_coords": [
+        25,
+        59
+      ],
+      "hist": {
+        "1990": 283.5,
+        "1995": 236.2,
+        "2000": 189.0,
+        "2005": 172.6,
+        "2010": 154.7
+      },
+      "peak_k": 283.5
+    },
+    {
+      "from_name": "Sri Lanka",
+      "from_iso": "LKA",
+      "from_coords": [
+        80,
+        7
+      ],
+      "to_name": "India",
+      "to_iso": "IND",
+      "to_coords": [
+        78,
+        22
+      ],
+      "hist": {
+        "1990": 281.7,
+        "1995": 235.8,
+        "2000": 189.8,
+        "2005": 202.4,
+        "2010": 212.0,
+        "2015": 197.6,
+        "2020": 184.8
+      },
+      "peak_k": 281.7
+    },
+    {
+      "from_name": "Somalia",
+      "from_iso": "SOM",
+      "from_coords": [
+        46,
+        5
+      ],
+      "to_name": "Yemen",
+      "to_iso": "YEM",
+      "to_coords": [
+        48,
+        15
+      ],
+      "hist": {
+        "2010": 194.4,
+        "2015": 275.7,
+        "2020": 280.9
+      },
+      "peak_k": 280.9
+    },
+    {
+      "from_name": "Nicaragua",
+      "from_iso": "NIC",
+      "from_coords": [
+        -85,
+        13
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 168.7,
+        "1995": 197.1,
+        "2000": 225.9,
+        "2005": 236.2,
+        "2010": 254.1,
+        "2015": 280.4,
+        "2020": 255.0
+      },
+      "peak_k": 280.4
+    },
+    {
+      "from_name": "Philippines",
+      "from_iso": "PHL",
+      "from_coords": [
+        122,
+        13
+      ],
+      "to_name": "Japan",
+      "to_iso": "JPN",
+      "to_coords": [
+        138,
+        37
+      ],
+      "hist": {
+        "2005": 198.2,
+        "2010": 210.2,
+        "2015": 229.6,
+        "2020": 275.3
+      },
+      "peak_k": 275.3
+    },
+    {
+      "from_name": "Portugal",
+      "from_iso": "PRT",
+      "from_coords": [
+        -8,
+        39
+      ],
+      "to_name": "Brazil",
+      "to_iso": "BRA",
+      "to_coords": [
+        -55,
+        -10
+      ],
+      "hist": {
+        "1990": 274.9,
+        "1995": 244.3,
+        "2000": 213.7,
+        "2005": 176.5,
+        "2015": 161.2,
+        "2020": 175.3
+      },
+      "peak_k": 274.9
+    },
+    {
+      "from_name": "United States of America",
+      "from_iso": "USA",
+      "from_coords": [
+        -95,
+        38
+      ],
+      "to_name": "Canada",
+      "to_iso": "CAN",
+      "to_coords": [
+        -96,
+        56
+      ],
+      "hist": {
+        "1990": 239.0,
+        "1995": 244.6,
+        "2000": 256.0,
+        "2005": 273.3,
+        "2010": 263.5,
+        "2015": 252.2,
+        "2020": 273.2
+      },
+      "peak_k": 273.3
+    },
+    {
+      "from_name": "Italy",
+      "from_iso": "ITA",
+      "from_coords": [
+        12,
+        43
+      ],
+      "to_name": "Australia",
+      "to_iso": "AUS",
+      "to_coords": [
+        133,
+        -27
+      ],
+      "hist": {
+        "1990": 271.1,
+        "1995": 260.7,
+        "2000": 234.0,
+        "2005": 220.5,
+        "2010": 204.7,
+        "2015": 198.5,
+        "2020": 206.3
+      },
+      "peak_k": 271.1
+    },
+    {
+      "from_name": "Italy",
+      "from_iso": "ITA",
+      "from_coords": [
+        12,
+        43
+      ],
+      "to_name": "Switzerland",
+      "to_iso": "CHE",
+      "to_coords": [
+        8,
+        47
+      ],
+      "hist": {
+        "1990": 208.1,
+        "1995": 191.9,
+        "2000": 176.4,
+        "2005": 198.9,
+        "2010": 232.8,
+        "2015": 255.0,
+        "2020": 270.1
+      },
+      "peak_k": 270.1
+    },
+    {
+      "from_name": "Viet Nam",
+      "from_iso": "VNM",
+      "from_coords": [
+        108,
+        14
+      ],
+      "to_name": "Australia",
+      "to_iso": "AUS",
+      "to_coords": [
+        133,
+        -27
+      ],
+      "hist": {
+        "1995": 157.4,
+        "2000": 163.7,
+        "2005": 174.4,
+        "2010": 203.8,
+        "2015": 235.6,
+        "2020": 269.8
+      },
+      "peak_k": 269.8
+    },
+    {
+      "from_name": "Pakistan",
+      "from_iso": "PAK",
+      "from_coords": [
+        68,
+        30
+      ],
+      "to_name": "Afghanistan",
+      "to_iso": "AFG",
+      "to_coords": [
+        67,
+        33
+      ],
+      "hist": {
+        "2015": 268.4
+      },
+      "peak_k": 268.4
+    },
+    {
+      "from_name": "Thailand",
+      "from_iso": "THA",
+      "from_coords": [
+        101,
+        15
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2000": 174.1,
+        "2005": 195.5,
+        "2010": 223.4,
+        "2015": 267.9,
+        "2020": 256.6
+      },
+      "peak_k": 267.9
+    },
+    {
+      "from_name": "Myanmar",
+      "from_iso": "MMR",
+      "from_coords": [
+        96,
+        20
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "2010": 167.8,
+        "2015": 214.4,
+        "2020": 267.8
+      },
+      "peak_k": 267.8
+    },
+    {
+      "from_name": "Ukraine",
+      "from_iso": "UKR",
+      "from_coords": [
+        32,
+        49
+      ],
+      "to_name": "Belarus",
+      "to_iso": "BLR",
+      "to_coords": [
+        28,
+        53
+      ],
+      "hist": {
+        "1990": 261.8,
+        "1995": 248.0,
+        "2000": 234.2,
+        "2005": 231.0,
+        "2010": 227.7,
+        "2015": 225.7,
+        "2020": 222.4
+      },
+      "peak_k": 261.8
+    },
+    {
+      "from_name": "Bangladesh",
+      "from_iso": "BGD",
+      "from_coords": [
+        90,
+        23
+      ],
+      "to_name": "Qatar",
+      "to_iso": "QAT",
+      "to_coords": [
+        51.5,
+        25
+      ],
+      "hist": {
+        "2010": 169.4,
+        "2015": 160.2,
+        "2020": 261.7
+      },
+      "peak_k": 261.7
+    },
+    {
+      "from_name": "Bangladesh",
+      "from_iso": "BGD",
+      "from_coords": [
+        90,
+        23
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2010": 159.5,
+        "2015": 222.6,
+        "2020": 261.5
+      },
+      "peak_k": 261.5
+    },
+    {
+      "from_name": "China",
+      "from_iso": "CHN",
+      "from_coords": [
+        104,
+        35
+      ],
+      "to_name": "Indonesia",
+      "to_iso": "IDN",
+      "to_coords": [
+        117,
+        -2
+      ],
+      "hist": {
+        "1990": 258.3,
+        "1995": 170.9
+      },
+      "peak_k": 258.3
+    },
+    {
+      "from_name": "Iraq",
+      "from_iso": "IRQ",
+      "from_coords": [
+        44,
+        33
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2015": 213.4,
+        "2020": 256.0
+      },
+      "peak_k": 256.0
+    },
+    {
+      "from_name": "Trinidad and Tobago",
+      "from_iso": "TTO",
+      "from_coords": [
+        -61,
+        10.5
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1995": 158.6,
+        "2000": 202.4,
+        "2005": 217.9,
+        "2010": 240.4,
+        "2015": 256.0,
+        "2020": 208.1
+      },
+      "peak_k": 256.0
+    },
+    {
+      "from_name": "Brazil",
+      "from_iso": "BRA",
+      "from_coords": [
+        -55,
+        -10
+      ],
+      "to_name": "Japan",
+      "to_iso": "JPN",
+      "to_coords": [
+        138,
+        37
+      ],
+      "hist": {
+        "1995": 178.9,
+        "2000": 254.4,
+        "2005": 217.5,
+        "2010": 230.6,
+        "2015": 173.4,
+        "2020": 204.8
+      },
+      "peak_k": 254.4
+    },
+    {
+      "from_name": "Syrian Arab Republic",
+      "from_iso": "SYR",
+      "from_coords": [
+        38,
+        35
+      ],
+      "to_name": "Iraq",
+      "to_iso": "IRQ",
+      "to_coords": [
+        44,
+        33
+      ],
+      "hist": {
+        "2015": 252.0,
+        "2020": 254.4
+      },
+      "peak_k": 254.4
+    },
+    {
+      "from_name": "Italy",
+      "from_iso": "ITA",
+      "from_coords": [
+        12,
+        43
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "2015": 152.5,
+        "2020": 254.1
+      },
+      "peak_k": 254.1
+    },
+    {
+      "from_name": "Nepal",
+      "from_iso": "NPL",
+      "from_coords": [
+        84,
+        28
+      ],
+      "to_name": "Qatar",
+      "to_iso": "QAT",
+      "to_coords": [
+        51.5,
+        25
+      ],
+      "hist": {
+        "2015": 151.3,
+        "2020": 253.9
+      },
+      "peak_k": 253.9
+    },
+    {
+      "from_name": "Democratic Republic of the Congo",
+      "from_iso": "COD",
+      "from_coords": [
+        24,
+        -3
+      ],
+      "to_name": "Congo",
+      "to_iso": "COG",
+      "to_coords": [
+        15,
+        -1
+      ],
+      "hist": {
+        "2000": 183.8,
+        "2005": 230.7,
+        "2010": 252.1,
+        "2015": 170.4,
+        "2020": 169.3
+      },
+      "peak_k": 252.1
+    },
+    {
+      "from_name": "Uzbekistan",
+      "from_iso": "UZB",
+      "from_coords": [
+        63,
+        41
+      ],
+      "to_name": "Ukraine",
+      "to_iso": "UKR",
+      "to_coords": [
+        32,
+        49
+      ],
+      "hist": {
+        "1995": 190.5,
+        "2000": 251.3,
+        "2005": 229.6,
+        "2010": 219.1,
+        "2015": 219.8,
+        "2020": 223.5
+      },
+      "peak_k": 251.3
+    },
+    {
+      "from_name": "Afghanistan",
+      "from_iso": "AFG",
+      "from_coords": [
+        67,
+        33
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "2020": 250.4
+      },
+      "peak_k": 250.4
+    },
+    {
+      "from_name": "Pakistan",
+      "from_iso": "PAK",
+      "from_coords": [
+        68,
+        30
+      ],
+      "to_name": "Oman",
+      "to_iso": "OMN",
+      "to_coords": [
+        57,
+        21
+      ],
+      "hist": {
+        "2015": 195.6,
+        "2020": 250.1
+      },
+      "peak_k": 250.1
+    },
+    {
+      "from_name": "China, Hong Kong SAR",
+      "from_iso": "HKG",
+      "from_coords": [
+        114.2,
+        22.3
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1995": 177.7,
+        "2000": 208.7,
+        "2005": 216.4,
+        "2010": 230.8,
+        "2015": 248.9,
+        "2020": 230.6
+      },
+      "peak_k": 248.9
+    },
+    {
+      "from_name": "Ukraine",
+      "from_iso": "UKR",
+      "from_coords": [
+        32,
+        49
+      ],
+      "to_name": "Italy",
+      "to_iso": "ITA",
+      "to_coords": [
+        12,
+        43
+      ],
+      "hist": {
+        "2010": 213.6,
+        "2015": 222.0,
+        "2020": 248.5
+      },
+      "peak_k": 248.5
+    },
+    {
+      "from_name": "Venezuela (Bolivarian Republic of)",
+      "from_iso": "VEN",
+      "from_coords": [
+        -65,
+        7
+      ],
+      "to_name": "Brazil",
+      "to_iso": "BRA",
+      "to_coords": [
+        -55,
+        -10
+      ],
+      "hist": {
+        "2020": 248.1
+      },
+      "peak_k": 248.1
+    },
+    {
+      "from_name": "South Africa",
+      "from_iso": "ZAF",
+      "from_coords": [
+        25,
+        -29
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "2005": 158.9,
+        "2010": 220.8,
+        "2015": 204.4,
+        "2020": 247.3
+      },
+      "peak_k": 247.3
+    },
+    {
+      "from_name": "Ethiopia",
+      "from_iso": "ETH",
+      "from_coords": [
+        39,
+        9
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2010": 152.8,
+        "2015": 221.5,
+        "2020": 245.7
+      },
+      "peak_k": 245.7
+    },
+    {
+      "from_name": "Ukraine",
+      "from_iso": "UKR",
+      "from_coords": [
+        32,
+        49
+      ],
+      "to_name": "Republic of Moldova",
+      "to_iso": "MDA",
+      "to_coords": [
+        28.5,
+        47
+      ],
+      "hist": {
+        "1990": 243.7,
+        "1995": 164.5
+      },
+      "peak_k": 243.7
+    },
+    {
+      "from_name": "Bangladesh",
+      "from_iso": "BGD",
+      "from_coords": [
+        90,
+        23
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "2005": 169.7,
+        "2010": 209.6,
+        "2015": 215.6,
+        "2020": 241.8
+      },
+      "peak_k": 241.8
+    },
+    {
+      "from_name": "Jordan",
+      "from_iso": "JOR",
+      "from_coords": [
+        36.5,
+        31
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "2010": 152.3,
+        "2015": 192.6,
+        "2020": 240.6
+      },
+      "peak_k": 240.6
+    },
+    {
+      "from_name": "Peru",
+      "from_iso": "PER",
+      "from_coords": [
+        -76,
+        -10
+      ],
+      "to_name": "Chile",
+      "to_iso": "CHL",
+      "to_coords": [
+        -71,
+        -35
+      ],
+      "hist": {
+        "2015": 150.9,
+        "2020": 240.3
+      },
+      "peak_k": 240.3
+    },
+    {
+      "from_name": "Ghana",
+      "from_iso": "GHA",
+      "from_coords": [
+        -1,
+        8
+      ],
+      "to_name": "Nigeria",
+      "to_iso": "NGA",
+      "to_coords": [
+        8,
+        10
+      ],
+      "hist": {
+        "2005": 179.8,
+        "2010": 183.7,
+        "2015": 222.4,
+        "2020": 238.3
+      },
+      "peak_k": 238.3
+    },
+    {
+      "from_name": "Angola",
+      "from_iso": "AGO",
+      "from_coords": [
+        18,
+        -12
+      ],
+      "to_name": "Zambia",
+      "to_iso": "ZMB",
+      "to_coords": [
+        28,
+        -15
+      ],
+      "hist": {
+        "2000": 238.2
+      },
+      "peak_k": 238.2
+    },
+    {
+      "from_name": "China, Hong Kong SAR",
+      "from_iso": "HKG",
+      "from_coords": [
+        114.2,
+        22.3
+      ],
+      "to_name": "Canada",
+      "to_iso": "CAN",
+      "to_coords": [
+        -96,
+        56
+      ],
+      "hist": {
+        "1990": 230.3,
+        "1995": 231.3,
+        "2000": 237.8,
+        "2005": 214.3,
+        "2010": 205.4,
+        "2015": 207.7,
+        "2020": 225.0
+      },
+      "peak_k": 237.8
+    },
+    {
+      "from_name": "Haiti",
+      "from_iso": "HTI",
+      "from_coords": [
+        -72,
+        19
+      ],
+      "to_name": "Chile",
+      "to_iso": "CHL",
+      "to_coords": [
+        -71,
+        -35
+      ],
+      "hist": {
+        "2020": 236.9
+      },
+      "peak_k": 236.9
+    },
+    {
+      "from_name": "Democratic Republic of the Congo",
+      "from_iso": "COD",
+      "from_coords": [
+        24,
+        -3
+      ],
+      "to_name": "Rwanda",
+      "to_iso": "RWA",
+      "to_coords": [
+        30,
+        -2
+      ],
+      "hist": {
+        "2000": 163.4,
+        "2005": 197.7,
+        "2010": 207.4,
+        "2015": 233.7,
+        "2020": 236.7
+      },
+      "peak_k": 236.7
+    },
+    {
+      "from_name": "El Salvador",
+      "from_iso": "SLV",
+      "from_coords": [
+        -89,
+        13
+      ],
+      "to_name": "Guatemala",
+      "to_iso": "GTM",
+      "to_coords": [
+        -90,
+        15
+      ],
+      "hist": {
+        "1990": 236.7
+      },
+      "peak_k": 236.7
+    },
+    {
+      "from_name": "Pakistan",
+      "from_iso": "PAK",
+      "from_coords": [
+        68,
+        30
+      ],
+      "to_name": "Qatar",
+      "to_iso": "QAT",
+      "to_coords": [
+        51.5,
+        25
+      ],
+      "hist": {
+        "2020": 235.5
+      },
+      "peak_k": 235.5
+    },
+    {
+      "from_name": "Lesotho",
+      "from_iso": "LSO",
+      "from_coords": [
+        28.5,
+        -29.5
+      ],
+      "to_name": "South Africa",
+      "to_iso": "ZAF",
+      "to_coords": [
+        25,
+        -29
+      ],
+      "hist": {
+        "1990": 187.0,
+        "2010": 234.1,
+        "2015": 181.8,
+        "2020": 192.0
+      },
+      "peak_k": 234.1
+    },
+    {
+      "from_name": "United States of America",
+      "from_iso": "USA",
+      "from_coords": [
+        -95,
+        38
+      ],
+      "to_name": "Puerto Rico",
+      "to_iso": "PRI",
+      "to_coords": [
+        -66.5,
+        18.2
+      ],
+      "hist": {
+        "1990": 227.5,
+        "1995": 230.4,
+        "2000": 233.9,
+        "2005": 223.9,
+        "2010": 185.8,
+        "2015": 165.1,
+        "2020": 159.5
+      },
+      "peak_k": 233.9
+    },
+    {
+      "from_name": "Iraq",
+      "from_iso": "IRQ",
+      "from_coords": [
+        44,
+        33
+      ],
+      "to_name": "Turkey",
+      "to_iso": "TUR",
+      "to_coords": [
+        35,
+        39
+      ],
+      "hist": {
+        "2020": 233.3
+      },
+      "peak_k": 233.3
+    },
+    {
+      "from_name": "China",
+      "from_iso": "CHN",
+      "from_coords": [
+        104,
+        35
+      ],
+      "to_name": "Italy",
+      "to_iso": "ITA",
+      "to_coords": [
+        12,
+        43
+      ],
+      "hist": {
+        "2010": 194.7,
+        "2015": 199.6,
+        "2020": 233.3
+      },
+      "peak_k": 233.3
+    },
+    {
+      "from_name": "Germany",
+      "from_iso": "DEU",
+      "from_coords": [
+        10,
+        51
+      ],
+      "to_name": "Austria",
+      "to_iso": "AUT",
+      "to_coords": [
+        14,
+        47
+      ],
+      "hist": {
+        "2005": 157.8,
+        "2010": 190.8,
+        "2015": 206.8,
+        "2020": 232.8
+      },
+      "peak_k": 232.8
+    },
+    {
+      "from_name": "Spain",
+      "from_iso": "ESP",
+      "from_coords": [
+        -4,
+        40
+      ],
+      "to_name": "Argentina",
+      "to_iso": "ARG",
+      "to_coords": [
+        -64,
+        -34
+      ],
+      "hist": {
+        "1990": 229.5,
+        "1995": 179.9
+      },
+      "peak_k": 229.5
+    },
+    {
+      "from_name": "Peru",
+      "from_iso": "PER",
+      "from_coords": [
+        -76,
+        -10
+      ],
+      "to_name": "Spain",
+      "to_iso": "ESP",
+      "to_coords": [
+        -4,
+        40
+      ],
+      "hist": {
+        "2010": 197.8,
+        "2015": 184.8,
+        "2020": 226.5
+      },
+      "peak_k": 226.5
+    },
+    {
+      "from_name": "Iraq",
+      "from_iso": "IRQ",
+      "from_coords": [
+        44,
+        33
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "2020": 226.5
+      },
+      "peak_k": 226.5
+    },
+    {
+      "from_name": "Russian Federation",
+      "from_iso": "RUS",
+      "from_coords": [
+        60,
+        58
+      ],
+      "to_name": "Republic of Moldova",
+      "to_iso": "MDA",
+      "to_coords": [
+        28.5,
+        47
+      ],
+      "hist": {
+        "1990": 225.6,
+        "1995": 152.3
+      },
+      "peak_k": 225.6
+    },
+    {
+      "from_name": "Chile",
+      "from_iso": "CHL",
+      "from_coords": [
+        -71,
+        -35
+      ],
+      "to_name": "Argentina",
+      "to_iso": "ARG",
+      "to_coords": [
+        -64,
+        -34
+      ],
+      "hist": {
+        "1990": 223.5,
+        "1995": 214.7,
+        "2000": 205.9,
+        "2005": 195.3,
+        "2010": 184.7,
+        "2015": 213.1,
+        "2020": 215.2
+      },
+      "peak_k": 223.5
+    },
+    {
+      "from_name": "Germany",
+      "from_iso": "DEU",
+      "from_coords": [
+        10,
+        51
+      ],
+      "to_name": "Italy",
+      "to_iso": "ITA",
+      "to_coords": [
+        12,
+        43
+      ],
+      "hist": {
+        "2010": 222.7,
+        "2015": 213.5,
+        "2020": 211.2
+      },
+      "peak_k": 222.7
+    },
+    {
+      "from_name": "Germany",
+      "from_iso": "DEU",
+      "from_coords": [
+        10,
+        51
+      ],
+      "to_name": "France",
+      "to_iso": "FRA",
+      "to_coords": [
+        2,
+        47
+      ],
+      "hist": {
+        "1990": 171.6,
+        "1995": 177.1,
+        "2000": 182.7,
+        "2005": 222.7,
+        "2010": 219.4,
+        "2015": 208.8,
+        "2020": 203.4
+      },
+      "peak_k": 222.7
+    },
+    {
+      "from_name": "Rwanda",
+      "from_iso": "RWA",
+      "from_coords": [
+        30,
+        -2
+      ],
+      "to_name": "Burundi",
+      "to_iso": "BDI",
+      "to_coords": [
+        29.9,
+        -3.4
+      ],
+      "hist": {
+        "1990": 221.9,
+        "1995": 160.2
+      },
+      "peak_k": 221.9
+    },
+    {
+      "from_name": "Bosnia and Herzegovina",
+      "from_iso": "BIH",
+      "from_coords": [
+        17.5,
+        44
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "2000": 151.1,
+        "2005": 157.1,
+        "2010": 160.9,
+        "2015": 165.2,
+        "2020": 221.7
+      },
+      "peak_k": 221.7
+    },
+    {
+      "from_name": "Colombia",
+      "from_iso": "COL",
+      "from_coords": [
+        -74,
+        4
+      ],
+      "to_name": "Ecuador",
+      "to_iso": "ECU",
+      "to_coords": [
+        -78,
+        -2
+      ],
+      "hist": {
+        "2010": 221.5,
+        "2015": 194.7,
+        "2020": 203.5
+      },
+      "peak_k": 221.5
+    },
+    {
+      "from_name": "France",
+      "from_iso": "FRA",
+      "from_coords": [
+        2,
+        47
+      ],
+      "to_name": "Spain",
+      "to_iso": "ESP",
+      "to_coords": [
+        -4,
+        40
+      ],
+      "hist": {
+        "2000": 174.6,
+        "2005": 177.0,
+        "2010": 210.0,
+        "2015": 203.7,
+        "2020": 221.4
+      },
+      "peak_k": 221.4
+    },
+    {
+      "from_name": "Hungary",
+      "from_iso": "HUN",
+      "from_coords": [
+        19,
+        47
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "2020": 220.8
+      },
+      "peak_k": 220.8
+    },
+    {
+      "from_name": "Argentina",
+      "from_iso": "ARG",
+      "from_coords": [
+        -64,
+        -34
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2005": 152.7,
+        "2010": 182.4,
+        "2015": 199.3,
+        "2020": 219.4
+      },
+      "peak_k": 219.4
+    },
+    {
+      "from_name": "Portugal",
+      "from_iso": "PRT",
+      "from_coords": [
+        -8,
+        39
+      ],
+      "to_name": "Switzerland",
+      "to_iso": "CHE",
+      "to_coords": [
+        8,
+        47
+      ],
+      "hist": {
+        "2005": 151.3,
+        "2010": 172.1,
+        "2015": 215.9,
+        "2020": 218.7
+      },
+      "peak_k": 218.7
+    },
+    {
+      "from_name": "Pakistan",
+      "from_iso": "PAK",
+      "from_coords": [
+        68,
+        30
+      ],
+      "to_name": "Canada",
+      "to_iso": "CAN",
+      "to_coords": [
+        -96,
+        56
+      ],
+      "hist": {
+        "2015": 201.0,
+        "2020": 217.8
+      },
+      "peak_k": 217.8
+    },
+    {
+      "from_name": "Bolivia (Plurinational State of)",
+      "from_iso": "BOL",
+      "from_coords": [
+        -65,
+        -17
+      ],
+      "to_name": "Spain",
+      "to_iso": "ESP",
+      "to_coords": [
+        -4,
+        40
+      ],
+      "hist": {
+        "2010": 216.0,
+        "2015": 150.7,
+        "2020": 159.9
+      },
+      "peak_k": 216.0
+    },
+    {
+      "from_name": "Rwanda",
+      "from_iso": "RWA",
+      "from_coords": [
+        30,
+        -2
+      ],
+      "to_name": "Uganda",
+      "to_iso": "UGA",
+      "to_coords": [
+        32,
+        1
+      ],
+      "hist": {
+        "1990": 214.6
+      },
+      "peak_k": 214.6
+    },
+    {
+      "from_name": "Romania",
+      "from_iso": "ROU",
+      "from_coords": [
+        25,
+        46
+      ],
+      "to_name": "Hungary",
+      "to_iso": "HUN",
+      "to_coords": [
+        19,
+        47
+      ],
+      "hist": {
+        "1990": 194.1,
+        "1995": 170.2,
+        "2005": 179.5,
+        "2010": 214.3,
+        "2015": 190.2,
+        "2020": 214.5
+      },
+      "peak_k": 214.5
+    },
+    {
+      "from_name": "Lao People's Democratic Republic",
+      "from_iso": "LAO",
+      "from_coords": [
+        103,
+        18
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 171.6,
+        "1995": 190.4,
+        "2000": 209.5,
+        "2005": 204.2,
+        "2010": 205.1,
+        "2015": 213.8,
+        "2020": 173.3
+      },
+      "peak_k": 213.8
+    },
+    {
+      "from_name": "Germany",
+      "from_iso": "DEU",
+      "from_coords": [
+        10,
+        51
+      ],
+      "to_name": "Spain",
+      "to_iso": "ESP",
+      "to_coords": [
+        -4,
+        40
+      ],
+      "hist": {
+        "2000": 160.5,
+        "2005": 180.3,
+        "2010": 212.9,
+        "2015": 200.6,
+        "2020": 200.7
+      },
+      "peak_k": 212.9
+    },
+    {
+      "from_name": "Portugal",
+      "from_iso": "PRT",
+      "from_coords": [
+        -8,
+        39
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 210.1,
+        "1995": 209.4,
+        "2000": 208.3,
+        "2005": 200.4,
+        "2010": 198.4,
+        "2015": 176.8,
+        "2020": 191.3
+      },
+      "peak_k": 210.1
+    },
+    {
+      "from_name": "China, Hong Kong SAR",
+      "from_iso": "HKG",
+      "from_coords": [
+        114.2,
+        22.3
+      ],
+      "to_name": "China",
+      "to_iso": "CHN",
+      "to_coords": [
+        104,
+        35
+      ],
+      "hist": {
+        "2010": 156.2,
+        "2015": 192.6,
+        "2020": 209.6
+      },
+      "peak_k": 209.6
+    },
+    {
+      "from_name": "China",
+      "from_iso": "CHN",
+      "from_coords": [
+        104,
+        35
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "2010": 155.2,
+        "2015": 199.4,
+        "2020": 208.2
+      },
+      "peak_k": 208.2
+    },
+    {
+      "from_name": "Eritrea",
+      "from_iso": "ERI",
+      "from_coords": [
+        39,
+        15
+      ],
+      "to_name": "Ethiopia",
+      "to_iso": "ETH",
+      "to_coords": [
+        39,
+        9
+      ],
+      "hist": {
+        "2015": 205.8,
+        "2020": 191.3
+      },
+      "peak_k": 205.8
+    },
+    {
+      "from_name": "Nigeria",
+      "from_iso": "NGA",
+      "from_coords": [
+        8,
+        10
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "2010": 162.1,
+        "2015": 181.0,
+        "2020": 205.8
+      },
+      "peak_k": 205.8
+    },
+    {
+      "from_name": "Yemen",
+      "from_iso": "YEM",
+      "from_coords": [
+        48,
+        15
+      ],
+      "to_name": "United Arab Emirates",
+      "to_iso": "ARE",
+      "to_coords": [
+        54,
+        24
+      ],
+      "hist": {
+        "2010": 172.6,
+        "2015": 188.6,
+        "2020": 205.6
+      },
+      "peak_k": 205.6
+    },
+    {
+      "from_name": "Armenia",
+      "from_iso": "ARM",
+      "from_coords": [
+        45,
+        40
+      ],
+      "to_name": "Azerbaijan",
+      "to_iso": "AZE",
+      "to_coords": [
+        47,
+        40
+      ],
+      "hist": {
+        "1990": 202.6,
+        "1995": 205.4,
+        "2000": 188.4,
+        "2005": 170.1,
+        "2010": 155.7
+      },
+      "peak_k": 205.4
+    },
+    {
+      "from_name": "Egypt",
+      "from_iso": "EGY",
+      "from_coords": [
+        30,
+        27
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2015": 188.2,
+        "2020": 205.0
+      },
+      "peak_k": 205.0
+    },
+    {
+      "from_name": "Malaysia",
+      "from_iso": "MYS",
+      "from_coords": [
+        109,
+        3
+      ],
+      "to_name": "Bangladesh",
+      "to_iso": "BGD",
+      "to_coords": [
+        90,
+        23
+      ],
+      "hist": {
+        "2000": 160.0,
+        "2005": 190.4,
+        "2010": 204.9,
+        "2015": 203.6,
+        "2020": 199.6
+      },
+      "peak_k": 204.9
+    },
+    {
+      "from_name": "Ghana",
+      "from_iso": "GHA",
+      "from_coords": [
+        -1,
+        8
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2015": 161.1,
+        "2020": 201.1
+      },
+      "peak_k": 201.1
+    },
+    {
+      "from_name": "South Africa",
+      "from_iso": "ZAF",
+      "from_coords": [
+        25,
+        -29
+      ],
+      "to_name": "Australia",
+      "to_iso": "AUS",
+      "to_coords": [
+        133,
+        -27
+      ],
+      "hist": {
+        "2010": 155.9,
+        "2015": 177.4,
+        "2020": 199.7
+      },
+      "peak_k": 199.7
+    },
+    {
+      "from_name": "Democratic Republic of the Congo",
+      "from_iso": "COD",
+      "from_coords": [
+        24,
+        -3
+      ],
+      "to_name": "Burundi",
+      "to_iso": "BDI",
+      "to_coords": [
+        29.9,
+        -3.4
+      ],
+      "hist": {
+        "2015": 175.8,
+        "2020": 199.6
+      },
+      "peak_k": 199.6
+    },
+    {
+      "from_name": "Turkey",
+      "from_iso": "TUR",
+      "from_coords": [
+        35,
+        39
+      ],
+      "to_name": "Netherlands",
+      "to_iso": "NLD",
+      "to_coords": [
+        5,
+        52
+      ],
+      "hist": {
+        "1995": 155.8,
+        "2000": 176.6,
+        "2005": 194.6,
+        "2010": 196.1,
+        "2015": 190.7,
+        "2020": 199.3
+      },
+      "peak_k": 199.3
+    },
+    {
+      "from_name": "North Macedonia",
+      "from_iso": "MKD",
+      "from_coords": [
+        22,
+        41.6
+      ],
+      "to_name": "Turkey",
+      "to_iso": "TUR",
+      "to_coords": [
+        35,
+        39
+      ],
+      "hist": {
+        "2020": 198.0
+      },
+      "peak_k": 198.0
+    },
+    {
+      "from_name": "Peru",
+      "from_iso": "PER",
+      "from_coords": [
+        -76,
+        -10
+      ],
+      "to_name": "Argentina",
+      "to_iso": "ARG",
+      "to_coords": [
+        -64,
+        -34
+      ],
+      "hist": {
+        "2010": 169.3,
+        "2015": 195.3,
+        "2020": 197.2
+      },
+      "peak_k": 197.2
+    },
+    {
+      "from_name": "Philippines",
+      "from_iso": "PHL",
+      "from_coords": [
+        122,
+        13
+      ],
+      "to_name": "Kuwait",
+      "to_iso": "KWT",
+      "to_coords": [
+        47.5,
+        29
+      ],
+      "hist": {
+        "2015": 181.5,
+        "2020": 196.9
+      },
+      "peak_k": 196.9
+    },
+    {
+      "from_name": "Chad",
+      "from_iso": "TCD",
+      "from_coords": [
+        18,
+        15
+      ],
+      "to_name": "Sudan",
+      "to_iso": "SDN",
+      "to_coords": [
+        31,
+        16
+      ],
+      "hist": {
+        "1990": 196.2
+      },
+      "peak_k": 196.2
+    },
+    {
+      "from_name": "Finland",
+      "from_iso": "FIN",
+      "from_coords": [
+        26,
+        64
+      ],
+      "to_name": "Sweden",
+      "to_iso": "SWE",
+      "to_coords": [
+        18,
+        62
+      ],
+      "hist": {
+        "1990": 153.6,
+        "1995": 182.2,
+        "2000": 195.4,
+        "2005": 181.7,
+        "2010": 171.6,
+        "2015": 151.6,
+        "2020": 151.7
+      },
+      "peak_k": 195.4
+    },
+    {
+      "from_name": "Côte d'Ivoire",
+      "from_iso": "CIV",
+      "from_coords": [
+        -6,
+        7
+      ],
+      "to_name": "Mali",
+      "to_iso": "MLI",
+      "to_coords": [
+        -2,
+        17
+      ],
+      "hist": {
+        "2015": 166.4,
+        "2020": 195.3
+      },
+      "peak_k": 195.3
+    },
+    {
+      "from_name": "Republic of Moldova",
+      "from_iso": "MDA",
+      "from_coords": [
+        28.5,
+        47
+      ],
+      "to_name": "Italy",
+      "to_iso": "ITA",
+      "to_coords": [
+        12,
+        43
+      ],
+      "hist": {
+        "2010": 159.9,
+        "2015": 170.7,
+        "2020": 194.5
+      },
+      "peak_k": 194.5
+    },
+    {
+      "from_name": "Switzerland",
+      "from_iso": "CHE",
+      "from_coords": [
+        8,
+        47
+      ],
+      "to_name": "Italy",
+      "to_iso": "ITA",
+      "to_coords": [
+        12,
+        43
+      ],
+      "hist": {
+        "2010": 194.5,
+        "2015": 193.3,
+        "2020": 193.6
+      },
+      "peak_k": 194.5
+    },
+    {
+      "from_name": "Syrian Arab Republic",
+      "from_iso": "SYR",
+      "from_coords": [
+        38,
+        35
+      ],
+      "to_name": "Sweden",
+      "to_iso": "SWE",
+      "to_coords": [
+        18,
+        62
+      ],
+      "hist": {
+        "2020": 190.9
+      },
+      "peak_k": 190.9
+    },
+    {
+      "from_name": "Lithuania",
+      "from_iso": "LTU",
+      "from_coords": [
+        24,
+        56
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "2020": 190.3
+      },
+      "peak_k": 190.3
+    },
+    {
+      "from_name": "United States of America",
+      "from_iso": "USA",
+      "from_coords": [
+        -95,
+        38
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "2000": 153.2,
+        "2005": 163.9,
+        "2010": 188.1,
+        "2015": 190.0,
+        "2020": 170.8
+      },
+      "peak_k": 190.0
+    },
+    {
+      "from_name": "France",
+      "from_iso": "FRA",
+      "from_coords": [
+        2,
+        47
+      ],
+      "to_name": "Belgium",
+      "to_iso": "BEL",
+      "to_coords": [
+        4.5,
+        50.5
+      ],
+      "hist": {
+        "2010": 171.2,
+        "2015": 182.2,
+        "2020": 189.5
+      },
+      "peak_k": 189.5
+    },
+    {
+      "from_name": "Turkey",
+      "from_iso": "TUR",
+      "from_coords": [
+        35,
+        39
+      ],
+      "to_name": "Belgium",
+      "to_iso": "BEL",
+      "to_coords": [
+        4.5,
+        50.5
+      ],
+      "hist": {
+        "1990": 188.8,
+        "1995": 163.1
+      },
+      "peak_k": 188.8
+    },
+    {
+      "from_name": "Suriname",
+      "from_iso": "SUR",
+      "from_coords": [
+        -56,
+        4
+      ],
+      "to_name": "Netherlands",
+      "to_iso": "NLD",
+      "to_coords": [
+        5,
+        52
+      ],
+      "hist": {
+        "1990": 156.2,
+        "1995": 167.1,
+        "2000": 183.6,
+        "2005": 188.7,
+        "2010": 186.2,
+        "2015": 179.0,
+        "2020": 182.9
+      },
+      "peak_k": 188.7
+    },
+    {
+      "from_name": "Indonesia",
+      "from_iso": "IDN",
+      "from_coords": [
+        117,
+        -2
+      ],
+      "to_name": "Netherlands",
+      "to_iso": "NLD",
+      "to_coords": [
+        5,
+        52
+      ],
+      "hist": {
+        "1990": 186.7,
+        "1995": 173.6,
+        "2000": 166.7,
+        "2005": 154.9
+      },
+      "peak_k": 186.7
+    },
+    {
+      "from_name": "Spain",
+      "from_iso": "ESP",
+      "from_coords": [
+        -4,
+        40
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "2020": 186.1
+      },
+      "peak_k": 186.1
+    },
+    {
+      "from_name": "Turkmenistan",
+      "from_iso": "TKM",
+      "from_coords": [
+        59,
+        39
+      ],
+      "to_name": "Russian Federation",
+      "to_iso": "RUS",
+      "to_coords": [
+        60,
+        58
+      ],
+      "hist": {
+        "1990": 165.9,
+        "1995": 173.3,
+        "2000": 174.4,
+        "2005": 180.1,
+        "2010": 182.2,
+        "2015": 185.7,
+        "2020": 185.6
+      },
+      "peak_k": 185.7
+    },
+    {
+      "from_name": "Dominican Republic",
+      "from_iso": "DOM",
+      "from_coords": [
+        -70,
+        19
+      ],
+      "to_name": "Spain",
+      "to_iso": "ESP",
+      "to_coords": [
+        -4,
+        40
+      ],
+      "hist": {
+        "2015": 156.9,
+        "2020": 184.8
+      },
+      "peak_k": 184.8
+    },
+    {
+      "from_name": "Egypt",
+      "from_iso": "EGY",
+      "from_coords": [
+        30,
+        27
+      ],
+      "to_name": "Qatar",
+      "to_iso": "QAT",
+      "to_coords": [
+        51.5,
+        25
+      ],
+      "hist": {
+        "2015": 163.6,
+        "2020": 183.5
+      },
+      "peak_k": 183.5
+    },
+    {
+      "from_name": "Viet Nam",
+      "from_iso": "VNM",
+      "from_coords": [
+        108,
+        14
+      ],
+      "to_name": "Canada",
+      "to_iso": "CAN",
+      "to_coords": [
+        -96,
+        56
+      ],
+      "hist": {
+        "2005": 151.6,
+        "2010": 165.1,
+        "2015": 168.2,
+        "2020": 182.3
+      },
+      "peak_k": 182.3
+    },
+    {
+      "from_name": "Cambodia",
+      "from_iso": "KHM",
+      "from_coords": [
+        105,
+        12
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2010": 159.2,
+        "2015": 181.5,
+        "2020": 154.9
+      },
+      "peak_k": 181.5
+    },
+    {
+      "from_name": "Ukraine",
+      "from_iso": "UKR",
+      "from_coords": [
+        32,
+        49
+      ],
+      "to_name": "Uzbekistan",
+      "to_iso": "UZB",
+      "to_coords": [
+        63,
+        41
+      ],
+      "hist": {
+        "1990": 180.2,
+        "1995": 153.4
+      },
+      "peak_k": 180.2
+    },
+    {
+      "from_name": "Poland",
+      "from_iso": "POL",
+      "from_coords": [
+        20,
+        52
+      ],
+      "to_name": "Canada",
+      "to_iso": "CAN",
+      "to_coords": [
+        -96,
+        56
+      ],
+      "hist": {
+        "1990": 177.2,
+        "1995": 176.5,
+        "2000": 180.1,
+        "2005": 160.2,
+        "2010": 152.3,
+        "2020": 157.7
+      },
+      "peak_k": 180.1
+    },
+    {
+      "from_name": "Republic of Moldova",
+      "from_iso": "MDA",
+      "from_coords": [
+        28.5,
+        47
+      ],
+      "to_name": "Ukraine",
+      "to_iso": "UKR",
+      "to_coords": [
+        32,
+        49
+      ],
+      "hist": {
+        "1990": 180.0,
+        "1995": 174.5,
+        "2000": 171.2,
+        "2005": 156.4,
+        "2020": 152.2
+      },
+      "peak_k": 180.0
+    },
+    {
+      "from_name": "Angola",
+      "from_iso": "AGO",
+      "from_coords": [
+        18,
+        -12
+      ],
+      "to_name": "Portugal",
+      "to_iso": "PRT",
+      "to_coords": [
+        -8,
+        39
+      ],
+      "hist": {
+        "1995": 154.3,
+        "2000": 173.2,
+        "2005": 169.6,
+        "2015": 156.3,
+        "2020": 179.5
+      },
+      "peak_k": 179.5
+    },
+    {
+      "from_name": "China",
+      "from_iso": "CHN",
+      "from_coords": [
+        104,
+        35
+      ],
+      "to_name": "Spain",
+      "to_iso": "ESP",
+      "to_coords": [
+        -4,
+        40
+      ],
+      "hist": {
+        "2010": 154.9,
+        "2015": 155.7,
+        "2020": 179.1
+      },
+      "peak_k": 179.1
+    },
+    {
+      "from_name": "Romania",
+      "from_iso": "ROU",
+      "from_coords": [
+        25,
+        46
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2005": 152.2,
+        "2010": 169.9,
+        "2015": 177.8,
+        "2020": 170.5
+      },
+      "peak_k": 177.8
+    },
+    {
+      "from_name": "Serbia",
+      "from_iso": "SRB",
+      "from_coords": [
+        21,
+        44
+      ],
+      "to_name": "Austria",
+      "to_iso": "AUT",
+      "to_coords": [
+        14,
+        47
+      ],
+      "hist": {
+        "2010": 166.3,
+        "2015": 160.0,
+        "2020": 177.6
+      },
+      "peak_k": 177.6
+    },
+    {
+      "from_name": "Greece",
+      "from_iso": "GRC",
+      "from_coords": [
+        22,
+        39
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 177.4,
+        "1995": 173.9,
+        "2000": 170.0,
+        "2005": 158.1,
+        "2010": 150.9,
+        "2015": 151.7
+      },
+      "peak_k": 177.4
+    },
+    {
+      "from_name": "Viet Nam",
+      "from_iso": "VNM",
+      "from_coords": [
+        108,
+        14
+      ],
+      "to_name": "Republic of Korea",
+      "to_iso": "KOR",
+      "to_coords": [
+        127,
+        37
+      ],
+      "hist": {
+        "2020": 177.3
+      },
+      "peak_k": 177.3
+    },
+    {
+      "from_name": "Malaysia",
+      "from_iso": "MYS",
+      "from_coords": [
+        109,
+        3
+      ],
+      "to_name": "Australia",
+      "to_iso": "AUS",
+      "to_coords": [
+        133,
+        -27
+      ],
+      "hist": {
+        "2020": 177.3
+      },
+      "peak_k": 177.3
+    },
+    {
+      "from_name": "Philippines",
+      "from_iso": "PHL",
+      "from_coords": [
+        122,
+        13
+      ],
+      "to_name": "Malaysia",
+      "to_iso": "MYS",
+      "to_coords": [
+        109,
+        3
+      ],
+      "hist": {
+        "2000": 177.0
+      },
+      "peak_k": 177.0
+    },
+    {
+      "from_name": "Nepal",
+      "from_iso": "NPL",
+      "from_coords": [
+        84,
+        28
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2020": 176.5
+      },
+      "peak_k": 176.5
+    },
+    {
+      "from_name": "Venezuela (Bolivarian Republic of)",
+      "from_iso": "VEN",
+      "from_coords": [
+        -65,
+        7
+      ],
+      "to_name": "Argentina",
+      "to_iso": "ARG",
+      "to_coords": [
+        -64,
+        -34
+      ],
+      "hist": {
+        "2020": 176.4
+      },
+      "peak_k": 176.4
+    },
+    {
+      "from_name": "Italy",
+      "from_iso": "ITA",
+      "from_coords": [
+        12,
+        43
+      ],
+      "to_name": "Belgium",
+      "to_iso": "BEL",
+      "to_coords": [
+        4.5,
+        50.5
+      ],
+      "hist": {
+        "1990": 176.2,
+        "1995": 163.8
+      },
+      "peak_k": 176.2
+    },
+    {
+      "from_name": "Germany",
+      "from_iso": "DEU",
+      "from_coords": [
+        10,
+        51
+      ],
+      "to_name": "Canada",
+      "to_iso": "CAN",
+      "to_coords": [
+        -96,
+        56
+      ],
+      "hist": {
+        "1990": 173.2,
+        "1995": 172.5,
+        "2000": 176.0,
+        "2005": 166.5,
+        "2010": 152.3,
+        "2020": 157.1
+      },
+      "peak_k": 176.0
+    },
+    {
+      "from_name": "Russian Federation",
+      "from_iso": "RUS",
+      "from_coords": [
+        60,
+        58
+      ],
+      "to_name": "Israel",
+      "to_iso": "ISR",
+      "to_coords": [
+        35,
+        31.5
+      ],
+      "hist": {
+        "1990": 175.9,
+        "1995": 173.9,
+        "2000": 162.2
+      },
+      "peak_k": 175.9
+    },
+    {
+      "from_name": "Tunisia",
+      "from_iso": "TUN",
+      "from_coords": [
+        9,
+        34
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2020": 175.7
+      },
+      "peak_k": 175.7
+    },
+    {
+      "from_name": "Morocco",
+      "from_iso": "MAR",
+      "from_coords": [
+        -7,
+        32
+      ],
+      "to_name": "Netherlands",
+      "to_iso": "NLD",
+      "to_coords": [
+        5,
+        52
+      ],
+      "hist": {
+        "2000": 151.5,
+        "2005": 167.4,
+        "2010": 166.9,
+        "2015": 166.9,
+        "2020": 174.9
+      },
+      "peak_k": 174.9
+    },
+    {
+      "from_name": "United Kingdom",
+      "from_iso": "GBR",
+      "from_coords": [
+        -2,
+        54
+      ],
+      "to_name": "France",
+      "to_iso": "FRA",
+      "to_coords": [
+        2,
+        47
+      ],
+      "hist": {
+        "2010": 174.0,
+        "2015": 167.1,
+        "2020": 169.6
+      },
+      "peak_k": 174.0
+    },
+    {
+      "from_name": "France",
+      "from_iso": "FRA",
+      "from_coords": [
+        2,
+        47
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2000": 155.0,
+        "2005": 155.3,
+        "2010": 160.3,
+        "2015": 173.6,
+        "2020": 162.4
+      },
+      "peak_k": 173.6
+    },
+    {
+      "from_name": "Colombia",
+      "from_iso": "COL",
+      "from_coords": [
+        -74,
+        4
+      ],
+      "to_name": "Chile",
+      "to_iso": "CHL",
+      "to_coords": [
+        -71,
+        -35
+      ],
+      "hist": {
+        "2020": 173.5
+      },
+      "peak_k": 173.5
+    },
+    {
+      "from_name": "Mali",
+      "from_iso": "MLI",
+      "from_coords": [
+        -2,
+        17
+      ],
+      "to_name": "Nigeria",
+      "to_iso": "NGA",
+      "to_coords": [
+        8,
+        10
+      ],
+      "hist": {
+        "2015": 161.0,
+        "2020": 172.5
+      },
+      "peak_k": 172.5
+    },
+    {
+      "from_name": "Ukraine",
+      "from_iso": "UKR",
+      "from_coords": [
+        32,
+        49
+      ],
+      "to_name": "Israel",
+      "to_iso": "ISR",
+      "to_coords": [
+        35,
+        31.5
+      ],
+      "hist": {
+        "1990": 168.1,
+        "1995": 171.0,
+        "2000": 164.3
+      },
+      "peak_k": 171.0
+    },
+    {
+      "from_name": "France",
+      "from_iso": "FRA",
+      "from_coords": [
+        2,
+        47
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "2020": 170.3
+      },
+      "peak_k": 170.3
+    },
+    {
+      "from_name": "Zimbabwe",
+      "from_iso": "ZWE",
+      "from_coords": [
+        30,
+        -20
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "2015": 150.9,
+        "2020": 170.3
+      },
+      "peak_k": 170.3
+    },
+    {
+      "from_name": "France",
+      "from_iso": "FRA",
+      "from_coords": [
+        2,
+        47
+      ],
+      "to_name": "Switzerland",
+      "to_iso": "CHE",
+      "to_coords": [
+        8,
+        47
+      ],
+      "hist": {
+        "2015": 151.2,
+        "2020": 170.2
+      },
+      "peak_k": 170.2
+    },
+    {
+      "from_name": "Philippines",
+      "from_iso": "PHL",
+      "from_coords": [
+        122,
+        13
+      ],
+      "to_name": "Qatar",
+      "to_iso": "QAT",
+      "to_coords": [
+        51.5,
+        25
+      ],
+      "hist": {
+        "2020": 170.1
+      },
+      "peak_k": 170.1
+    },
+    {
+      "from_name": "Ireland",
+      "from_iso": "IRL",
+      "from_coords": [
+        -8,
+        53
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "1990": 169.8,
+        "1995": 165.3,
+        "2000": 160.4
+      },
+      "peak_k": 169.8
+    },
+    {
+      "from_name": "Nigeria",
+      "from_iso": "NGA",
+      "from_coords": [
+        8,
+        10
+      ],
+      "to_name": "Cameroon",
+      "to_iso": "CMR",
+      "to_coords": [
+        12,
+        6
+      ],
+      "hist": {
+        "2020": 169.6
+      },
+      "peak_k": 169.6
+    },
+    {
+      "from_name": "Jordan",
+      "from_iso": "JOR",
+      "from_coords": [
+        36.5,
+        31
+      ],
+      "to_name": "United Arab Emirates",
+      "to_iso": "ARE",
+      "to_coords": [
+        54,
+        24
+      ],
+      "hist": {
+        "2015": 155.0,
+        "2020": 169.0
+      },
+      "peak_k": 169.0
+    },
+    {
+      "from_name": "Bosnia and Herzegovina",
+      "from_iso": "BIH",
+      "from_coords": [
+        17.5,
+        44
+      ],
+      "to_name": "Austria",
+      "to_iso": "AUT",
+      "to_coords": [
+        14,
+        47
+      ],
+      "hist": {
+        "2015": 152.8,
+        "2020": 168.8
+      },
+      "peak_k": 168.8
+    },
+    {
+      "from_name": "Western Sahara",
+      "from_iso": "ESH",
+      "from_coords": [
+        -13,
+        25
+      ],
+      "to_name": "Algeria",
+      "to_iso": "DZA",
+      "to_coords": [
+        3,
+        28
+      ],
+      "hist": {
+        "1990": 167.9,
+        "1995": 166.9,
+        "2000": 165.9,
+        "2015": 156.7,
+        "2020": 163.0
+      },
+      "peak_k": 167.9
+    },
+    {
+      "from_name": "Guinea",
+      "from_iso": "GIN",
+      "from_coords": [
+        -11,
+        11
+      ],
+      "to_name": "Côte d'Ivoire",
+      "to_iso": "CIV",
+      "to_coords": [
+        -6,
+        7
+      ],
+      "hist": {
+        "2010": 154.6,
+        "2015": 161.4,
+        "2020": 167.5
+      },
+      "peak_k": 167.5
+    },
+    {
+      "from_name": "India",
+      "from_iso": "IND",
+      "from_coords": [
+        78,
+        22
+      ],
+      "to_name": "Italy",
+      "to_iso": "ITA",
+      "to_coords": [
+        12,
+        43
+      ],
+      "hist": {
+        "2020": 167.3
+      },
+      "peak_k": 167.3
+    },
+    {
+      "from_name": "Morocco",
+      "from_iso": "MAR",
+      "from_coords": [
+        -7,
+        32
+      ],
+      "to_name": "Israel",
+      "to_iso": "ISR",
+      "to_coords": [
+        35,
+        31.5
+      ],
+      "hist": {
+        "1990": 157.0,
+        "1995": 166.7,
+        "2000": 167.0,
+        "2005": 161.6,
+        "2010": 158.2,
+        "2015": 163.1,
+        "2020": 158.4
+      },
+      "peak_k": 167.0
+    },
+    {
+      "from_name": "Iran (Islamic Republic of)",
+      "from_iso": "IRN",
+      "from_coords": [
+        53,
+        33
+      ],
+      "to_name": "Canada",
+      "to_iso": "CAN",
+      "to_coords": [
+        -96,
+        56
+      ],
+      "hist": {
+        "2015": 153.5,
+        "2020": 166.3
+      },
+      "peak_k": 166.3
+    },
+    {
+      "from_name": "United Kingdom",
+      "from_iso": "GBR",
+      "from_coords": [
+        -2,
+        54
+      ],
+      "to_name": "South Africa",
+      "to_iso": "ZAF",
+      "to_coords": [
+        25,
+        -29
+      ],
+      "hist": {
+        "2005": 165.7
+      },
+      "peak_k": 165.7
+    },
+    {
+      "from_name": "Netherlands",
+      "from_iso": "NLD",
+      "from_coords": [
+        5,
+        52
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "2020": 165.4
+      },
+      "peak_k": 165.4
+    },
+    {
+      "from_name": "Ethiopia",
+      "from_iso": "ETH",
+      "from_coords": [
+        39,
+        9
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "2020": 164.2
+      },
+      "peak_k": 164.2
+    },
+    {
+      "from_name": "Belgium",
+      "from_iso": "BEL",
+      "from_coords": [
+        4.5,
+        50.5
+      ],
+      "to_name": "France",
+      "to_iso": "FRA",
+      "to_coords": [
+        2,
+        47
+      ],
+      "hist": {
+        "2015": 153.1,
+        "2020": 163.6
+      },
+      "peak_k": 163.6
+    },
+    {
+      "from_name": "China",
+      "from_iso": "CHN",
+      "from_coords": [
+        104,
+        35
+      ],
+      "to_name": "Bangladesh",
+      "to_iso": "BGD",
+      "to_coords": [
+        90,
+        23
+      ],
+      "hist": {
+        "2010": 160.3,
+        "2015": 162.8,
+        "2020": 159.6
+      },
+      "peak_k": 162.8
+    },
+    {
+      "from_name": "Cuba",
+      "from_iso": "CUB",
+      "from_coords": [
+        -79.5,
+        22
+      ],
+      "to_name": "Spain",
+      "to_iso": "ESP",
+      "to_coords": [
+        -4,
+        40
+      ],
+      "hist": {
+        "2020": 162.4
+      },
+      "peak_k": 162.4
+    },
+    {
+      "from_name": "France",
+      "from_iso": "FRA",
+      "from_coords": [
+        2,
+        47
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "2020": 161.8
+      },
+      "peak_k": 161.8
+    },
+    {
+      "from_name": "Turkey",
+      "from_iso": "TUR",
+      "from_coords": [
+        35,
+        39
+      ],
+      "to_name": "Austria",
+      "to_iso": "AUT",
+      "to_coords": [
+        14,
+        47
+      ],
+      "hist": {
+        "2010": 157.4,
+        "2015": 153.9,
+        "2020": 160.0
+      },
+      "peak_k": 160.0
+    },
+    {
+      "from_name": "Indonesia",
+      "from_iso": "IDN",
+      "from_coords": [
+        117,
+        -2
+      ],
+      "to_name": "Singapore",
+      "to_iso": "SGP",
+      "to_coords": [
+        104,
+        1
+      ],
+      "hist": {
+        "2015": 157.1,
+        "2020": 159.7
+      },
+      "peak_k": 159.7
+    },
+    {
+      "from_name": "Thailand",
+      "from_iso": "THA",
+      "from_coords": [
+        101,
+        15
+      ],
+      "to_name": "Republic of Korea",
+      "to_iso": "KOR",
+      "to_coords": [
+        127,
+        37
+      ],
+      "hist": {
+        "2020": 159.3
+      },
+      "peak_k": 159.3
+    },
+    {
+      "from_name": "Russian Federation",
+      "from_iso": "RUS",
+      "from_coords": [
+        60,
+        58
+      ],
+      "to_name": "Lithuania",
+      "to_iso": "LTU",
+      "to_coords": [
+        24,
+        56
+      ],
+      "hist": {
+        "1990": 158.4
+      },
+      "peak_k": 158.4
+    },
+    {
+      "from_name": "Togo",
+      "from_iso": "TGO",
+      "from_coords": [
+        1.2,
+        8
+      ],
+      "to_name": "Nigeria",
+      "to_iso": "NGA",
+      "to_coords": [
+        8,
+        10
+      ],
+      "hist": {
+        "2020": 158.3
+      },
+      "peak_k": 158.3
+    },
+    {
+      "from_name": "Kenya",
+      "from_iso": "KEN",
+      "from_coords": [
+        37,
+        -1
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2020": 157.0
+      },
+      "peak_k": 157.0
+    },
+    {
+      "from_name": "Myanmar",
+      "from_iso": "MMR",
+      "from_coords": [
+        96,
+        20
+      ],
+      "to_name": "United States of America",
+      "to_iso": "USA",
+      "to_coords": [
+        -95,
+        38
+      ],
+      "hist": {
+        "2020": 156.4
+      },
+      "peak_k": 156.4
+    },
+    {
+      "from_name": "Nigeria",
+      "from_iso": "NGA",
+      "from_coords": [
+        8,
+        10
+      ],
+      "to_name": "Niger",
+      "to_iso": "NER",
+      "to_coords": [
+        8,
+        17
+      ],
+      "hist": {
+        "2020": 154.7
+      },
+      "peak_k": 154.7
+    },
+    {
+      "from_name": "Portugal",
+      "from_iso": "PRT",
+      "from_coords": [
+        -8,
+        39
+      ],
+      "to_name": "Canada",
+      "to_iso": "CAN",
+      "to_coords": [
+        -96,
+        56
+      ],
+      "hist": {
+        "1990": 154.7,
+        "1995": 152.7,
+        "2000": 154.3,
+        "2020": 150.2
+      },
+      "peak_k": 154.7
+    },
+    {
+      "from_name": "Sri Lanka",
+      "from_iso": "LKA",
+      "from_coords": [
+        80,
+        7
+      ],
+      "to_name": "Qatar",
+      "to_iso": "QAT",
+      "to_coords": [
+        51.5,
+        25
+      ],
+      "hist": {
+        "2020": 154.1
+      },
+      "peak_k": 154.1
+    },
+    {
+      "from_name": "Lebanon",
+      "from_iso": "LBN",
+      "from_coords": [
+        35.5,
+        33.8
+      ],
+      "to_name": "Saudi Arabia",
+      "to_iso": "SAU",
+      "to_coords": [
+        45,
+        24
+      ],
+      "hist": {
+        "2020": 154.0
+      },
+      "peak_k": 154.0
+    },
+    {
+      "from_name": "Brazil",
+      "from_iso": "BRA",
+      "from_coords": [
+        -55,
+        -10
+      ],
+      "to_name": "Portugal",
+      "to_iso": "PRT",
+      "to_coords": [
+        -8,
+        39
+      ],
+      "hist": {
+        "2020": 154.0
+      },
+      "peak_k": 154.0
+    },
+    {
+      "from_name": "Italy",
+      "from_iso": "ITA",
+      "from_coords": [
+        12,
+        43
+      ],
+      "to_name": "Spain",
+      "to_iso": "ESP",
+      "to_coords": [
+        -4,
+        40
+      ],
+      "hist": {
+        "2020": 153.6
+      },
+      "peak_k": 153.6
+    },
+    {
+      "from_name": "Indonesia",
+      "from_iso": "IDN",
+      "from_coords": [
+        117,
+        -2
+      ],
+      "to_name": "Bangladesh",
+      "to_iso": "BGD",
+      "to_coords": [
+        90,
+        23
+      ],
+      "hist": {
+        "2015": 152.9
+      },
+      "peak_k": 152.9
+    },
+    {
+      "from_name": "Portugal",
+      "from_iso": "PRT",
+      "from_coords": [
+        -8,
+        39
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "2020": 152.9
+      },
+      "peak_k": 152.9
+    },
+    {
+      "from_name": "Iran (Islamic Republic of)",
+      "from_iso": "IRN",
+      "from_coords": [
+        53,
+        33
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "2020": 152.6
+      },
+      "peak_k": 152.6
+    },
+    {
+      "from_name": "United States of America",
+      "from_iso": "USA",
+      "from_coords": [
+        -95,
+        38
+      ],
+      "to_name": "Germany",
+      "to_iso": "DEU",
+      "to_coords": [
+        10,
+        51
+      ],
+      "hist": {
+        "2020": 152.6
+      },
+      "peak_k": 152.6
+    },
+    {
+      "from_name": "Philippines",
+      "from_iso": "PHL",
+      "from_coords": [
+        122,
+        13
+      ],
+      "to_name": "Italy",
+      "to_iso": "ITA",
+      "to_coords": [
+        12,
+        43
+      ],
+      "hist": {
+        "2020": 151.5
+      },
+      "peak_k": 151.5
+    },
+    {
+      "from_name": "Russian Federation",
+      "from_iso": "RUS",
+      "from_coords": [
+        60,
+        58
+      ],
+      "to_name": "Georgia",
+      "to_iso": "GEO",
+      "to_coords": [
+        43,
+        42
+      ],
+      "hist": {
+        "1990": 151.1
+      },
+      "peak_k": 151.1
+    },
+    {
+      "from_name": "Uganda",
+      "from_iso": "UGA",
+      "from_coords": [
+        32,
+        1
+      ],
+      "to_name": "South Sudan",
+      "to_iso": "SSD",
+      "to_coords": [
+        31,
+        7
+      ],
+      "hist": {
+        "2020": 151.0
+      },
+      "peak_k": 151.0
+    },
+    {
+      "from_name": "Spain",
+      "from_iso": "ESP",
+      "from_coords": [
+        -4,
+        40
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "2020": 150.9
+      },
+      "peak_k": 150.9
+    },
+    {
+      "from_name": "Somalia",
+      "from_iso": "SOM",
+      "from_coords": [
+        46,
+        5
+      ],
+      "to_name": "United Kingdom",
+      "to_iso": "GBR",
+      "to_coords": [
+        -2,
+        54
+      ],
+      "hist": {
+        "2020": 150.4
+      },
+      "peak_k": 150.4
+    },
+    {
+      "from_name": "Democratic Republic of the Congo",
+      "from_iso": "COD",
+      "from_coords": [
+        24,
+        -3
+      ],
+      "to_name": "United Republic of Tanzania",
+      "to_iso": "TZA",
+      "to_coords": [
+        35,
+        -6
+      ],
+      "hist": {
+        "2005": 150.3
+      },
+      "peak_k": 150.3
+    }
+  ]
+}
