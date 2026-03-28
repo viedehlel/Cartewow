@@ -1,4 +1,4 @@
-name: Update cereal data
+name: Update data (cereals + migrations)
 
 on:
   schedule:
@@ -24,10 +24,13 @@ jobs:
       - name: Fetch cereal production from World Bank
         run: python scripts/fetch_cereal_production.py
 
+      - name: Fetch migration data from UNHCR
+        run: python scripts/fetch_migrations.py
+
       - name: Commit if data changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/cereals.json
-          git diff --cached --quiet || git commit -m "Auto-update cereals data $(date +%Y-%m-%d)"
+          git add data/cereals.json data/cereal_production.json data/migrations.json
+          git diff --cached --quiet || git commit -m "Auto-update data $(date +%Y-%m-%d)"
           git push

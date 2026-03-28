@@ -889,46 +889,46 @@ const ENERGY_DATA = {
 const PIPELINES_DATA = {
   type: "FeatureCollection",
   features: [
-    { type:"Feature", properties:{ id:"p01", name:"Nord Stream 1", type:"gas", from:"Russie", to:"Allemagne", status:"damaged", capacity_bcm:55, year:2011, source:"Nord Stream AG / European Commission" }, geometry:{ type:"LineString", coordinates:[[28.75,60.7],[27,60.2],[24.5,59.5],[22,58.8],[20,57.8],[18.5,57],[17,56.5],[15.5,55.8],[14.5,55.2],[13.9,54.1]] } },
-    { type:"Feature", properties:{ id:"p02", name:"Nord Stream 2", type:"gas", from:"Russie", to:"Allemagne", status:"damaged", capacity_bcm:55, year:2021, source:"Nord Stream 2 AG" }, geometry:{ type:"LineString", coordinates:[[28.5,59.7],[26.8,59.5],[24,59],[21.5,57.8],[19,56.8],[17.5,56.2],[16,55.8],[14.8,55.2],[13.9,54.1]] } },
-    { type:"Feature", properties:{ id:"p03", name:"TurkStream", type:"gas", from:"Russie", to:"Turquie", status:"active", capacity_bcm:31.5, year:2020, source:"Gazprom / IEA" }, geometry:{ type:"LineString", coordinates:[[37.3,44.9],[35.5,44],[33.5,43.2],[31,42.5],[29,42],[27.9,41.6]] } },
-    { type:"Feature", properties:{ id:"p04", name:"Yamal-Europe", type:"gas", from:"Russie", to:"Allemagne", status:"inactive", capacity_bcm:33, year:1999, source:"Gazprom / GIE" }, geometry:{ type:"LineString", coordinates:[[68,68.5],[60,65],[50,60],[43,57],[37,55.8],[32,54.5],[27.5,53.9],[23,52.8],[19.5,52.3],[16,52],[14.3,52.5]] } },
+    { type:"Feature", properties:{ id:"p01", name:"Nord Stream 1", type:"gas", from:"Russie", to_iso:"DEU",to:"Allemagne", status:"damaged", capacity_bcm:55, year:2011, source:"Nord Stream AG / European Commission" }, geometry:{ type:"LineString", coordinates:[[28.75,60.7],[27,60.2],[24.5,59.5],[22,58.8],[20,57.8],[18.5,57],[17,56.5],[15.5,55.8],[14.5,55.2],[13.9,54.1]] } },
+    { type:"Feature", properties:{ id:"p02", name:"Nord Stream 2", type:"gas", from:"Russie", to_iso:"DEU",to:"Allemagne", status:"damaged", capacity_bcm:55, year:2021, source:"Nord Stream 2 AG" }, geometry:{ type:"LineString", coordinates:[[28.5,59.7],[26.8,59.5],[24,59],[21.5,57.8],[19,56.8],[17.5,56.2],[16,55.8],[14.8,55.2],[13.9,54.1]] } },
+    { type:"Feature", properties:{ id:"p03", name:"TurkStream", type:"gas", from:"Russie", to_iso:"TUR",to:"Turquie", status:"active", capacity_bcm:31.5, year:2020, source:"Gazprom / IEA" }, geometry:{ type:"LineString", coordinates:[[37.3,44.9],[35.5,44],[33.5,43.2],[31,42.5],[29,42],[27.9,41.6]] } },
+    { type:"Feature", properties:{ id:"p04", name:"Yamal-Europe", type:"gas", from:"Russie", to_iso:"DEU",to:"Allemagne", status:"inactive", capacity_bcm:33, year:1999, source:"Gazprom / GIE" }, geometry:{ type:"LineString", coordinates:[[68,68.5],[60,65],[50,60],[43,57],[37,55.8],[32,54.5],[27.5,53.9],[23,52.8],[19.5,52.3],[16,52],[14.3,52.5]] } },
     { type:"Feature", properties:{ id:"p05", name:"Brotherhood (Ukraine transit)", type:"gas", from:"Russie", to:"Europe", status:"inactive", capacity_bcm:28, year:1967, source:"GTSOU / IEA", notes:"Transit expiré fin 2024." }, geometry:{ type:"LineString", coordinates:[[67,65],[60,62],[53,58.5],[47,56],[40,55.5],[35.5,53.2],[32,51.5],[29,50.5],[26,49.5],[22.3,48.6],[18,48.5],[16.5,48.2],[14,48.3]] } },
     { type:"Feature", properties:{ id:"p06", name:"TANAP", type:"gas", from:"Azerbaïdjan", to:"Turquie/Europe", status:"active", capacity_bcm:16, year:2018, source:"BOTAŞ / SOCAR" }, geometry:{ type:"LineString", coordinates:[[49.8,40.2],[47,40.5],[44.5,40.8],[41.5,40.5],[38.5,39.5],[35,38.5],[32,39],[29.5,40],[27.5,40.8],[26.6,41.6]] } },
     { type:"Feature", properties:{ id:"p07", name:"TAP", type:"gas", from:"Turquie/Grèce", to:"Italie", status:"active", capacity_bcm:10, year:2020, source:"Trans Adriatic Pipeline AG" }, geometry:{ type:"LineString", coordinates:[[26.2,41.4],[23.5,41.2],[21,41.1],[20.2,41],[19.6,40.7],[19,40.5],[18.3,40.3]] } },
     { type:"Feature", properties:{ id:"p08", name:"Medgaz", type:"gas", from:"Algérie", to:"Espagne", status:"active", capacity_bcm:10.5, year:2011, source:"Medgaz SA / Sonatrach" }, geometry:{ type:"LineString", coordinates:[[1.4,35.3],[0.5,36],[-0.3,36.4],[-2.5,36.8]] } },
     { type:"Feature", properties:{ id:"p09", name:"Transmed", type:"gas", from:"Algérie", to:"Italie", status:"active", capacity_bcm:33, year:1983, source:"Sonatrach / ENI / IEA" }, geometry:{ type:"LineString", coordinates:[[3.25,32.9],[5.5,33.8],[7.5,35],[9.5,36.5],[10.5,37],[10.9,37.1],[11.5,37.4],[12.6,37.7],[13.5,38.5],[14.5,40],[15,41],[15.5,41.5],[14.5,45.5]] } },
     { type:"Feature", properties:{ id:"p10", name:"GreenStream", type:"gas", from:"Libye", to:"Italie", status:"active", capacity_bcm:11, year:2004, source:"ENI / NOC Libya" }, geometry:{ type:"LineString", coordinates:[[12.7,32.8],[13,34],[13.5,35.5],[14,36.5],[14.3,37.1]] } },
-    { type:"Feature", properties:{ id:"p11", name:"Baltic Pipe", type:"gas", from:"Norvège", to:"Pologne", status:"active", capacity_bcm:10, year:2022, source:"GAZ-SYSTEM / Energinet" }, geometry:{ type:"LineString", coordinates:[[7.7,56.5],[9.5,56.3],[11,56],[13.5,55.5],[16,55.3],[18,55.1],[19,54.6]] } },
+    { type:"Feature", properties:{ id:"p11", name:"Baltic Pipe", type:"gas", from:"Norvège", to_iso:"POL",to:"Pologne", status:"active", capacity_bcm:10, year:2022, source:"GAZ-SYSTEM / Energinet" }, geometry:{ type:"LineString", coordinates:[[7.7,56.5],[9.5,56.3],[11,56],[13.5,55.5],[16,55.3],[18,55.1],[19,54.6]] } },
     { type:"Feature", properties:{ id:"p12", name:"Dolphin Pipeline", type:"gas", from:"Qatar", to:"UAE/Oman", status:"active", capacity_bcm:20, year:2007, source:"Dolphin Energy / IEA" }, geometry:{ type:"LineString", coordinates:[[51.5,25.9],[52.5,25.2],[54,24.5],[55,23.8],[56,22.5]] } },
     { type:"Feature", properties:{ id:"p13", name:"Power of Siberia", type:"gas", from:"Russie", to:"Chine", status:"active", capacity_bcm:38, year:2019, source:"Gazprom / CNPC" }, geometry:{ type:"LineString", coordinates:[[104,52.5],[111,55],[118,58],[121.5,63.5],[127,60],[129,55],[127.5,50.3],[127.5,48.5],[125,46],[123,42],[121,39.5],[116.5,39.9]] } },
     { type:"Feature", properties:{ id:"p14", name:"CAGP (Asie Centrale-Chine)", type:"gas", from:"Turkménistan", to:"Chine", status:"active", capacity_bcm:55, year:2009, source:"CNPC / Turkmengaz / IEA" }, geometry:{ type:"LineString", coordinates:[[60,38.5],[63.5,40],[66.5,41],[69.5,41.5],[72,42.5],[76,43],[80,43.5],[87,44],[95,43],[102,40],[106.5,38],[110,36],[114,34.5]] } },
-    { type:"Feature", properties:{ id:"p15", name:"Iran-Turquie", type:"gas", from:"Iran", to:"Turquie", status:"active", capacity_bcm:14, year:2001, source:"NIGC / BOTAŞ / IEA" }, geometry:{ type:"LineString", coordinates:[[46.3,38.1],[44.5,39],[42,39.5],[40,39.8],[37,40.2],[34.5,40],[32.5,39.9]] } },
+    { type:"Feature", properties:{ id:"p15", name:"Iran-Turquie", type:"gas", from:"Iran", to_iso:"TUR",to:"Turquie", status:"active", capacity_bcm:14, year:2001, source:"NIGC / BOTAŞ / IEA" }, geometry:{ type:"LineString", coordinates:[[46.3,38.1],[44.5,39],[42,39.5],[40,39.8],[37,40.2],[34.5,40],[32.5,39.9]] } },
     { type:"Feature", properties:{ id:"p16", name:"Druzhba (oléoduc)", type:"oil", from:"Russie", to:"Europe centrale", status:"active", capacity_mbd:2.0, year:1964, source:"Transneft / IEA" }, geometry:{ type:"LineString", coordinates:[[53,54],[47,53],[40,52.5],[34,52.5],[28,51.5],[24.5,51.5],[21,51.5],[18,51.5],[15,51.5],[13.5,51.5]] } },
-    { type:"Feature", properties:{ id:"p17", name:"BTC (Bakou-Tbilissi-Ceyhan)", type:"oil", from:"Azerbaïdjan", to:"Turquie", status:"active", capacity_mbd:1.2, year:2006, source:"BP / SOCAR" }, geometry:{ type:"LineString", coordinates:[[49.9,40.4],[47.5,41],[44.8,41.7],[43,41.5],[40.5,40.5],[38,40],[36,38.5],[35.7,36.8]] } },
+    { type:"Feature", properties:{ id:"p17", name:"BTC (Bakou-Tbilissi-Ceyhan)", type:"oil", from:"Azerbaïdjan", to_iso:"TUR",to:"Turquie", status:"active", capacity_mbd:1.2, year:2006, source:"BP / SOCAR" }, geometry:{ type:"LineString", coordinates:[[49.9,40.4],[47.5,41],[44.8,41.7],[43,41.5],[40.5,40.5],[38,40],[36,38.5],[35.7,36.8]] } },
     { type:"Feature", properties:{ id:"p18", name:"ESPO", type:"oil", from:"Russie", to:"Chine/Pacifique", status:"active", capacity_mbd:1.6, year:2009, source:"Transneft / IEA" }, geometry:{ type:"LineString", coordinates:[[97.5,56],[104,55],[110,53.5],[116,52.5],[120,52],[124,53.9],[128,52],[132,46.5],[132.8,42.7]] } },
-    { type:"Feature", properties:{ id:"p19", name:"Kirkuk-Ceyhan", type:"oil", from:"Irak", to:"Turquie", status:"active", capacity_mbd:0.9, year:1977, source:"SOMO / BOTAŞ" }, geometry:{ type:"LineString", coordinates:[[44.4,35.5],[42.5,36.5],[40,37.5],[37.5,37.5],[35.7,36.8]] } },
+    { type:"Feature", properties:{ id:"p19", name:"Kirkuk-Ceyhan", type:"oil", from:"Irak", to_iso:"TUR",to:"Turquie", status:"active", capacity_mbd:0.9, year:1977, source:"SOMO / BOTAŞ" }, geometry:{ type:"LineString", coordinates:[[44.4,35.5],[42.5,36.5],[40,37.5],[37.5,37.5],[35.7,36.8]] } },
     { type:"Feature", properties:{ id:"p20", name:"Arab Gas Pipeline", type:"gas", from:"Égypte", to:"Jordanie/Syrie/Liban", status:"inactive", capacity_bcm:10, year:2003, source:"IEA" }, geometry:{ type:"LineString", coordinates:[[32.5,31.2],[34,31],[35,29.5],[35.5,30.5],[36,32],[36.5,33.5],[36.5,34],[35.8,34.4]] } },
     { type:"Feature", properties:{ id:"p21", name:"Langeled (Norvège→UK)", type:"gas", from:"Norvège", to:"Royaume-Uni", status:"active", capacity_bcm:25.5, year:2006, source:"Gassco" }, geometry:{ type:"LineString", coordinates:[[6.8,62.8],[4,61.5],[2,60],[0,58.5],[-0.5,57.5],[-0.3,53.7]] } },
-    { type:"Feature", properties:{ id:"p22", name:"Norpipe (Ekofisk→Allemagne)", type:"gas", from:"Norvège", to:"Allemagne", status:"active", capacity_bcm:15, year:1977, source:"Gassco / Open Grid Europe" }, geometry:{ type:"LineString", coordinates:[[3.2,56.5],[4,55.5],[5,54.5],[6.5,54],[8,54.3]] } },
+    { type:"Feature", properties:{ id:"p22", name:"Norpipe (Ekofisk→Allemagne)", type:"gas", from:"Norvège", to_iso:"DEU",to:"Allemagne", status:"active", capacity_bcm:15, year:1977, source:"Gassco / Open Grid Europe" }, geometry:{ type:"LineString", coordinates:[[3.2,56.5],[4,55.5],[5,54.5],[6.5,54],[8,54.3]] } },
     { type:"Feature", properties:{ id:"p23", name:"Franpipe (Draupner→France)", type:"gas", from:"Norvège", to:"France", status:"active", capacity_bcm:17, year:1998, source:"Gassco / GRTgaz" }, geometry:{ type:"LineString", coordinates:[[2.5,58],[1.5,57],[-0.2,55.5],[-1.5,53],[-2.5,52],[-2,48],[-1,46.5],[0,45.8],[2,44.5]] } },
     { type:"Feature", properties:{ id:"p24", name:"Zeepipe (Troll→Belgique)", type:"gas", from:"Norvège", to:"Belgique", status:"active", capacity_bcm:18, year:1993, source:"Gassco / Fluxys" }, geometry:{ type:"LineString", coordinates:[[3.7,59.8],[3,58],[2.5,56.5],[2.8,54],[3.5,52.5],[3.8,51.2]] } },
     { type:"Feature", properties:{ id:"p25", name:"Interconnector UK-Belgique", type:"gas", from:"Royaume-Uni", to:"Belgique", status:"active", capacity_bcm:25, year:1998, source:"National Grid / Fluxys" }, geometry:{ type:"LineString", coordinates:[[1.5,51.5],[2,51.4],[2.5,51.3],[3,51.3],[4,51.2]] } },
     { type:"Feature", properties:{ id:"p26", name:"CPC Pipeline (Kazakhstan→Mer Noire)", type:"oil", from:"Kazakhstan", to:"Russie/Novorossiysk", status:"active", capacity_mbd:1.4, year:2001, source:"CPC Consortium / IEA" }, geometry:{ type:"LineString", coordinates:[[53.5,47],[52,47.5],[50,47.5],[48,46.8],[46,45.5],[44.5,44.5],[38,44.8],[37.8,44.7]] } },
     { type:"Feature", properties:{ id:"p27", name:"West-East Gas Pipeline (Chine)", type:"gas", from:"Xinjiang (Chine)", to:"Shanghai", status:"active", capacity_bcm:77, year:2004, source:"CNPC" }, geometry:{ type:"LineString", coordinates:[[80,43],[87,43.5],[94,42],[100,39],[106,36],[110,34.5],[114,33],[118,32],[121,31.2]] } },
-    { type:"Feature", properties:{ id:"p28", name:"Yadana (Myanmar→Thaïlande)", type:"gas", from:"Myanmar", to:"Thaïlande", status:"active", capacity_bcm:7, year:1998, source:"TotalEnergies / MOGE" }, geometry:{ type:"LineString", coordinates:[[98.5,15.5],[99,14],[100,13.5],[100.5,13.7]] } },
+    { type:"Feature", properties:{ id:"p28", name:"Yadana (Myanmar→Thaïlande)", type:"gas", from_iso:"MMR",from:"Myanmar", to_iso:"THA",to:"Thaïlande", status:"active", capacity_bcm:7, year:1998, source:"TotalEnergies / MOGE" }, geometry:{ type:"LineString", coordinates:[[98.5,15.5],[99,14],[100,13.5],[100.5,13.7]] } },
     { type:"Feature", properties:{ id:"p29", name:"Trans-Afghanistan (TAPI)", type:"gas", from:"Turkménistan", to:"Pakistan/Inde", status:"planned", capacity_bcm:33, year:2030, source:"TAPI Pipeline Company / ADB" }, geometry:{ type:"LineString", coordinates:[[63,37],[65,37],[66,36],[66.5,34.5],[67,33],[67.5,30.5],[68,29],[70,26],[74,24],[76,22]] } },
     { type:"Feature", properties:{ id:"p30", name:"Maghreb-Europe (GME)", type:"gas", from:"Algérie", to:"Espagne (via Maroc)", status:"inactive", capacity_bcm:13, year:1996, source:"Sonatrach / Enagas", notes:"Interrompu oct.2021 (Algérie/Maroc). Flux redirigés vers Medgaz." }, geometry:{ type:"LineString", coordinates:[[1.5,32],[0,33.5],[-2,34.5],[-5.5,35.5],[-5.7,35.9],[-5.9,37.5],[-5,38.5],[-4,39],[-3,40],[-2.5,40.4]] } },
     { type:"Feature", properties:{ id:"p31", name:"EACOP (Ouganda→Tanzanie)", type:"oil", from:"Ouganda", to:"Tanzanie/Tanga", status:"planned", capacity_mbd:0.22, year:2025, source:"TotalEnergies / CNOOC / UNOC" }, geometry:{ type:"LineString", coordinates:[[31,1.2],[32,0],[32.5,-1],[33,-2],[34,-3.5],[34.5,-5],[35,-6],[36.5,-6.5],[38,-6.8],[38.8,-5.1]] } },
     { type:"Feature", properties:{ id:"p32", name:"Power of Siberia 2 (projet)", type:"gas", from:"Russie", to:"Chine (Mongolie)", status:"planned", capacity_bcm:50, year:2030, source:"Gazprom / CNPC" }, geometry:{ type:"LineString", coordinates:[[73,56],[78,53],[82,50],[90,48],[96,45],[102,43],[106,41],[110,39],[114,37]] } },
     { type:"Feature", properties:{ id:"p33", name:"Trans-Caspien (projet)", type:"gas", from:"Turkménistan", to:"Azerbaïdjan", status:"planned", capacity_bcm:30, year:2030, source:"SGC / Turkmengaz (discussions)" }, geometry:{ type:"LineString", coordinates:[[53,38.5],[52,40],[50.5,41.5],[49.8,40.2]] } },
     { type:"Feature", properties:{ id:"p34", name:"Balticconnector (Estonie-Finlande)", type:"gas", from:"Finlande", to:"Estonie", status:"active", capacity_bcm:2.6, year:2019, source:"Gasgrid / Elering", notes:"Sabotage oct.2023, réparé mai 2024." }, geometry:{ type:"LineString", coordinates:[[24.7,59.4],[24.5,59.0],[24.3,58.6],[24.1,58.2]] } },
-    { type:"Feature", properties:{ id:"p35", name:"Leviathan Pipeline (Israël→Égypte)", type:"gas", from:"Israël", to:"Égypte", status:"active", capacity_bcm:7, year:2020, source:"NewMed Energy / Energean" }, geometry:{ type:"LineString", coordinates:[[34.9,32],[34.2,31.5],[33.5,31.2],[32.5,31.1]] } }
+    { type:"Feature", properties:{ id:"p35", name:"Leviathan Pipeline (Israël→Égypte)", type:"gas", from:"Israël", to_iso:"EGY",to:"Égypte", status:"active", capacity_bcm:7, year:2020, source:"NewMed Energy / Energean" }, geometry:{ type:"LineString", coordinates:[[34.9,32],[34.2,31.5],[33.5,31.2],[32.5,31.1]] } }
   ]
 };
 
 const FLOWS_DATA = [
-  { id:"f001", from:"Norvège", to:"Allemagne", from_centroid:[10,62], to_centroid:[10,51], type:"gas_pipeline", volume:30, unit:"bcm/an", year:2022, source:"Gassco Annual Report 2022" },
+  { id:"f001", from:"Norvège", to_iso:"DEU",to:"Allemagne", from_centroid:[10,62], to_centroid:[10,51], type:"gas_pipeline", volume:30, unit:"bcm/an", year:2022, source:"Gassco Annual Report 2022" },
   { id:"f002", from:"Norvège", to:"Royaume-Uni", from_centroid:[10,62], to_centroid:[-2,54], type:"gas_pipeline", volume:17, unit:"bcm/an", year:2022, source:"Gassco Annual Report 2022" },
   { id:"f003", from:"Algérie", to:"Italie", from_centroid:[3,28], to_centroid:[13,42], type:"gas_pipeline", volume:22, unit:"bcm/an", year:2022, source:"Sonatrach / ENI" },
   { id:"f004", from:"Algérie", to:"Espagne", from_centroid:[3,28], to_centroid:[-4,40], type:"gas_pipeline", volume:10, unit:"bcm/an", year:2022, source:"Medgaz SA / Sonatrach" },
@@ -940,7 +940,7 @@ const FLOWS_DATA = [
   { id:"f010", from:"Australie", to:"Chine", from_centroid:[133,-27], to_centroid:[104,35], type:"lng", volume:41.4, unit:"bcm/an", year:2022, source:"DCCEEW / GIIGNL 2023" },
   { id:"f011", from:"États-Unis", to:"Europe", from_centroid:[-95,38], to_centroid:[10,50], type:"lng", volume:75.9, unit:"bcm/an", year:2022, source:"DOE / GIIGNL 2023" },
   { id:"f012", from:"Russie", to:"Chine", from_centroid:[60,58], to_centroid:[104,35], type:"gas_pipeline", volume:15, unit:"bcm/an", year:2022, source:"Gazprom / CNPC" },
-  { id:"f013", from:"Russie", to:"Turquie", from_centroid:[60,58], to_centroid:[35,39], type:"gas_pipeline", volume:20, unit:"bcm/an", year:2022, source:"Gazprom / BOTAŞ" },
+  { id:"f013", from:"Russie", to_iso:"TUR",to:"Turquie", from_centroid:[60,58], to_centroid:[35,39], type:"gas_pipeline", volume:20, unit:"bcm/an", year:2022, source:"Gazprom / BOTAŞ" },
   { id:"f014", from:"Arabie Saoudite", to:"Chine", from_centroid:[45,24], to_centroid:[104,35], type:"oil", volume:2.0, unit:"mb/j", year:2022, source:"Kpler / IEA" },
   { id:"f015", from:"Arabie Saoudite", to:"Inde", from_centroid:[45,24], to_centroid:[78,22], type:"oil", volume:0.9, unit:"mb/j", year:2022, source:"Kpler / IEA" },
   { id:"f016", from:"Arabie Saoudite", to:"Japon", from_centroid:[45,24], to_centroid:[138,37], type:"oil", volume:1.1, unit:"mb/j", year:2022, source:"Kpler / IEA" },
@@ -948,7 +948,7 @@ const FLOWS_DATA = [
   { id:"f018", from:"Russie", to:"Inde", from_centroid:[60,58], to_centroid:[78,22], type:"oil", volume:1.4, unit:"mb/j", year:2022, source:"Kpler / IEA" },
   { id:"f019", from:"Turkménistan", to:"Chine", from_centroid:[59,39], to_centroid:[104,35], type:"gas_pipeline", volume:40, unit:"bcm/an", year:2022, source:"CNPC / Turkmengaz" },
   { id:"f020", from:"Azerbaïdjan", to:"Italie", from_centroid:[47.6,40.4], to_centroid:[13,42], type:"gas_pipeline", volume:10, unit:"bcm/an", year:2022, source:"SOCAR / TAP AG" },
-  { id:"f021", from:"Canada", to:"États-Unis", from_centroid:[-96,56], to_centroid:[-95,38], type:"oil", volume:3.5, unit:"mb/j", year:2022, source:"NEB Canada / EIA" },
+  { id:"f021", from:"Canada", to_iso:"USA",to:"États-Unis", from_centroid:[-96,56], to_centroid:[-95,38], type:"oil", volume:3.5, unit:"mb/j", year:2022, source:"NEB Canada / EIA" },
   { id:"f022", from:"États-Unis", to:"Europe (pétrole)", from_centroid:[-95,38], to_centroid:[10,50], type:"oil", volume:1.2, unit:"mb/j", year:2022, source:"EIA / IEA" },
   { id:"f023", from:"États-Unis", to:"Japon", from_centroid:[-95,38], to_centroid:[138,37], type:"lng", volume:11.0, unit:"bcm/an", year:2022, source:"DOE / GIIGNL 2023" },
   { id:"f024", from:"États-Unis", to:"Corée du Sud", from_centroid:[-95,38], to_centroid:[128,36], type:"lng", volume:8.3, unit:"bcm/an", year:2022, source:"DOE / GIIGNL 2023" },
@@ -963,7 +963,7 @@ const FLOWS_DATA = [
   { id:"f033", from:"Norvège", to:"France", from_centroid:[10,62], to_centroid:[2.3,46], type:"gas_pipeline", volume:17, unit:"bcm/an", year:2022, source:"Gassco / GRTgaz" },
   { id:"f034", from:"Norvège", to:"Belgique", from_centroid:[10,62], to_centroid:[4.5,50.5], type:"gas_pipeline", volume:12, unit:"bcm/an", year:2022, source:"Gassco / Fluxys" },
   { id:"f035", from:"Libye", to:"Italie", from_centroid:[17,27], to_centroid:[13,42], type:"gas_pipeline", volume:7, unit:"bcm/an", year:2022, source:"NOC Libya / ENI" },
-  { id:"f036", from:"Qatar", to:"Pakistan", from_centroid:[51.5,25.3], to_centroid:[68,30], type:"lng", volume:5.5, unit:"bcm/an", year:2022, source:"QatarEnergy / GIIGNL 2023" },
+  { id:"f036", from:"Qatar", to_iso:"PAK",to:"Pakistan", from_centroid:[51.5,25.3], to_centroid:[68,30], type:"lng", volume:5.5, unit:"bcm/an", year:2022, source:"QatarEnergy / GIIGNL 2023" },
   { id:"f037", from:"Australie", to:"Inde", from_centroid:[133,-27], to_centroid:[78,22], type:"lng", volume:8.3, unit:"bcm/an", year:2022, source:"DCCEEW / GIIGNL 2023" },
   { id:"f038", from:"Trinité-et-Tobago", to:"Europe", from_centroid:[-61.2,10.7], to_centroid:[10,50], type:"lng", volume:13.8, unit:"bcm/an", year:2022, source:"NGC / GIIGNL 2023" },
   { id:"f039", from:"Arabie Saoudite", to:"Corée du Sud", from_centroid:[45,24], to_centroid:[128,36], type:"oil", volume:0.8, unit:"mb/j", year:2022, source:"Kpler / IEA" },
@@ -971,21 +971,21 @@ const FLOWS_DATA = [
   { id:"f041", from:"Kazakhstan", to:"Chine", from_centroid:[66,48], to_centroid:[104,35], type:"oil", volume:0.3, unit:"mb/j", year:2022, source:"KMG / Transneft" },
   { id:"f042", from:"Angola", to:"Chine", from_centroid:[18,-12], to_centroid:[104,35], type:"oil", volume:0.7, unit:"mb/j", year:2022, source:"Kpler / IEA" },
   { id:"f043", from:"Pérou", to:"Espagne", from_centroid:[-76,-10], to_centroid:[-4,40], type:"lng", volume:4.1, unit:"bcm/an", year:2022, source:"Peru LNG / GIIGNL 2023" },
-  { id:"f044", from:"Israël", to:"Égypte", from_centroid:[34.9,31.5], to_centroid:[30,26], type:"gas_pipeline", volume:7, unit:"bcm/an", year:2022, source:"NewMed Energy / Energean" },
-  { id:"f045", from:"Myanmar", to:"Chine (gaz)", from_centroid:[96,20], to_centroid:[104,35], type:"gas_pipeline", volume:4, unit:"bcm/an", year:2022, source:"MOGE / CNOOC" },
+  { id:"f044", from:"Israël", to_iso:"EGY",to:"Égypte", from_centroid:[34.9,31.5], to_centroid:[30,26], type:"gas_pipeline", volume:7, unit:"bcm/an", year:2022, source:"NewMed Energy / Energean" },
+  { id:"f045", from_iso:"MMR",from:"Myanmar", to:"Chine (gaz)", from_centroid:[96,20], to_centroid:[104,35], type:"gas_pipeline", volume:4, unit:"bcm/an", year:2022, source:"MOGE / CNOOC" },
   // === FLUX GAZ — EUROPE (équilibrage bilans) ===
-  { id:"f046", from:"Russie", to:"Allemagne", from_centroid:[60,58], to_centroid:[10,51], type:"gas_pipeline", volume:20, unit:"bcm/an", year:2022, source:"Bundesnetzagentur / IEA 2022 (résiduel avant sabotage NS1)" },
+  { id:"f046", from:"Russie", to_iso:"DEU",to:"Allemagne", from_centroid:[60,58], to_centroid:[10,51], type:"gas_pipeline", volume:20, unit:"bcm/an", year:2022, source:"Bundesnetzagentur / IEA 2022 (résiduel avant sabotage NS1)" },
   { id:"f047", from:"Russie", to:"Italie", from_centroid:[60,58], to_centroid:[13,42], type:"gas_pipeline", volume:12, unit:"bcm/an", year:2022, source:"Snam / IEA 2022 (via Ukraine + TurkStream)" },
   { id:"f048", from:"Russie", to:"Hongrie", from_centroid:[60,58], to_centroid:[19,47], type:"gas_pipeline", volume:8, unit:"bcm/an", year:2022, source:"MVM / IEA 2022 (TurkStream branche nord)" },
   { id:"f049", from:"Russie", to:"Autriche", from_centroid:[60,58], to_centroid:[14,47.5], type:"gas_pipeline", volume:10, unit:"bcm/an", year:2022, source:"OMV / IEA 2022 (via Ukraine + BAUMGARTEN hub)" },
   { id:"f050", from:"Russie", to:"Slovaquie", from_centroid:[60,58], to_centroid:[19,48.7], type:"gas_pipeline", volume:12, unit:"bcm/an", year:2022, source:"SPP / IEA 2022 (transit vers l'Ouest via Ukraine)" },
   { id:"f052", from:"Norvège", to:"Pays-Bas", from_centroid:[10,62], to_centroid:[5.3,52.1], type:"gas_pipeline", volume:15, unit:"bcm/an", year:2022, source:"Gassco / Gasunie 2022" },
   { id:"f053", from:"Norvège", to:"Italie", from_centroid:[10,62], to_centroid:[13,42], type:"gas_pipeline", volume:5, unit:"bcm/an", year:2022, source:"Gassco / Eni 2022 (via TAG pipeline)" },
-  { id:"f054", from:"Azerbaïdjan", to:"Turquie", from_centroid:[47.4,40.4], to_centroid:[35,39], type:"gas_pipeline", volume:10, unit:"bcm/an", year:2022, source:"SOCAR / BOTAŞ 2022 (TANAP)" },
+  { id:"f054", from:"Azerbaïdjan", to_iso:"TUR",to:"Turquie", from_centroid:[47.4,40.4], to_centroid:[35,39], type:"gas_pipeline", volume:10, unit:"bcm/an", year:2022, source:"SOCAR / BOTAŞ 2022 (TANAP)" },
   // === FLUX GNL — EUROPE (équilibrage bilans) ===
   { id:"f055", from:"États-Unis", to:"France", from_centroid:[-95,38], to_centroid:[2.3,46], type:"lng", volume:8.3, unit:"bcm/an", year:2022, source:"DOE / GRTgaz 2022" },
   { id:"f056", from:"États-Unis", to:"Espagne", from_centroid:[-95,38], to_centroid:[-4,40], type:"lng", volume:11.0, unit:"bcm/an", year:2022, source:"DOE / Enagas 2022" },
-  { id:"f057", from:"États-Unis", to:"Allemagne", from_centroid:[-95,38], to_centroid:[10,51], type:"lng", volume:9.7, unit:"bcm/an", year:2022, source:"DOE / Bundesnetzagentur 2022 (FSRU Deutsche Bucht)" },
+  { id:"f057", from:"États-Unis", to_iso:"DEU",to:"Allemagne", from_centroid:[-95,38], to_centroid:[10,51], type:"lng", volume:9.7, unit:"bcm/an", year:2022, source:"DOE / Bundesnetzagentur 2022 (FSRU Deutsche Bucht)" },
   { id:"f058", from:"États-Unis", to:"Belgique", from_centroid:[-95,38], to_centroid:[4.5,50.5], type:"lng", volume:6.9, unit:"bcm/an", year:2022, source:"DOE / Fluxys 2022 (Zeebrugge)" },
   { id:"f059", from:"États-Unis", to:"Italie", from_centroid:[-95,38], to_centroid:[13,42], type:"lng", volume:5.5, unit:"bcm/an", year:2022, source:"DOE / Snam 2022" },
   { id:"f060", from:"États-Unis", to:"Pays-Bas", from_centroid:[-95,38], to_centroid:[5.3,52.1], type:"lng", volume:8.3, unit:"bcm/an", year:2022, source:"DOE / Gasunie 2022 (Gate terminal Rotterdam)" },
@@ -1003,8 +1003,8 @@ const FLOWS_DATA = [
   { id:"f072", from:"Norvège", to:"Royaume-Uni", from_centroid:[10,62], to_centroid:[-2,54], type:"lng", volume:2.8, unit:"bcm/an", year:2022, source:"Equinor / GIIGNL 2023 (Hammerfest LNG)" },
   { id:"f073", from:"Algérie", to:"France", from_centroid:[3,28], to_centroid:[2.3,46], type:"gas_pipeline", volume:8, unit:"bcm/an", year:2022, source:"Sonatrach / GRTgaz 2022 (MEDGAZ + TRANSMED)" },
   // === FLUX PÉTROLE — équilibrage ===
-  { id:"f074", from:"Russie", to:"Allemagne", from_centroid:[60,58], to_centroid:[10,51], type:"oil", volume:0.5, unit:"mb/j", year:2022, source:"Transneft / IEA 2022 (Druzhba pipeline)" },
-  { id:"f075", from:"Russie", to:"Pologne", from_centroid:[60,58], to_centroid:[19,52], type:"oil", volume:0.4, unit:"mb/j", year:2022, source:"PERN / IEA 2022 (Druzhba nord)" },
+  { id:"f074", from:"Russie", to_iso:"DEU",to:"Allemagne", from_centroid:[60,58], to_centroid:[10,51], type:"oil", volume:0.5, unit:"mb/j", year:2022, source:"Transneft / IEA 2022 (Druzhba pipeline)" },
+  { id:"f075", from:"Russie", to_iso:"POL",to:"Pologne", from_centroid:[60,58], to_centroid:[19,52], type:"oil", volume:0.4, unit:"mb/j", year:2022, source:"PERN / IEA 2022 (Druzhba nord)" },
   { id:"f076", from:"Russie", to:"Hongrie", from_centroid:[60,58], to_centroid:[19,47], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"MOL / IEA 2022 (Druzhba sud)" },
   { id:"f077", from:"Irak", to:"Inde", from_centroid:[44,33], to_centroid:[78,22], type:"oil", volume:0.5, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f078", from:"Irak", to:"Europe", from_centroid:[44,33], to_centroid:[10,50], type:"oil", volume:0.5, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
@@ -1013,28 +1013,28 @@ const FLOWS_DATA = [
   { id:"f080", from:"Bolivie", to:"Brésil", from_centroid:[-64,-17], to_centroid:[-51,-14], type:"gas_pipeline", volume:9, unit:"bcm/an", year:2022, source:"YPFB / ANP Brasil 2022 (Gasbol pipeline)" },
   { id:"f081", from:"Brésil", to:"Argentine", from_centroid:[-51,-14], to_centroid:[-64,-34], type:"gas_pipeline", volume:2, unit:"bcm/an", year:2022, source:"ANP Brasil / Enargas 2022 (Uruguaiana)" },
   { id:"f082", from:"Brésil", to:"Chine", from_centroid:[-40,-15], to_centroid:[104,35], type:"oil", volume:0.6, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (pétrole offshore Petrobras)" },
-  { id:"f083", from:"Brésil", to:"États-Unis", from_centroid:[-40,-15], to_centroid:[-95,38], type:"oil", volume:0.3, unit:"mb/j", year:2022, source:"Kpler / EIA 2022" },
+  { id:"f083", from:"Brésil", to_iso:"USA",to:"États-Unis", from_centroid:[-40,-15], to_centroid:[-95,38], type:"oil", volume:0.3, unit:"mb/j", year:2022, source:"Kpler / EIA 2022" },
   { id:"f084", from:"Brésil", to:"Espagne", from_centroid:[-40,-15], to_centroid:[-4,40], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"Kpler / Enagas 2022" },
   { id:"f085", from:"Australie", to:"Singapour", from_centroid:[133,-27], to_centroid:[103.8,1.4], type:"lng", volume:5.5, unit:"bcm/an", year:2022, source:"DCCEEW / GIIGNL 2023" },
   { id:"f086", from:"Australie", to:"Taïwan", from_centroid:[133,-27], to_centroid:[121,23.5], type:"lng", volume:13.8, unit:"bcm/an", year:2022, source:"DCCEEW / GIIGNL 2023" },
   { id:"f087", from:"Australie", to:"Inde", from_centroid:[133,-27], to_centroid:[78,22], type:"lng", volume:8.3, unit:"bcm/an", year:2022, source:"DCCEEW / GIIGNL 2023" },
   // === FLUX ASIE & AUTRES ===
   { id:"f088", from:"Qatar", to:"Chine", from_centroid:[51.5,25.3], to_centroid:[104,35], type:"lng", volume:16.6, unit:"bcm/an", year:2022, source:"QatarEnergy / GIIGNL 2023" },
-  { id:"f089", from:"Qatar", to:"Turquie", from_centroid:[51.5,25.3], to_centroid:[35,39], type:"lng", volume:4.1, unit:"bcm/an", year:2022, source:"QatarEnergy / BOTAŞ 2022" },
+  { id:"f089", from:"Qatar", to_iso:"TUR",to:"Turquie", from_centroid:[51.5,25.3], to_centroid:[35,39], type:"lng", volume:4.1, unit:"bcm/an", year:2022, source:"QatarEnergy / BOTAŞ 2022" },
   { id:"f090", from:"Malaisie", to:"Corée du Sud", from_centroid:[110,3], to_centroid:[128,36], type:"lng", volume:8.3, unit:"bcm/an", year:2022, source:"PETRONAS / GIIGNL 2023" },
   { id:"f091", from:"Indonésie", to:"Japon", from_centroid:[118,-2], to_centroid:[138,37], type:"lng", volume:11.0, unit:"bcm/an", year:2022, source:"Pertamina / GIIGNL 2023" },
   { id:"f092", from:"Indonésie", to:"Chine", from_centroid:[118,-2], to_centroid:[104,35], type:"lng", volume:6.9, unit:"bcm/an", year:2022, source:"Pertamina / GIIGNL 2023" },
-  { id:"f093", from:"Kazakhstan", to:"Russie", from_centroid:[66,48], to_centroid:[60,58], type:"oil", volume:0.7, unit:"mb/j", year:2022, source:"KMG / Transneft 2022 (transit CPC pipeline)" },
-  { id:"f094", from:"Colombia", to:"États-Unis", from_centroid:[-74,4], to_centroid:[-95,38], type:"oil", volume:0.3, unit:"mb/j", year:2022, source:"Kpler / EIA 2022" },
-  { id:"f095", from:"Équateur", to:"États-Unis", from_centroid:[-78,-2], to_centroid:[-95,38], type:"oil", volume:0.2, unit:"mb/j", year:2022, source:"Kpler / EIA 2022" },
-  { id:"f096", from:"Venezuela", to:"Chine", from_centroid:[-66,8], to_centroid:[104,35], type:"oil", volume:0.3, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
+  { id:"f093", from:"Kazakhstan", to_iso:"RUS",to:"Russie", from_centroid:[66,48], to_centroid:[60,58], type:"oil", volume:0.7, unit:"mb/j", year:2022, source:"KMG / Transneft 2022 (transit CPC pipeline)" },
+  { id:"f094", from:"Colombia", to_iso:"USA",to:"États-Unis", from_centroid:[-74,4], to_centroid:[-95,38], type:"oil", volume:0.3, unit:"mb/j", year:2022, source:"Kpler / EIA 2022" },
+  { id:"f095", from:"Équateur", to_iso:"USA",to:"États-Unis", from_centroid:[-78,-2], to_centroid:[-95,38], type:"oil", volume:0.2, unit:"mb/j", year:2022, source:"Kpler / EIA 2022" },
+  { id:"f096", from_iso:"VEN",from:"Venezuela", to:"Chine", from_centroid:[-66,8], to_centroid:[104,35], type:"oil", volume:0.3, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f097", from:"Oman", to:"Chine", from_centroid:[57.6,21.5], to_centroid:[104,35], type:"oil", volume:0.4, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f098", from:"Oman", to:"Inde", from_centroid:[57.6,21.5], to_centroid:[78,22], type:"oil", volume:0.2, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f099", from:"Émirats Arabes Unis", to:"Japon", from_centroid:[54,24], to_centroid:[138,37], type:"oil", volume:0.8, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f100", from:"Émirats Arabes Unis", to:"Chine", from_centroid:[54,24], to_centroid:[104,35], type:"oil", volume:0.5, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f101", from:"Angola", to:"Inde", from_centroid:[18,-12], to_centroid:[78,22], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f102", from:"Nigeria", to:"Inde", from_centroid:[8,9], to_centroid:[78,22], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
-  { id:"f103", from:"Irak", to:"Turquie", from_centroid:[44,33], to_centroid:[35,39], type:"oil", volume:0.35, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (Kirkuk-Ceyhan pipeline, réduit)" },
+  { id:"f103", from:"Irak", to_iso:"TUR",to:"Turquie", from_centroid:[44,33], to_centroid:[35,39], type:"oil", volume:0.35, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (Kirkuk-Ceyhan pipeline, réduit)" },
   { id:"f104", from:"États-Unis", to:"Inde", from_centroid:[-95,38], to_centroid:[78,22], type:"lng", volume:4.1, unit:"bcm/an", year:2022, source:"DOE / Petronet LNG 2022" },
   { id:"f105", from:"États-Unis", to:"Chine", from_centroid:[-95,38], to_centroid:[104,35], type:"lng", volume:6.9, unit:"bcm/an", year:2022, source:"DOE / GIIGNL 2023" },
   // === FLUX PÉTROLE SUPPLÉMENTAIRES ===
@@ -1046,20 +1046,20 @@ const FLOWS_DATA = [
   { id:"f111", from:"Émirats Arabes Unis", to:"Inde", from_centroid:[54,24], to_centroid:[78,22], type:"oil", volume:0.3, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f112", from:"Émirats Arabes Unis", to:"Corée du Sud", from_centroid:[54,24], to_centroid:[128,36], type:"oil", volume:0.2, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f113", from:"Iran", to:"Inde", from_centroid:[54,32], to_centroid:[78,22], type:"oil", volume:0.2, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (sous sanctions, données estimées)" },
-  { id:"f114", from:"Russie", to:"Turquie", from_centroid:[60,58], to_centroid:[35,39], type:"oil", volume:0.3, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
+  { id:"f114", from:"Russie", to_iso:"TUR",to:"Turquie", from_centroid:[60,58], to_centroid:[35,39], type:"oil", volume:0.3, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f115", from:"Libye", to:"Italie", from_centroid:[17,27], to_centroid:[13,42], type:"oil", volume:0.2, unit:"mb/j", year:2022, source:"Kpler / NOC Libya 2022" },
   { id:"f116", from:"Libye", to:"Espagne", from_centroid:[17,27], to_centroid:[-4,40], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f117", from:"Algérie", to:"Italie", from_centroid:[3,28], to_centroid:[13,42], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"Kpler / Sonatrach 2022" },
   { id:"f118", from:"Nigeria", to:"Europe", from_centroid:[8,9], to_centroid:[10,50], type:"oil", volume:0.3, unit:"mb/j", year:2022, source:"Kpler / NNPC 2022" },
   { id:"f119", from:"Nigeria", to:"Inde", from_centroid:[8,9], to_centroid:[78,22], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f120", from:"Angola", to:"Europe", from_centroid:[18,-12], to_centroid:[10,50], type:"oil", volume:0.2, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
-  { id:"f121", from:"Venezuela", to:"États-Unis", from_centroid:[-66,8], to_centroid:[-95,38], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"Kpler / EIA 2022 (relance partielle)" },
+  { id:"f121", from_iso:"VEN",from:"Venezuela", to_iso:"USA",to:"États-Unis", from_centroid:[-66,8], to_centroid:[-95,38], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"Kpler / EIA 2022 (relance partielle)" },
   { id:"f122", from:"Canada", to:"Chine", from_centroid:[-96,60], to_centroid:[104,35], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"NEB Canada / Kpler 2022 (Trans Mountain)" },
   { id:"f123", from:"Kazakhstan", to:"Europe", from_centroid:[66,48], to_centroid:[10,50], type:"oil", volume:0.3, unit:"mb/j", year:2022, source:"KMG / IEA 2022 (CPC pipeline via Novorossiysk)" },
   { id:"f124", from:"Azerbaïdjan", to:"Europe", from_centroid:[47.4,40.4], to_centroid:[10,50], type:"oil", volume:0.2, unit:"mb/j", year:2022, source:"SOCAR / IEA 2022 (BTC pipeline)" },
-  { id:"f125", from:"Mexique", to:"États-Unis", from_centroid:[-102,24], to_centroid:[-95,38], type:"oil", volume:0.4, unit:"mb/j", year:2022, source:"Pemex / EIA 2022" },
-  { id:"f126", from:"Colombie", to:"États-Unis", from_centroid:[-74,4], to_centroid:[-95,38], type:"oil", volume:0.3, unit:"mb/j", year:2022, source:"Kpler / EIA 2022" },
-  { id:"f127", from:"Équateur", to:"États-Unis", from_centroid:[-78,-2], to_centroid:[-95,38], type:"oil", volume:0.2, unit:"mb/j", year:2022, source:"Kpler / EIA 2022" },
+  { id:"f125", from:"Mexique", to_iso:"USA",to:"États-Unis", from_centroid:[-102,24], to_centroid:[-95,38], type:"oil", volume:0.4, unit:"mb/j", year:2022, source:"Pemex / EIA 2022" },
+  { id:"f126", from:"Colombie", to_iso:"USA",to:"États-Unis", from_centroid:[-74,4], to_centroid:[-95,38], type:"oil", volume:0.3, unit:"mb/j", year:2022, source:"Kpler / EIA 2022" },
+  { id:"f127", from:"Équateur", to_iso:"USA",to:"États-Unis", from_centroid:[-78,-2], to_centroid:[-95,38], type:"oil", volume:0.2, unit:"mb/j", year:2022, source:"Kpler / EIA 2022" },
   { id:"f128", from:"Brésil", to:"Inde", from_centroid:[-40,-15], to_centroid:[78,22], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f129", from:"Australie", to:"Japon", from_centroid:[133,-27], to_centroid:[138,37], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"Kpler / DCCEEW 2022" },
   { id:"f130", from:"Oman", to:"Japon", from_centroid:[57.6,21.5], to_centroid:[138,37], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" }
@@ -2128,22 +2128,22 @@ Object.entries(AUTO_INDUSTRY_PATCHES).forEach(([iso, vals]) => {
 
 // Flux commerciaux automobiles majeurs (véhicules, 2023, en millions/an)
 const AUTO_FLOWS = [
-  { id:"af01", from:"Allemagne",  to:"États-Unis",   fromC:[10,51],    toC:[-95,38],     vol:0.5, type:"mixed", note:"BMW, Mercedes, VW SUVs. Source: Destatis 2023" },
+  { id:"af01", from:"Allemagne",  to_iso:"USA",to:"États-Unis",   fromC:[10,51],    toC:[-95,38],     vol:0.5, type:"mixed", note:"BMW, Mercedes, VW SUVs. Source: Destatis 2023" },
   { id:"af02", from:"Allemagne",  to:"Chine",        fromC:[10,51],    toC:[104,35],      vol:0.35,type:"mixed", note:"BMW, Mercedes, Audi premium. Source: Destatis 2023" },
-  { id:"af03", from:"Japon",      to:"États-Unis",   fromC:[138,37],   toC:[-95,38],      vol:1.5, type:"therm", note:"Toyota, Honda, Nissan. Source: JAMA 2023" },
+  { id:"af03", from:"Japon",      to_iso:"USA",to:"États-Unis",   fromC:[138,37],   toC:[-95,38],      vol:1.5, type:"therm", note:"Toyota, Honda, Nissan. Source: JAMA 2023" },
   { id:"af04", from:"Japon",      to:"Europe",       fromC:[138,37],   toC:[10,50],       vol:0.6, type:"therm", note:"Toyota, Mazda. Source: JAMA 2023" },
-  { id:"af05", from:"Corée du Sud",to:"États-Unis",  fromC:[128,36],   toC:[-95,38],      vol:0.9, type:"mixed", note:"Hyundai, Kia. Source: KAMA 2023" },
+  { id:"af05", from:"Corée du Sud",to_iso:"USA",to:"États-Unis",  fromC:[128,36],   toC:[-95,38],      vol:0.9, type:"mixed", note:"Hyundai, Kia. Source: KAMA 2023" },
   { id:"af06", from:"Corée du Sud",to:"Europe",      fromC:[128,36],   toC:[10,50],       vol:0.55,type:"mixed", note:"Hyundai, Kia EV6/Ioniq 5. Source: KAMA 2023" },
-  { id:"af07", from:"Mexique",    to:"États-Unis",   fromC:[-102,24],  toC:[-95,38],      vol:2.6, type:"therm", note:"GM, Ford, Stellantis, VW. 1er flux mondial. Source: AMIA 2023" },
-  { id:"af08", from:"Canada",     to:"États-Unis",   fromC:[-96,56],   toC:[-95,38],      vol:1.5, type:"mixed", note:"GM, Ford, Stellantis. USMCA. Source: Stat Canada 2023" },
+  { id:"af07", from:"Mexique",    to_iso:"USA",to:"États-Unis",   fromC:[-102,24],  toC:[-95,38],      vol:2.6, type:"therm", note:"GM, Ford, Stellantis, VW. 1er flux mondial. Source: AMIA 2023" },
+  { id:"af08", from:"Canada",     to_iso:"USA",to:"États-Unis",   fromC:[-96,56],   toC:[-95,38],      vol:1.5, type:"mixed", note:"GM, Ford, Stellantis. USMCA. Source: Stat Canada 2023" },
   { id:"af09", from:"Chine",      to:"Europe",       fromC:[121,31],   toC:[10,50],       vol:0.8, type:"ev",    note:"BYD, MG/SAIC, NIO. Forte hausse 2022-2023. Source: Eurostat + China customs" },
   { id:"af10", from:"Chine",      to:"Asie SE",      fromC:[104,22],   toC:[105,10],      vol:0.7, type:"mixed", note:"BYD, Chery, Great Wall. Source: China customs 2023" },
-  { id:"af11", from:"Chine",      to:"Russie",       fromC:[104,40],   toC:[60,58],       vol:0.85,type:"therm", note:"Chery, Haval/GWM, Geely. Post-sanctions: explosion. Source: China customs" },
+  { id:"af11", from:"Chine",      to_iso:"RUS",to:"Russie",       fromC:[104,40],   toC:[60,58],       vol:0.85,type:"therm", note:"Chery, Haval/GWM, Geely. Post-sanctions: explosion. Source: China customs" },
   { id:"af12", from:"Chine",      to:"Amérique latine",fromC:[121,31], toC:[-55,-10],     vol:0.4, type:"mixed", note:"Chery, BYD, JAC. Source: China customs 2023" },
   { id:"af13", from:"Thaïlande",  to:"Australie",    fromC:[101,15],   toC:[133,-27],     vol:0.25,type:"therm", note:"Toyota Hilux, Isuzu D-Max, Mitsubishi. Source: FTI Thailand" },
   { id:"af14", from:"Thaïlande",  to:"Asie SE",      fromC:[101,15],   toC:[107,5],       vol:0.3, type:"therm", note:"Hub pickup ASEAN. Source: FTI Thailand" },
-  { id:"af15", from:"Rép. tchèque",to:"Allemagne",   fromC:[15.5,49.8],toC:[10,51],       vol:0.5, type:"therm", note:"Škoda Octavia/Superb. Source: AutoSAP 2023" },
-  { id:"af16", from:"Slovaquie",  to:"Allemagne",    fromC:[19,48.7],  toC:[10,51],       vol:0.4, type:"therm", note:"VW Touareg/Porsche Cayenne, Kia Sportage. Source: ZAP SR" },
+  { id:"af15", from:"Rép. tchèque",to_iso:"DEU",to:"Allemagne",   fromC:[15.5,49.8],toC:[10,51],       vol:0.5, type:"therm", note:"Škoda Octavia/Superb. Source: AutoSAP 2023" },
+  { id:"af16", from:"Slovaquie",  to_iso:"DEU",to:"Allemagne",    fromC:[19,48.7],  toC:[10,51],       vol:0.4, type:"therm", note:"VW Touareg/Porsche Cayenne, Kia Sportage. Source: ZAP SR" },
   { id:"af17", from:"Espagne",    to:"France",       fromC:[-4,40],    toC:[2.3,46],      vol:0.35,type:"therm", note:"SEAT, VW Polo Pamplona. Source: ANFAC" },
   { id:"af18", from:"Espagne",    to:"Royaume-Uni",  fromC:[-4,40],    toC:[-2,54],       vol:0.2, type:"therm", note:"Nissan Qashqai Barcelona. Source: ANFAC" },
   { id:"af19", from:"Maroc",      to:"Europe",       fromC:[-5,34],    toC:[2,46],        vol:0.35,type:"therm", note:"Renault Sandero/Dacia, Stellantis. Source: AMICA" },
@@ -2163,12 +2163,12 @@ const AERO_FLOWS = [
   { id:"aero04", from:"États-Unis", to:"Asie SE",            fromC:[-95,38],  toC:[105,10],   vol:4.2,  type:"civil",    note:"Boeing 737 MAX → Lion Air, VietJet, AirAsia X, IndiGo (ex-Inde). Source: Boeing 2023" },
   { id:"aero05", from:"États-Unis", to:"Émirats Arabes Unis",fromC:[-95,38],  toC:[54,24],    vol:5.8,  type:"civil",    note:"Boeing 777X (115 cmds Emirates), 787 → Etihad, flydubai. Source: Boeing 2023" },
   // --- Civil — Airbus (France/Allemagne) ---
-  { id:"aero06", from:"France",     to:"États-Unis",         fromC:[2.3,46],  toC:[-95,38],   vol:7.2,  type:"civil",    note:"Airbus A220, A320neo, A321XLR, A350 → American, Delta, United, JetBlue. Source: Airbus 2023" },
+  { id:"aero06", from:"France",     to_iso:"USA",to:"États-Unis",         fromC:[2.3,46],  toC:[-95,38],   vol:7.2,  type:"civil",    note:"Airbus A220, A320neo, A321XLR, A350 → American, Delta, United, JetBlue. Source: Airbus 2023" },
   { id:"aero07", from:"France",     to:"Asie SE",            fromC:[2.3,46],  toC:[105,10],   vol:5.5,  type:"civil",    note:"Airbus A320neo/A321neo → AirAsia, VietJet, Lion Air, IndiGo. Source: Airbus 2023" },
   { id:"aero08", from:"France",     to:"Chine",              fromC:[2.3,46],  toC:[104,35],   vol:4.8,  type:"civil",    note:"Airbus A320neo, A350-900/1000 → Air China, China Eastern, Shenzhen Airlines. FAL Tianjin. Source: Airbus 2023" },
   { id:"aero09", from:"France",     to:"Émirats Arabes Unis",fromC:[2.3,46],  toC:[54,24],    vol:3.2,  type:"civil",    note:"Airbus A380 (Emirates fleet), A320neo → flydubai, Air Arabia. Source: Airbus 2023" },
   // --- Civil — Embraer (Brésil) ---
-  { id:"aero10", from:"Brésil",     to:"États-Unis",         fromC:[-47,-23], toC:[-95,38],   vol:2.1,  type:"civil",    note:"Embraer E175 → American Eagle, SkyWest, GoJet (jets régionaux dom. aux USA). Source: Embraer 2023" },
+  { id:"aero10", from:"Brésil",     to_iso:"USA",to:"États-Unis",         fromC:[-47,-23], toC:[-95,38],   vol:2.1,  type:"civil",    note:"Embraer E175 → American Eagle, SkyWest, GoJet (jets régionaux dom. aux USA). Source: Embraer 2023" },
   { id:"aero11", from:"Brésil",     to:"Europe",             fromC:[-47,-23], toC:[10,50],    vol:1.2,  type:"civil",    note:"Embraer E195-E2 → KLM Cityhopper, Helvetic Airways, Azul Europe. Source: Embraer 2023" },
   // --- Militaire — USA (F-35 / FMS) ---
   { id:"aero12", from:"États-Unis", to:"Europe",             fromC:[-95,38],  toC:[10,50],    vol:9.5,  type:"military", note:"F-35A → Pays-Bas (46), Belgique (34), Danemark (27), Pologne (32), Finlande (64), Norvège (52), Italie (90). Source: Lockheed Martin / DoD FMS 2023" },
@@ -2187,16 +2187,16 @@ const NAVAL_FLOWS = [
   // --- Construction civile — Corée du Sud (leader mondial LNG) ---
   { id:"nav01", from:"Corée du Sud", to:"Europe",            fromC:[128,36],  toC:[10,50],    vol:12.5, type:"commercial", note:"LNG carriers, VLCC, porte-conteneurs → armateurs grecs (Tsakos), danois (Maersk), norvégiens. HD Hyundai HI, Samsung HI. Source: Clarkson 2023" },
   { id:"nav02", from:"Corée du Sud", to:"Japon",             fromC:[128,36],  toC:[138,37],   vol:3.2,  type:"commercial", note:"Vraquiers, pétroliers, car carriers → NYK, MOL, K Line. Source: Clarkson 2023" },
-  { id:"nav03", from:"Corée du Sud", to:"États-Unis",        fromC:[128,36],  toC:[-95,38],   vol:2.8,  type:"commercial", note:"LNG carriers, VLCC → compagnies énergétiques US (Cheniere, ExxonMobil). Source: Clarkson 2023" },
+  { id:"nav03", from:"Corée du Sud", to_iso:"USA",to:"États-Unis",        fromC:[128,36],  toC:[-95,38],   vol:2.8,  type:"commercial", note:"LNG carriers, VLCC → compagnies énergétiques US (Cheniere, ExxonMobil). Source: Clarkson 2023" },
   // --- Construction civile — Chine (2ème mondial, rattrapage rapide) ---
   { id:"nav04", from:"Chine",        to:"Europe",            fromC:[121,31],  toC:[10,50],    vol:8.5,  type:"commercial", note:"Vraquiers Capesize, porte-conteneurs, VLCC → armateurs grecs, allemands, danois. CSSC/Hudong. Source: Clarkson 2023" },
   { id:"nav05", from:"Chine",        to:"Asie SE",           fromC:[121,31],  toC:[105,10],   vol:4.2,  type:"commercial", note:"Vraquiers, ferry, Ro-Ro → Singapour, Malaisie, Philippines, Vietnam. Source: Clarkson 2023" },
   // --- Construction civile — Japon (3ème mondial) ---
   { id:"nav06", from:"Japon",        to:"Europe",            fromC:[138,37],  toC:[10,50],    vol:3.5,  type:"commercial", note:"Vraquiers haute qualité, car carriers, LNG feeders → armateurs européens. Imabari, JMU. Source: Clarkson 2023" },
-  { id:"nav07", from:"Japon",        to:"États-Unis",        fromC:[138,37],  toC:[-95,38],   vol:1.8,  type:"commercial", note:"Car carriers, product tankers → marchés américains. NYK, MOL transfèrent orders. Source: Clarkson 2023" },
+  { id:"nav07", from:"Japon",        to_iso:"USA",to:"États-Unis",        fromC:[138,37],  toC:[-95,38],   vol:1.8,  type:"commercial", note:"Car carriers, product tankers → marchés américains. NYK, MOL transfèrent orders. Source: Clarkson 2023" },
   // --- Paquebots de croisière — Europe (Italie, Finlande) ---
-  { id:"nav08", from:"Italie",       to:"États-Unis",        fromC:[12,43],   toC:[-95,38],   vol:4.2,  type:"cruise",     note:"Fincantieri Monfalcone → MSC Seashore, Carnival, Royal Caribbean. 1er constructeur croisière mondial. Source: Fincantieri 2023" },
-  { id:"nav09", from:"Finlande",     to:"États-Unis",        fromC:[25,62],   toC:[-95,38],   vol:2.8,  type:"cruise",     note:"Meyer Turku → Royal Caribbean Icon of the Seas class (1,4 Mrd€/navire). Source: Meyer Werft 2023" },
+  { id:"nav08", from:"Italie",       to_iso:"USA",to:"États-Unis",        fromC:[12,43],   toC:[-95,38],   vol:4.2,  type:"cruise",     note:"Fincantieri Monfalcone → MSC Seashore, Carnival, Royal Caribbean. 1er constructeur croisière mondial. Source: Fincantieri 2023" },
+  { id:"nav09", from:"Finlande",     to_iso:"USA",to:"États-Unis",        fromC:[25,62],   toC:[-95,38],   vol:2.8,  type:"cruise",     note:"Meyer Turku → Royal Caribbean Icon of the Seas class (1,4 Mrd€/navire). Source: Meyer Werft 2023" },
   // --- Construction militaire — États-Unis (AUKUS + FMS) ---
   { id:"nav10", from:"États-Unis",   to:"Australie",         fromC:[-95,38],  toC:[133,-27],  vol:8.0,  type:"military",   note:"Virginia class SSN (3-5 bâtiments) + technologie SSN-AUKUS → RAN. Accord AUKUS 2023-2035. Source: DoD AUKUS" },
   { id:"nav11", from:"États-Unis",   to:"Taïwan",            fromC:[-95,38],  toC:[121,24],   vol:2.5,  type:"military",   note:"Frégates Oliver Hazard Perry (surplus), systèmes anti-sous-marins P-3 Orion. Source: FMS DoD 2023" },
@@ -2639,7 +2639,7 @@ const RARE_EARTH_FLOWS = [
   // Minerai brut → transformation
   { id:"re001", from:"Australie", to:"Malaisie", from_c:[133,-27], to_c:[103.3,3.9], type:"ore", volume:18, unit:"kt REO/an",
     notes:"Mount Weld concentrate → LAMP Lynas. Principal flux minerai TR hors Chine." },
-  { id:"re002", from:"Myanmar", to:"Chine", from_c:[97.5,25.5], to_c:[110.0,40.65], type:"ore", volume:38, unit:"kt REO/an",
+  { id:"re002", from_iso:"MMR",from:"Myanmar", to:"Chine", from_c:[97.5,25.5], to_c:[110.0,40.65], type:"ore", volume:38, unit:"kt REO/an",
     notes:"Terres rares lourdes ioniques → séparation Ganzhou/Jiangxi. Flux CRUCIAL HREE. Largement informel." },
   { id:"re003", from:"États-Unis", to:"Estonie", from_c:[-95,38], to_c:[27.8,59.4], type:"ore", volume:1, unit:"kt REO/an",
     notes:"Energy Fuels (Utah) → Silmet. Mixed RE carbonate pour séparation EU." },
@@ -2648,7 +2648,7 @@ const RARE_EARTH_FLOWS = [
     notes:"Oxydes et métaux TR séparés → Shin-Etsu, TDK, Hitachi. Principal client Asie." },
   { id:"re005", from:"Chine", to:"Europe", from_c:[110.0,35.0], to_c:[10,50], type:"processed", volume:12, unit:"kt REO/an",
     notes:"Oxydes TR (La, Ce, Nd, Pr) → catalyseurs auto, polissage, aimants EU." },
-  { id:"re006", from:"Chine", to:"États-Unis", from_c:[110.0,35.0], to_c:[-95,38], type:"processed", volume:15, unit:"kt REO/an",
+  { id:"re006", from:"Chine", to_iso:"USA",to:"États-Unis", from_c:[110.0,35.0], to_c:[-95,38], type:"processed", volume:15, unit:"kt REO/an",
     notes:"Oxydes + aimants NdFeB → industrie US. Source principale malgré tensions commerciales." },
   { id:"re007", from:"Chine", to:"Corée du Sud", from_c:[110.0,35.0], to_c:[128,36], type:"processed", volume:8, unit:"kt REO/an",
     notes:"TR pour batteries, écrans OLED, semi-conducteurs Samsung/LG/SK Hynix." },
@@ -2663,7 +2663,7 @@ const RARE_EARTH_FLOWS = [
     notes:"Aimants NdFeB finis → secteur éolien (Siemens Gamesa, Vestas), VE (BMW, VW, Stellantis)." },
   { id:"re012", from:"Japon", to:"Europe", from_c:[138,37], to_c:[10,50], type:"magnets", volume:4, unit:"kt aimants/an",
     notes:"Aimants haute performance Shin-Etsu/TDK → robots industriels, médical, défense EU." },
-  { id:"re013", from:"Chine", to:"États-Unis", from_c:[116.4,39.9], to_c:[-95,38], type:"magnets", volume:12, unit:"kt aimants/an",
+  { id:"re013", from:"Chine", to_iso:"USA",to:"États-Unis", from_c:[116.4,39.9], to_c:[-95,38], type:"magnets", volume:12, unit:"kt aimants/an",
     notes:"Aimants NdFeB → VE (Tesla, GM), éolien offshore, équipements militaires US." },
 ];
 
@@ -3484,7 +3484,7 @@ function initTimeline() {
   if (typeof loadCerealData === 'function') setTimeout(loadCerealData, 500);
   if (typeof loadCerealProductionData === 'function') setTimeout(loadCerealProductionData, 700);
   if (typeof updateMetalProdForYear === 'function') setTimeout(function(){ updateMetalProdForYear(currentYear || 2022); }, 800);
-  if (typeof updateMigrationForYear === 'function') setTimeout(function(){ updateMigrationForYear(currentYear || 2022); }, 900);
+  if (typeof loadMigrationsData === 'function') setTimeout(loadMigrationsData, 900);
   const slider = document.getElementById('year-slider');
   const playBtn = document.getElementById('timeline-play');
   if (!slider) return;
@@ -5751,14 +5751,14 @@ const ARMS_FLOWS = [
   {from:"États-Unis", fromC:[-100,38], to:"Inde", toC:[78,20],
    hist:{2000:0,2005:0,2010:150,2015:350,2020:450,2022:500,2025:600},
    note:"MH-60R, CH-47F — rapprochement post-2008"},
-  {from:"États-Unis", fromC:[-100,38], to:"Pologne", toC:[20,52],
+  {from:"États-Unis", fromC:[-100,38], to_iso:"POL",to:"Pologne", toC:[20,52],
    hist:{2000:0,2005:100,2010:150,2015:200,2020:400,2022:480,2025:700},
    note:"F-35A, M1A2 SEPv3, HIMARS"},
   {from:"États-Unis", fromC:[-100,38], to:"Qatar", toC:[51,25],
    hist:{2000:0,2005:100,2010:200,2015:350,2020:420,2022:450,2025:480},
    note:"F-15QA, Apache, Patriot — base Al-Udeid"},
   // Pakistan: sanctions 1990-2001, suspensions 2011 et 2018
-  {from:"États-Unis", fromC:[-100,38], to:"Pakistan", toC:[70,30],
+  {from:"États-Unis", fromC:[-100,38], to_iso:"PAK",to:"Pakistan", toC:[70,30],
    hist:{2000:0,2005:600,2010:700,2015:400,2020:100,2022:0,2025:0},
    note:"F-16 (bloqué 1990-2001), suspensions après 2011/2018"},
   // ── RUSSIE ───────────────────────────────────────────────────
@@ -5768,7 +5768,7 @@ const ARMS_FLOWS = [
   {from:"Russie", fromC:[60,60], to:"Chine", toC:[104,35],
    hist:{2000:1200,2005:2000,2010:1200,2015:900,2020:850,2022:800,2025:600},
    note:"Su-35, S-400 — déclin car industrie chinoise autonome"},
-  {from:"Russie", fromC:[60,60], to:"Égypte", toC:[30,27],
+  {from:"Russie", fromC:[60,60], to_iso:"EGY",to:"Égypte", toC:[30,27],
    hist:{2000:0,2005:100,2010:350,2015:500,2020:600,2022:600,2025:400},
    note:"MiG-29M, Ka-52, S-300VM"},
   {from:"Russie", fromC:[60,60], to:"Algérie", toC:[3,28],
@@ -5793,7 +5793,7 @@ const ARMS_FLOWS = [
   {from:"France", fromC:[2,47], to:"Inde", toC:[78,20],
    hist:{2000:100,2005:200,2010:300,2015:400,2020:1600,2022:1800,2025:1900},
    note:"Rafale (contrat 2016), Scorpene, SCALP-EG"},
-  {from:"France", fromC:[2,47], to:"Égypte", toC:[30,27],
+  {from:"France", fromC:[2,47], to_iso:"EGY",to:"Égypte", toC:[30,27],
    hist:{2000:100,2005:150,2010:250,2015:900,2020:1100,2022:1100,2025:1000},
    note:"Rafale (contrat 2015), frégates FREMM, Mistral"},
   {from:"France", fromC:[2,47], to:"Qatar", toC:[51,25],
@@ -5813,7 +5813,7 @@ const ARMS_FLOWS = [
    hist:{2000:0,2005:0,2010:100,2015:300,2020:380,2022:400,2025:420},
    note:"Typhoon (contrat 2017), Hawk"},
   // ── ALLEMAGNE ────────────────────────────────────────────────
-  {from:"Allemagne", fromC:[10,51], to:"Égypte", toC:[30,27],
+  {from:"Allemagne", fromC:[10,51], to_iso:"EGY",to:"Égypte", toC:[30,27],
    hist:{2000:0,2005:150,2010:400,2015:550,2020:600,2022:600,2025:500},
    note:"Sous-marins Type 209, frégates MEKO"},
   {from:"Allemagne", fromC:[10,51], to:"Algérie", toC:[3,28],
@@ -5823,10 +5823,10 @@ const ARMS_FLOWS = [
    hist:{2000:0,2005:0,2010:200,2015:280,2020:300,2022:300,2025:310},
    note:"Sous-marins U-214 (contrat 2011)"},
   // ── CHINE ────────────────────────────────────────────────────
-  {from:"Chine", fromC:[104,35], to:"Pakistan", toC:[70,30],
+  {from:"Chine", fromC:[104,35], to_iso:"PAK",to:"Pakistan", toC:[70,30],
    hist:{2000:100,2005:300,2010:600,2015:800,2020:880,2022:900,2025:950},
    note:"JF-17 (1er vol 2003), Z-9, frégates F-22P"},
-  {from:"Chine", fromC:[104,35], to:"Bangladesh", toC:[90,24],
+  {from:"Chine", fromC:[104,35], to_iso:"BGD",to:"Bangladesh", toC:[90,24],
    hist:{2000:0,2005:50,2010:150,2015:280,2020:340,2022:350,2025:360},
    note:"Sous-marins Type 035, Type 053H3"},
   {from:"Chine", fromC:[104,35], to:"Myanmar", toC:[96,17],
@@ -6183,7 +6183,7 @@ var METAL_FLOWS = [
   {from:"Chili",     fromC:[-71,-35], to:"Corée du Sud",  toC:[127,37],  type:"copper", unit:"kt", hist:{2000:150,2005:200,2010:220,2015:250,2022:250,2023:240}},
   {from:"Pérou",     fromC:[-76,-10], to:"Chine",         toC:[104,35],  type:"copper", unit:"kt", hist:{2000:80,2005:200,2010:500,2015:700,2020:1000,2022:1200,2023:1200}},
   {from:"Pérou",     fromC:[-76,-10], to:"Japon",         toC:[138,37],  type:"copper", unit:"kt", hist:{2000:180,2010:200,2015:220,2022:200,2023:190}},
-  {from:"Rép. démocratique du Congo", fromC:[24,-3], to:"Chine", toC:[104,35], type:"copper", unit:"kt", hist:{2000:5,2005:50,2010:300,2015:600,2020:1100,2022:1200,2023:1300}},
+  {from_iso:"COD",from:"Rép. démocratique du Congo", fromC:[24,-3], to:"Chine", toC:[104,35], type:"copper", unit:"kt", hist:{2000:5,2005:50,2010:300,2015:600,2020:1100,2022:1200,2023:1300}},
   {from:"Australie", fromC:[133,-27], to:"Japon",         toC:[138,37],  type:"copper", unit:"kt", hist:{2000:350,2005:380,2010:400,2015:420,2022:400,2023:390}},
   {from:"Australie", fromC:[133,-27], to:"Corée du Sud",  toC:[127,37],  type:"copper", unit:"kt", hist:{2000:130,2010:190,2015:200,2022:200,2023:195}},
   {from:"Zambie",    fromC:[28,-14],  to:"Chine",         toC:[104,35],  type:"copper", unit:"kt", hist:{2000:30,2005:100,2010:250,2015:300,2022:400,2023:420}},
@@ -6195,16 +6195,16 @@ var METAL_FLOWS = [
   {from:"Chili",     fromC:[-71,-35], to:"Corée du Sud",  toC:[127,37],  type:"lithium", unit:"kt", hist:{2015:4,2018:6,2020:7,2022:8,2023:8}},
   {from:"Argentine", fromC:[-64,-34], to:"Chine",         toC:[104,35],  type:"lithium", unit:"kt", hist:{2018:1,2020:3,2022:5,2023:6}},
   // COBALT (kt)
-  {from:"Rép. démocratique du Congo", fromC:[24,-3], to:"Chine",    toC:[104,35],  type:"cobalt", unit:"kt", hist:{2000:9,2005:17,2010:40,2015:57,2020:88,2022:140,2023:150}},
-  {from:"Rép. démocratique du Congo", fromC:[24,-3], to:"Finlande", toC:[26,62],   type:"cobalt", unit:"kt", hist:{2010:5,2015:9,2022:15,2023:14}},
-  {from:"Rép. démocratique du Congo", fromC:[24,-3], to:"Belgique", toC:[4.5,50.5],type:"cobalt", unit:"kt", hist:{2010:4,2015:7,2022:10,2023:9}},
+  {from_iso:"COD",from:"Rép. démocratique du Congo", fromC:[24,-3], to:"Chine",    toC:[104,35],  type:"cobalt", unit:"kt", hist:{2000:9,2005:17,2010:40,2015:57,2020:88,2022:140,2023:150}},
+  {from_iso:"COD",from:"Rép. démocratique du Congo", fromC:[24,-3], to:"Finlande", toC:[26,62],   type:"cobalt", unit:"kt", hist:{2010:5,2015:9,2022:15,2023:14}},
+  {from_iso:"COD",from:"Rép. démocratique du Congo", fromC:[24,-3], to:"Belgique", toC:[4.5,50.5],type:"cobalt", unit:"kt", hist:{2010:4,2015:7,2022:10,2023:9}},
   {from:"Australie", fromC:[133,-27], to:"Chine",         toC:[104,35],  type:"cobalt", unit:"kt", hist:{2015:3,2022:5,2023:5}},
   {from:"Russie",    fromC:[60,58],   to:"Finlande",      toC:[26,62],   type:"cobalt", unit:"kt", hist:{2015:4,2022:4,2023:3}},
   // NICKEL (kt)
   {from:"Indonésie", fromC:[117,-2],  to:"Chine",         toC:[104,35],  type:"nickel", unit:"kt", hist:{2010:50,2015:80,2017:200,2019:700,2022:800,2023:900}},
   {from:"Philippines",fromC:[122,13], to:"Chine",         toC:[104,35],  type:"nickel", unit:"kt", hist:{2010:80,2015:150,2022:300,2023:310}},
   {from:"Russie",    fromC:[60,58],   to:"Pays-Bas",      toC:[5,52],    type:"nickel", unit:"kt", hist:{2000:60,2010:80,2015:80,2022:80,2023:70}},
-  {from:"Canada",    fromC:[-96,56],  to:"États-Unis",    toC:[-95,38],  type:"nickel", unit:"kt", hist:{2000:50,2010:60,2015:70,2022:80,2023:80}},
+  {from:"Canada",    fromC:[-96,56],  to_iso:"USA",to:"États-Unis",    toC:[-95,38],  type:"nickel", unit:"kt", hist:{2000:50,2010:60,2015:70,2022:80,2023:80}},
   // MINERAI DE FER (Mt)
   {from:"Australie", fromC:[133,-27], to:"Chine",         toC:[104,35],  type:"iron_ore", unit:"Mt", hist:{2000:60,2005:130,2010:300,2015:540,2020:680,2022:700,2023:720}},
   {from:"Australie", fromC:[133,-27], to:"Japon",         toC:[138,37],  type:"iron_ore", unit:"Mt", hist:{2000:55,2005:65,2010:70,2015:75,2022:80,2023:78}},
@@ -6346,32 +6346,32 @@ var MIGRATION_PROD_DATA = {
 
 var MIGRATION_FLOWS = [
   // Crise syrienne
-  {from:"Syrie",       fromC:[38,35],   to:"Turquie",     toC:[35,39],   type:"migration", hist:{2012:100,2013:600,2014:1300,2015:2000,2016:2700,2018:3600,2020:3600,2022:3600,2023:3600}},
-  {from:"Syrie",       fromC:[38,35],   to:"Allemagne",   toC:[10,51],   type:"migration", hist:{2013:50,2014:200,2015:500,2016:700,2017:700,2018:700,2022:700,2023:750}},
-  {from:"Syrie",       fromC:[38,35],   to:"Liban",       toC:[35.5,33.8],type:"migration",hist:{2012:100,2013:600,2014:1100,2015:1200,2018:950,2020:900,2022:800,2023:800}},
-  {from:"Syrie",       fromC:[38,35],   to:"Jordanie",    toC:[36.5,31], type:"migration", hist:{2012:80,2013:400,2014:620,2015:650,2018:670,2022:660,2023:650}},
+  {from_iso:"SYR",from:"Syrie",       fromC:[38,35],   to_iso:"TUR",to:"Turquie",     toC:[35,39],   type:"migration", hist:{2012:100,2013:600,2014:1300,2015:2000,2016:2700,2018:3600,2020:3600,2022:3600,2023:3600}},
+  {from_iso:"SYR",from:"Syrie",       fromC:[38,35],   to_iso:"DEU",to:"Allemagne",   toC:[10,51],   type:"migration", hist:{2013:50,2014:200,2015:500,2016:700,2017:700,2018:700,2022:700,2023:750}},
+  {from_iso:"SYR",from:"Syrie",       fromC:[38,35],   to_iso:"LBN",to:"Liban",       toC:[35.5,33.8],type:"migration",hist:{2012:100,2013:600,2014:1100,2015:1200,2018:950,2020:900,2022:800,2023:800}},
+  {from_iso:"SYR",from:"Syrie",       fromC:[38,35],   to_iso:"JOR",to:"Jordanie",    toC:[36.5,31], type:"migration", hist:{2012:80,2013:400,2014:620,2015:650,2018:670,2022:660,2023:650}},
   // Crise afghane
-  {from:"Afghanistan", fromC:[67,33],   to:"Pakistan",    toC:[68,30],   type:"migration", hist:{2000:2000,2005:1100,2010:1900,2015:1500,2020:1500,2021:1500,2022:1700,2023:1700}},
-  {from:"Afghanistan", fromC:[67,33],   to:"Iran",        toC:[53,33],   type:"migration", hist:{2000:1500,2005:900,2010:1000,2015:950,2018:950,2020:780,2022:780,2023:780}},
-  {from:"Afghanistan", fromC:[67,33],   to:"Allemagne",   toC:[10,51],   type:"migration", hist:{2015:50,2016:200,2018:180,2021:100,2022:300,2023:350}},
+  {from_iso:"AFG",from:"Afghanistan", fromC:[67,33],   to_iso:"PAK",to:"Pakistan",    toC:[68,30],   type:"migration", hist:{2000:2000,2005:1100,2010:1900,2015:1500,2020:1500,2021:1500,2022:1700,2023:1700}},
+  {from_iso:"AFG",from:"Afghanistan", fromC:[67,33],   to_iso:"IRN",to:"Iran",        toC:[53,33],   type:"migration", hist:{2000:1500,2005:900,2010:1000,2015:950,2018:950,2020:780,2022:780,2023:780}},
+  {from_iso:"AFG",from:"Afghanistan", fromC:[67,33],   to_iso:"DEU",to:"Allemagne",   toC:[10,51],   type:"migration", hist:{2015:50,2016:200,2018:180,2021:100,2022:300,2023:350}},
   // Crise venezuelienne
-  {from:"Venezuela",   fromC:[-65,7],   to:"Colombie",    toC:[-74,4],   type:"migration", hist:{2015:50,2017:500,2018:1000,2019:1400,2020:1800,2021:1700,2022:2500,2023:2900}},
-  {from:"Venezuela",   fromC:[-65,7],   to:"Pérou",       toC:[-76,-10], type:"migration", hist:{2017:100,2018:500,2019:900,2020:1000,2021:1000,2022:1300,2023:1500}},
-  {from:"Venezuela",   fromC:[-65,7],   to:"États-Unis",  toC:[-95,38],  type:"migration", hist:{2018:50,2020:100,2022:300,2023:500}},
+  {from_iso:"VEN",from:"Venezuela",   fromC:[-65,7],   to:"Colombie",    toC:[-74,4],   type:"migration", hist:{2015:50,2017:500,2018:1000,2019:1400,2020:1800,2021:1700,2022:2500,2023:2900}},
+  {from_iso:"VEN",from:"Venezuela",   fromC:[-65,7],   to_iso:"PER",to:"Pérou",       toC:[-76,-10], type:"migration", hist:{2017:100,2018:500,2019:900,2020:1000,2021:1000,2022:1300,2023:1500}},
+  {from_iso:"VEN",from:"Venezuela",   fromC:[-65,7],   to_iso:"USA",to:"États-Unis",  toC:[-95,38],  type:"migration", hist:{2018:50,2020:100,2022:300,2023:500}},
   // Crise ukrainienne
-  {from:"Ukraine",     fromC:[32,49],   to:"Allemagne",   toC:[10,51],   type:"migration", hist:{2014:50,2015:50,2016:50,2018:100,2019:100,2020:100,2021:100,2022:1000,2023:1100}},
-  {from:"Ukraine",     fromC:[32,49],   to:"Pologne",     toC:[20,52],   type:"migration", hist:{2014:30,2015:30,2020:30,2021:30,2022:1500,2023:970}},
-  {from:"Ukraine",     fromC:[32,49],   to:"Russie",      toC:[60,58],   type:"migration", hist:{2022:2900,2023:2600}},
+  {from_iso:"UKR",from:"Ukraine",     fromC:[32,49],   to_iso:"DEU",to:"Allemagne",   toC:[10,51],   type:"migration", hist:{2014:50,2015:50,2016:50,2018:100,2019:100,2020:100,2021:100,2022:1000,2023:1100}},
+  {from_iso:"UKR",from:"Ukraine",     fromC:[32,49],   to_iso:"POL",to:"Pologne",     toC:[20,52],   type:"migration", hist:{2014:30,2015:30,2020:30,2021:30,2022:1500,2023:970}},
+  {from_iso:"UKR",from:"Ukraine",     fromC:[32,49],   to_iso:"RUS",to:"Russie",      toC:[60,58],   type:"migration", hist:{2022:2900,2023:2600}},
   // Crise birmane / Rohingya
-  {from:"Myanmar",     fromC:[96,20],   to:"Bangladesh",  toC:[90,23.5], type:"migration", hist:{2010:200,2015:400,2017:700,2018:900,2019:900,2020:900,2022:950,2023:980}},
-  {from:"Myanmar",     fromC:[96,20],   to:"Thaïlande",   toC:[101,15],  type:"migration", hist:{2000:100,2005:150,2010:150,2015:100,2022:100,2023:120}},
+  {from_iso:"MMR",from:"Myanmar",     fromC:[96,20],   to_iso:"BGD",to:"Bangladesh",  toC:[90,23.5], type:"migration", hist:{2010:200,2015:400,2017:700,2018:900,2019:900,2020:900,2022:950,2023:980}},
+  {from_iso:"MMR",from:"Myanmar",     fromC:[96,20],   to_iso:"THA",to:"Thaïlande",   toC:[101,15],  type:"migration", hist:{2000:100,2005:150,2010:150,2015:100,2022:100,2023:120}},
   // Afrique sub-saharienne
-  {from:"Soudan du Sud",fromC:[31,7],   to:"Ouganda",     toC:[32.3,1.3],type:"migration", hist:{2013:100,2014:400,2015:600,2016:900,2017:1000,2018:900,2020:900,2022:960,2023:1000}},
-  {from:"Soudan du Sud",fromC:[31,7],   to:"Éthiopie",    toC:[39,9],    type:"migration", hist:{2013:50,2015:300,2017:400,2018:400,2020:370,2022:400,2023:420}},
-  {from:"Rép. démocratique du Congo",fromC:[24,-3],to:"Ouganda",toC:[32.3,1.3],type:"migration",hist:{2010:150,2015:200,2018:350,2020:400,2022:420,2023:450}},
-  {from:"Somalie",     fromC:[46,5],    to:"Éthiopie",    toC:[39,9],    type:"migration", hist:{2000:100,2005:150,2010:200,2015:250,2018:280,2020:300,2022:400,2023:430}},
-  {from:"Soudan",      fromC:[31,16],   to:"Éthiopie",    toC:[39,9],    type:"migration", hist:{2020:50,2021:60,2022:70,2023:800}},
-  {from:"Soudan",      fromC:[31,16],   to:"Égypte",      toC:[30,27],   type:"migration", hist:{2020:50,2022:50,2023:500}}
+  {from_iso:"SSD",from:"Soudan du Sud",fromC:[31,7],   to_iso:"UGA",to:"Ouganda",     toC:[32.3,1.3],type:"migration", hist:{2013:100,2014:400,2015:600,2016:900,2017:1000,2018:900,2020:900,2022:960,2023:1000}},
+  {from_iso:"SSD",from:"Soudan du Sud",fromC:[31,7],   to_iso:"ETH",to:"Éthiopie",    toC:[39,9],    type:"migration", hist:{2013:50,2015:300,2017:400,2018:400,2020:370,2022:400,2023:420}},
+  {from_iso:"COD",from:"Rép. démocratique du Congo",fromC:[24,-3],to_iso:"UGA",to:"Ouganda",toC:[32.3,1.3],type:"migration",hist:{2010:150,2015:200,2018:350,2020:400,2022:420,2023:450}},
+  {from_iso:"SOM",from:"Somalie",     fromC:[46,5],    to_iso:"ETH",to:"Éthiopie",    toC:[39,9],    type:"migration", hist:{2000:100,2005:150,2010:200,2015:250,2018:280,2020:300,2022:400,2023:430}},
+  {from_iso:"SDN",from:"Soudan",      fromC:[31,16],   to_iso:"ETH",to:"Éthiopie",    toC:[39,9],    type:"migration", hist:{2020:50,2021:60,2022:70,2023:800}},
+  {from_iso:"SDN",from:"Soudan",      fromC:[31,16],   to_iso:"EGY",to:"Égypte",      toC:[30,27],   type:"migration", hist:{2020:50,2022:50,2023:500}}
 ];
 
 var migrationFlowsLayerItems = [];
@@ -6441,12 +6441,64 @@ function updateMigrationForYear(year) {
     for(var i=0;i<keys.length-1;i++){if(y>=keys[i]&&y<=keys[i+1]){var t=(y-keys[i])/(keys[i+1]-keys[i]);return Math.round(byYear[keys[i]]*(1-t)+byYear[keys[i+1]]*t);}}
     return byYear[keys[0]];
   }
-  Object.keys(MIGRATION_PROD_DATA).forEach(function(metric){
-    var cd=MIGRATION_PROD_DATA[metric];
-    Object.values(ENERGY_DATA).forEach(function(d){
-      if(d.iso3&&cd[d.iso3])d[metric]=interp(cd[d.iso3],year);
+  // Use real API data (_hist_*) if available, else fallback to hardcoded
+  var metrics = ['refugees_out_k','refugees_in_k','idp_k'];
+  Object.values(ENERGY_DATA).forEach(function(d){
+    metrics.forEach(function(metric){
+      var hist = d['_hist_' + metric] || (MIGRATION_PROD_DATA[metric] && MIGRATION_PROD_DATA[metric][d.iso3]);
+      if (hist) d[metric] = interp(hist, year);
     });
   });
+}
+
+
+var MIGRATION_ISO_FR = {
+  "SYR":"Syrie","AFG":"Afghanistan","VEN":"Venezuela","UKR":"Ukraine",
+  "MMR":"Myanmar","SSD":"Soudan du Sud","COD":"Rép. démocratique du Congo",
+  "SOM":"Somalie","SDN":"Soudan","ETH":"Éthiopie","IRQ":"Irak",
+  "NGA":"Nigeria","YEM":"Yémen","COL":"Colombie","BGD":"Bangladesh",
+  "TUR":"Turquie","DEU":"Allemagne","LBN":"Liban","JOR":"Jordanie",
+  "PAK":"Pakistan","IRN":"Iran","UGA":"Ouganda","POL":"Pologne",
+  "KEN":"Kenya","LBR":"Libéria","MLI":"Mali","CAF":"Centrafrique",
+  "THA":"Thaïlande","PER":"Pérou","USA":"États-Unis",
+  "RUS":"Russie","SWE":"Suède","ECU":"Équateur","RWA":"Rwanda",
+  "AGO":"Angola","EGY":"Égypte","CHD":"Tchad","CZE":"Tchéquie",
+  "IND":"Inde","AUS":"Australie"
+};
+
+function loadMigrationsData() {
+  fetch('data/migrations.json')
+    .then(function(r){ return r.json(); })
+    .then(function(json){
+      // 1. Update production metrics in ENERGY_DATA
+      var metrics = ['refugees_out_k','refugees_in_k','idp_k'];
+      metrics.forEach(function(metric){
+        var cd = json[metric] || {};
+        Object.values(ENERGY_DATA).forEach(function(d){
+          if (!d.iso3 || !cd[d.iso3]) return;
+          // store full hist
+          d['_hist_' + metric] = cd[d.iso3];
+        });
+      });
+
+      // 2. Update MIGRATION_FLOWS hist from real API data
+      var apiFlows = json.flows || [];
+      MIGRATION_FLOWS.forEach(function(fl){
+        var match = apiFlows.find(function(af){
+          return af.from_iso === fl.from_iso && af.to_iso === fl.to_iso;
+        });
+        if (match && match.hist && Object.keys(match.hist).length > 0) {
+          fl.hist = match.hist;
+        }
+      });
+
+      console.log('Loaded migrations data from UNHCR API (' + json.updated + ')');
+      updateMigrationForYear(currentYear || 2022);
+      if (layerVis.migration_flows) rebuildMigrationFlowsLayer();
+      var mc = document.getElementById('mc-ref-out');
+      if (mc && mc.checked) updateCountriesStyle();
+    })
+    .catch(function(e){ console.warn('Could not load migrations.json:', e); });
 }
 
 function loadCerealProductionData() {
