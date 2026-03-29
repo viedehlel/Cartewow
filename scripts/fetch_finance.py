@@ -67,7 +67,8 @@ COORDS = {
     "Ukraine":         [32,  49],    "Nouvelle-Zélande":  [172,-41],
 }
 
-THRESHOLD_MD = 2.0   # seuil : 2 Md$ minimum par flux bilatéral
+THRESHOLD_MD = 2.0       # seuil flux OCDE : 2 Md$ minimum
+THRESHOLD_CHN_MD = 0.5   # seuil Chine : 0.5 Md$ (investissements plus diffus)
 
 def fetch_bilateral(reporters, years):
     rep_str = "+".join(reporters)
@@ -161,14 +162,97 @@ def parse_flows(csv_text, years):
     return {k: v for k, v in flows.items() if v}
 
 
+def fetch_china_outward(years):
+    """
+    Flux IDE de Chine vers les pays OCDE via les déclarations inward (DI)
+    des pays OCDE avec la Chine comme COUNTERPART_AREA.
+    """
+    key = ".T_FA_F.USD_EXC.DI...D.S1.CHN.IMC._T.A.CTRY_IND"
+    url = (
+        "https://sdmx.oecd.org/public/rest/data/"
+        f"OECD.DAF.INV,DSD_FDI@DF_FDI_FLOW_CTRY,1.0/{key}"
+        f"?startPeriod={years[0]}&endPeriod={years[-1]}&format=csvfile"
+    )
+    print("Telechargement IDE Chine -> pays OCDE...")
+    for attempt in range(3):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=60) as r:
+                data = r.read().decode("utf-8")
+                print(f"  Reçu : {len(data)//1024} KB")
+                return data
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                time.sleep(30 * (attempt + 1))
+            else:
+                print(f"  HTTP {e.code}")
+                return None
+        except Exception as e:
+            print(f"  Erreur: {e}")
+            return None
+    return None
+
+
+def parse_china_flows(csv_text, years):
+    """
+    Parse les flux entrants OCDE depuis Chine.
+    REF_AREA = pays destination (OCDE), COUNTERPART_AREA = CHN.
+    Retourne dict ("Chine", to_fr) -> {year: val_md}.
+    """
+    years_set = set(str(y) for y in years)
+    raw = defaultdict(lambda: defaultdict(dict))  # [dest_iso][year][entry]
+
+    reader = csv.DictReader(io.StringIO(csv_text))
+    for row in reader:
+        dest    = row.get("REF_AREA", "")
+        year    = row.get("TIME_PERIOD", "")
+        entry   = row.get("ACCOUNTING_ENTRY", "")
+        obs     = row.get("OBS_VALUE", "").strip()
+
+        if year not in years_set or not obs:
+            continue
+        try:
+            raw[dest][year][entry] = float(obs)
+        except ValueError:
+            continue
+
+    flows = {}
+    for dest_iso, yr_data in raw.items():
+        to_fr = ISO3_TO_FR.get(dest_iso)
+        if not to_fr or to_fr not in COORDS or to_fr == "Chine":
+            continue
+        hist = {}
+        for year, entries in yr_data.items():
+            val = (entries.get("NET_FDI")
+                   or entries.get("A")
+                   or next(iter(entries.values()), None))
+            if val is None:
+                continue
+            val_md = val / 1000.0
+            if val_md >= THRESHOLD_CHN_MD:
+                hist[year] = round(val_md, 1)
+        if hist:
+            flows[("Chine", to_fr)] = hist
+
+    return flows
+
+
 def main():
+    # 1. Flux sortants des pays OCDE
     csv_text = fetch_bilateral(REPORTERS_ISO3, YEARS)
     if not csv_text:
         print("Échec du téléchargement OECD.")
         return
 
     flows_dict = parse_flows(csv_text, YEARS)
-    print(f"{len(flows_dict)} paires pays avec IDE >= {THRESHOLD_MD} Md$/an")
+    print(f"{len(flows_dict)} paires pays OCDE avec IDE >= {THRESHOLD_MD} Md$/an")
+
+    # 2. Flux sortants de la Chine (via déclarations inward OCDE)
+    chn_csv = fetch_china_outward(YEARS)
+    if chn_csv:
+        chn_flows = parse_china_flows(chn_csv, YEARS)
+        print(f"{len(chn_flows)} destinations chinoises avec IDE >= {THRESHOLD_CHN_MD} Md$/an")
+        flows_dict.update(chn_flows)
 
     flows_out = []
     for (from_fr, to_fr), hist in sorted(flows_dict.items()):
