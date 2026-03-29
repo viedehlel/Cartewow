@@ -9,7 +9,7 @@ Fonctionnement :
 
 Types couverts (codes HS) :
   8542 — Circuits intégrés / semiconducteurs  (electronics)
-  8479 — Machines industrielles               (machinery)
+  8458+8462+8466 — Tours + Presses + Parties machines-outils (machinery)
 
 Source : https://comtradeapi.un.org  (nécessite COMTRADE_KEY)
 """
@@ -82,7 +82,7 @@ EXPORTERS = {
 
 HS_CODES = {
     "electronics": "8542",  # circuits intégrés / semiconducteurs
-    "machinery":   "8479",  # machines industrielles
+    "machinery":   "8458,8462,8466",  # tours + presses + parties machines-outils
 }
 
 TYPE_COLORS = {
