@@ -81,8 +81,8 @@ EXPORTERS = {
 }
 
 HS_CODES = {
-    "electronics": "8542",  # circuits intégrés / semiconducteurs
-    "machinery":   "8458,8462,8466",  # tours + presses + parties machines-outils
+    "electronics": "8542",              # circuits intégrés / semiconducteurs
+    "machinery":   "8457,8458,8462,8466",  # centres usinage + tours + presses + parties
 }
 
 TYPE_COLORS = {
@@ -95,8 +95,11 @@ UNITS = {
     "machinery":   "Md$",
 }
 
-THRESHOLD = 500_000_000    # 500 M USD
-DIVISOR   = 1_000_000_000  # → milliards USD
+THRESHOLDS = {
+    "electronics": 500_000_000,  # 500 M USD — semis sont de gros volumes
+    "machinery":   100_000_000,  # 100 M USD — machines-outils plus niches
+}
+DIVISOR = 1_000_000_000  # → milliards USD
 
 
 def load_existing():
@@ -206,7 +209,7 @@ def build_flows(api_key, existing_agg, existing_meta, done):
                 raw_val = float(primary_value)
             except (TypeError, ValueError):
                 continue
-            if raw_val < THRESHOLD:
+            if raw_val < THRESHOLDS[tech_type]:
                 continue
             to_name = M49_TO_FR.get(partner)
             if not to_name or to_name not in COORDS or to_name == from_name:
