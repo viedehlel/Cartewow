@@ -7028,6 +7028,7 @@ function getFinanceValue(fl, year) {
 function buildFinanceFlowsLayer() {
   if (!layerVis.finance_fdi) return;
   var year = typeof currentYear !== 'undefined' ? currentYear : 2022;
+  console.log('[Finance] build '+FINANCE_FLOWS.length+' flows, year='+year);
   var values = FINANCE_FLOWS.map(function(f){ return getFinanceValue(f, year); });
   var activeVals = values.filter(function(v){ return v > 0; });
   var sorted = activeVals.slice().sort(function(a,b){return a-b;});
@@ -7064,7 +7065,13 @@ function toggleFinanceLayer() {
   layerVis.finance_fdi = !layerVis.finance_fdi;
   financeFlowsLayerItems.forEach(function(item){try{map.removeLayer(item);}catch(e){}});
   financeFlowsLayerItems.length = 0;
-  if (layerVis.finance_fdi) buildFinanceFlowsLayer();
+  if (layerVis.finance_fdi) {
+    if (FINANCE_FLOWS.length === 0) {
+      loadFinanceData();  // chargement à la demande si pas encore fait
+    } else {
+      buildFinanceFlowsLayer();
+    }
+  }
 }
 
 function rebuildFinanceFlowsLayer() {
