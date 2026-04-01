@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carte Mondiale de l'Énergie</title>
+<title>Atlas Géopolitique Mondial</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
 :root {
@@ -260,8 +260,8 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
 
 <div id="header">
   <div class="title-group">
-    <div class="title">🌍 Carte Mondiale de l'Énergie</div>
-    <div class="subtitle">Données: BP Statistical Review 2023 / IEA / GIIGNL</div>
+    <div class="title">🌍 Atlas Géopolitique Mondial</div>
+    <div class="subtitle">Énergie · Céréales · Métaux · Commerce · Finance · Migrations</div>
   </div>
   <div class="spacer"></div>
   <button class="pill-btn" onclick="openSearch()" title="Recherche universelle (Ctrl+K)" style="gap:6px;display:flex;align-items:center">
@@ -3590,7 +3590,7 @@ function updateFlowsForYear(year) {
   if (typeof rebuildFinanceFlowsLayer === 'function') rebuildFinanceFlowsLayer();
   // Mettre à jour le panneau ouvert + re-appliquer le filtre pays
   if (selectedFeature && selectedFeature.type === 'country') {
-    renderCountryPanel(selectedFeature.key);
+    renderCountryPanel(selectedFeature.key, true); // skipZoom=true : pas de re-zoom au changement de date
     var _d = ENERGY_DATA[selectedFeature.key];
     if (_d) filterFlowsByCountry(_d.name);
   }
@@ -4486,13 +4486,14 @@ function renderPanel() {
   }
 }
 
-function renderCountryPanel(key) {
+function renderCountryPanel(key, skipZoom) {
   const d = getCountryDataForYear(key, currentYear);
   if (!d) return;
   const panel = document.getElementById('panel-inner');
 
   // Zoom adapté à la taille réelle du pays (corrige les DOM/TOM et très grands pays)
-  if (layers.countries) {
+  // skipZoom=true quand on rafraîchit le panneau suite à un changement de date (pas de re-zoom)
+  if (!skipZoom && layers.countries) {
     layers.countries.eachLayer(l => {
       if (String(parseInt(l.feature.id)) !== key) return;
       try {
