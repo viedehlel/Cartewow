@@ -4966,17 +4966,36 @@ function showSupplierDetail(idx) {
   if (!s) return;
   var panel = document.getElementById('panel-inner');
   var DOMAIN_ICONS = {'Énergie':'⚡','Terres rares':'💎','Céréales':'🌾','Métaux':'🏗️','Automobile':'🚗','Aviation':'✈️','Naval':'⚓','Technologie':'💻'};
+  var importerName = _depImporterKey && ENERGY_DATA[_depImporterKey] ? ENERGY_DATA[_depImporterKey].name : '?';
+
+  // On récupère les domaines enrichis depuis DEP_SCORES si disponible
+  var iso3 = _depImporterKey && ENERGY_DATA[_depImporterKey] ? ENERGY_DATA[_depImporterKey].iso3 : null;
+  var cached = iso3 ? DEP_SCORES[iso3] : null;
+  var domainDetails = {}; // dom -> detail BMAD
+  if (cached && cached.domains) {
+    cached.domains.forEach(function(d){ if(d.detail) domainDetails[d.domain] = d.detail; });
+  }
 
   var rows = Object.keys(s.domains).map(function(dom) {
     var pct = Math.round(s.domains[dom] * 100);
     if (pct < 1) return '';
     var col = pct > 60 ? '#f85149' : pct > 30 ? '#ffa726' : pct > 10 ? '#fbbf24' : '#58a6ff';
     var icon = DOMAIN_ICONS[dom] || '•';
+    var det = domainDetails[dom];
+    var subRow = det
+      ? '<div style="font-size:10px;color:var(--text-secondary);margin:1px 0 3px 12px;display:flex;gap:10px">'
+        +'<span title="Part des imports">📦 '+det.importPct+'%</span>'
+        +'<span title="Concentration fournisseur">🎯 '+det.concentration+'%</span>'
+        +'<span title="Vélocité crise">⚡ '+det.velocite+'%</span>'
+        +'<span title="Non-substituabilité">'+(100-det.substituabilite)+'% irrempl.</span>'
+        +'</div>'
+      : '';
     return '<div style="margin:5px 0">'
       +'<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px">'
       +'<span>'+icon+' '+dom+'</span>'
-      +'<span style="color:'+col+';font-weight:600">'+pct+'%</span>'
+      +'<span style="color:'+col+';font-weight:600">'+pct+'/100</span>'
       +'</div>'
+      +subRow
       +'<div style="height:3px;background:rgba(255,255,255,0.1);border-radius:2px">'
       +'<div style="height:3px;width:'+Math.min(pct,100)+'%;background:'+col+';border-radius:2px"></div>'
       +'</div></div>';
@@ -4989,9 +5008,11 @@ function showSupplierDetail(idx) {
     +'<button onclick="'+backFn+'" style="background:none;border:1px solid var(--border);border-radius:4px;color:var(--text-secondary);cursor:pointer;padding:3px 8px;font-size:11px">← Retour</button>'
     +'<div style="font-weight:600;color:var(--text-primary)">'+s.supplier+'</div>'
     +'</div>'
-    +'<div style="font-size:10px;color:var(--text-secondary);margin-bottom:10px">Dépendance de <b style="color:var(--text-primary)">'+(_depImporterKey&&ENERGY_DATA[_depImporterKey]?ENERGY_DATA[_depImporterKey].name:'?')+'</b> envers ce pays :</div>'
+    +'<div style="font-size:10px;color:var(--text-secondary);margin-bottom:4px">Dépendance de <b style="color:var(--text-primary)">'+importerName+'</b> envers ce pays</div>'
+    +'<div style="font-size:9px;color:var(--text-secondary);margin-bottom:10px;opacity:0.7">Formule BMAD : imports/supply × concentration × vélocité × (1−substituabilité)</div>'
     +'<div style="font-size:10px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">Par domaine</div>'
     +rows
+    +(rows ? '' : '<div style="font-size:11px;color:var(--text-secondary)">Aucune dépendance tracée vers ce fournisseur.</div>')
     +'</div>';
 }
 
@@ -7391,10 +7412,36 @@ function loadFinanceData() {
 // Formule : pour chaque domaine, dep_ratio = imports_bloquables / (prod + imports)
 // Score global = moyenne pondérée des ratios par domaine × 100
 
+// ============================================================
+//  FORMULE BMAD : score = (imports/supply) × concentration × vélocité × (1-substituabilité) × (1-réciprocité×0.3)
+//  Coefficients statiques par domaine (session BMAD 2026-03-29)
+// ============================================================
+var BMAD_SUBST = {
+  // Substituabilité : 0 = impossible à remplacer, 1 = facilement substituable
+  'Énergie':      0.55,  // pétrole/gaz : alternatives existent mais coûteuses
+  'Terres rares': 0.10,  // quasi-irremplaçable à court terme
+  'Céréales':     0.60,  // marchés mondiaux profonds, stockage possible
+  'Métaux':       0.40,  // dépend du métal (cuivre/alu = plus substituable que cobalt)
+  'Automobile':   0.50,
+  'Aviation':     0.30,  // oligopole Boeing/Airbus, peu substituable
+  'Naval':        0.35,
+  'Technologie':  0.15,  // semiconducteurs : très faible substituabilité
+};
+var BMAD_VELOC = {
+  // Vélocité : 1 = crise immédiate si coupure, 0 = peut attendre
+  'Énergie':      1.00,  // stocks = quelques semaines
+  'Terres rares': 0.80,  // affecte chaînes industrielles rapidement
+  'Céréales':     0.70,  // stocks mondiaux ~3 mois
+  'Métaux':       0.55,
+  'Automobile':   0.40,
+  'Aviation':     0.60,  // pièces de rechange critiques
+  'Naval':        0.35,
+  'Technologie':  0.65,  // rupture chips = arrêt lignes production
+};
+
 function computeDepScoreForCountry(countryName, iso3, year) {
   var yr = parseInt(year) || 2022;
 
-  // Helper : interpole une valeur hist
   function hv(fl, y) {
     if (!fl.hist) return fl.volume || fl.vol || 0;
     var k = Object.keys(fl.hist).map(Number).sort(function(a,b){return a-b;});
@@ -7405,7 +7452,6 @@ function computeDepScoreForCountry(countryName, iso3, year) {
     return 0;
   }
 
-  // Correspond à un pays (gère régions collectives)
   function matchTo(flowTo) {
     if (!flowTo) return false;
     if (flowTo === countryName) return true;
@@ -7413,33 +7459,62 @@ function computeDepScoreForCountry(countryName, iso3, year) {
     return reg ? reg.includes(countryName) : false;
   }
 
-  var scores = [];
+  // Concentration HHI simplifié : part du top fournisseur dans les imports
+  function concentration(flows, volFn) {
+    var bySupplier = {};
+    flows.forEach(function(f){ bySupplier[f.from] = (bySupplier[f.from]||0) + volFn(f); });
+    var total = Object.values(bySupplier).reduce(function(s,v){return s+v;},0);
+    if (!total) return 0;
+    var max = Math.max.apply(null, Object.values(bySupplier));
+    return max / total; // 1 = monopole, 0.33 = 3 fournisseurs égaux
+  }
 
-  // --- ÉNERGIE ---
+  // Réciprocité : flux sortant du pays vers ce fournisseur / flux entrant
+  function reciprocity(flowsIn, allFlows, volFn) {
+    var totalIn = flowsIn.reduce(function(s,f){return s+volFn(f);},0);
+    if (!totalIn) return 0;
+    var totalOut = allFlows.filter(function(f){return f.from===countryName||f.from===countryName;}).reduce(function(s,f){return s+volFn(f);},0);
+    return Math.min(totalOut / (totalIn + 0.001), 1);
+  }
+
+  // Formule BMAD pour un domaine : importRatio × concentration × vélocité × (1-substituabilité) × réciprocityFactor
+  function bmadScore(importRatio, concen, domain, recipFactor) {
+    var v = BMAD_VELOC[domain] || 0.5;
+    var s = BMAD_SUBST[domain] || 0.5;
+    var rf = 1 - recipFactor * 0.3; // réciprocité réduit le risque max 30%
+    return Math.min(importRatio * concen * v * (1 - s) * rf, 1);
+  }
+
+  var scores = [];
   var d = null;
   Object.values(ENERGY_DATA).forEach(function(x){if(x.name===countryName)d=x;});
+
+  // --- ÉNERGIE ---
   if (d) {
-    var gasConso = d.gas_consumption_bcm || 0;
-    var oilConso = (d.oil_consumption_mbd || 0) * 50;
-    var gasProd  = d.gas_prod_bcm || 0;
-    var oilProd  = (d.oil_prod_mbd || 0) * 50;
-    var totalConso = gasConso + oilConso;
-    var totalProd  = gasProd + oilProd;
-    if (totalConso > 0) {
-      var flowsIn = FLOWS_DATA.filter(function(f){return f.to===countryName||f.to.startsWith(countryName);});
-      var totalImport = flowsIn.reduce(function(s,f){return s+(f.type==='oil'?(f.volume||0)*50:(f.volume||0));},0);
-      var supply = totalProd + totalImport;
-      var ratio = supply > 0 ? Math.min(totalImport / supply, 1) : 0;
-      scores.push({domain:'Énergie', ratio:ratio, weight:0.30});
+    var gasProd = d.gas_prod_bcm || 0;
+    var oilProd = (d.oil_prod_mbd||0)*50;
+    var flowsIn = FLOWS_DATA.filter(function(f){return f.to===countryName||f.to.startsWith(countryName);});
+    var totalImport = flowsIn.reduce(function(s,f){return s+(f.type==='oil'?(f.volume||0)*50:(f.volume||0));},0);
+    var supply = gasProd + oilProd + totalImport;
+    if (supply > 0 && totalImport > 0) {
+      var iRatio = Math.min(totalImport/supply, 1);
+      var concen = concentration(flowsIn, function(f){return f.type==='oil'?(f.volume||0)*50:(f.volume||0);});
+      var flowsOut = FLOWS_DATA.filter(function(f){return f.from===countryName;});
+      var recip = reciprocity(flowsIn, flowsOut, function(f){return f.type==='oil'?(f.volume||0)*50:(f.volume||0);});
+      var raw = bmadScore(iRatio, concen, 'Énergie', recip);
+      scores.push({domain:'Énergie', raw:raw, importRatio:iRatio, concentration:concen, weight:0.30});
     }
   }
 
   // --- TERRES RARES ---
   if (typeof RARE_EARTH_FLOWS !== 'undefined') {
     var reIn = RARE_EARTH_FLOWS.filter(function(f){return matchTo(f.to);});
-    var reImport = reIn.reduce(function(s,f){return s+(f.volume||0);},0);
-    if (reImport > 0) scores.push({domain:'Terres rares', ratio:1.0, weight:0.15});
-    // On ne connaît pas la prod locale de TR dans ENERGY_DATA, on considère dépendance totale si imports existent
+    var reTot = reIn.reduce(function(s,f){return s+(f.volume||0);},0);
+    if (reTot > 0) {
+      var concen = concentration(reIn, function(f){return f.volume||0;});
+      var raw = bmadScore(1.0, concen, 'Terres rares', 0);
+      scores.push({domain:'Terres rares', raw:raw, importRatio:1.0, concentration:concen, weight:0.15});
+    }
   }
 
   // --- CÉRÉALES ---
@@ -7447,17 +7522,15 @@ function computeDepScoreForCountry(countryName, iso3, year) {
     var cerIn = CEREAL_FLOWS.filter(function(f){return matchTo(f.to);});
     var cerImport = cerIn.reduce(function(s,f){return s+getCerealValue(f,yr);},0);
     if (cerImport > 0) {
-      // Production locale depuis CEREAL_BY_TYPE
       var cerProd = 0;
-      if (iso3 && CEREAL_BY_TYPE[iso3]) {
-        ['wheat','rice','maize','barley','soy'].forEach(function(c){
-          var data = getCerealByType(iso3, yr);
-          if (data && data[c]) cerProd += data[c];
-        });
-      }
+      if (iso3) { var bt=getCerealByType(iso3,yr); if(bt) Object.values(bt).forEach(function(v){cerProd+=v;}); }
       var cerSupply = cerProd + cerImport;
-      var ratio = cerSupply > 0 ? Math.min(cerImport / cerSupply, 1) : 0;
-      scores.push({domain:'Céréales', ratio:ratio, weight:0.15});
+      var iRatio = Math.min(cerImport/cerSupply, 1);
+      var concen = concentration(cerIn, function(f){return getCerealValue(f,yr);});
+      var cerOut = typeof CEREAL_FLOWS!=='undefined' ? CEREAL_FLOWS.filter(function(f){return f.from===countryName;}) : [];
+      var recip = reciprocity(cerIn, cerOut, function(f){return getCerealValue(f,yr);});
+      var raw = bmadScore(iRatio, concen, 'Céréales', recip);
+      scores.push({domain:'Céréales', raw:raw, importRatio:iRatio, concentration:concen, weight:0.15});
     }
   }
 
@@ -7466,17 +7539,17 @@ function computeDepScoreForCountry(countryName, iso3, year) {
     var metIn = METAL_FLOWS.filter(function(f){return matchTo(f.to);});
     var metImport = metIn.reduce(function(s,f){return s+hv(f,yr);},0);
     if (metImport > 0) {
-      // Prod locale : somme des métaux raffinés
       var metProd = 0;
-      if (iso3 && REFINED_METALS) {
-        ['steel_kt','aluminum_kt','copper_ref_kt','zinc_ref_kt','nickel_ref_kt'].forEach(function(m){
-          var v = getRefinedMetal(m, iso3, yr);
-          if (v) metProd += v;
-        });
+      if (iso3 && typeof getRefinedMetal==='function') {
+        ['steel_kt','aluminum_kt','copper_ref_kt','zinc_ref_kt','nickel_ref_kt'].forEach(function(m){var v=getRefinedMetal(m,iso3,yr);if(v)metProd+=v;});
       }
       var metSupply = metProd + metImport;
-      var ratio = metSupply > 0 ? Math.min(metImport / metSupply, 1) : 0;
-      scores.push({domain:'Métaux', ratio:ratio, weight:0.12});
+      var iRatio = Math.min(metImport/metSupply, 1);
+      var concen = concentration(metIn, function(f){return hv(f,yr);});
+      var metOut = METAL_FLOWS.filter(function(f){return f.from===countryName;});
+      var recip = reciprocity(metIn, metOut, function(f){return hv(f,yr);});
+      var raw = bmadScore(iRatio, concen, 'Métaux', recip);
+      scores.push({domain:'Métaux', raw:raw, importRatio:iRatio, concentration:concen, weight:0.12});
     }
   }
 
@@ -7486,8 +7559,12 @@ function computeDepScoreForCountry(countryName, iso3, year) {
     var autoImport = autoIn.reduce(function(s,f){return s+(f.vol||0);},0);
     if (autoImport > 0) {
       var autoProd = d ? ((d.auto_prod_therm_M||0)+(d.auto_prod_ev_M||0))*1e6 : 0;
-      var ratio = autoImport / (autoProd + autoImport);
-      scores.push({domain:'Automobile', ratio:Math.min(ratio,1), weight:0.08});
+      var iRatio = Math.min(autoImport/(autoProd+autoImport), 1);
+      var concen = concentration(autoIn, function(f){return f.vol||0;});
+      var autoOut = AUTO_FLOWS.filter(function(f){return f.from===countryName;});
+      var recip = reciprocity(autoIn, autoOut, function(f){return f.vol||0;});
+      var raw = bmadScore(iRatio, concen, 'Automobile', recip);
+      scores.push({domain:'Automobile', raw:raw, importRatio:iRatio, concentration:concen, weight:0.08});
     }
   }
 
@@ -7497,8 +7574,10 @@ function computeDepScoreForCountry(countryName, iso3, year) {
     var aeroImport = aeroIn.reduce(function(s,f){return s+(f.vol||0);},0);
     if (aeroImport > 0) {
       var aeroProd = d ? ((d.aero_civil_units||0)+(d.aero_mil_units||0)) : 0;
-      var ratio = aeroImport / (aeroProd + aeroImport);
-      scores.push({domain:'Aviation', ratio:Math.min(ratio,1), weight:0.08});
+      var iRatio = Math.min(aeroImport/(aeroProd+aeroImport), 1);
+      var concen = concentration(aeroIn, function(f){return f.vol||0;});
+      var raw = bmadScore(iRatio, concen, 'Aviation', 0);
+      scores.push({domain:'Aviation', raw:raw, importRatio:iRatio, concentration:concen, weight:0.08});
     }
   }
 
@@ -7508,24 +7587,43 @@ function computeDepScoreForCountry(countryName, iso3, year) {
     var navalImport = navalIn.reduce(function(s,f){return s+(f.vol||0);},0);
     if (navalImport > 0) {
       var navalProd = d ? ((d.naval_civil_kgt||0)+(d.naval_mil_kt||0)) : 0;
-      var ratio = navalImport / (navalProd + navalImport);
-      scores.push({domain:'Naval', ratio:Math.min(ratio,1), weight:0.04});
+      var iRatio = Math.min(navalImport/(navalProd+navalImport), 1);
+      var concen = concentration(navalIn, function(f){return f.vol||0;});
+      var raw = bmadScore(iRatio, concen, 'Naval', 0);
+      scores.push({domain:'Naval', raw:raw, importRatio:iRatio, concentration:concen, weight:0.04});
     }
   }
 
-  // --- TECH ---
+  // --- TECHNOLOGIE ---
   if (typeof TECH_FLOWS !== 'undefined' && typeof getTechFlowValue !== 'undefined') {
     var techIn = TECH_FLOWS.filter(function(f){return matchTo(f.to);});
     var techImport = techIn.reduce(function(s,f){return s+getTechFlowValue(f,yr);},0);
-    if (techImport > 0) scores.push({domain:'Technologie', ratio:1.0, weight:0.06});
-    // pas de prod locale de semiconducteurs trackée
+    if (techImport > 0) {
+      var concen = concentration(techIn, function(f){return getTechFlowValue(f,yr);});
+      var techOut = TECH_FLOWS.filter(function(f){return f.from===countryName;});
+      var recip = reciprocity(techIn, techOut, function(f){return getTechFlowValue(f,yr);});
+      var raw = bmadScore(1.0, concen, 'Technologie', recip);
+      scores.push({domain:'Technologie', raw:raw, importRatio:1.0, concentration:concen, weight:0.08});
+    }
   }
 
   if (!scores.length) return null;
 
-  // Pondération normalisée
+  // Score final : moyenne pondérée des raw scores BMAD, normalisée ×100
   var totalW = scores.reduce(function(s,x){return s+x.weight;},0);
-  var score = scores.reduce(function(s,x){return s+x.ratio*x.weight;},0) / totalW;
+  var score = scores.reduce(function(s,x){return s+x.raw*x.weight;},0) / totalW;
+
+  // Enrichir les domaines avec les détails pour l'affichage
+  scores.forEach(function(s){
+    s.ratio = s.raw; // compatibilité affichage barres
+    s.detail = {
+      importPct: Math.round(s.importRatio*100),
+      concentration: Math.round(s.concentration*100),
+      velocite: Math.round((BMAD_VELOC[s.domain]||0.5)*100),
+      substituabilite: Math.round((BMAD_SUBST[s.domain]||0.5)*100)
+    };
+  });
+
   return {score: Math.round(score * 100), domains: scores};
 }
 
