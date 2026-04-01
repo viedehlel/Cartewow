@@ -7481,8 +7481,10 @@ function computeDepScoreForCountry(countryName, iso3, year) {
   function bmadScore(importRatio, concen, domain, recipFactor) {
     var v = BMAD_VELOC[domain] || 0.5;
     var s = BMAD_SUBST[domain] || 0.5;
-    var rf = 1 - recipFactor * 0.3; // réciprocité réduit le risque max 30%
-    return Math.min(importRatio * concen * v * (1 - s) * rf, 1);
+    var rf = 1 - recipFactor * 0.3;
+    // Moyenne géométrique des 3 modificateurs pour éviter l'écrasement par multiplication
+    var modifier = Math.pow(concen * v * (1 - s), 1/3);
+    return Math.min(importRatio * modifier * rf, 1);
   }
 
   var scores = [];
