@@ -3671,24 +3671,33 @@ function updateFlowsForYear(year) {
 }
 
 function initTimeline() {
-  // Load cereal data from JSON
-  if (typeof loadCerealData === 'function') setTimeout(loadCerealData, 500);
-  if (typeof loadCerealProductionData === 'function') setTimeout(loadCerealProductionData, 700);
-  if (typeof loadEnergyData === 'function') setTimeout(loadEnergyData, 850);
-  if (typeof updateMetalProdForYear === 'function') setTimeout(function(){ updateMetalProdForYear(currentYear || 2022); }, 800);
-  if (typeof loadMigrationsData === 'function') setTimeout(loadMigrationsData, 900);
-  if (typeof loadMigrationEconomicData === 'function') setTimeout(loadMigrationEconomicData, 1100);
-  if (typeof loadArmsData === 'function') setTimeout(loadArmsData, 1200);
-  if (typeof loadMetalFlowsData === 'function') setTimeout(loadMetalFlowsData, 1350);
-  if (typeof loadTechFlowsData === 'function') setTimeout(loadTechFlowsData, 1500);
-  if (typeof loadFinanceData === 'function') setTimeout(loadFinanceData, 1700);
-  if (typeof loadCerealByType === 'function') setTimeout(loadCerealByType, 1900);
-  if (typeof loadRefinedMetals === 'function') setTimeout(loadRefinedMetals, 2100);
-  setTimeout(function(){
-    if (typeof updateCerealByTypeForYear === 'function') updateCerealByTypeForYear(currentYear || 2022);
-    if (typeof updateRefinedMetalsForYear === 'function') updateRefinedMetalsForYear(currentYear || 2022);
-    if (typeof updateDepScoreForYear === 'function') updateDepScoreForYear(currentYear || 2022);
-  }, 2500);
+  // Chargement séquentiel : chaque loader retourne une Promise → pas de timeouts hardcodés
+  var loaderNames = [
+    'loadCerealData', 'loadCerealProductionData', 'loadEnergyData',
+    'loadMigrationsData', 'loadMigrationEconomicData', 'loadArmsData',
+    'loadMetalFlowsData', 'loadTechFlowsData', 'loadFinanceData',
+    'loadCerealByType', 'loadRefinedMetals'
+  ];
+
+  if (typeof updateMetalProdForYear === 'function') updateMetalProdForYear(currentYear || 2022);
+
+  var promises = loaderNames.map(function(fn) {
+    if (typeof window[fn] === 'function') {
+      try {
+        var p = window[fn]();
+        return (p && typeof p.then === 'function') ? p.catch(function(){}) : Promise.resolve();
+      } catch(e) { return Promise.resolve(); }
+    }
+    return Promise.resolve();
+  });
+
+  Promise.all(promises).then(function() {
+    var yr = currentYear || 2022;
+    if (typeof updateCerealByTypeForYear === 'function') updateCerealByTypeForYear(yr);
+    if (typeof updateRefinedMetalsForYear === 'function') updateRefinedMetalsForYear(yr);
+    if (typeof updateDepScoreForYear === 'function') updateDepScoreForYear(yr);
+    console.log('[initTimeline] Toutes les données chargées — année ' + yr);
+  });
   const slider = document.getElementById('year-slider');
   const playBtn = document.getElementById('timeline-play');
   if (!slider) return;
@@ -4887,8 +4896,25 @@ function computeDepBySupplier(countryName, iso3, year) {
     if (techImport > 0) techIn.forEach(function(f){ add(f.from, 'Technologie', getTechFlowValue(f,yr)/techImport); });
   }
 
+  // Finance (IDE entrants)
+  if (typeof FINANCE_FLOWS !== 'undefined' && FINANCE_FLOWS.length > 0 && iso3) {
+    var finIn = FINANCE_FLOWS.filter(function(f){ return f.toIso3 === iso3; });
+    var finTotal = finIn.reduce(function(s,f){ return s+hv(f,yr); }, 0);
+    if (finTotal > 0) {
+      finIn.forEach(function(f){
+        // Résoudre le nom anglais du fournisseur depuis ENERGY_DATA via iso3
+        var supplierName = null;
+        if (f.fromIso3) {
+          Object.values(ENERGY_DATA).forEach(function(d){ if(d.iso3===f.fromIso3) supplierName=d.name; });
+        }
+        if (!supplierName) supplierName = f.from; // fallback nom français si ENERGY_DATA incomplet
+        add(supplierName, 'Finance', hv(f,yr)/finTotal);
+      });
+    }
+  }
+
   // Score total par fournisseur = somme des ratios (pondérés)
-  var WEIGHTS = {'Énergie':0.30,'Terres rares':0.15,'Céréales':0.15,'Métaux':0.12,'Automobile':0.08,'Aviation':0.08,'Naval':0.04,'Technologie':0.06};
+  var WEIGHTS = {'Énergie':0.30,'Terres rares':0.15,'Céréales':0.15,'Métaux':0.12,'Automobile':0.08,'Aviation':0.08,'Naval':0.04,'Technologie':0.06,'Finance':0.05};
   var result = [];
   Object.keys(bySupplier).forEach(function(supplier) {
     var domains = bySupplier[supplier];
@@ -4917,7 +4943,12 @@ function buildDependencySection(countryName, d) {
     var result = computeDepScoreForCountry(d.name, iso3, yr);
     if (result) cached = result;
   }
-  if (!cached || !cached.domains || !cached.domains.length) return '';
+  if (!cached || !cached.domains || !cached.domains.length) {
+    return '<div class="info-section">'
+      +'<div class="info-section-title">🔗 Score de Dépendance</div>'
+      +'<div style="font-size:11px;color:var(--text-secondary);font-style:italic;padding:4px 0">N/D — Données insuffisantes pour ce pays</div>'
+      +'</div>';
+  }
 
   // Mémoriser les fournisseurs pour le onclick
   _depSupplierCache = computeDepBySupplier(countryName, iso3, yr);
@@ -4935,8 +4966,20 @@ function buildDependencySection(countryName, d) {
     +'<div><div style="font-size:12px;font-weight:600;color:'+scoreColor+'">'+scoreLabel+'</div>'
     +'<div style="font-size:10px;color:var(--text-secondary)">/100 — imports/(prod+imports)</div></div>'
     +'</div>'
-    +'<div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:10px">'
+    +'<div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:6px">'
     +'<div style="height:4px;width:'+Math.min(cached.score,100)+'%;background:'+scoreColor+';border-radius:2px"></div></div>';
+
+  // Description contextuelle : top fournisseur + domaine principal
+  if (_depSupplierCache.length > 0) {
+    var _ts = _depSupplierCache[0];
+    var _td = Object.keys(_ts.domains).sort(function(a,b){ return _ts.domains[b]-_ts.domains[a]; })[0];
+    if (_td) {
+      html += '<div style="font-size:10px;color:var(--text-secondary);margin-bottom:8px">'
+        +'Principale dépendance envers <b style="color:var(--text-primary)">'+_ts.supplier+'</b>'
+        +' <span style="opacity:.7">('+_td+' · '+_ts.score+'%)</span>'
+        +'</div>';
+    }
+  }
 
   var top10 = _depSupplierCache.slice(0, 10);
   if (top10.length) {
@@ -4965,7 +5008,7 @@ function showSupplierDetail(idx) {
   var s = _depSupplierCache[idx];
   if (!s) return;
   var panel = document.getElementById('panel-inner');
-  var DOMAIN_ICONS = {'Énergie':'⚡','Terres rares':'💎','Céréales':'🌾','Métaux':'🏗️','Automobile':'🚗','Aviation':'✈️','Naval':'⚓','Technologie':'💻'};
+  var DOMAIN_ICONS = {'Énergie':'⚡','Terres rares':'💎','Céréales':'🌾','Métaux':'🏗️','Automobile':'🚗','Aviation':'✈️','Naval':'⚓','Technologie':'💻','Finance':'💰'};
   var importerName = _depImporterKey && ENERGY_DATA[_depImporterKey] ? ENERGY_DATA[_depImporterKey].name : '?';
 
   // On récupère les domaines enrichis depuis DEP_SCORES si disponible
@@ -6222,7 +6265,7 @@ function getArmsValue(fl, year) {
 }
 
 function loadArmsData() {
-  fetch('data/arms.json')
+  return fetch('data/arms.json')
     .then(function(r){ return r.json(); })
     .then(function(json){
       var data = json.data || {};
@@ -6251,7 +6294,7 @@ function loadArmsData() {
 }
 
 function loadMetalFlowsData() {
-  fetch('data/metals.json')
+  return fetch('data/metals.json')
     .then(function(r){ return r.json(); })
     .then(function(json){
       var flows = json.flows || [];
@@ -7026,7 +7069,7 @@ var ISO_ECON_FR = {
 };
 
 function loadMigrationEconomicData() {
-  fetch('data/migration_economic.json')
+  return fetch('data/migration_economic.json')
     .then(function(r){ return r.json(); })
     .then(function(json){
       // Remove existing hardcoded economic flows
@@ -7054,7 +7097,7 @@ function loadMigrationEconomicData() {
 }
 
 function loadMigrationsData() {
-  fetch('data/migrations.json')
+  return fetch('data/migrations.json')
     .then(function(r){ return r.json(); })
     .then(function(json){
       // 1. Update production metrics in ENERGY_DATA
@@ -7089,7 +7132,7 @@ function loadMigrationsData() {
 }
 
 function loadEnergyData() {
-  fetch('data/energy.json')
+  return fetch('data/energy.json')
     .then(function(r){ return r.json(); })
     .then(function(json){
       var owid = json.data || {};
@@ -7158,7 +7201,7 @@ function loadEnergyData() {
 }
 
 function loadCerealProductionData() {
-  fetch('data/cereal_production.json')
+  return fetch('data/cereal_production.json')
     .then(function(r){ return r.json(); })
     .then(function(json){
       CEREAL_PROD_DATA = json.data || {};
@@ -7172,7 +7215,7 @@ function loadCerealProductionData() {
 }
 
 function loadCerealData() {
-  fetch('data/cereals.json')
+  return fetch('data/cereals.json')
     .then(function(r){ return r.json(); })
     .then(function(json){
       CEREAL_FLOWS = (json.flows || []).map(function(f){
@@ -7303,7 +7346,7 @@ function rebuildTechFlowsLayer() {
 }
 
 function loadTechFlowsData() {
-  fetch('data/tech_flows.json')
+  return fetch('data/tech_flows.json')
     .then(function(r){return r.json();})
     .then(function(json){
       TECH_FLOWS=(json.flows||[]).map(function(f){
@@ -7321,6 +7364,25 @@ function loadTechFlowsData() {
 // ============================================================
 var FINANCE_FLOWS = [];
 var financeFlowsLayerItems = [];
+
+// Mapping ISO3 → nom français (même que fetch_finance.py), utilisé pour annoter les flux
+var ISO3_TO_FR_MAP = {
+  'USA':'États-Unis','JPN':'Japon','DEU':'Allemagne','GBR':'Royaume-Uni',
+  'FRA':'France','NLD':'Pays-Bas','CHE':'Suisse','KOR':'Corée du Sud',
+  'CAN':'Canada','AUS':'Australie','ITA':'Italie','ESP':'Espagne',
+  'BEL':'Belgique','SWE':'Suède','DNK':'Danemark',
+  'CHN':'Chine','IND':'Inde','BRA':'Brésil','SGP':'Singapour',
+  'MYS':'Malaisie','IDN':'Indonésie','MEX':'Mexique','THA':'Thaïlande',
+  'VNM':'Vietnam','SAU':'Arabie Saoudite','ARE':'Émirats Arabes Unis',
+  'RUS':'Russie','TUR':'Turquie','POL':'Pologne','ARG':'Argentine',
+  'CHL':'Chili','PER':'Pérou','ZAF':'Afrique du Sud','NOR':'Norvège',
+  'IRL':'Irlande','TWN':'Taïwan','PHL':'Philippines','CZE':'Tchéquie',
+  'HUN':'Hongrie','PRT':'Portugal','GRC':'Grèce','FIN':'Finlande',
+  'AUT':'Autriche','LUX':'Luxembourg','KAZ':'Kazakhstan','UKR':'Ukraine',
+  'NZL':'Nouvelle-Zélande'
+};
+var FR_TO_ISO3_MAP = {};
+(function(){ Object.keys(ISO3_TO_FR_MAP).forEach(function(k){ FR_TO_ISO3_MAP[ISO3_TO_FR_MAP[k]] = k; }); })();
 
 function getFinanceValue(fl, year) {
   if (!fl.hist) return 0;
@@ -7394,11 +7456,15 @@ function rebuildFinanceFlowsLayer() {
 }
 
 function loadFinanceData() {
-  fetch('data/finance.json')
+  return fetch('data/finance.json')
     .then(function(r){return r.json();})
     .then(function(json){
       FINANCE_FLOWS=(json.flows||[]).map(function(f){
-        return {from:f.from,fromC:f.fromC,to:f.to,toC:f.toC,hist:f.hist||{}};
+        return {
+          from:f.from, fromC:f.fromC, fromIso3: FR_TO_ISO3_MAP[f.from] || null,
+          to:f.to,   toC:f.toC,   toIso3:   FR_TO_ISO3_MAP[f.to]   || null,
+          hist:f.hist||{}
+        };
       });
       console.log('Loaded '+FINANCE_FLOWS.length+' finance flows ('+json.updated+')');
       if (layerVis.finance_fdi) rebuildFinanceFlowsLayer();
@@ -7426,6 +7492,7 @@ var BMAD_SUBST = {
   'Aviation':     0.30,  // oligopole Boeing/Airbus, peu substituable
   'Naval':        0.35,
   'Technologie':  0.15,  // semiconducteurs : très faible substituabilité
+  'Finance':      0.65,  // capital peut se rediriger, mais lent et coûteux
 };
 var BMAD_VELOC = {
   // Vélocité : 1 = crise immédiate si coupure, 0 = peut attendre
@@ -7437,6 +7504,7 @@ var BMAD_VELOC = {
   'Aviation':     0.60,  // pièces de rechange critiques
   'Naval':        0.35,
   'Technologie':  0.65,  // rupture chips = arrêt lignes production
+  'Finance':      0.30,  // dépendance financière = risque moyen terme
 };
 
 function computeDepScoreForCountry(countryName, iso3, year) {
@@ -7609,6 +7677,19 @@ function computeDepScoreForCountry(countryName, iso3, year) {
     }
   }
 
+  // --- FINANCE (IDE entrants) ---
+  if (typeof FINANCE_FLOWS !== 'undefined' && FINANCE_FLOWS.length > 0 && iso3) {
+    var finIn = FINANCE_FLOWS.filter(function(f){ return f.toIso3 === iso3; });
+    var finImport = finIn.reduce(function(s,f){ return s+hv(f,yr); }, 0);
+    if (finImport > 0) {
+      var concen = concentration(finIn, function(f){ return hv(f,yr); });
+      var finOut = FINANCE_FLOWS.filter(function(f){ return f.fromIso3 === iso3; });
+      var recip = reciprocity(finIn, finOut, function(f){ return hv(f,yr); });
+      var raw = bmadScore(1.0, concen, 'Finance', recip);
+      scores.push({domain:'Finance', raw:raw, importRatio:1.0, concentration:concen, weight:0.05});
+    }
+  }
+
   if (!scores.length) return null;
 
   // Score final : moyenne pondérée des raw scores BMAD, normalisée ×100
@@ -7665,15 +7746,27 @@ function updateDepScoreForYear(year) {
 }
 
 function selectCountryByIso3(iso3) {
-  if (!layers.countries) return;
-  layers.countries.eachLayer(function(l){
-    var key = String(parseInt(l.feature.id));
-    var d = ENERGY_DATA[key];
-    if (d && d.iso3 === iso3) {
-      selectedFeature = {type:'country', key:key};
-      renderCountryPanel(key);
+  var found = false;
+  if (layers.countries) {
+    layers.countries.eachLayer(function(l){
+      var key = String(parseInt(l.feature.id));
+      var d = ENERGY_DATA[key];
+      if (d && d.iso3 === iso3) {
+        found = true;
+        selectedFeature = {type:'country', key:key};
+        renderCountryPanel(key);
+      }
+    });
+  }
+  // Fallback : pays présent dans ENERGY_DATA mais absent du GeoJSON (territoires, micro-États…)
+  if (!found) {
+    var fallbackKey = null;
+    Object.keys(ENERGY_DATA).forEach(function(k){ if(ENERGY_DATA[k].iso3===iso3) fallbackKey=k; });
+    if (fallbackKey) {
+      selectedFeature = {type:'country', key:fallbackKey};
+      renderCountryPanel(fallbackKey, true); // skipZoom : pas de géométrie disponible
     }
-  });
+  }
 }
 
 // ============================================================
@@ -7682,7 +7775,7 @@ function selectCountryByIso3(iso3) {
 var CEREAL_BY_TYPE = {};  // {iso3: {wheat:{year:Mt}, rice:{...}, ...}}
 
 function loadCerealByType() {
-  fetch('data/cereal_by_type.json')
+  return fetch('data/cereal_by_type.json')
     .then(function(r){return r.json();})
     .then(function(json){
       CEREAL_BY_TYPE = json.data || {};
@@ -7736,7 +7829,7 @@ function buildCerealByTypeHtml(iso3, year) {
 var REFINED_METALS = {};  // {metal: {iso3: {year: kt}}}
 
 function loadRefinedMetals() {
-  fetch('data/refined_metals.json')
+  return fetch('data/refined_metals.json')
     .then(function(r){return r.json();})
     .then(function(json){
       REFINED_METALS = json.data || {};
