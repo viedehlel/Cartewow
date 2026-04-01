@@ -554,11 +554,33 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
           <span class="layer-group-arrow" id="arr-grp-cereals">▶</span>
         </div>
         <div class="layer-group-body collapsed" id="grp-cereals">
-          <div style="font-size:10px;color:#8b949e;margin-bottom:6px">Source : World Bank / UN Comtrade</div>
-          <div class="toggle-row">
-            <span class="toggle-label"><span class="toggle-dot" style="background:#84cc16"></span>Production (Mt/an)</span>
+          <div style="font-size:10px;color:#8b949e;margin-bottom:6px">Source : FAO / World Bank / UN Comtrade</div>
+          <div class="ctrl-title">Production</div>
+          <div class="toggle-row" style="margin-bottom:2px">
+            <span class="toggle-label" style="font-size:11px"><span class="toggle-dot" style="background:#84cc16"></span>Total (Mt/an)</span>
             <label class="toggle-switch"><input type="checkbox" id="mc-cereal-prod" value="cereal_prod_mt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
           </div>
+          <div class="toggle-row" style="margin-bottom:2px">
+            <span class="toggle-label" style="font-size:11px"><span class="toggle-dot" style="background:#fbbf24"></span>Blé (Mt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-wheat" value="wheat_prod_mt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row" style="margin-bottom:2px">
+            <span class="toggle-label" style="font-size:11px"><span class="toggle-dot" style="background:#84cc16"></span>Riz (Mt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-rice" value="rice_prod_mt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row" style="margin-bottom:2px">
+            <span class="toggle-label" style="font-size:11px"><span class="toggle-dot" style="background:#f97316"></span>Maïs (Mt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-maize" value="maize_prod_mt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row" style="margin-bottom:2px">
+            <span class="toggle-label" style="font-size:11px"><span class="toggle-dot" style="background:#d97706"></span>Orge (Mt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-barley" value="barley_prod_mt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row" style="margin-bottom:2px">
+            <span class="toggle-label" style="font-size:11px"><span class="toggle-dot" style="background:#34d399"></span>Soja (Mt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-soy" value="soy_prod_mt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="ctrl-title" style="margin-top:6px">Flux commerciaux</div>
           <div class="toggle-row">
             <span class="toggle-label"><span class="toggle-dot" style="background:#f59e0b"></span> Blé</span>
             <label class="toggle-switch"><input type="checkbox" id="tog-cereal-wheat" onchange="toggleCerealType('wheat')"><span class="toggle-slider"></span></label>
@@ -603,6 +625,23 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
           <div class="toggle-row">
             <span class="toggle-label"><span class="toggle-dot" style="background:#34d399"></span> Investissements directs (IDE)</span>
             <label class="toggle-switch"><input type="checkbox" id="tog-finance-fdi" onchange="toggleFinanceLayer()"><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+      </div>
+      <div class="layer-group">
+        <div class="layer-group-header" onclick="toggleGroup('grp-dep')">
+          <span class="layer-group-title">&#128279; Score de D&eacute;pendance</span>
+          <span class="layer-group-arrow" id="arr-grp-dep">&#9658;</span>
+        </div>
+        <div class="layer-group-body collapsed" id="grp-dep">
+          <div style="font-size:10px;color:#8b949e;margin-bottom:6px">Formule : imports / (prod + imports − exports) par domaine</div>
+          <div class="toggle-row">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#f85149"></span>Score dépendance (/100)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-dep-score" value="dep_score" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div id="dep-top10-panel" style="margin-top:8px;display:none">
+            <div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em">Top 10 pays les plus ind&eacute;pendants</div>
+            <div id="dep-top10-list"></div>
           </div>
         </div>
       </div>
@@ -657,6 +696,27 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
           <div class="toggle-row">
             <span class="toggle-label"><span class="toggle-dot" style="background:#b45309"></span>Minerai de fer</span>
             <label class="toggle-switch"><input type="checkbox" id="tog-metal-iron_ore" onchange="toggleMetalType('iron_ore')"><span class="toggle-slider"></span></label>
+          </div>
+          <div style="font-size:10px;color:#8b949e;margin:6px 0 4px">Production raffin&eacute;e</div>
+          <div class="toggle-row" style="margin-bottom:2px">
+            <span class="toggle-label" style="font-size:11px"><span class="toggle-dot" style="background:#94a3b8"></span>Acier (kt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-steel-prod" value="steel_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row" style="margin-bottom:2px">
+            <span class="toggle-label" style="font-size:11px"><span class="toggle-dot" style="background:#60a5fa"></span>Aluminium (kt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-alu-prod" value="aluminum_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row" style="margin-bottom:2px">
+            <span class="toggle-label" style="font-size:11px"><span class="toggle-dot" style="background:#f97316"></span>Cuivre affiné (kt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-cu-ref-prod" value="copper_ref_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row" style="margin-bottom:2px">
+            <span class="toggle-label" style="font-size:11px"><span class="toggle-dot" style="background:#a78bfa"></span>Zinc affiné (kt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-zn-prod" value="zinc_ref_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row" style="margin-bottom:2px">
+            <span class="toggle-label" style="font-size:11px"><span class="toggle-dot" style="background:#34d399"></span>Nickel affiné (kt/an)</span>
+            <label class="toggle-switch"><input type="checkbox" id="mc-ni-ref-prod" value="nickel_ref_prod_kt" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
           </div>
           <div style="font-size:10px;color:#8b949e;margin:6px 0 4px">Flux — m&eacute;taux raffin&eacute;s</div>
           <div class="toggle-row">
@@ -3125,6 +3185,17 @@ const METRIC_CONFIG = {
   naval_civil_kgt:   { label:"Construction navale civile",  unit:"kCGT/an", max:20000, key:"naval_civil_kgt", baseColor:'#06b6d4', colors:['#ecfeff','#a5f3fc','#22d3ee','#06b6d4','#0e7490','#164e63'], grad:"linear-gradient(to right,#ecfeff,#a5f3fc,#22d3ee,#06b6d4,#0e7490,#164e63)" },
   naval_mil_kt:      { label:"Construction navale militaire", unit:"kt dépl./an", max:200, key:"naval_mil_kt", baseColor:'#64748b', colors:['#f8fafc','#cbd5e1','#94a3b8','#64748b','#334155','#1e293b'], grad:"linear-gradient(to right,#f8fafc,#cbd5e1,#94a3b8,#64748b,#334155,#1e293b)" },
   cereal_prod_mt:    { label:"Production céréales",           unit:"Mt/an",      max:650, key:"cereal_prod_mt", baseColor:'#84cc16', colors:['#f7fee7','#d9f99d','#a3e635','#84cc16','#4d7c0f','#1a2e05'], grad:"linear-gradient(to right,#f7fee7,#d9f99d,#a3e635,#84cc16,#4d7c0f,#1a2e05)" },
+  wheat_prod_mt:    { label:"Production blé",         unit:"Mt/an", max:140, key:"wheat_prod_mt",    baseColor:'#fbbf24', colors:['#fefce8','#fef3c7','#fde68a','#fbbf24','#b45309','#78350f'], grad:"linear-gradient(to right,#fefce8,#fef3c7,#fde68a,#fbbf24,#b45309,#78350f)" },
+  rice_prod_mt:     { label:"Production riz",          unit:"Mt/an", max:220, key:"rice_prod_mt",     baseColor:'#84cc16', colors:['#f7fee7','#d9f99d','#a3e635','#84cc16','#4d7c0f','#1a2e05'], grad:"linear-gradient(to right,#f7fee7,#d9f99d,#a3e635,#84cc16,#4d7c0f,#1a2e05)" },
+  maize_prod_mt:    { label:"Production maïs",         unit:"Mt/an", max:380, key:"maize_prod_mt",    baseColor:'#f97316', colors:['#fff7ed','#fed7aa','#fb923c','#f97316','#c2410c','#431407'], grad:"linear-gradient(to right,#fff7ed,#fed7aa,#fb923c,#f97316,#c2410c,#431407)" },
+  barley_prod_mt:   { label:"Production orge",         unit:"Mt/an", max:80,  key:"barley_prod_mt",   baseColor:'#d97706', colors:['#fffbeb','#fef3c7','#fde68a','#d97706','#92400e','#451a03'], grad:"linear-gradient(to right,#fffbeb,#fef3c7,#fde68a,#d97706,#92400e,#451a03)" },
+  soy_prod_mt:      { label:"Production soja",         unit:"Mt/an", max:130, key:"soy_prod_mt",      baseColor:'#34d399', colors:['#f0fdf4','#d1fae5','#6ee7b7','#34d399','#059669','#064e3b'], grad:"linear-gradient(to right,#f0fdf4,#d1fae5,#6ee7b7,#34d399,#059669,#064e3b)" },
+  steel_prod_kt:    { label:"Production acier",        unit:"kt/an", max:1100000, key:"steel_prod_kt",   baseColor:'#94a3b8', colors:['#f8fafc','#e2e8f0','#94a3b8','#64748b','#334155','#0f172a'], grad:"linear-gradient(to right,#f8fafc,#e2e8f0,#94a3b8,#64748b,#334155,#0f172a)" },
+  aluminum_prod_kt: { label:"Production aluminium",    unit:"kt/an", max:45000,   key:"aluminum_prod_kt", baseColor:'#60a5fa', colors:['#eff6ff','#bfdbfe','#93c5fd','#60a5fa','#2563eb','#1e3a8a'], grad:"linear-gradient(to right,#eff6ff,#bfdbfe,#93c5fd,#60a5fa,#2563eb,#1e3a8a)" },
+  copper_ref_prod_kt:{ label:"Cuivre affiné",          unit:"kt/an", max:13000,   key:"copper_ref_prod_kt",baseColor:'#f97316', colors:['#fff7ed','#fed7aa','#fb923c','#f97316','#c2410c','#431407'], grad:"linear-gradient(to right,#fff7ed,#fed7aa,#fb923c,#f97316,#c2410c,#431407)" },
+  zinc_ref_prod_kt: { label:"Zinc affiné",             unit:"kt/an", max:7000,    key:"zinc_ref_prod_kt", baseColor:'#a78bfa', colors:['#faf5ff','#ede9fe','#c4b5fd','#a78bfa','#6d28d9','#3b0764'], grad:"linear-gradient(to right,#faf5ff,#ede9fe,#c4b5fd,#a78bfa,#6d28d9,#3b0764)" },
+  nickel_ref_prod_kt:{ label:"Nickel affiné",          unit:"kt/an", max:1200,    key:"nickel_ref_prod_kt",baseColor:'#34d399', colors:['#f0fdf4','#d1fae5','#6ee7b7','#34d399','#059669','#064e3b'], grad:"linear-gradient(to right,#f0fdf4,#d1fae5,#6ee7b7,#34d399,#059669,#064e3b)" },
+  dep_score:        { label:"Score dépendance",        unit:"/100",  max:100,    key:"dep_score",        baseColor:'#f85149', colors:['#f0fdf4','#bbf7d0','#fef9c3','#fde68a','#fca5a5','#f85149'], grad:"linear-gradient(to right,#f0fdf4,#bbf7d0,#fef9c3,#fde68a,#fca5a5,#f85149)" },
   // -- METAUX --
   copper_prod_kt:   { label:"Production cuivre",         unit:"kt/an",  max:6000,   key:"copper_prod_kt",   baseColor:'#b45309', colors:['#fef3c7','#fde68a','#fbbf24','#d97706','#b45309','#7c2d12'], grad:"linear-gradient(to right,#fef3c7,#fde68a,#fbbf24,#d97706,#b45309,#7c2d12)" },
   lithium_prod_kt:  { label:"Production lithium",         unit:"kt/an",  max:120,    key:"lithium_prod_kt",  baseColor:'#0ea5e9', colors:['#f0f9ff','#bae6fd','#38bdf8','#0ea5e9','#0369a1','#0c4a6e'], grad:"linear-gradient(to right,#f0f9ff,#bae6fd,#38bdf8,#0ea5e9,#0369a1,#0c4a6e)" },
@@ -3578,6 +3649,9 @@ function updateFlowsForYear(year) {
   if (typeof updateMetalProdForYear === 'function') updateMetalProdForYear(year);
   if (typeof updateMigrationForYear === 'function') updateMigrationForYear(year);
   if (typeof updateCerealProdForYear === 'function') updateCerealProdForYear(year);
+  if (typeof updateCerealByTypeForYear === 'function') updateCerealByTypeForYear(year);
+  if (typeof updateRefinedMetalsForYear === 'function') updateRefinedMetalsForYear(year);
+  if (typeof updateDepScoreForYear === 'function') updateDepScoreForYear(year);
   updateCountriesStyle();
   if (typeof rebuildArmsFlowsLayer === 'function') rebuildArmsFlowsLayer();
   if (typeof rebuildCerealFlowsLayer === 'function') rebuildCerealFlowsLayer();
@@ -3610,6 +3684,11 @@ function initTimeline() {
   if (typeof loadFinanceData === 'function') setTimeout(loadFinanceData, 1700);
   if (typeof loadCerealByType === 'function') setTimeout(loadCerealByType, 1900);
   if (typeof loadRefinedMetals === 'function') setTimeout(loadRefinedMetals, 2100);
+  setTimeout(function(){
+    if (typeof updateCerealByTypeForYear === 'function') updateCerealByTypeForYear(currentYear || 2022);
+    if (typeof updateRefinedMetalsForYear === 'function') updateRefinedMetalsForYear(currentYear || 2022);
+    if (typeof updateDepScoreForYear === 'function') updateDepScoreForYear(currentYear || 2022);
+  }, 2500);
   const slider = document.getElementById('year-slider');
   const playBtn = document.getElementById('timeline-play');
   if (!slider) return;
@@ -4421,7 +4500,7 @@ function updateLegendVisibility() {
 // ============================================================
 function onMetricChange() {
   activeMetrics = [];
-  document.querySelectorAll('#metric-checks input[type=checkbox], #mc-re, #mc-re-res, #mc-re-conso, #mc-auto-therm, #mc-auto-ev, #mc-auto-sales, #mc-aero-civil, #mc-aero-mil, #mc-naval-civil, #mc-naval-mil, #mc-cereal-prod, #mc-copper, #mc-lithium, #mc-cobalt, #mc-nickel, #mc-iron, #mc-gold, #mc-ref-out, #mc-ref-in, #mc-idp').forEach(cb => {
+  document.querySelectorAll('#metric-checks input[type=checkbox], #mc-re, #mc-re-res, #mc-re-conso, #mc-auto-therm, #mc-auto-ev, #mc-auto-sales, #mc-aero-civil, #mc-aero-mil, #mc-naval-civil, #mc-naval-mil, #mc-cereal-prod, #mc-copper, #mc-lithium, #mc-cobalt, #mc-nickel, #mc-iron, #mc-gold, #mc-ref-out, #mc-ref-in, #mc-idp, #mc-wheat, #mc-rice, #mc-maize, #mc-barley, #mc-soy, #mc-steel-prod, #mc-alu-prod, #mc-cu-ref-prod, #mc-zn-prod, #mc-ni-ref-prod, #mc-dep-score').forEach(cb => {
     if (cb.checked) activeMetrics.push(cb.value);
   });
   updateCountriesStyle();
@@ -4712,136 +4791,51 @@ function renderCountryPanel(key, skipZoom) {
 //  SECTION DÉPENDANCES — top fournisseurs par dimension
 // ============================================================
 function buildDependencySection(countryName, d) {
-  const match = flowTo => crisisFlowMatchesCountry(flowTo, countryName);
+  var iso3 = d ? d.iso3 : null;
+  var yr = typeof currentYear !== 'undefined' ? currentYear : 2022;
+  var cached = iso3 ? DEP_SCORES[iso3] : null;
 
-  // Agrège par fournisseur. Pour l'énergie, le dénominateur est la CONSOMMATION
-  // (pas la somme des imports) → un pays autosuffisant ne montre pas de dépendance.
-  function topSuppliers(flows, volKey, n, consumptionDenominator) {
-    const bySupplier = {};
-    flows.forEach(f => { bySupplier[f.from] = (bySupplier[f.from] || 0) + (f[volKey] || 0); });
-    const totalImports = Object.values(bySupplier).reduce((s, v) => s + v, 0);
-    // Si un dénominateur de consommation est fourni, l'utiliser ; sinon les imports
-    const denom = (consumptionDenominator && consumptionDenominator > 0)
-      ? consumptionDenominator
-      : totalImports;
-    const sorted = Object.entries(bySupplier)
-      .map(([name, vol]) => [name, vol, denom > 0 ? vol / denom : 0])
-      .filter(([, , pct]) => pct > 0.01) // ignorer < 1% de la conso (bruit)
-      .sort((a, b) => b[2] - a[2])
-      .slice(0, n)
-      .map(([name, , pct]) => [name, pct]); // on retourne [name, ratio 0-1]
-    return { sorted, total: 1 }; // total=1 car sorted contient déjà les ratios
+  // Si le score n'est pas encore calculé, calculer à la volée
+  if (!cached && d && d.name) {
+    var result = computeDepScoreForCountry(d.name, iso3, yr);
+    if (result) cached = result;
   }
 
-  // sorted contient [name, ratio 0-1] — total inutilisé (=1 par convention)
-  function barRows(sorted) {
-    if (!sorted.length) return '';
-    return sorted.map(([supplier, ratio]) => {
-      const pct = Math.round(ratio * 100);
-      const color = pct > 60 ? '#f85149' : pct > 35 ? '#ffa726' : '#58a6ff';
-      const alert = pct > 60 ? ' <span style="color:#f85149" title="Concentration critique">⚠️</span>' : '';
-      return `
-        <div style="margin:4px 0">
-          <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:2px">
-            <span>${supplier}${alert}</span>
-            <span style="color:${color};font-weight:600;min-width:32px;text-align:right">${pct}%</span>
-          </div>
-          <div style="height:3px;background:rgba(255,255,255,0.1);border-radius:2px">
-            <div style="height:3px;width:${Math.min(pct,100)}%;background:${color};border-radius:2px"></div>
-          </div>
-        </div>`;
-    }).join('');
-  }
+  if (!cached || !cached.domains || !cached.domains.length) return '';
 
-  // Énergie — dénominateur = consommation réelle (gaz + pétrole séparés, convertis en unité commune BCM)
-  // 1 Mb/j pétrole ≈ 50 BCM/an (ordre de grandeur pour pondération)
-  const gasConso  = (d && d.gas_consumption_bcm) || 0;
-  const oilConso  = (d && d.oil_consumption_mbd)  || 0;
-  const totalConsoBCM = gasConso + oilConso * 50; // unité commune grossière
+  var scoreColor = cached.score < 20 ? '#34d399' : cached.score < 40 ? '#84cc16' : cached.score < 60 ? '#fbbf24' : cached.score < 75 ? '#ffa726' : '#f85149';
+  var scoreLabel = cached.score < 20 ? 'Très indépendant' : cached.score < 40 ? 'Faible dépendance' : cached.score < 60 ? 'Dépendance modérée' : cached.score < 75 ? 'Forte dépendance' : 'Dépendance critique';
 
-  const energyIn = FLOWS_DATA.filter(f => f.to === countryName || f.to.startsWith(countryName));
-  // Convertir chaque flux en BCM-equiv pour avoir un dénominateur commun
-  const energyConverted = energyIn.map(f => ({
-    from: f.from,
-    volBCM: (f.type === 'oil') ? (f.volume || 0) * 50 : (f.volume || 0),
-  }));
-  const { sorted: topE } = topSuppliers(energyConverted, 'volBCM', 4, totalConsoBCM);
+  var html = '<div class="info-section">'
+    +'<div class="info-section-title">🔗 Score de Dépendance</div>'
+    +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'
+    +'<div style="font-size:28px;font-weight:700;color:'+scoreColor+'">'+cached.score+'</div>'
+    +'<div><div style="font-size:12px;font-weight:600;color:'+scoreColor+'">'+scoreLabel+'</div>'
+    +'<div style="font-size:10px;color:var(--text-secondary)">/100 — imports/(prod+imports)</div></div>'
+    +'</div>';
 
-  // Terres rares — pas de donnée de consommation → on utilise les imports comme base
-  const reIn = RARE_EARTH_FLOWS.filter(f => match(f.to));
-  const { sorted: topR } = topSuppliers(reIn, 'volume', 3, 0);
+  // Barre globale
+  html += '<div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:10px">'
+    +'<div style="height:4px;width:'+Math.min(cached.score,100)+'%;background:'+scoreColor+';border-radius:2px"></div></div>';
 
-  // Automobile
-  const autoIn = AUTO_FLOWS.filter(f => match(f.to));
-  const { sorted: topA } = topSuppliers(autoIn, 'vol', 3, 0);
+  // Détail par domaine
+  html += '<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em">Détail par domaine</div>';
 
-  // Aviation
-  const aeroIn = AERO_FLOWS.filter(f => match(f.to));
-  const { sorted: topAero } = topSuppliers(aeroIn, 'vol', 3, 0);
+  cached.domains.forEach(function(dom) {
+    var pct = Math.round(dom.ratio * 100);
+    var col = pct > 70 ? '#f85149' : pct > 40 ? '#ffa726' : pct > 15 ? '#fbbf24' : '#34d399';
+    var alert = pct > 70 ? ' ⚠️' : '';
+    html += '<div style="margin:3px 0">'
+      +'<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px">'
+      +'<span>'+dom.domain+alert+'</span>'
+      +'<span style="color:'+col+';font-weight:600">'+pct+'%</span>'
+      +'</div>'
+      +'<div style="height:3px;background:rgba(255,255,255,0.1);border-radius:2px">'
+      +'<div style="height:3px;width:'+Math.min(pct,100)+'%;background:'+col+';border-radius:2px"></div>'
+      +'</div></div>';
+  });
 
-  // Naval
-  const navalIn = NAVAL_FLOWS.filter(f => match(f.to));
-  const { sorted: topNav } = topSuppliers(navalIn, 'vol', 3, 0);
-
-  // Évalue les flux hist au currentYear courant
-  const yr = typeof currentYear !== 'undefined' ? currentYear : 2022;
-  function evalHist(fl, fn) { return { from: fl.from, volume: fn(fl, yr) }; }
-
-  // Céréales (flux import de cereals.json)
-  const cerealIn = typeof CEREAL_FLOWS !== 'undefined' && typeof getCerealValue !== 'undefined'
-    ? CEREAL_FLOWS.filter(f => match(f.to)).map(f => evalHist(f, getCerealValue)) : [];
-  const { sorted: topCer } = topSuppliers(cerealIn, 'volume', 3, 0);
-
-  // Métaux (flux import de metals.json) — getMetalFlowValue(fl, year)
-  function getMetalFlowVal(fl, y) {
-    if (!fl.hist) return 0;
-    var keys = Object.keys(fl.hist).map(Number).sort(function(a,b){return a-b;});
-    if (!keys.length) return 0;
-    if (y<=keys[0]) return fl.hist[keys[0]];
-    if (y>=keys[keys.length-1]) return fl.hist[keys[keys.length-1]];
-    for (var i=0;i<keys.length-1;i++){if(y>=keys[i]&&y<=keys[i+1]){var t=(y-keys[i])/(keys[i+1]-keys[i]);return fl.hist[keys[i]]*(1-t)+fl.hist[keys[i+1]]*t;}}
-    return 0;
-  }
-  const metalIn = typeof METAL_FLOWS !== 'undefined'
-    ? METAL_FLOWS.filter(f => match(f.to)).map(f => ({from:f.from, volume:getMetalFlowVal(f,yr)})) : [];
-  const { sorted: topMet } = topSuppliers(metalIn, 'volume', 3, 0);
-
-  // Tech
-  const techIn = typeof TECH_FLOWS !== 'undefined' && typeof getTechFlowValue !== 'undefined'
-    ? TECH_FLOWS.filter(f => match(f.to)).map(f => evalHist(f, getTechFlowValue)) : [];
-  const { sorted: topTech } = topSuppliers(techIn, 'volume', 3, 0);
-
-  // Pas de dépendance connue
-  if (!topE.length && !topR.length && !topA.length && !topAero.length && !topNav.length && !topCer.length && !topMet.length && !topTech.length) return '';
-
-  let html = `<div class="info-section"><div class="info-section-title">🔗 Dépendances</div>`;
-
-  if (topE.length) {
-    html += `<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin:6px 0 3px;letter-spacing:.04em">⚡ ÉNERGIE <span style="font-weight:400;opacity:.7">(% de la conso. nationale)</span></div>${barRows(topE)}`;
-  }
-  if (topR.length) {
-    html += `<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin:8px 0 3px;letter-spacing:.04em">💎 TERRES RARES <span style="font-weight:400;opacity:.7">(% des imports tracés)</span></div>${barRows(topR)}`;
-  }
-  if (topA.length) {
-    html += `<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin:8px 0 3px;letter-spacing:.04em">🚗 AUTOMOBILE <span style="font-weight:400;opacity:.7">(% des imports tracés)</span></div>${barRows(topA)}`;
-  }
-  if (topAero.length) {
-    html += `<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin:8px 0 3px;letter-spacing:.04em">✈️ AVIATION <span style="font-weight:400;opacity:.7">(% des imports tracés)</span></div>${barRows(topAero)}`;
-  }
-  if (topNav.length) {
-    html += `<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin:8px 0 3px;letter-spacing:.04em">⚓ NAVAL <span style="font-weight:400;opacity:.7">(% des imports tracés)</span></div>${barRows(topNav)}`;
-  }
-  if (topCer.length) {
-    html += `<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin:8px 0 3px;letter-spacing:.04em">🌾 CÉRÉALES <span style="font-weight:400;opacity:.7">(% des imports tracés)</span></div>${barRows(topCer)}`;
-  }
-  if (topMet.length) {
-    html += `<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin:8px 0 3px;letter-spacing:.04em">🏗️ MÉTAUX <span style="font-weight:400;opacity:.7">(% des imports tracés)</span></div>${barRows(topMet)}`;
-  }
-  if (topTech.length) {
-    html += `<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin:8px 0 3px;letter-spacing:.04em">💻 TECHNOLOGIE <span style="font-weight:400;opacity:.7">(% des imports tracés)</span></div>${barRows(topTech)}`;
-  }
-
-  html += `</div>`;
+  html += '</div>';
   return html;
 }
 
@@ -6435,6 +6429,69 @@ function updateCerealProdForYear(year) {
 }
 
 
+function updateCerealByTypeForYear(year) {
+  if (!CEREAL_BY_TYPE || Object.keys(CEREAL_BY_TYPE).length === 0) return;
+  var crops = {wheat:'wheat_prod_mt', rice:'rice_prod_mt', maize:'maize_prod_mt', barley:'barley_prod_mt', soy:'soy_prod_mt'};
+  Object.values(ENERGY_DATA).forEach(function(d) {
+    var iso3 = d.iso3;
+    if (!iso3 || !CEREAL_BY_TYPE[iso3]) return;
+    Object.keys(crops).forEach(function(crop) {
+      var byYear = CEREAL_BY_TYPE[iso3][crop];
+      if (!byYear) return;
+      var years = Object.keys(byYear).map(Number).sort(function(a,b){return a-b;});
+      if (!years.length) return;
+      var yr = parseInt(year);
+      var val;
+      if (yr <= years[0]) val = byYear[String(years[0])];
+      else if (yr >= years[years.length-1]) val = byYear[String(years[years.length-1])];
+      else {
+        for (var i=0;i<years.length-1;i++){
+          if(yr>=years[i]&&yr<=years[i+1]){
+            var t=(yr-years[i])/(years[i+1]-years[i]);
+            val=Math.round((byYear[String(years[i])]*(1-t)+byYear[String(years[i+1])]*t)*100)/100;
+            break;
+          }
+        }
+      }
+      if (val !== undefined) d[crops[crop]] = val;
+    });
+  });
+}
+
+function updateRefinedMetalsForYear(year) {
+  if (!REFINED_METALS || Object.keys(REFINED_METALS).length === 0) return;
+  var metals = {
+    steel_kt:'steel_prod_kt', aluminum_kt:'aluminum_prod_kt',
+    copper_ref_kt:'copper_ref_prod_kt', zinc_ref_kt:'zinc_ref_prod_kt', nickel_ref_kt:'nickel_ref_prod_kt'
+  };
+  Object.values(ENERGY_DATA).forEach(function(d) {
+    var iso3 = d.iso3;
+    if (!iso3) return;
+    Object.keys(metals).forEach(function(src) {
+      var destKey = metals[src];
+      var byCountry = REFINED_METALS[src];
+      if (!byCountry || !byCountry[iso3]) return;
+      var byYear = byCountry[iso3];
+      var years = Object.keys(byYear).map(Number).sort(function(a,b){return a-b;});
+      if (!years.length) return;
+      var yr = parseInt(year);
+      var val;
+      if (yr <= years[0]) val = byYear[String(years[0])];
+      else if (yr >= years[years.length-1]) val = byYear[String(years[years.length-1])];
+      else {
+        for (var i=0;i<years.length-1;i++){
+          if(yr>=years[i]&&yr<=years[i+1]){
+            var t=(yr-years[i])/(years[i+1]-years[i]);
+            val=Math.round(byYear[String(years[i])]*(1-t)+byYear[String(years[i+1])]*t);
+            break;
+          }
+        }
+      }
+      if (val !== undefined) d[destKey] = val;
+    });
+  });
+}
+
 var METAL_FLOWS = [
   // CUIVRE (kt)
   {from:"Chili",     fromC:[-71,-35], to:"Chine",        toC:[104,35],  type:"copper", unit:"kt", hist:{2000:400,2005:800,2010:1200,2015:1600,2018:2000,2020:2300,2022:2800,2023:2700}},
@@ -7170,6 +7227,197 @@ function loadFinanceData() {
       if (layerVis.finance_fdi) rebuildFinanceFlowsLayer();
     })
     .catch(function(e){console.warn('Could not load finance.json:',e);});
+}
+
+// ============================================================
+//  SCORE DE DÉPENDANCE GLOBAL
+// ============================================================
+// Formule : pour chaque domaine, dep_ratio = imports_bloquables / (prod + imports)
+// Score global = moyenne pondérée des ratios par domaine × 100
+
+function computeDepScoreForCountry(countryName, iso3, year) {
+  var yr = parseInt(year) || 2022;
+
+  // Helper : interpole une valeur hist
+  function hv(fl, y) {
+    if (!fl.hist) return fl.volume || fl.vol || 0;
+    var k = Object.keys(fl.hist).map(Number).sort(function(a,b){return a-b;});
+    if (!k.length) return 0;
+    if (y <= k[0]) return fl.hist[k[0]];
+    if (y >= k[k.length-1]) return fl.hist[k[k.length-1]];
+    for (var i=0;i<k.length-1;i++){if(y>=k[i]&&y<=k[i+1]){var t=(y-k[i])/(k[i+1]-k[i]);return fl.hist[k[i]]*(1-t)+fl.hist[k[i+1]]*t;}}
+    return 0;
+  }
+
+  // Correspond à un pays (gère régions collectives)
+  function matchTo(flowTo) {
+    if (!flowTo) return false;
+    if (flowTo === countryName) return true;
+    var reg = CRISIS_REGION_MAP[flowTo];
+    return reg ? reg.includes(countryName) : false;
+  }
+
+  var scores = [];
+
+  // --- ÉNERGIE ---
+  var d = null;
+  Object.values(ENERGY_DATA).forEach(function(x){if(x.name===countryName)d=x;});
+  if (d) {
+    var gasConso = d.gas_consumption_bcm || 0;
+    var oilConso = (d.oil_consumption_mbd || 0) * 50;
+    var gasProd  = d.gas_prod_bcm || 0;
+    var oilProd  = (d.oil_prod_mbd || 0) * 50;
+    var totalConso = gasConso + oilConso;
+    var totalProd  = gasProd + oilProd;
+    if (totalConso > 0) {
+      var flowsIn = FLOWS_DATA.filter(function(f){return f.to===countryName||f.to.startsWith(countryName);});
+      var totalImport = flowsIn.reduce(function(s,f){return s+(f.type==='oil'?(f.volume||0)*50:(f.volume||0));},0);
+      var supply = totalProd + totalImport;
+      var ratio = supply > 0 ? Math.min(totalImport / supply, 1) : 0;
+      scores.push({domain:'Énergie', ratio:ratio, weight:0.30});
+    }
+  }
+
+  // --- TERRES RARES ---
+  if (typeof RARE_EARTH_FLOWS !== 'undefined') {
+    var reIn = RARE_EARTH_FLOWS.filter(function(f){return matchTo(f.to);});
+    var reImport = reIn.reduce(function(s,f){return s+(f.volume||0);},0);
+    if (reImport > 0) scores.push({domain:'Terres rares', ratio:1.0, weight:0.15});
+    // On ne connaît pas la prod locale de TR dans ENERGY_DATA, on considère dépendance totale si imports existent
+  }
+
+  // --- CÉRÉALES ---
+  if (typeof CEREAL_FLOWS !== 'undefined' && typeof getCerealValue !== 'undefined') {
+    var cerIn = CEREAL_FLOWS.filter(function(f){return matchTo(f.to);});
+    var cerImport = cerIn.reduce(function(s,f){return s+getCerealValue(f,yr);},0);
+    if (cerImport > 0) {
+      // Production locale depuis CEREAL_BY_TYPE
+      var cerProd = 0;
+      if (iso3 && CEREAL_BY_TYPE[iso3]) {
+        ['wheat','rice','maize','barley','soy'].forEach(function(c){
+          var data = getCerealByType(iso3, yr);
+          if (data && data[c]) cerProd += data[c];
+        });
+      }
+      var cerSupply = cerProd + cerImport;
+      var ratio = cerSupply > 0 ? Math.min(cerImport / cerSupply, 1) : 0;
+      scores.push({domain:'Céréales', ratio:ratio, weight:0.15});
+    }
+  }
+
+  // --- MÉTAUX ---
+  if (typeof METAL_FLOWS !== 'undefined') {
+    var metIn = METAL_FLOWS.filter(function(f){return matchTo(f.to);});
+    var metImport = metIn.reduce(function(s,f){return s+hv(f,yr);},0);
+    if (metImport > 0) {
+      // Prod locale : somme des métaux raffinés
+      var metProd = 0;
+      if (iso3 && REFINED_METALS) {
+        ['steel_kt','aluminum_kt','copper_ref_kt','zinc_ref_kt','nickel_ref_kt'].forEach(function(m){
+          var v = getRefinedMetal(m, iso3, yr);
+          if (v) metProd += v;
+        });
+      }
+      var metSupply = metProd + metImport;
+      var ratio = metSupply > 0 ? Math.min(metImport / metSupply, 1) : 0;
+      scores.push({domain:'Métaux', ratio:ratio, weight:0.12});
+    }
+  }
+
+  // --- AUTOMOBILE ---
+  if (typeof AUTO_FLOWS !== 'undefined') {
+    var autoIn = AUTO_FLOWS.filter(function(f){return matchTo(f.to);});
+    var autoImport = autoIn.reduce(function(s,f){return s+(f.vol||0);},0);
+    if (autoImport > 0) {
+      var autoProd = d ? ((d.auto_prod_therm_M||0)+(d.auto_prod_ev_M||0))*1e6 : 0;
+      var ratio = autoImport / (autoProd + autoImport);
+      scores.push({domain:'Automobile', ratio:Math.min(ratio,1), weight:0.08});
+    }
+  }
+
+  // --- AVIATION ---
+  if (typeof AERO_FLOWS !== 'undefined') {
+    var aeroIn = AERO_FLOWS.filter(function(f){return matchTo(f.to);});
+    var aeroImport = aeroIn.reduce(function(s,f){return s+(f.vol||0);},0);
+    if (aeroImport > 0) {
+      var aeroProd = d ? ((d.aero_civil_units||0)+(d.aero_mil_units||0)) : 0;
+      var ratio = aeroImport / (aeroProd + aeroImport);
+      scores.push({domain:'Aviation', ratio:Math.min(ratio,1), weight:0.08});
+    }
+  }
+
+  // --- NAVAL ---
+  if (typeof NAVAL_FLOWS !== 'undefined') {
+    var navalIn = NAVAL_FLOWS.filter(function(f){return matchTo(f.to);});
+    var navalImport = navalIn.reduce(function(s,f){return s+(f.vol||0);},0);
+    if (navalImport > 0) {
+      var navalProd = d ? ((d.naval_civil_kgt||0)+(d.naval_mil_kt||0)) : 0;
+      var ratio = navalImport / (navalProd + navalImport);
+      scores.push({domain:'Naval', ratio:Math.min(ratio,1), weight:0.04});
+    }
+  }
+
+  // --- TECH ---
+  if (typeof TECH_FLOWS !== 'undefined' && typeof getTechFlowValue !== 'undefined') {
+    var techIn = TECH_FLOWS.filter(function(f){return matchTo(f.to);});
+    var techImport = techIn.reduce(function(s,f){return s+getTechFlowValue(f,yr);},0);
+    if (techImport > 0) scores.push({domain:'Technologie', ratio:1.0, weight:0.06});
+    // pas de prod locale de semiconducteurs trackée
+  }
+
+  if (!scores.length) return null;
+
+  // Pondération normalisée
+  var totalW = scores.reduce(function(s,x){return s+x.weight;},0);
+  var score = scores.reduce(function(s,x){return s+x.ratio*x.weight;},0) / totalW;
+  return {score: Math.round(score * 100), domains: scores};
+}
+
+var DEP_SCORES = {};  // {iso3: {score, domains}}
+
+function updateDepScoreForYear(year) {
+  DEP_SCORES = {};
+  Object.entries(ENERGY_DATA).forEach(function(entry) {
+    var key = entry[0], d = entry[1];
+    if (!d || !d.name || !d.iso3) return;
+    var result = computeDepScoreForCountry(d.name, d.iso3, year);
+    if (result !== null) {
+      DEP_SCORES[d.iso3] = result;
+      d.dep_score = result.score;
+    }
+  });
+
+  // Afficher top 10 les plus indépendants
+  var list = document.getElementById('dep-top10-list');
+  var panel = document.getElementById('dep-top10-panel');
+  if (!list || !panel) return;
+  var entries = Object.entries(DEP_SCORES).filter(function(e){return e[1].score>0;});
+  entries.sort(function(a,b){return a[1].score-b[1].score;});
+  var top10 = entries.slice(0,10);
+  if (top10.length) {
+    panel.style.display = 'block';
+    list.innerHTML = top10.map(function(e,i){
+      var iso3=e[0], sc=e[1].score;
+      var d = Object.values(ENERGY_DATA).find(function(x){return x.iso3===iso3;});
+      var name = d ? d.name : iso3;
+      var col = sc < 20 ? '#34d399' : sc < 40 ? '#84cc16' : sc < 60 ? '#fbbf24' : '#f85149';
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:11px;cursor:pointer" onclick="selectCountryByIso3(\''+iso3+'\')">'
+        +'<span style="color:var(--text-secondary)">'+(i+1)+'. '+name+'</span>'
+        +'<span style="color:'+col+';font-weight:600">'+sc+'/100</span></div>';
+    }).join('');
+  }
+}
+
+function selectCountryByIso3(iso3) {
+  if (!layers.countries) return;
+  layers.countries.eachLayer(function(l){
+    var key = String(parseInt(l.feature.id));
+    var d = ENERGY_DATA[key];
+    if (d && d.iso3 === iso3) {
+      selectedFeature = {type:'country', key:key};
+      renderCountryPanel(key);
+    }
+  });
 }
 
 // ============================================================
