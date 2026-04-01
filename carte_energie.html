@@ -3608,6 +3608,8 @@ function initTimeline() {
   if (typeof loadMetalFlowsData === 'function') setTimeout(loadMetalFlowsData, 1350);
   if (typeof loadTechFlowsData === 'function') setTimeout(loadTechFlowsData, 1500);
   if (typeof loadFinanceData === 'function') setTimeout(loadFinanceData, 1700);
+  if (typeof loadCerealByType === 'function') setTimeout(loadCerealByType, 1900);
+  if (typeof loadRefinedMetals === 'function') setTimeout(loadRefinedMetals, 2100);
   const slider = document.getElementById('year-slider');
   const playBtn = document.getElementById('timeline-play');
   if (!slider) return;
@@ -4606,6 +4608,10 @@ function renderCountryPanel(key, skipZoom) {
 
       ${buildDependencySection(d.name, d)}
 
+      ${buildCerealByTypeHtml(d.iso3, currentYear)}
+
+      ${buildRefinedMetalsHtml(d.iso3, currentYear)}
+
       ${(d.auto_prod_therm_M || d.auto_prod_ev_M || d.auto_sales_M) ? `<div class="info-section">
         <div class="info-section-title">🚗 Automobile</div>
         ${d.auto_prod_therm_M ? `<div class="info-row"><span class="ir-label">Prod. thermique</span><span class="ir-value">${fmtNum(d.auto_prod_therm_M)} M/an</span></div>` : ''}
@@ -4777,8 +4783,36 @@ function buildDependencySection(countryName, d) {
   const navalIn = NAVAL_FLOWS.filter(f => match(f.to));
   const { sorted: topNav } = topSuppliers(navalIn, 'vol', 3, 0);
 
+  // Évalue les flux hist au currentYear courant
+  const yr = typeof currentYear !== 'undefined' ? currentYear : 2022;
+  function evalHist(fl, fn) { return { from: fl.from, volume: fn(fl, yr) }; }
+
+  // Céréales (flux import de cereals.json)
+  const cerealIn = typeof CEREAL_FLOWS !== 'undefined' && typeof getCerealValue !== 'undefined'
+    ? CEREAL_FLOWS.filter(f => match(f.to)).map(f => evalHist(f, getCerealValue)) : [];
+  const { sorted: topCer } = topSuppliers(cerealIn, 'volume', 3, 0);
+
+  // Métaux (flux import de metals.json) — getMetalFlowValue(fl, year)
+  function getMetalFlowVal(fl, y) {
+    if (!fl.hist) return 0;
+    var keys = Object.keys(fl.hist).map(Number).sort(function(a,b){return a-b;});
+    if (!keys.length) return 0;
+    if (y<=keys[0]) return fl.hist[keys[0]];
+    if (y>=keys[keys.length-1]) return fl.hist[keys[keys.length-1]];
+    for (var i=0;i<keys.length-1;i++){if(y>=keys[i]&&y<=keys[i+1]){var t=(y-keys[i])/(keys[i+1]-keys[i]);return fl.hist[keys[i]]*(1-t)+fl.hist[keys[i+1]]*t;}}
+    return 0;
+  }
+  const metalIn = typeof METAL_FLOWS !== 'undefined'
+    ? METAL_FLOWS.filter(f => match(f.to)).map(f => ({from:f.from, volume:getMetalFlowVal(f,yr)})) : [];
+  const { sorted: topMet } = topSuppliers(metalIn, 'volume', 3, 0);
+
+  // Tech
+  const techIn = typeof TECH_FLOWS !== 'undefined' && typeof getTechFlowValue !== 'undefined'
+    ? TECH_FLOWS.filter(f => match(f.to)).map(f => evalHist(f, getTechFlowValue)) : [];
+  const { sorted: topTech } = topSuppliers(techIn, 'volume', 3, 0);
+
   // Pas de dépendance connue
-  if (!topE.length && !topR.length && !topA.length && !topAero.length && !topNav.length) return '';
+  if (!topE.length && !topR.length && !topA.length && !topAero.length && !topNav.length && !topCer.length && !topMet.length && !topTech.length) return '';
 
   let html = `<div class="info-section"><div class="info-section-title">🔗 Dépendances</div>`;
 
@@ -4796,6 +4830,15 @@ function buildDependencySection(countryName, d) {
   }
   if (topNav.length) {
     html += `<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin:8px 0 3px;letter-spacing:.04em">⚓ NAVAL <span style="font-weight:400;opacity:.7">(% des imports tracés)</span></div>${barRows(topNav)}`;
+  }
+  if (topCer.length) {
+    html += `<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin:8px 0 3px;letter-spacing:.04em">🌾 CÉRÉALES <span style="font-weight:400;opacity:.7">(% des imports tracés)</span></div>${barRows(topCer)}`;
+  }
+  if (topMet.length) {
+    html += `<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin:8px 0 3px;letter-spacing:.04em">🏗️ MÉTAUX <span style="font-weight:400;opacity:.7">(% des imports tracés)</span></div>${barRows(topMet)}`;
+  }
+  if (topTech.length) {
+    html += `<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin:8px 0 3px;letter-spacing:.04em">💻 TECHNOLOGIE <span style="font-weight:400;opacity:.7">(% des imports tracés)</span></div>${barRows(topTech)}`;
   }
 
   html += `</div>`;
@@ -5259,17 +5302,51 @@ function computeSuffering(countryKey) {
   const blockedNaval = navalFlowsIn.filter(f => blockedCountries.has(f.from)).reduce((s, f) => s + (f.vol || 0), 0);
   const navalScore = totalNaval > 0 ? blockedNaval / totalNaval : 0;
 
+  // --- CÉRÉALES ---
+  const yr2 = typeof currentYear !== 'undefined' ? currentYear : 2022;
+  function evalHist2(fl, fn) { return typeof fn !== 'undefined' ? fn(fl, yr2) : 0; }
+  const cerealFlowsIn = typeof CEREAL_FLOWS !== 'undefined' && typeof getCerealValue !== 'undefined'
+    ? CEREAL_FLOWS.filter(f => flowToMatchesCountry(f.to)).map(f => ({from:f.from, volume:getCerealValue(f,yr2)})) : [];
+  const totalCereal = cerealFlowsIn.reduce((s,f)=>s+(f.volume||0),0);
+  const blockedCereal = cerealFlowsIn.filter(f=>blockedCountries.has(f.from)).reduce((s,f)=>s+(f.volume||0),0);
+  const cerealScore = totalCereal > 0 ? blockedCereal / totalCereal : 0;
+
+  // --- MÉTAUX ---
+  function mhv(fl,y){if(!fl.hist)return 0;var k=Object.keys(fl.hist).map(Number).sort((a,b)=>a-b);if(!k.length)return 0;if(y<=k[0])return fl.hist[k[0]];if(y>=k[k.length-1])return fl.hist[k[k.length-1]];for(var i=0;i<k.length-1;i++){if(y>=k[i]&&y<=k[i+1]){var t=(y-k[i])/(k[i+1]-k[i]);return fl.hist[k[i]]*(1-t)+fl.hist[k[i+1]]*t;}}return 0;}
+  const metalFlowsIn = typeof METAL_FLOWS !== 'undefined'
+    ? METAL_FLOWS.filter(f=>flowToMatchesCountry(f.to)).map(f=>({from:f.from,volume:mhv(f,yr2)})) : [];
+  const totalMetal = metalFlowsIn.reduce((s,f)=>s+(f.volume||0),0);
+  const blockedMetal = metalFlowsIn.filter(f=>blockedCountries.has(f.from)).reduce((s,f)=>s+(f.volume||0),0);
+  const metalScore = totalMetal > 0 ? blockedMetal / totalMetal : 0;
+
+  // --- TECH ---
+  const techFlowsIn2 = typeof TECH_FLOWS !== 'undefined' && typeof getTechFlowValue !== 'undefined'
+    ? TECH_FLOWS.filter(f=>flowToMatchesCountry(f.to)).map(f=>({from:f.from,volume:getTechFlowValue(f,yr2)})) : [];
+  const totalTech = techFlowsIn2.reduce((s,f)=>s+(f.volume||0),0);
+  const blockedTech = techFlowsIn2.filter(f=>blockedCountries.has(f.from)).reduce((s,f)=>s+(f.volume||0),0);
+  const techScore = totalTech > 0 ? blockedTech / totalTech : 0;
+
+  // --- FINANCE (FDI) ---
+  const finFlowsIn = typeof FINANCE_FLOWS !== 'undefined' && typeof getFinanceValue !== 'undefined'
+    ? FINANCE_FLOWS.filter(f=>flowToMatchesCountry(f.to)).map(f=>({from:f.from,volume:getFinanceValue(f,yr2)})) : [];
+  const totalFin = finFlowsIn.reduce((s,f)=>s+(f.volume||0),0);
+  const blockedFin = finFlowsIn.filter(f=>blockedCountries.has(f.from)).reduce((s,f)=>s+(f.volume||0),0);
+  const finScore = totalFin > 0 ? blockedFin / totalFin : 0;
+
   // --- SCORE COMBINÉ (pondéré par les dimensions présentes) ---
-  // Énergie 40%, Terres rares 30%, Auto 10%, Aviation 13%, Naval 7%
-  // Le poids énergie est actif si le pays consomme de l'énergie (pas seulement s'il importe)
-  const wE = totalConsoBCM > 0 ? 0.40 : 0;
-  const wR = totalRE > 0 ? 0.30 : 0;
-  const wA = totalAuto > 0 ? 0.10 : 0;
-  const wAero = totalAero > 0 ? 0.13 : 0;
-  const wNav = totalNaval > 0 ? 0.07 : 0;
-  const totalW = wE + wR + wA + wAero + wNav;
+  // Énergie 30%, Terres rares 20%, Céréales 15%, Métaux 12%, Auto 8%, Aviation 8%, Naval 4%, Tech 2%, Finance 1%
+  const wE = totalConsoBCM > 0 ? 0.30 : 0;
+  const wR = totalRE > 0 ? 0.20 : 0;
+  const wCer = totalCereal > 0 ? 0.15 : 0;
+  const wMet = totalMetal > 0 ? 0.12 : 0;
+  const wA = totalAuto > 0 ? 0.08 : 0;
+  const wAero = totalAero > 0 ? 0.08 : 0;
+  const wNav = totalNaval > 0 ? 0.04 : 0;
+  const wTech = totalTech > 0 ? 0.02 : 0;
+  const wFin = totalFin > 0 ? 0.01 : 0;
+  const totalW = wE + wR + wCer + wMet + wA + wAero + wNav + wTech + wFin;
   if (totalW === 0) return 0;
-  return (energyScore * wE + reScore * wR + autoScore * wA + aeroScore * wAero + navalScore * wNav) / totalW;
+  return (energyScore*wE + reScore*wR + cerealScore*wCer + metalScore*wMet + autoScore*wA + aeroScore*wAero + navalScore*wNav + techScore*wTech + finScore*wFin) / totalW;
 }
 
 // Met à jour les couleurs des pays selon la souffrance en mode crise
@@ -7093,6 +7170,110 @@ function loadFinanceData() {
       if (layerVis.finance_fdi) rebuildFinanceFlowsLayer();
     })
     .catch(function(e){console.warn('Could not load finance.json:',e);});
+}
+
+// ============================================================
+//  CEREAL BY TYPE (FAO)
+// ============================================================
+var CEREAL_BY_TYPE = {};  // {iso3: {wheat:{year:Mt}, rice:{...}, ...}}
+
+function loadCerealByType() {
+  fetch('data/cereal_by_type.json')
+    .then(function(r){return r.json();})
+    .then(function(json){
+      CEREAL_BY_TYPE = json.data || {};
+      console.log('Loaded cereal by type: '+Object.keys(CEREAL_BY_TYPE).length+' countries');
+    })
+    .catch(function(e){console.warn('Could not load cereal_by_type.json:',e);});
+}
+
+function getCerealByType(iso3, year) {
+  var c = CEREAL_BY_TYPE[iso3];
+  if (!c) return null;
+  var y = String(year);
+  var result = {};
+  ['wheat','rice','maize','barley','soy'].forEach(function(crop){
+    if (!c[crop]) return;
+    // interpolate: find nearest year
+    var years = Object.keys(c[crop]).map(Number).sort(function(a,b){return a-b;});
+    if (!years.length) return;
+    var yr = parseInt(year);
+    if (yr <= years[0]) { result[crop] = c[crop][String(years[0])]; return; }
+    if (yr >= years[years.length-1]) { result[crop] = c[crop][String(years[years.length-1])]; return; }
+    for (var i=0;i<years.length-1;i++){
+      if (yr>=years[i]&&yr<=years[i+1]){
+        var t=(yr-years[i])/(years[i+1]-years[i]);
+        result[crop]=Math.round((c[crop][String(years[i])]*(1-t)+c[crop][String(years[i+1])]*t)*100)/100;
+        return;
+      }
+    }
+  });
+  return Object.keys(result).length ? result : null;
+}
+
+function buildCerealByTypeHtml(iso3, year) {
+  var data = getCerealByType(iso3, year);
+  if (!data) return '';
+  var labels = {wheat:'Blé',rice:'Riz',maize:'Maïs',barley:'Orge',soy:'Soja'};
+  var colors = {wheat:'#fbbf24',rice:'#84cc16',maize:'#f97316',barley:'#a78bfa',soy:'#34d399'};
+  var rows = ['wheat','rice','maize','barley','soy']
+    .filter(function(c){return data[c]>0;})
+    .sort(function(a,b){return data[b]-data[a];})
+    .map(function(crop){
+      return '<div class="info-row"><span class="ir-label"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+colors[crop]+';margin-right:5px"></span>'+labels[crop]+'</span><span class="ir-value">'+data[crop]+' Mt</span></div>';
+    }).join('');
+  if (!rows) return '';
+  return '<div class="info-section"><div class="info-section-title">🌾 Production céréales & oléagineux</div>'+rows+'</div>';
+}
+
+// ============================================================
+//  REFINED METALS (World Steel / IAI / ICSG / ILZSG / INSG)
+// ============================================================
+var REFINED_METALS = {};  // {metal: {iso3: {year: kt}}}
+
+function loadRefinedMetals() {
+  fetch('data/refined_metals.json')
+    .then(function(r){return r.json();})
+    .then(function(json){
+      REFINED_METALS = json.data || {};
+      console.log('Loaded refined metals: '+Object.keys(REFINED_METALS).length+' types');
+    })
+    .catch(function(e){console.warn('Could not load refined_metals.json:',e);});
+}
+
+function getRefinedMetal(metal, iso3, year) {
+  var d = REFINED_METALS[metal];
+  if (!d || !d[iso3]) return null;
+  var byYear = d[iso3];
+  var years = Object.keys(byYear).map(Number).sort(function(a,b){return a-b;});
+  if (!years.length) return null;
+  var yr = parseInt(year);
+  if (yr <= years[0]) return byYear[String(years[0])];
+  if (yr >= years[years.length-1]) return byYear[String(years[years.length-1])];
+  for (var i=0;i<years.length-1;i++){
+    if (yr>=years[i]&&yr<=years[i+1]){
+      var t=(yr-years[i])/(years[i+1]-years[i]);
+      return Math.round(byYear[String(years[i])]*(1-t)+byYear[String(years[i+1])]*t);
+    }
+  }
+  return null;
+}
+
+function buildRefinedMetalsHtml(iso3, year) {
+  var defs = [
+    {key:'steel_kt',   label:'Acier',        col:'#94a3b8', fmt:function(v){return v>=1000?(Math.round(v/100)/10)+' Mt':(v+' kt');}},
+    {key:'aluminum_kt',label:'Aluminium',     col:'#60a5fa', fmt:function(v){return v>=1000?(Math.round(v/100)/10)+' Mt':(v+' kt');}},
+    {key:'copper_ref_kt',label:'Cuivre (affiné)',col:'#f97316',fmt:function(v){return v+' kt';}},
+    {key:'zinc_ref_kt', label:'Zinc (affiné)', col:'#a78bfa', fmt:function(v){return v+' kt';}},
+    {key:'nickel_ref_kt',label:'Nickel (affiné)',col:'#34d399',fmt:function(v){return v+' kt';}},
+  ];
+  var rows = defs.map(function(d){
+    var v = getRefinedMetal(d.key, iso3, year);
+    if (!v) return '';
+    return '<div class="info-row"><span class="ir-label"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+d.col+';margin-right:5px"></span>'+d.label+'</span><span class="ir-value">'+d.fmt(v)+'</span></div>';
+  }).join('');
+  if (!rows) return '';
+  return '<div class="info-section"><div class="info-section-title">🏭 Production métaux raffinés</div>'+rows+'</div>';
 }
 </script>
 
