@@ -4750,15 +4750,36 @@ function renderCountryPanel(key, skipZoom) {
       ${!flowsOutGas.length && !flowsOutOil.length && !flowsInGas.length && !flowsInOil.length && !pipes.length && !lngExp.length && !lngImp.length && !nukes.length && !fields.length
         ? `<div class="panel-empty" style="padding:24px 0"><p style="font-size:12px">Aucun flux tracé pour ce pays</p></div>` : ''}`;
 
-    // Contenu onglet Crise
+    // Contenu onglet Crise — utilise une fonction globale pour éviter le key stale
+    const _crisisKey = key;
     const tabCrise = crisisMode
-      ? `<div style="font-size:11px;color:var(--text-secondary);margin-bottom:10px">Mode crise actif — cliquez sur des pays/infrastructures sur la carte pour les bloquer.</div>
-         <button class="btn-secondary" onclick="showCrisisDetail('${key}')" style="width:100%;margin-bottom:6px">📊 Voir l'impact sur ${d.name}</button>
-         <button class="btn-secondary" onclick="toggleCrisisMode()" style="width:100%;background:#f85149;border-color:#f85149;color:#fff">Quitter le mode crise</button>`
+      ? (() => {
+          const crisisScore = computeSuffering(_crisisKey);
+          const _cColor = crisisScore > 0.6 ? '#f85149' : crisisScore > 0.3 ? '#ffa726' : crisisScore > 0.05 ? '#ffeb3b' : '#3fb950';
+          const _cEmoji = crisisScore > 0.6 ? '🚨' : crisisScore > 0.3 ? '🔴' : crisisScore > 0.05 ? '🟡' : '🟢';
+          const _cLabel = crisisScore > 0.6 ? 'Critique' : crisisScore > 0.3 ? 'Élevé' : crisisScore > 0.05 ? 'Modéré' : 'Résilient';
+          const _cPct = Math.round(crisisScore * 100);
+          return `
+            <div class="dep-score-badge" style="border-color:${_cColor}40;margin-bottom:10px">
+              <div class="dep-score-number" style="color:${_cColor}">${crisisScore < 0 ? '—' : _cPct}</div>
+              <div style="flex:1">
+                <div class="dep-score-label" style="color:${_cColor}">${crisisScore < 0 ? '⛔ Pays bloqué' : _cEmoji+' Impact '+_cLabel}</div>
+                <div class="dep-score-sub">${crisisScore < 0 ? 'Ce pays est dans la liste des pays bloqués' : '/100 · Impact de la crise sur '+d.name}</div>
+              </div>
+            </div>
+            <button class="btn-secondary" onclick="showCrisisDetail('${_crisisKey}')" style="width:100%;margin-bottom:6px">📊 Détail par domaine</button>
+            <button class="btn-secondary" onclick="renderCrisisPanel()" style="width:100%;margin-bottom:6px">🚨 Panneau de crise</button>
+            <button class="btn-secondary" onclick="toggleCrisisMode()" style="width:100%;background:#f85149;border-color:#f85149;color:#fff">Quitter le mode crise</button>`;
+        })()
       : `<div style="text-align:center;padding:24px 0">
            <div style="font-size:28px;margin-bottom:8px">🚨</div>
-           <div style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">Activez le mode crise pour simuler des perturbations géopolitiques sur ${d.name}</div>
-           <button class="btn-secondary" onclick="toggleCrisisMode()" style="width:100%">Activer le mode crise</button>
+           <div style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">Simulez des perturbations géopolitiques sur ${d.name}</div>
+           <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:12px;text-align:left">
+             ${CRISIS_SCENARIOS.slice(0,3).map(sc =>
+               `<button onclick="applyCrisisScenario('${sc.id}')" style="background:var(--bg-dark);border:1px solid var(--border);border-radius:6px;padding:5px 8px;cursor:pointer;font-size:11px;color:var(--text-primary);text-align:left;width:100%" onmouseover="this.style.borderColor='#f85149'" onmouseout="this.style.borderColor='var(--border)'">${sc.icon} ${sc.label}</button>`
+             ).join('')}
+           </div>
+           <button class="btn-secondary" onclick="toggleCrisisMode()" style="width:100%">Activer le mode libre</button>
          </div>`;
 
     const t = activePanelTab;
@@ -5313,6 +5334,68 @@ function importExcel(event) {
 //  MODE CRISE — SIMULATION GÉOPOLITIQUE
 // ============================================================
 
+// Intensité de blocage par pays : countryName -> 0.25|0.50|0.75|1.0
+var crisisIntensity = {};
+function getBlockIntensity(name) { return crisisIntensity[name] || 1.0; }
+
+// Scénarios prédéfinis
+var CRISIS_SCENARIOS = [
+  {
+    id:'russia_embargo', icon:'🇷🇺', label:'Embargo Russie',
+    desc:'Coupure totale des exports russes (énergie, céréales, métaux)',
+    countries:['Russie'], chokepoints:[], intensity:1.0
+  },
+  {
+    id:'taiwan_crisis', icon:'🇹🇼', label:'Crise Taiwan',
+    desc:'Blocus du détroit de Taiwan — semiconducteurs, électronique',
+    countries:['Taïwan','Chine'], chokepoints:['malacca'], intensity:0.75
+  },
+  {
+    id:'hormuz_block', icon:'⚓', label:'Fermeture Ormuz',
+    desc:'Détroit d\'Ormuz fermé — pétrole du Golfe bloqué',
+    countries:[], chokepoints:['ormuz'], intensity:1.0
+  },
+  {
+    id:'suez_block', icon:'🚢', label:'Blocage Suez',
+    desc:'Canal de Suez fermé — perturbation routes Europe/Asie',
+    countries:[], chokepoints:['suez'], intensity:1.0
+  },
+  {
+    id:'middle_east', icon:'🔥', label:'Crise Moyen-Orient',
+    desc:'Conflit généralisé — Arabie Saoudite, Iran, EAU bloqués',
+    countries:['Arabie Saoudite','Iran','Émirats Arabes Unis','Irak','Qatar'], chokepoints:['ormuz'], intensity:1.0
+  },
+  {
+    id:'food_crisis', icon:'🌾', label:'Crise alimentaire',
+    desc:'Ukraine + Russie coupent les exports de céréales',
+    countries:['Russie','Ukraine'], chokepoints:['bosphore'], intensity:1.0
+  },
+];
+
+function applyCrisisScenario(scenarioId) {
+  var sc = CRISIS_SCENARIOS.find(function(s){return s.id===scenarioId;});
+  if (!sc) return;
+  // Activer le mode crise si pas déjà actif
+  if (!crisisMode) toggleCrisisMode();
+  // Clear existing
+  blockedCountries.clear();
+  blockedChokepoints.clear();
+  blockedInfra.clear();
+  crisisIntensity = {};
+  // Appliquer le scénario
+  sc.countries.forEach(function(c){
+    blockedCountries.add(c);
+    crisisIntensity[c] = sc.intensity;
+  });
+  sc.chokepoints.forEach(function(cp){ blockedChokepoints.add(cp); });
+  showToast('🚨 Scénario : ' + sc.label, 'warning');
+  updateCrisisColors();
+  buildChokepointsLayer();
+  buildAlternativeRoutes();
+  buildLngLayer();
+  renderCrisisPanel();
+}
+
 function toggleCrisisMode() {
   crisisMode = !crisisMode;
   const btn = document.getElementById('btn-crisis');
@@ -5330,6 +5413,7 @@ function toggleCrisisMode() {
     blockedCountries.clear();
     blockedChokepoints.clear();
     blockedInfra.clear();
+    crisisIntensity = {};
     removeCrisisBanner();
     if (crisisAltLayer) { crisisAltLayer.remove(); crisisAltLayer = null; }
     if (crisisChokepointLayer) { crisisChokepointLayer.remove(); crisisChokepointLayer = null; }
@@ -5432,10 +5516,19 @@ function isFlowBlockedByInfra(flow) {
 function toggleBlockCountry(countryName) {
   if (blockedCountries.has(countryName)) {
     blockedCountries.delete(countryName);
+    delete crisisIntensity[countryName];
   } else {
     blockedCountries.add(countryName);
+    crisisIntensity[countryName] = 1.0;
     showToast(`🔴 ${countryName} bloqué`, 'error');
   }
+  updateCrisisColors();
+  buildAlternativeRoutes();
+  renderCrisisPanel();
+}
+
+function setCrisisIntensity(countryName, val) {
+  crisisIntensity[countryName] = parseFloat(val);
   updateCrisisColors();
   buildAlternativeRoutes();
   renderCrisisPanel();
@@ -5485,50 +5578,55 @@ function computeSuffering(countryKey) {
   const flowsIn = FLOWS_DATA.filter(f => f.to === name || f.to.startsWith(name));
   const gasIn = flowsIn.filter(f => f.type === 'gas_pipeline' || f.type === 'lng');
   const oilIn = flowsIn.filter(f => f.type === 'oil');
-  const isFlowBlocked = f => blockedCountries.has(f.from) || isFlowBlockedByChokepoint(f) || isFlowBlockedByInfra(f);
+  // Intensité : facteur multiplicatif sur le volume bloqué (0.25/0.50/0.75/1.0)
+  function flowBlockedVolume(f, vol) {
+    var intensity = 0;
+    if (blockedCountries.has(f.from)) intensity = Math.max(intensity, getBlockIntensity(f.from));
+    if (isFlowBlockedByChokepoint(f)) intensity = Math.max(intensity, 1.0);
+    if (isFlowBlockedByInfra(f)) intensity = Math.max(intensity, 1.0);
+    return vol * intensity;
+  }
 
   // Bloquer uniquement les imports réellement nécessaires (besoin net = conso - prod domestique)
-  const gasNeed = Math.max(0, gasConso - gasProd);   // BCM réellement à importer
-  const oilNeed = Math.max(0, oilConso - oilProd);   // Mbd réellement à importer
+  const gasNeed = Math.max(0, gasConso - gasProd);
+  const oilNeed = Math.max(0, oilConso - oilProd);
 
-  const blockedGasBCM = gasIn.filter(isFlowBlocked).reduce((s, f) => s + (f.volume || 0), 0);
-  const blockedOilBCM = oilIn.filter(isFlowBlocked).reduce((s, f) => s + (f.volume || 0), 0) * 50;
+  const blockedGasBCM = gasIn.reduce((s, f) => s + flowBlockedVolume(f, f.volume || 0), 0);
+  const blockedOilBCM = oilIn.reduce((s, f) => s + flowBlockedVolume(f, f.volume || 0), 0) * 50;
 
-  // Cap : on ne peut bloquer plus que ce dont le pays a réellement besoin
   const effectiveBlockedBCM = Math.min(blockedGasBCM, gasNeed) + Math.min(blockedOilBCM, oilNeed * 50);
   const energyScore = totalConsoBCM > 0 ? effectiveBlockedBCM / totalConsoBCM : 0;
 
   // --- TERRES RARES ---
   const reFlowsIn = RARE_EARTH_FLOWS.filter(f => flowToMatchesCountry(f.to));
   const totalRE = reFlowsIn.reduce((s, f) => s + (f.volume || 0), 0);
-  const blockedRE = reFlowsIn.filter(f => blockedCountries.has(f.from)).reduce((s, f) => s + (f.volume || 0), 0);
+  const blockedRE = reFlowsIn.reduce((s, f) => s + flowBlockedVolume(f, f.volume || 0), 0);
   const reScore = totalRE > 0 ? blockedRE / totalRE : 0;
 
   // --- AUTOMOBILE ---
   const autoFlowsIn = AUTO_FLOWS.filter(f => flowToMatchesCountry(f.to));
   const totalAuto = autoFlowsIn.reduce((s, f) => s + (f.vol || 0), 0);
-  const blockedAuto = autoFlowsIn.filter(f => blockedCountries.has(f.from)).reduce((s, f) => s + (f.vol || 0), 0);
+  const blockedAuto = autoFlowsIn.reduce((s, f) => s + flowBlockedVolume(f, f.vol || 0), 0);
   const autoScore = totalAuto > 0 ? blockedAuto / totalAuto : 0;
 
   // --- AVIATION ---
   const aeroFlowsIn = AERO_FLOWS.filter(f => flowToMatchesCountry(f.to));
   const totalAero = aeroFlowsIn.reduce((s, f) => s + (f.vol || 0), 0);
-  const blockedAero = aeroFlowsIn.filter(f => blockedCountries.has(f.from)).reduce((s, f) => s + (f.vol || 0), 0);
+  const blockedAero = aeroFlowsIn.reduce((s, f) => s + flowBlockedVolume(f, f.vol || 0), 0);
   const aeroScore = totalAero > 0 ? blockedAero / totalAero : 0;
 
   // --- NAVAL ---
   const navalFlowsIn = NAVAL_FLOWS.filter(f => flowToMatchesCountry(f.to));
   const totalNaval = navalFlowsIn.reduce((s, f) => s + (f.vol || 0), 0);
-  const blockedNaval = navalFlowsIn.filter(f => blockedCountries.has(f.from)).reduce((s, f) => s + (f.vol || 0), 0);
+  const blockedNaval = navalFlowsIn.reduce((s, f) => s + flowBlockedVolume(f, f.vol || 0), 0);
   const navalScore = totalNaval > 0 ? blockedNaval / totalNaval : 0;
 
   // --- CÉRÉALES ---
   const yr2 = typeof currentYear !== 'undefined' ? currentYear : 2022;
-  function evalHist2(fl, fn) { return typeof fn !== 'undefined' ? fn(fl, yr2) : 0; }
   const cerealFlowsIn = typeof CEREAL_FLOWS !== 'undefined' && typeof getCerealValue !== 'undefined'
     ? CEREAL_FLOWS.filter(f => flowToMatchesCountry(f.to)).map(f => ({from:f.from, volume:getCerealValue(f,yr2)})) : [];
   const totalCereal = cerealFlowsIn.reduce((s,f)=>s+(f.volume||0),0);
-  const blockedCereal = cerealFlowsIn.filter(f=>blockedCountries.has(f.from)).reduce((s,f)=>s+(f.volume||0),0);
+  const blockedCereal = cerealFlowsIn.reduce((s,f)=>s+flowBlockedVolume(f,f.volume||0),0);
   const cerealScore = totalCereal > 0 ? blockedCereal / totalCereal : 0;
 
   // --- MÉTAUX ---
@@ -5536,37 +5634,39 @@ function computeSuffering(countryKey) {
   const metalFlowsIn = typeof METAL_FLOWS !== 'undefined'
     ? METAL_FLOWS.filter(f=>flowToMatchesCountry(f.to)).map(f=>({from:f.from,volume:mhv(f,yr2)})) : [];
   const totalMetal = metalFlowsIn.reduce((s,f)=>s+(f.volume||0),0);
-  const blockedMetal = metalFlowsIn.filter(f=>blockedCountries.has(f.from)).reduce((s,f)=>s+(f.volume||0),0);
+  const blockedMetal = metalFlowsIn.reduce((s,f)=>s+flowBlockedVolume(f,f.volume||0),0);
   const metalScore = totalMetal > 0 ? blockedMetal / totalMetal : 0;
 
   // --- TECH ---
   const techFlowsIn2 = typeof TECH_FLOWS !== 'undefined' && typeof getTechFlowValue !== 'undefined'
     ? TECH_FLOWS.filter(f=>flowToMatchesCountry(f.to)).map(f=>({from:f.from,volume:getTechFlowValue(f,yr2)})) : [];
   const totalTech = techFlowsIn2.reduce((s,f)=>s+(f.volume||0),0);
-  const blockedTech = techFlowsIn2.filter(f=>blockedCountries.has(f.from)).reduce((s,f)=>s+(f.volume||0),0);
+  const blockedTech = techFlowsIn2.reduce((s,f)=>s+flowBlockedVolume(f,f.volume||0),0);
   const techScore = totalTech > 0 ? blockedTech / totalTech : 0;
 
   // --- FINANCE (FDI) ---
   const finFlowsIn = typeof FINANCE_FLOWS !== 'undefined' && typeof getFinanceValue !== 'undefined'
     ? FINANCE_FLOWS.filter(f=>flowToMatchesCountry(f.to)).map(f=>({from:f.from,volume:getFinanceValue(f,yr2)})) : [];
   const totalFin = finFlowsIn.reduce((s,f)=>s+(f.volume||0),0);
-  const blockedFin = finFlowsIn.filter(f=>blockedCountries.has(f.from)).reduce((s,f)=>s+(f.volume||0),0);
+  const blockedFin = finFlowsIn.reduce((s,f)=>s+flowBlockedVolume(f,f.volume||0),0);
   const finScore = totalFin > 0 ? blockedFin / totalFin : 0;
 
   // --- SCORE COMBINÉ (pondéré par les dimensions présentes) ---
-  // Énergie 30%, Terres rares 20%, Céréales 15%, Métaux 12%, Auto 8%, Aviation 8%, Naval 4%, Tech 2%, Finance 1%
   const wE = totalConsoBCM > 0 ? 0.30 : 0;
-  const wR = totalRE > 0 ? 0.20 : 0;
+  const wR = totalRE > 0 ? 0.15 : 0;
   const wCer = totalCereal > 0 ? 0.15 : 0;
   const wMet = totalMetal > 0 ? 0.12 : 0;
-  const wA = totalAuto > 0 ? 0.08 : 0;
-  const wAero = totalAero > 0 ? 0.08 : 0;
-  const wNav = totalNaval > 0 ? 0.04 : 0;
-  const wTech = totalTech > 0 ? 0.02 : 0;
-  const wFin = totalFin > 0 ? 0.01 : 0;
+  const wA = totalAuto > 0 ? 0.06 : 0;
+  const wAero = totalAero > 0 ? 0.05 : 0;
+  const wNav = totalNaval > 0 ? 0.03 : 0;
+  const wTech = totalTech > 0 ? 0.08 : 0;
+  const wFin = totalFin > 0 ? 0.06 : 0;
   const totalW = wE + wR + wCer + wMet + wA + wAero + wNav + wTech + wFin;
   if (totalW === 0) return 0;
-  return (energyScore*wE + reScore*wR + cerealScore*wCer + metalScore*wMet + autoScore*wA + aeroScore*wAero + navalScore*wNav + techScore*wTech + finScore*wFin) / totalW;
+
+  // Retourner objet détaillé si demandé
+  var rawScore = (energyScore*wE + reScore*wR + cerealScore*wCer + metalScore*wMet + autoScore*wA + aeroScore*wAero + navalScore*wNav + techScore*wTech + finScore*wFin) / totalW;
+  return rawScore;
 }
 
 // Met à jour les couleurs des pays selon la souffrance en mode crise
@@ -5665,95 +5765,147 @@ function showCrisisDetail(countryKey) {
   if (!d) return;
   const name = d.name;
   const panel = document.getElementById('panel-inner');
+  const yr2 = typeof currentYear !== 'undefined' ? currentYear : 2022;
 
   const match = flowTo => crisisFlowMatchesCountry(flowTo, name);
-  const isBlocked = f => blockedCountries.has(f.from) || isFlowBlockedByChokepoint(f) || isFlowBlockedByInfra(f);
+  function flowBlockedVol(f, vol) {
+    var intensity = 0;
+    if (blockedCountries.has(f.from)) intensity = Math.max(intensity, getBlockIntensity(f.from));
+    if (isFlowBlockedByChokepoint(f)) intensity = Math.max(intensity, 1.0);
+    if (isFlowBlockedByInfra(f)) intensity = Math.max(intensity, 1.0);
+    return vol * intensity;
+  }
 
   // --- Énergie ---
   const energyIn = FLOWS_DATA.filter(f => f.to === name || f.to.startsWith(name));
-  const energyBlocked = energyIn.filter(isBlocked);
   const totalE = energyIn.reduce((s, f) => s + (f.volume || 0), 0);
-  const blockedE = energyBlocked.reduce((s, f) => s + (f.volume || 0), 0);
+  const blockedE = energyIn.reduce((s, f) => s + flowBlockedVol(f, f.volume || 0), 0);
 
   // --- Terres rares ---
   const reIn = RARE_EARTH_FLOWS.filter(f => match(f.to));
-  const reBlocked = reIn.filter(f => blockedCountries.has(f.from));
   const totalR = reIn.reduce((s, f) => s + (f.volume || 0), 0);
-  const blockedR = reBlocked.reduce((s, f) => s + (f.volume || 0), 0);
+  const blockedR = reIn.reduce((s, f) => s + flowBlockedVol(f, f.volume || 0), 0);
+
+  // --- Céréales ---
+  const cerIn = typeof CEREAL_FLOWS !== 'undefined' && typeof getCerealValue !== 'undefined'
+    ? CEREAL_FLOWS.filter(f => match(f.to)) : [];
+  const totalCer = cerIn.reduce((s, f) => s + getCerealValue(f, yr2), 0);
+  const blockedCer = cerIn.reduce((s, f) => s + flowBlockedVol(f, getCerealValue(f, yr2)), 0);
+
+  // --- Métaux ---
+  function mhv(fl,y){if(!fl.hist)return 0;var k=Object.keys(fl.hist).map(Number).sort((a,b)=>a-b);if(!k.length)return 0;if(y<=k[0])return fl.hist[k[0]];if(y>=k[k.length-1])return fl.hist[k[k.length-1]];for(var i=0;i<k.length-1;i++){if(y>=k[i]&&y<=k[i+1]){var t=(y-k[i])/(k[i+1]-k[i]);return fl.hist[k[i]]*(1-t)+fl.hist[k[i+1]]*t;}}return 0;}
+  const metIn = typeof METAL_FLOWS !== 'undefined' ? METAL_FLOWS.filter(f => match(f.to)) : [];
+  const totalMet = metIn.reduce((s, f) => s + mhv(f, yr2), 0);
+  const blockedMet = metIn.reduce((s, f) => s + flowBlockedVol(f, mhv(f, yr2)), 0);
 
   // --- Automobile ---
   const autoIn = AUTO_FLOWS.filter(f => match(f.to));
-  const autoBlocked = autoIn.filter(f => blockedCountries.has(f.from));
   const totalA = autoIn.reduce((s, f) => s + (f.vol || 0), 0);
-  const blockedA = autoBlocked.reduce((s, f) => s + (f.vol || 0), 0);
+  const blockedA = autoIn.reduce((s, f) => s + flowBlockedVol(f, f.vol || 0), 0);
 
   // --- Aviation ---
   const aeroIn = AERO_FLOWS.filter(f => match(f.to));
-  const aeroBlocked = aeroIn.filter(f => blockedCountries.has(f.from));
   const totalAero = aeroIn.reduce((s, f) => s + (f.vol || 0), 0);
-  const blockedAero = aeroBlocked.reduce((s, f) => s + (f.vol || 0), 0);
+  const blockedAero = aeroIn.reduce((s, f) => s + flowBlockedVol(f, f.vol || 0), 0);
 
   // --- Naval ---
   const navalIn = NAVAL_FLOWS.filter(f => match(f.to));
-  const navalBlocked = navalIn.filter(f => blockedCountries.has(f.from));
   const totalNav = navalIn.reduce((s, f) => s + (f.vol || 0), 0);
-  const blockedNav = navalBlocked.reduce((s, f) => s + (f.vol || 0), 0);
+  const blockedNav = navalIn.reduce((s, f) => s + flowBlockedVol(f, f.vol || 0), 0);
+
+  // --- Tech ---
+  const techIn = typeof TECH_FLOWS !== 'undefined' && typeof getTechFlowValue !== 'undefined'
+    ? TECH_FLOWS.filter(f => match(f.to)) : [];
+  const totalTech = techIn.reduce((s, f) => s + getTechFlowValue(f, yr2), 0);
+  const blockedTech = techIn.reduce((s, f) => s + flowBlockedVol(f, getTechFlowValue(f, yr2)), 0);
+
+  // --- Finance ---
+  const finIn = typeof FINANCE_FLOWS !== 'undefined' && typeof getFinanceValue !== 'undefined'
+    ? FINANCE_FLOWS.filter(f => match(f.to)) : [];
+  const totalFin = finIn.reduce((s, f) => s + getFinanceValue(f, yr2), 0);
+  const blockedFin = finIn.reduce((s, f) => s + flowBlockedVol(f, getFinanceValue(f, yr2)), 0);
 
   const score = computeSuffering(countryKey);
-  const sufColor = s => s > 0.6 ? '#f85149' : s > 0.3 ? '#ffa726' : '#ffeb3b';
-  const sufLabel = s => s > 0.6 ? 'Critique' : s > 0.3 ? 'Élevé' : 'Modéré';
+  const sufColor = s => s > 0.6 ? '#f85149' : s > 0.3 ? '#ffa726' : s > 0.05 ? '#ffeb3b' : '#3fb950';
+  const sufEmoji = s => s > 0.6 ? '🚨' : s > 0.3 ? '🔴' : s > 0.05 ? '🟡' : '🟢';
+  const sufLabel = s => s > 0.6 ? 'Critique' : s > 0.3 ? 'Élevé' : s > 0.05 ? 'Modéré' : 'Résilient';
   const pct = v => Math.round(v * 100);
 
-  function dimSection(icon, title, flowsAll, flowsBlocked, totalVol, blockedVol, fmtFlow) {
-    if (flowsAll.length === 0) return '';
-    const ratio = totalVol > 0 ? blockedVol / totalVol : 0;
+  function dimBar(icon, title, total, blocked) {
+    if (total <= 0) return '';
+    const ratio = blocked / total;
     const color = ratio > 0.6 ? '#f85149' : ratio > 0.3 ? '#ffa726' : ratio > 0 ? '#ffeb3b' : '#3fb950';
-    const rows = flowsBlocked.length > 0
-      ? flowsBlocked.map(f => `
-          <div style="margin:3px 0 3px 8px;font-size:10px;line-height:1.4">
-            <span style="color:#f85149">🔴</span>
-            <b style="color:var(--text-primary)">${f.from}</b> ${fmtFlow(f)}
-            ${f.notes || f.note ? `<div style="color:var(--text-secondary);font-style:italic;margin-left:12px">${(f.notes || f.note).slice(0, 80)}…</div>` : ''}
-          </div>`).join('')
-      : `<div style="font-size:10px;color:var(--text-secondary);margin-left:8px">Aucun flux bloqué</div>`;
     return `
-      <div style="margin:8px 0 4px;border-top:1px solid rgba(255,255,255,0.08);padding-top:6px">
-        <div style="font-size:11px;font-weight:600;color:${color};display:flex;justify-content:space-between">
+      <div style="margin:5px 0">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">
           <span>${icon} ${title}</span>
-          <span>${pct(ratio)}% bloqué</span>
+          <span style="color:${color};font-weight:600">${pct(ratio)}% bloqué</span>
         </div>
-        ${rows}
+        <div style="height:5px;background:rgba(255,255,255,0.08);border-radius:3px">
+          <div style="height:5px;width:${Math.min(pct(ratio),100)}%;background:${color};border-radius:3px;transition:width .3s"></div>
+        </div>
       </div>`;
   }
 
-  const fmtEnergy = f => `→ ${f.volume || '?'} ${f.unit || ''} (${f.type})`;
-  const fmtRE     = f => `→ ${f.volume || '?'} ${f.unit || 'kt/an'} (${f.type})`;
-  const fmtAuto   = f => `→ ${f.vol || '?'} M véhicules (${f.type})`;
-  const fmtAero   = f => `→ ${f.vol || '?'} Md$ (${f.type})`;
-  const fmtNav    = f => `→ ${f.vol || '?'} Md$ (${f.type})`;
-
   panel.innerHTML = `
     <div id="crisis-panel">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
         <button class="btn-secondary" onclick="renderCrisisPanel()" style="padding:3px 8px;font-size:11px">← Retour</button>
         <div style="font-weight:600;color:var(--text-primary)">${name}</div>
+        <div style="font-size:10px;color:var(--text-secondary);margin-left:auto">${yr2}</div>
       </div>
 
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-        <span style="font-size:11px;color:var(--text-secondary)">Score d'impact global</span>
-        <span style="font-size:16px;font-weight:700;color:${sufColor(score)}">${pct(score)}%
-          <span style="font-size:11px">${sufLabel(score)}</span>
-        </span>
+      <div class="dep-score-badge" style="border-color:${sufColor(score)}40">
+        <div class="dep-score-number" style="color:${sufColor(score)}">${pct(score)}</div>
+        <div style="flex:1">
+          <div class="dep-score-label" style="color:${sufColor(score)}">${sufEmoji(score)} Impact ${sufLabel(score)}</div>
+          <div class="dep-score-sub">/100 · Score d'impact de la crise</div>
+        </div>
       </div>
 
-      ${dimSection('⚡', 'Énergie (gaz + pétrole)', energyIn, energyBlocked, totalE, blockedE, fmtEnergy)}
-      ${dimSection('💎', 'Terres rares', reIn, reBlocked, totalR, blockedR, fmtRE)}
-      ${dimSection('🚗', 'Automobile', autoIn, autoBlocked, totalA, blockedA, fmtAuto)}
-      ${dimSection('✈️', 'Aviation', aeroIn, aeroBlocked, totalAero, blockedAero, fmtAero)}
-      ${dimSection('⚓', 'Naval', navalIn, navalBlocked, totalNav, blockedNav, fmtNav)}
+      <div style="font-size:10px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.04em;margin:10px 0 6px">Détail par domaine</div>
+      ${dimBar('⚡', 'Énergie', totalE, blockedE)}
+      ${dimBar('💎', 'Terres rares', totalR, blockedR)}
+      ${dimBar('🌾', 'Céréales', totalCer, blockedCer)}
+      ${dimBar('🏗️', 'Métaux', totalMet, blockedMet)}
+      ${dimBar('💻', 'Technologie', totalTech, blockedTech)}
+      ${dimBar('🚗', 'Automobile', totalA, blockedA)}
+      ${dimBar('✈️', 'Aviation', totalAero, blockedAero)}
+      ${dimBar('⚓', 'Naval', totalNav, blockedNav)}
+      ${dimBar('💰', 'Finance', totalFin, blockedFin)}
 
       <button class="btn-secondary" onclick="toggleCrisisMode()" style="margin-top:12px;width:100%;background:#f85149;border-color:#f85149;color:#fff">Quitter le mode crise</button>
     </div>`;
+}
+
+function buildCrisisNarrative(suffering) {
+  if (blockedCountries.size === 0 && blockedChokepoints.size === 0) return '';
+  var blocked = Array.from(blockedCountries);
+  var nbAffected = suffering.length;
+  var criticalCount = suffering.filter(function(s){return s.score>0.6;}).length;
+  var parts = [];
+  if (blocked.length) parts.push('En bloquant <b>' + blocked.join(', ') + '</b>');
+  if (blockedChokepoints.size) {
+    var cpNames = Array.from(blockedChokepoints).map(function(id){
+      var cp = CHOKEPOINTS_DATA.find(function(c){return c.id===id;});
+      return cp ? cp.name : id;
+    });
+    parts.push((blocked.length?'et en fermant':'En fermant')+' <b>'+cpNames.join(', ')+'</b>');
+  }
+  var phrase = parts.join(' ');
+  if (nbAffected > 0) {
+    phrase += ', <b style="color:#ffa726">'+nbAffected+' pays</b> sont affectés';
+    if (criticalCount > 0) phrase += ' dont <b style="color:#f85149">'+criticalCount+' en état critique</b>';
+  } else {
+    phrase += ', aucun pays n\'est significativement affecté';
+  }
+  phrase += '.';
+  // Top domaine affecté
+  if (suffering.length > 0) {
+    var topCountry = suffering[0];
+    phrase += ' <span style="color:var(--text-secondary)">'+topCountry.name+' est le plus touché ('+Math.round(topCountry.score*100)+'%).</span>';
+  }
+  return '<div style="font-size:11px;color:var(--text-primary);background:rgba(248,81,73,0.08);border:1px solid rgba(248,81,73,0.2);border-radius:6px;padding:8px 10px;margin-bottom:10px;line-height:1.5">'+phrase+'</div>';
 }
 
 function renderCrisisPanel() {
@@ -5770,15 +5922,35 @@ function renderCrisisPanel() {
   suffering.sort((a, b) => b.score - a.score);
   const top = suffering.slice(0, 10);
 
-  const sufColor = s => s > 0.6 ? '#f85149' : s > 0.3 ? '#ffa726' : '#ffeb3b';
-  const sufLabel = s => s > 0.6 ? 'Critique' : s > 0.3 ? 'Élevé' : 'Modéré';
+  const sufColor = s => s > 0.6 ? '#f85149' : s > 0.3 ? '#ffa726' : s > 0.05 ? '#ffeb3b' : '#3fb950';
+  const sufEmoji = s => s > 0.6 ? '🚨' : s > 0.3 ? '🔴' : s > 0.05 ? '🟡' : '🟢';
+  const sufLabel = s => s > 0.6 ? 'Critique' : s > 0.3 ? 'Élevé' : s > 0.05 ? 'Modéré' : 'Résilient';
 
   const totalBlocked = blockedCountries.size + blockedChokepoints.size + blockedInfra.size;
+
+  // Scénarios prédéfinis
+  const scenariosHtml = CRISIS_SCENARIOS.map(sc =>
+    `<button onclick="applyCrisisScenario('${sc.id}')" title="${sc.desc}" style="background:var(--bg-dark);border:1px solid var(--border);border-radius:6px;padding:5px 8px;cursor:pointer;font-size:11px;color:var(--text-primary);transition:all .15s;text-align:left;width:100%" onmouseover="this.style.borderColor='#f85149'" onmouseout="this.style.borderColor='var(--border)'">${sc.icon} ${sc.label}<div style="font-size:9px;color:var(--text-secondary);margin-top:1px">${sc.desc}</div></button>`
+  ).join('');
+
+  // Éléments bloqués avec slider d'intensité
   const blockedHtml = totalBlocked > 0
     ? [
-        ...Array.from(blockedCountries).map(n =>
-          `<div class="cp-row"><span>🌍 ${n}</span><button class="crisis-country-btn" onclick="toggleBlockCountry('${n}')">×</button></div>`
-        ),
+        ...Array.from(blockedCountries).map(n => {
+          var intens = getBlockIntensity(n);
+          var intensPct = Math.round(intens * 100);
+          return `<div style="padding:4px 0;border-bottom:1px solid var(--border)">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px">
+              <span>🌍 ${n} <span style="color:#f85149;font-size:10px">${intensPct}%</span></span>
+              <button class="crisis-country-btn" onclick="toggleBlockCountry('${n}')">×</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;margin-top:3px">
+              <span style="font-size:9px;color:var(--text-secondary)">25%</span>
+              <input type="range" min="0.25" max="1" step="0.25" value="${intens}" onchange="setCrisisIntensity('${n}',this.value)" style="flex:1;height:3px;accent-color:#f85149;cursor:pointer">
+              <span style="font-size:9px;color:var(--text-secondary)">100%</span>
+            </div>
+          </div>`;
+        }),
         ...Array.from(blockedChokepoints).map(id => {
           const cp = CHOKEPOINTS_DATA.find(c => c.id === id);
           return cp ? `<div class="cp-row"><span>⚓ ${cp.name}</span><button class="crisis-country-btn" onclick="toggleBlockChokepoint('${id}','${cp.name}')">×</button></div>` : '';
@@ -5788,40 +5960,57 @@ function renderCrisisPanel() {
           return `<div class="cp-row"><span>🏭 ${name}</span><button class="crisis-country-btn" onclick="blockedInfra.delete('${id}');updateCrisisColors();buildLngLayer();buildAlternativeRoutes();renderCrisisPanel()">×</button></div>`;
         })
       ].join('')
-    : `<div style="font-size:11px;color:var(--text-secondary);padding:4px 0">Cliquez sur un pays, un <b style="color:#ffa726">⚓ détroit</b> ou un terminal GNL pour le bloquer.</div>`;
+    : '';
 
   const topHtml = top.length > 0
-    ? top.map(t => `<div class="cp-row" onclick="showCrisisDetail('${t.key}')" style="cursor:pointer;border-radius:4px;padding:3px 4px;transition:background 0.15s" onmouseover="this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.background=''">
-        <span>${t.name} <span style="font-size:10px;color:var(--text-secondary)">›</span></span>
-        <span style="color:${sufColor(t.score)};font-weight:600">
-          ${sufLabel(t.score)}
-          <span class="suf-bar" style="width:${Math.round(t.score*40)}px;background:${sufColor(t.score)}"></span>
+    ? top.map(t => `<div onclick="showCrisisDetail('${t.key}')" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:4px 6px;border-radius:4px;transition:background 0.15s;font-size:11px" onmouseover="this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.background=''">
+        <span>${sufEmoji(t.score)} ${t.name}</span>
+        <span style="color:${sufColor(t.score)};font-weight:600;display:flex;align-items:center;gap:4px">
+          ${Math.round(t.score*100)}%
+          <span class="suf-bar" style="width:${Math.round(t.score*50)}px;background:${sufColor(t.score)}"></span>
         </span>
       </div>`).join('')
-    : `<div style="font-size:11px;color:var(--text-secondary);padding:4px 0">Aucun pays affecté.</div>`;
+    : '';
+
+  const narrative = buildCrisisNarrative(suffering);
 
   panel.innerHTML = `
     <div id="crisis-panel">
       <div class="cp-title">🚨 Simulation de Crise</div>
-      <div style="font-size:11px;color:var(--text-secondary);margin-bottom:8px">Cliquez sur un <b style="color:#e6edf3">pays</b>, un <b style="color:#ffa726">⚓ détroit</b> ou un <b style="color:#ff8a65">terminal GNL</b> pour le bloquer.</div>
 
-      <div style="font-size:11px;font-weight:600;color:var(--text-primary);margin-bottom:4px">Éléments bloqués (${totalBlocked})</div>
-      ${blockedHtml}
+      ${totalBlocked === 0 ? `
+        <div style="font-size:10px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">Scénarios prédéfinis</div>
+        <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:12px">${scenariosHtml}</div>
+        <div style="height:1px;background:var(--border);margin:8px 0"></div>
+        <div style="font-size:11px;color:var(--text-secondary);padding:4px 0">Ou cliquez directement sur un <b style="color:#e6edf3">pays</b>, un <b style="color:#ffa726">⚓ détroit</b> ou un <b style="color:#ff8a65">terminal GNL</b> sur la carte.</div>
+      ` : `
+        ${narrative}
 
-      ${top.length > 0 ? `
-      <div style="font-size:11px;font-weight:600;color:var(--text-primary);margin:8px 0 4px">🔴 Pays les plus touchés</div>
-      ${topHtml}
-      ` : ''}
+        <div style="font-size:10px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px">Éléments bloqués (${totalBlocked})</div>
+        ${blockedHtml}
+
+        ${top.length > 0 ? `
+          <div style="font-size:10px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.04em;margin:10px 0 4px">Top pays impactés</div>
+          ${topHtml}
+        ` : `<div style="font-size:11px;color:var(--text-secondary);padding:8px 0">Aucun pays significativement affecté.</div>`}
+
+        <div style="margin-top:8px;height:1px;background:var(--border)"></div>
+        <div style="font-size:10px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.04em;margin:8px 0 6px">Ajouter un scénario</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px">
+          ${CRISIS_SCENARIOS.map(sc =>
+            `<button onclick="applyCrisisScenario('${sc.id}')" title="${sc.desc}" style="background:var(--bg-dark);border:1px solid var(--border);border-radius:4px;padding:3px 6px;cursor:pointer;font-size:10px;color:var(--text-secondary);white-space:nowrap" onmouseover="this.style.borderColor='#f85149';this.style.color='var(--text-primary)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)'">${sc.icon} ${sc.label}</button>`
+          ).join('')}
+        </div>
+      `}
 
       <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
-        <div style="font-size:10px;color:var(--text-secondary)">
-          <span style="color:#f85149">■</span> Critique (&gt;60%)
-          <span style="color:#ffa726;margin-left:6px">■</span> Élevé (&gt;30%)
-          <span style="color:#ffeb3b;margin-left:6px">■</span> Modéré
-          <span style="color:#3fb950;margin-left:6px">■</span> Résilient
+        <div style="font-size:9px;color:var(--text-secondary)">
+          <span style="color:#f85149">■</span> Critique
+          <span style="color:#ffa726;margin-left:4px">■</span> Élevé
+          <span style="color:#ffeb3b;margin-left:4px">■</span> Modéré
+          <span style="color:#3fb950;margin-left:4px">■</span> Résilient
         </div>
       </div>
-      ${blockedCountries.size > 0 ? `<div style="font-size:10px;color:#3fb950;margin-top:6px">— — — Routes alternatives disponibles</div>` : ''}
 
       <button class="btn-secondary" onclick="toggleCrisisMode()" style="margin-top:10px;width:100%;background:#f85149;border-color:#f85149;color:#fff">Quitter le mode crise</button>
     </div>`;
