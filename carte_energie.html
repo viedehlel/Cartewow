@@ -4790,53 +4790,191 @@ function renderCountryPanel(key, skipZoom) {
 // ============================================================
 //  SECTION DÉPENDANCES — top fournisseurs par dimension
 // ============================================================
+// Calcule {supplier: {domain: pct_of_total_imports}} pour un pays cible
+function computeDepBySupplier(countryName, iso3, year) {
+  var yr = parseInt(year) || 2022;
+  function hv(fl,y){if(!fl.hist)return fl.volume||fl.vol||0;var k=Object.keys(fl.hist).map(Number).sort(function(a,b){return a-b;});if(!k.length)return 0;if(y<=k[0])return fl.hist[k[0]];if(y>=k[k.length-1])return fl.hist[k[k.length-1]];for(var i=0;i<k.length-1;i++){if(y>=k[i]&&y<=k[i+1]){var t=(y-k[i])/(k[i+1]-k[i]);return fl.hist[k[i]]*(1-t)+fl.hist[k[i+1]]*t;}}return 0;}
+  function matchTo(flowTo){if(!flowTo)return false;if(flowTo===countryName)return true;var reg=CRISIS_REGION_MAP[flowTo];return reg?reg.includes(countryName):false;}
+
+  // supplier -> {domain -> volume}
+  var bySupplier = {};
+  function add(supplier, domain, vol) {
+    if (!supplier || !vol || vol <= 0) return;
+    if (!bySupplier[supplier]) bySupplier[supplier] = {};
+    bySupplier[supplier][domain] = (bySupplier[supplier][domain] || 0) + vol;
+  }
+
+  // Énergie
+  var dE = null;
+  Object.values(ENERGY_DATA).forEach(function(x){if(x.name===countryName)dE=x;});
+  if (dE) {
+    var totalConso = (dE.gas_consumption_bcm||0) + (dE.oil_consumption_mbd||0)*50;
+    var totalProd  = (dE.gas_prod_bcm||0) + (dE.oil_prod_mbd||0)*50;
+    var supply = totalProd;
+    var flowsIn = FLOWS_DATA.filter(function(f){return f.to===countryName||f.to.startsWith(countryName);});
+    flowsIn.forEach(function(f){ supply += (f.type==='oil'?(f.volume||0)*50:(f.volume||0)); });
+    if (supply > 0) {
+      flowsIn.forEach(function(f){
+        var vol = (f.type==='oil'?(f.volume||0)*50:(f.volume||0));
+        add(f.from, 'Énergie', vol / supply);
+      });
+    }
+  }
+
+  // Terres rares
+  if (typeof RARE_EARTH_FLOWS !== 'undefined') {
+    var reIn = RARE_EARTH_FLOWS.filter(function(f){return matchTo(f.to);});
+    var reTotal = reIn.reduce(function(s,f){return s+(f.volume||0);},0);
+    if (reTotal > 0) reIn.forEach(function(f){ add(f.from, 'Terres rares', (f.volume||0)/reTotal); });
+  }
+
+  // Céréales
+  if (typeof CEREAL_FLOWS !== 'undefined' && typeof getCerealValue !== 'undefined') {
+    var cerIn = CEREAL_FLOWS.filter(function(f){return matchTo(f.to);});
+    var cerImport = cerIn.reduce(function(s,f){return s+getCerealValue(f,yr);},0);
+    var cerProd = 0;
+    if (iso3 && typeof getCerealByType === 'function') {
+      var bt = getCerealByType(iso3, yr);
+      if (bt) ['wheat','rice','maize','barley','soy'].forEach(function(c){if(bt[c])cerProd+=bt[c];});
+    }
+    var cerSupply = cerProd + cerImport;
+    if (cerSupply > 0) cerIn.forEach(function(f){ add(f.from, 'Céréales', getCerealValue(f,yr)/cerSupply); });
+  }
+
+  // Métaux
+  if (typeof METAL_FLOWS !== 'undefined') {
+    var metIn = METAL_FLOWS.filter(function(f){return matchTo(f.to);});
+    var metImport = metIn.reduce(function(s,f){return s+hv(f,yr);},0);
+    var metProd = 0;
+    if (iso3 && typeof getRefinedMetal === 'function') {
+      ['steel_kt','aluminum_kt','copper_ref_kt','zinc_ref_kt','nickel_ref_kt'].forEach(function(m){var v=getRefinedMetal(m,iso3,yr);if(v)metProd+=v;});
+    }
+    var metSupply = metProd + metImport;
+    if (metSupply > 0) metIn.forEach(function(f){ add(f.from, 'Métaux', hv(f,yr)/metSupply); });
+  }
+
+  // Auto
+  if (typeof AUTO_FLOWS !== 'undefined') {
+    var autoIn = AUTO_FLOWS.filter(function(f){return matchTo(f.to);});
+    var autoImport = autoIn.reduce(function(s,f){return s+(f.vol||0);},0);
+    var autoProd = dE ? ((dE.auto_prod_therm_M||0)+(dE.auto_prod_ev_M||0))*1e6 : 0;
+    var autoSupply = autoProd + autoImport;
+    if (autoSupply > 0) autoIn.forEach(function(f){ add(f.from, 'Automobile', (f.vol||0)/autoSupply); });
+  }
+
+  // Aviation
+  if (typeof AERO_FLOWS !== 'undefined') {
+    var aeroIn = AERO_FLOWS.filter(function(f){return matchTo(f.to);});
+    var aeroImport = aeroIn.reduce(function(s,f){return s+(f.vol||0);},0);
+    var aeroProd = dE ? ((dE.aero_civil_units||0)+(dE.aero_mil_units||0)) : 0;
+    var aeroSupply = aeroProd + aeroImport;
+    if (aeroSupply > 0) aeroIn.forEach(function(f){ add(f.from, 'Aviation', (f.vol||0)/aeroSupply); });
+  }
+
+  // Naval
+  if (typeof NAVAL_FLOWS !== 'undefined') {
+    var navalIn = NAVAL_FLOWS.filter(function(f){return matchTo(f.to);});
+    var navalImport = navalIn.reduce(function(s,f){return s+(f.vol||0);},0);
+    var navalProd = dE ? ((dE.naval_civil_kgt||0)+(dE.naval_mil_kt||0)) : 0;
+    var navalSupply = navalProd + navalImport;
+    if (navalSupply > 0) navalIn.forEach(function(f){ add(f.from, 'Naval', (f.vol||0)/navalSupply); });
+  }
+
+  // Tech
+  if (typeof TECH_FLOWS !== 'undefined' && typeof getTechFlowValue !== 'undefined') {
+    var techIn = TECH_FLOWS.filter(function(f){return matchTo(f.to);});
+    var techImport = techIn.reduce(function(s,f){return s+getTechFlowValue(f,yr);},0);
+    if (techImport > 0) techIn.forEach(function(f){ add(f.from, 'Technologie', getTechFlowValue(f,yr)/techImport); });
+  }
+
+  // Score total par fournisseur = somme des ratios (pondérés)
+  var WEIGHTS = {'Énergie':0.30,'Terres rares':0.15,'Céréales':0.15,'Métaux':0.12,'Automobile':0.08,'Aviation':0.08,'Naval':0.04,'Technologie':0.06};
+  var result = [];
+  Object.keys(bySupplier).forEach(function(supplier) {
+    var domains = bySupplier[supplier];
+    var totalScore = 0, totalW = 0;
+    Object.keys(domains).forEach(function(dom){
+      var w = WEIGHTS[dom] || 0.05;
+      totalScore += domains[dom] * w;
+      totalW += w;
+    });
+    var score = totalW > 0 ? totalScore / totalW : 0;
+    result.push({supplier: supplier, score: Math.round(score*100), domains: domains});
+  });
+  result.sort(function(a,b){return b.score-a.score;});
+  return result;
+}
+
 function buildDependencySection(countryName, d) {
   var iso3 = d ? d.iso3 : null;
   var yr = typeof currentYear !== 'undefined' ? currentYear : 2022;
   var cached = iso3 ? DEP_SCORES[iso3] : null;
-
-  // Si le score n'est pas encore calculé, calculer à la volée
   if (!cached && d && d.name) {
     var result = computeDepScoreForCountry(d.name, iso3, yr);
     if (result) cached = result;
   }
-
   if (!cached || !cached.domains || !cached.domains.length) return '';
 
   var scoreColor = cached.score < 20 ? '#34d399' : cached.score < 40 ? '#84cc16' : cached.score < 60 ? '#fbbf24' : cached.score < 75 ? '#ffa726' : '#f85149';
   var scoreLabel = cached.score < 20 ? 'Très indépendant' : cached.score < 40 ? 'Faible dépendance' : cached.score < 60 ? 'Dépendance modérée' : cached.score < 75 ? 'Forte dépendance' : 'Dépendance critique';
 
+  // Score global + barre
   var html = '<div class="info-section">'
     +'<div class="info-section-title">🔗 Score de Dépendance</div>'
-    +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'
+    +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">'
     +'<div style="font-size:28px;font-weight:700;color:'+scoreColor+'">'+cached.score+'</div>'
     +'<div><div style="font-size:12px;font-weight:600;color:'+scoreColor+'">'+scoreLabel+'</div>'
     +'<div style="font-size:10px;color:var(--text-secondary)">/100 — imports/(prod+imports)</div></div>'
-    +'</div>';
-
-  // Barre globale
-  html += '<div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:10px">'
+    +'</div>'
+    +'<div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:10px">'
     +'<div style="height:4px;width:'+Math.min(cached.score,100)+'%;background:'+scoreColor+';border-radius:2px"></div></div>';
 
-  // Détail par domaine
-  html += '<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em">Détail par domaine</div>';
+  // Top fournisseurs
+  var suppliers = computeDepBySupplier(countryName, iso3, yr);
+  var top10 = suppliers.slice(0, 10);
 
-  cached.domains.forEach(function(dom) {
-    var pct = Math.round(dom.ratio * 100);
-    var col = pct > 70 ? '#f85149' : pct > 40 ? '#ffa726' : pct > 15 ? '#fbbf24' : '#34d399';
-    var alert = pct > 70 ? ' ⚠️' : '';
-    html += '<div style="margin:3px 0">'
-      +'<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px">'
-      +'<span>'+dom.domain+alert+'</span>'
-      +'<span style="color:'+col+';font-weight:600">'+pct+'%</span>'
-      +'</div>'
-      +'<div style="height:3px;background:rgba(255,255,255,0.1);border-radius:2px">'
-      +'<div style="height:3px;width:'+Math.min(pct,100)+'%;background:'+col+';border-radius:2px"></div>'
-      +'</div></div>';
-  });
+  if (top10.length) {
+    html += '<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em">Top dépendances par pays fournisseur</div>';
+    top10.forEach(function(s, i) {
+      var col = s.score > 60 ? '#f85149' : s.score > 35 ? '#ffa726' : s.score > 15 ? '#fbbf24' : '#58a6ff';
+      var alert = s.score > 60 ? ' ⚠️' : '';
+      // Domaines encodés en JSON pour le onclick
+      var domainsJson = JSON.stringify(s.domains).replace(/'/g,"&#39;").replace(/"/g,'&quot;');
+      html += '<div style="margin:4px 0">'
+        +'<div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:2px">'
+        +'<button onclick="showSupplierDomains(\''+s.supplier.replace(/'/g,"\\'")+"','"+countryName.replace(/'/g,"\\'")+"',"+JSON.stringify(s.domains).replace(/</g,'\\x3c')+')" '
+        +'style="background:none;border:none;padding:0;cursor:pointer;color:var(--text-primary);font-size:11px;text-align:left;text-decoration:underline;text-decoration-color:rgba(255,255,255,0.3)">'
+        +s.supplier+alert+'</button>'
+        +'<span style="color:'+col+';font-weight:600;min-width:32px;text-align:right">'+s.score+'%</span>'
+        +'</div>'
+        +'<div style="height:3px;background:rgba(255,255,255,0.1);border-radius:2px">'
+        +'<div style="height:3px;width:'+Math.min(s.score,100)+'%;background:'+col+';border-radius:2px"></div>'
+        +'</div></div>';
+    });
+  }
 
+  html += '<div id="supplier-detail-box" style="display:none;margin-top:8px;padding:8px;background:rgba(255,255,255,0.04);border-radius:6px;border:1px solid var(--border)"></div>';
   html += '</div>';
   return html;
+}
+
+// Appelé au clic sur un pays fournisseur dans la fiche
+function showSupplierDomains(supplier, importer, domains) {
+  var box = document.getElementById('supplier-detail-box');
+  if (!box) return;
+  var DOMAIN_ICONS = {'Énergie':'⚡','Terres rares':'💎','Céréales':'🌾','Métaux':'🏗️','Automobile':'🚗','Aviation':'✈️','Naval':'⚓','Technologie':'💻'};
+  var rows = Object.keys(domains).map(function(dom) {
+    var pct = Math.round(domains[dom] * 100);
+    if (pct < 1) return '';
+    var col = pct > 60 ? '#f85149' : pct > 30 ? '#ffa726' : pct > 10 ? '#fbbf24' : '#58a6ff';
+    var icon = DOMAIN_ICONS[dom] || '•';
+    return '<div style="display:flex;justify-content:space-between;font-size:11px;padding:2px 0">'
+      +'<span>'+icon+' '+dom+'</span>'
+      +'<span style="color:'+col+';font-weight:600">'+pct+'%</span>'
+      +'</div>';
+  }).filter(Boolean).join('');
+  box.innerHTML = '<div style="font-size:11px;font-weight:600;color:var(--accent);margin-bottom:6px">Dépendance envers '+supplier+' :</div>'+rows;
+  box.style.display = 'block';
 }
 
 function saveCountry(key) {
