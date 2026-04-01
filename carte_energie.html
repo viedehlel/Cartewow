@@ -4905,6 +4905,10 @@ function computeDepBySupplier(countryName, iso3, year) {
   return result;
 }
 
+// Cache des fournisseurs pour le clic (évite JSON dans onclick)
+var _depSupplierCache = [];
+var _depImporterKey = null; // clé ENERGY_DATA du pays affiché
+
 function buildDependencySection(countryName, d) {
   var iso3 = d ? d.iso3 : null;
   var yr = typeof currentYear !== 'undefined' ? currentYear : 2022;
@@ -4915,10 +4919,15 @@ function buildDependencySection(countryName, d) {
   }
   if (!cached || !cached.domains || !cached.domains.length) return '';
 
+  // Mémoriser les fournisseurs pour le onclick
+  _depSupplierCache = computeDepBySupplier(countryName, iso3, yr);
+  // Trouver la clé ENERGY_DATA pour le retour
+  _depImporterKey = null;
+  Object.keys(ENERGY_DATA).forEach(function(k){ if(ENERGY_DATA[k].name===countryName) _depImporterKey=k; });
+
   var scoreColor = cached.score < 20 ? '#34d399' : cached.score < 40 ? '#84cc16' : cached.score < 60 ? '#fbbf24' : cached.score < 75 ? '#ffa726' : '#f85149';
   var scoreLabel = cached.score < 20 ? 'Très indépendant' : cached.score < 40 ? 'Faible dépendance' : cached.score < 60 ? 'Dépendance modérée' : cached.score < 75 ? 'Forte dépendance' : 'Dépendance critique';
 
-  // Score global + barre
   var html = '<div class="info-section">'
     +'<div class="info-section-title">🔗 Score de Dépendance</div>'
     +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">'
@@ -4929,22 +4938,16 @@ function buildDependencySection(countryName, d) {
     +'<div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:10px">'
     +'<div style="height:4px;width:'+Math.min(cached.score,100)+'%;background:'+scoreColor+';border-radius:2px"></div></div>';
 
-  // Top fournisseurs
-  var suppliers = computeDepBySupplier(countryName, iso3, yr);
-  var top10 = suppliers.slice(0, 10);
-
+  var top10 = _depSupplierCache.slice(0, 10);
   if (top10.length) {
     html += '<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em">Top dépendances par pays fournisseur</div>';
     top10.forEach(function(s, i) {
       var col = s.score > 60 ? '#f85149' : s.score > 35 ? '#ffa726' : s.score > 15 ? '#fbbf24' : '#58a6ff';
       var alert = s.score > 60 ? ' ⚠️' : '';
-      // Domaines encodés en JSON pour le onclick
-      var domainsJson = JSON.stringify(s.domains).replace(/'/g,"&#39;").replace(/"/g,'&quot;');
       html += '<div style="margin:4px 0">'
         +'<div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:2px">'
-        +'<button onclick="showSupplierDomains(\''+s.supplier.replace(/'/g,"\\'")+"','"+countryName.replace(/'/g,"\\'")+"',"+JSON.stringify(s.domains).replace(/</g,'\\x3c')+')" '
-        +'style="background:none;border:none;padding:0;cursor:pointer;color:var(--text-primary);font-size:11px;text-align:left;text-decoration:underline;text-decoration-color:rgba(255,255,255,0.3)">'
-        +s.supplier+alert+'</button>'
+        +'<span onclick="showSupplierDetail('+i+')" style="cursor:pointer;color:var(--text-primary);text-decoration:underline;text-decoration-color:rgba(255,255,255,0.3)">'
+        +s.supplier+' ›'+alert+'</span>'
         +'<span style="color:'+col+';font-weight:600;min-width:32px;text-align:right">'+s.score+'%</span>'
         +'</div>'
         +'<div style="height:3px;background:rgba(255,255,255,0.1);border-radius:2px">'
@@ -4953,28 +4956,43 @@ function buildDependencySection(countryName, d) {
     });
   }
 
-  html += '<div id="supplier-detail-box" style="display:none;margin-top:8px;padding:8px;background:rgba(255,255,255,0.04);border-radius:6px;border:1px solid var(--border)"></div>';
   html += '</div>';
   return html;
 }
 
-// Appelé au clic sur un pays fournisseur dans la fiche
-function showSupplierDomains(supplier, importer, domains) {
-  var box = document.getElementById('supplier-detail-box');
-  if (!box) return;
+// Même pattern que showCrisisDetail : remplace panel.innerHTML + bouton retour
+function showSupplierDetail(idx) {
+  var s = _depSupplierCache[idx];
+  if (!s) return;
+  var panel = document.getElementById('panel-inner');
   var DOMAIN_ICONS = {'Énergie':'⚡','Terres rares':'💎','Céréales':'🌾','Métaux':'🏗️','Automobile':'🚗','Aviation':'✈️','Naval':'⚓','Technologie':'💻'};
-  var rows = Object.keys(domains).map(function(dom) {
-    var pct = Math.round(domains[dom] * 100);
+
+  var rows = Object.keys(s.domains).map(function(dom) {
+    var pct = Math.round(s.domains[dom] * 100);
     if (pct < 1) return '';
     var col = pct > 60 ? '#f85149' : pct > 30 ? '#ffa726' : pct > 10 ? '#fbbf24' : '#58a6ff';
     var icon = DOMAIN_ICONS[dom] || '•';
-    return '<div style="display:flex;justify-content:space-between;font-size:11px;padding:2px 0">'
+    return '<div style="margin:5px 0">'
+      +'<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px">'
       +'<span>'+icon+' '+dom+'</span>'
       +'<span style="color:'+col+';font-weight:600">'+pct+'%</span>'
-      +'</div>';
+      +'</div>'
+      +'<div style="height:3px;background:rgba(255,255,255,0.1);border-radius:2px">'
+      +'<div style="height:3px;width:'+Math.min(pct,100)+'%;background:'+col+';border-radius:2px"></div>'
+      +'</div></div>';
   }).filter(Boolean).join('');
-  box.innerHTML = '<div style="font-size:11px;font-weight:600;color:var(--accent);margin-bottom:6px">Dépendance envers '+supplier+' :</div>'+rows;
-  box.style.display = 'block';
+
+  var backFn = _depImporterKey ? 'renderCountryPanel(\''+_depImporterKey+'\',true)' : 'renderPanel()';
+
+  panel.innerHTML = '<div style="padding:4px 0 10px">'
+    +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">'
+    +'<button onclick="'+backFn+'" style="background:none;border:1px solid var(--border);border-radius:4px;color:var(--text-secondary);cursor:pointer;padding:3px 8px;font-size:11px">← Retour</button>'
+    +'<div style="font-weight:600;color:var(--text-primary)">'+s.supplier+'</div>'
+    +'</div>'
+    +'<div style="font-size:10px;color:var(--text-secondary);margin-bottom:10px">Dépendance de <b style="color:var(--text-primary)">'+(_depImporterKey&&ENERGY_DATA[_depImporterKey]?ENERGY_DATA[_depImporterKey].name:'?')+'</b> envers ce pays :</div>'
+    +'<div style="font-size:10px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">Par domaine</div>'
+    +rows
+    +'</div>';
 }
 
 function saveCountry(key) {
