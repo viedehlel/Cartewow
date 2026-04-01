@@ -254,6 +254,30 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-dark); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* PANEL TABS */
+.panel-tabs { display:flex; gap:2px; padding:0 0 10px; border-bottom:1px solid var(--border); margin-bottom:12px; }
+.panel-tab {
+  flex:1; border:none; border-radius:6px; padding:5px 4px;
+  background:transparent; color:var(--text-secondary);
+  font-size:11px; font-weight:500; cursor:pointer;
+  transition:all .15s; white-space:nowrap;
+}
+.panel-tab:hover { background:var(--bg-panel-light); color:var(--text-primary); }
+.panel-tab.active { background:var(--bg-panel-light); color:var(--text-primary); font-weight:600; border-bottom:2px solid var(--accent); border-radius:6px 6px 0 0; }
+.panel-tab.crisis-tab.active { border-bottom-color:#f85149; color:#f85149; }
+.panel-tab-content { display:none; }
+.panel-tab-content.active { display:block; }
+
+/* SCORE BADGE */
+.dep-score-badge {
+  display:flex; align-items:center; gap:12px;
+  background:var(--bg-dark); border-radius:10px; padding:12px 14px;
+  border:1px solid var(--border); margin-bottom:10px;
+}
+.dep-score-number { font-size:36px; font-weight:800; line-height:1; }
+.dep-score-label { font-size:14px; font-weight:700; margin-bottom:2px; }
+.dep-score-sub { font-size:10px; color:var(--text-secondary); }
 </style>
 </head>
 <body>
@@ -3148,6 +3172,7 @@ const CHOKEPOINTS_DATA = [
 let map, activeMetrics = [], appMode = 'view';
 let selectedFeature = null;
 let crisisMode = false;
+let activePanelTab = 'dep'; // onglet actif du panel pays : 'dep' | 'prod' | 'flux' | 'crise'
 let blockedCountries = new Set();     // noms de pays bloqués
 let blockedChokepoints = new Set();   // ids de détroits bloqués
 let blockedInfra = new Set();         // ids d'infra bloquées (ex: "lng_Ras Laffan")
@@ -4673,17 +4698,11 @@ function renderCountryPanel(key, skipZoom) {
         </div>` : ''}` : ''}
       </div>`;
 
-    panel.innerHTML = `
-      <div class="feat-header" style="display:flex;align-items:flex-start;justify-content:space-between">
-        <div>
-          <div class="feat-title">${d.name} <span style="font-size:12px;color:var(--text-secondary)">(${d.iso3})</span></div>
-          <div class="feat-sub">Source: ${d.source_production}</div>
-          <div class="feat-sub" style="color:#58a6ff;font-weight:600">Données affichées : ${currentYear}${COUNTRY_HISTORY[key] ? '' : ' (données 2022)'}</div>
-        </div>
-        <button onclick="deselectCountry()" title="Fermer" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:18px;padding:0 4px;line-height:1;flex-shrink:0">×</button>
-      </div>
+    // Contenu onglet Dépendance
+    const tabDep = buildDependencySection(d.name, d);
 
-      <div class="info-section-title">Production</div>
+    // Contenu onglet Production
+    const tabProd = `
       <div class="metrics-grid">
         <div class="metric-card oil"><div class="mc-label">Pétrole</div><div class="mc-value">${fmtNum(d.oil_prod_mbd)}</div><div class="mc-unit">Mb/j</div></div>
         <div class="metric-card gas"><div class="mc-label">Gaz</div><div class="mc-value">${fmtNum(d.gas_prod_bcm)}</div><div class="mc-unit">Gcm/an</div></div>
@@ -4691,92 +4710,78 @@ function renderCountryPanel(key, skipZoom) {
         <div class="metric-card coal"><div class="mc-label">Charbon</div><div class="mc-value">${fmtNum(d.coal_mt)}</div><div class="mc-unit">MT</div></div>
         <div class="metric-card renew"><div class="mc-label">Renouvelables</div><div class="mc-value">${fmtNum(Math.round(d.renewables_gw * 2.2))}</div><div class="mc-unit">TWh/an</div></div>
       </div>
-
       ${bilanHtml}
-
-      ${buildDependencySection(d.name, d)}
-
       ${buildCerealByTypeHtml(d.iso3, currentYear)}
-
       ${buildRefinedMetalsHtml(d.iso3, currentYear)}
-
       ${(d.auto_prod_therm_M || d.auto_prod_ev_M || d.auto_sales_M) ? `<div class="info-section">
         <div class="info-section-title">🚗 Automobile</div>
         ${d.auto_prod_therm_M ? `<div class="info-row"><span class="ir-label">Prod. thermique</span><span class="ir-value">${fmtNum(d.auto_prod_therm_M)} M/an</span></div>` : ''}
         ${d.auto_prod_ev_M ? `<div class="info-row"><span class="ir-label">Prod. électrique</span><span class="ir-value">${fmtNum(d.auto_prod_ev_M)} M/an</span></div>` : ''}
         ${d.auto_sales_M ? `<div class="info-row"><span class="ir-label">Ventes totales</span><span class="ir-value">${fmtNum(d.auto_sales_M)} M/an</span></div>` : ''}
       </div>` : ''}
-
       ${(d.aero_civil_units || d.aero_mil_units) ? `<div class="info-section">
         <div class="info-section-title">✈️ Aéronautique</div>
         ${d.aero_civil_units ? `<div class="info-row"><span class="ir-label">Avions civils livrés</span><span class="ir-value">${d.aero_civil_units} u/an</span></div>` : ''}
         ${d.aero_mil_units ? `<div class="info-row"><span class="ir-label">Avions militaires</span><span class="ir-value">${d.aero_mil_units} u/an</span></div>` : ''}
       </div>` : ''}
-
       ${(d.naval_civil_kgt || d.naval_mil_kt) ? `<div class="info-section">
         <div class="info-section-title">🚢 Naval</div>
         ${d.naval_civil_kgt ? `<div class="info-row"><span class="ir-label">Construction civile</span><span class="ir-value">${d.naval_civil_kgt.toLocaleString('fr-FR')} kCGT/an</span></div>` : ''}
         ${d.naval_mil_kt ? `<div class="info-row"><span class="ir-label">Construction militaire</span><span class="ir-value">${d.naval_mil_kt} kt dépl./an</span></div>` : ''}
       </div>` : ''}
-
-      ${flowsOutGas.length ? `<div class="info-section">
-        <div class="info-section-title">Exports gaz / GNL (${flowsOutGas.length})</div>
-        ${flowRows(flowsOutGas)}
-      </div>` : ''}
-      ${flowsOutOil.length ? `<div class="info-section">
-        <div class="info-section-title">Exports pétrole (${flowsOutOil.length})</div>
-        ${flowRows(flowsOutOil)}
-      </div>` : ''}
-      ${flowsInGas.length ? `<div class="info-section">
-        <div class="info-section-title">Imports gaz / GNL (${flowsInGas.length})</div>
-        ${flowRows(flowsInGas)}
-      </div>` : ''}
-      ${flowsInOil.length ? `<div class="info-section">
-        <div class="info-section-title">Imports pétrole (${flowsInOil.length})</div>
-        ${flowRows(flowsInOil)}
-      </div>` : ''}
-
-      ${pipes.length ? `<div class="info-section">
-        <div class="info-section-title">Pipelines liés (${pipes.length})</div>
-        ${pipes.map(p => `<div class="info-row"><span class="ir-label">${pipeStatusIcon(p.properties.status)} ${p.properties.name}</span><span class="ir-value">${p.properties.type === 'gas' ? (p.properties.capacity_bcm||'—')+' Gcm/an' : (p.properties.capacity_mbd||'—')+' Mb/j'}</span></div>`).join('')}
-      </div>` : ''}
-
-      ${(lngExp.length || lngImp.length) ? `<div class="info-section">
-        <div class="info-section-title">Terminaux GNL</div>
-        ${lngExp.map(t => `<div class="info-row"><span class="ir-label">🟠 ${t.name}</span><span class="ir-value">Export — ${t.capacity_mt} MT/an</span></div>`).join('')}
-        ${lngImp.map(t => `<div class="info-row"><span class="ir-label">🔵 ${t.name}</span><span class="ir-value">Import — ${t.capacity_mt} MT/an</span></div>`).join('')}
-      </div>` : ''}
-
-      ${nukes.length ? `<div class="info-section">
-        <div class="info-section-title">Centrales nucléaires</div>
-        ${nukes.map(n => `<div class="info-row"><span class="ir-label">⚛️ ${n.name}</span><span class="ir-value">${n.gw} GW — ${n.reactors} réacteurs — ${n.status}</span></div>`).join('')}
-      </div>` : ''}
-
-      ${fields.length ? `<div class="info-section">
-        <div class="info-section-title">Gisements</div>
-        ${fields.map(f => `<div class="info-row"><span class="ir-label">${f.type==='oil'?'🟤':'🔵'} ${f.name}</span><span class="ir-value">${f.production}</span></div>`).join('')}
-      </div>` : ''}
-
       ${(d.co2_mt || d.co2_per_capita || d.elec_price) ? `<div class="info-section">
         <div class="info-section-title">🌡️ Climat & Prix</div>
-        ${d.co2_mt ? `<div class="info-row">
-          <span class="ir-label">💨 CO2 énergie total</span>
-          <span class="ir-value" style="color:${d.co2_mt > 3000 ? '#f85149' : d.co2_mt > 800 ? '#ffa726' : 'inherit'}">${fmtNum(d.co2_mt)} Mt/an</span>
-        </div>` : ''}
-        ${d.co2_per_capita ? `<div class="info-row">
-          <span class="ir-label">👤 CO2 par habitant</span>
-          <span class="ir-value" style="color:${d.co2_per_capita > 15 ? '#f85149' : d.co2_per_capita > 8 ? '#ffa726' : 'inherit'}">${d.co2_per_capita} t/pers./an</span>
-        </div>` : ''}
-        ${d.elec_price ? `<div class="info-row">
-          <span class="ir-label">⚡ Prix électricité</span>
-          <span class="ir-value" style="color:${d.elec_price > 0.30 ? '#f85149' : d.elec_price > 0.18 ? '#ffa726' : '#3fb950'}">${d.elec_price.toFixed(3)} USD/kWh</span>
-        </div>` : ''}
+        ${d.co2_mt ? `<div class="info-row"><span class="ir-label">💨 CO2 énergie total</span><span class="ir-value" style="color:${d.co2_mt > 3000 ? '#f85149' : d.co2_mt > 800 ? '#ffa726' : 'inherit'}">${fmtNum(d.co2_mt)} Mt/an</span></div>` : ''}
+        ${d.co2_per_capita ? `<div class="info-row"><span class="ir-label">👤 CO2 par habitant</span><span class="ir-value" style="color:${d.co2_per_capita > 15 ? '#f85149' : d.co2_per_capita > 8 ? '#ffa726' : 'inherit'}">${d.co2_per_capita} t/pers./an</span></div>` : ''}
+        ${d.elec_price ? `<div class="info-row"><span class="ir-label">⚡ Prix électricité</span><span class="ir-value" style="color:${d.elec_price > 0.30 ? '#f85149' : d.elec_price > 0.18 ? '#ffa726' : '#3fb950'}">${d.elec_price.toFixed(3)} USD/kWh</span></div>` : ''}
       </div>` : ''}
+      ${d.notes ? `<div class="info-section"><div class="info-section-title">Notes</div><div class="notes-box">${d.notes}</div></div>` : ''}`;
 
-      ${d.notes ? `<div class="info-section">
-        <div class="info-section-title">Notes</div>
-        <div class="notes-box">${d.notes}</div>
-      </div>` : ''}`;
+    // Contenu onglet Flux
+    const tabFlux = `
+      ${flowsOutGas.length ? `<div class="info-section"><div class="info-section-title">Exports gaz / GNL (${flowsOutGas.length})</div>${flowRows(flowsOutGas)}</div>` : ''}
+      ${flowsOutOil.length ? `<div class="info-section"><div class="info-section-title">Exports pétrole (${flowsOutOil.length})</div>${flowRows(flowsOutOil)}</div>` : ''}
+      ${flowsInGas.length ? `<div class="info-section"><div class="info-section-title">Imports gaz / GNL (${flowsInGas.length})</div>${flowRows(flowsInGas)}</div>` : ''}
+      ${flowsInOil.length ? `<div class="info-section"><div class="info-section-title">Imports pétrole (${flowsInOil.length})</div>${flowRows(flowsInOil)}</div>` : ''}
+      ${pipes.length ? `<div class="info-section"><div class="info-section-title">Pipelines liés (${pipes.length})</div>${pipes.map(p => `<div class="info-row"><span class="ir-label">${pipeStatusIcon(p.properties.status)} ${p.properties.name}</span><span class="ir-value">${p.properties.type === 'gas' ? (p.properties.capacity_bcm||'—')+' Gcm/an' : (p.properties.capacity_mbd||'—')+' Mb/j'}</span></div>`).join('')}</div>` : ''}
+      ${(lngExp.length || lngImp.length) ? `<div class="info-section"><div class="info-section-title">Terminaux GNL</div>${lngExp.map(t => `<div class="info-row"><span class="ir-label">🟠 ${t.name}</span><span class="ir-value">Export — ${t.capacity_mt} MT/an</span></div>`).join('')}${lngImp.map(t => `<div class="info-row"><span class="ir-label">🔵 ${t.name}</span><span class="ir-value">Import — ${t.capacity_mt} MT/an</span></div>`).join('')}</div>` : ''}
+      ${nukes.length ? `<div class="info-section"><div class="info-section-title">Centrales nucléaires</div>${nukes.map(n => `<div class="info-row"><span class="ir-label">⚛️ ${n.name}</span><span class="ir-value">${n.gw} GW — ${n.reactors} réacteurs — ${n.status}</span></div>`).join('')}</div>` : ''}
+      ${fields.length ? `<div class="info-section"><div class="info-section-title">Gisements</div>${fields.map(f => `<div class="info-row"><span class="ir-label">${f.type==='oil'?'🟤':'🔵'} ${f.name}</span><span class="ir-value">${f.production}</span></div>`).join('')}</div>` : ''}
+      ${!flowsOutGas.length && !flowsOutOil.length && !flowsInGas.length && !flowsInOil.length && !pipes.length && !lngExp.length && !lngImp.length && !nukes.length && !fields.length
+        ? `<div class="panel-empty" style="padding:24px 0"><p style="font-size:12px">Aucun flux tracé pour ce pays</p></div>` : ''}`;
+
+    // Contenu onglet Crise
+    const tabCrise = crisisMode
+      ? `<div style="font-size:11px;color:var(--text-secondary);margin-bottom:10px">Mode crise actif — cliquez sur des pays/infrastructures sur la carte pour les bloquer.</div>
+         <button class="btn-secondary" onclick="showCrisisDetail('${key}')" style="width:100%;margin-bottom:6px">📊 Voir l'impact sur ${d.name}</button>
+         <button class="btn-secondary" onclick="toggleCrisisMode()" style="width:100%;background:#f85149;border-color:#f85149;color:#fff">Quitter le mode crise</button>`
+      : `<div style="text-align:center;padding:24px 0">
+           <div style="font-size:28px;margin-bottom:8px">🚨</div>
+           <div style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">Activez le mode crise pour simuler des perturbations géopolitiques sur ${d.name}</div>
+           <button class="btn-secondary" onclick="toggleCrisisMode()" style="width:100%">Activer le mode crise</button>
+         </div>`;
+
+    const t = activePanelTab;
+    panel.innerHTML = `
+      <div class="feat-header" style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px">
+        <div>
+          <div class="feat-title">${d.name} <span style="font-size:12px;color:var(--text-secondary)">(${d.iso3})</span></div>
+          <div class="feat-sub" style="color:#58a6ff">${currentYear}${COUNTRY_HISTORY[key] ? '' : ' · données 2022'}</div>
+        </div>
+        <button onclick="deselectCountry()" title="Fermer" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:18px;padding:0 4px;line-height:1;flex-shrink:0">×</button>
+      </div>
+
+      <div class="panel-tabs">
+        <button class="panel-tab${t==='dep'?' active':''}" onclick="switchPanelTab('dep','${key}')">🔗 Dépendance</button>
+        <button class="panel-tab${t==='prod'?' active':''}" onclick="switchPanelTab('prod','${key}')">🏭 Production</button>
+        <button class="panel-tab${t==='flux'?' active':''}" onclick="switchPanelTab('flux','${key}')">🔀 Flux</button>
+        <button class="panel-tab crisis-tab${t==='crise'?' active':''}${crisisMode?' active':''}" onclick="switchPanelTab('crise','${key}')">🚨 Crise</button>
+      </div>
+
+      <div id="ptab-dep" class="panel-tab-content${t==='dep'?' active':''}">${tabDep}</div>
+      <div id="ptab-prod" class="panel-tab-content${t==='prod'?' active':''}">${tabProd}</div>
+      <div id="ptab-flux" class="panel-tab-content${t==='flux'?' active':''}">${tabFlux}</div>
+      <div id="ptab-crise" class="panel-tab-content${t==='crise'?' active':''}">${tabCrise}</div>`;
   } else {
     // EDIT MODE
     panel.innerHTML = `
@@ -4957,17 +4962,18 @@ function buildDependencySection(countryName, d) {
   Object.keys(ENERGY_DATA).forEach(function(k){ if(ENERGY_DATA[k].name===countryName) _depImporterKey=k; });
 
   var scoreColor = cached.score < 20 ? '#34d399' : cached.score < 40 ? '#84cc16' : cached.score < 60 ? '#fbbf24' : cached.score < 75 ? '#ffa726' : '#f85149';
+  var scoreEmoji = cached.score < 20 ? '🟢' : cached.score < 40 ? '🟡' : cached.score < 60 ? '🟠' : cached.score < 75 ? '🔴' : '🚨';
   var scoreLabel = cached.score < 20 ? 'Très indépendant' : cached.score < 40 ? 'Faible dépendance' : cached.score < 60 ? 'Dépendance modérée' : cached.score < 75 ? 'Forte dépendance' : 'Dépendance critique';
 
-  var html = '<div class="info-section">'
-    +'<div class="info-section-title">🔗 Score de Dépendance</div>'
-    +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">'
-    +'<div style="font-size:28px;font-weight:700;color:'+scoreColor+'">'+cached.score+'</div>'
-    +'<div><div style="font-size:12px;font-weight:600;color:'+scoreColor+'">'+scoreLabel+'</div>'
-    +'<div style="font-size:10px;color:var(--text-secondary)">/100 — imports/(prod+imports)</div></div>'
+  var html = '<div class="dep-score-badge">'
+    +'<div class="dep-score-number" style="color:'+scoreColor+'">'+cached.score+'</div>'
+    +'<div style="flex:1">'
+    +'<div class="dep-score-label" style="color:'+scoreColor+'">'+scoreEmoji+' '+scoreLabel+'</div>'
+    +'<div class="dep-score-sub">/100 · Formule BMAD — imports/(prod+imports)</div>'
     +'</div>'
-    +'<div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:6px">'
-    +'<div style="height:4px;width:'+Math.min(cached.score,100)+'%;background:'+scoreColor+';border-radius:2px"></div></div>';
+    +'</div>'
+    +'<div style="height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin-bottom:10px">'
+    +'<div style="height:4px;width:'+Math.min(cached.score,100)+'%;background:'+scoreColor+';border-radius:2px;transition:width .4s ease"></div></div>';
 
   // Description contextuelle : top fournisseur + domaine principal
   if (_depSupplierCache.length > 0) {
@@ -7743,6 +7749,20 @@ function updateDepScoreForYear(year) {
         +'<span style="color:'+col+';font-weight:600">'+sc+'/100</span></div>';
     }).join('');
   }
+}
+
+function switchPanelTab(tab, key) {
+  activePanelTab = tab;
+  // Swap active class on buttons
+  document.querySelectorAll('.panel-tab').forEach(function(btn) {
+    btn.classList.remove('active');
+  });
+  var allTabs = document.querySelectorAll('.panel-tab-content');
+  allTabs.forEach(function(el) { el.classList.remove('active'); });
+  var activeBtn = document.querySelector('.panel-tab[onclick*="\''+tab+'\'"]');
+  if (activeBtn) activeBtn.classList.add('active');
+  var activeContent = document.getElementById('ptab-'+tab);
+  if (activeContent) activeContent.classList.add('active');
 }
 
 function selectCountryByIso3(iso3) {
