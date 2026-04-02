@@ -637,12 +637,17 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
           <span class="layer-group-arrow" id="arr-grp-tech">&#9658;</span>
         </div>
         <div class="layer-group-body collapsed" id="grp-tech">
+          <div style="font-size:10px;color:#8b949e;margin-bottom:6px">Source : UN Comtrade HS 8517/8542/8457-66</div>
           <div class="toggle-row">
-            <span class="toggle-label"><span class="toggle-dot" style="background:#818cf8"></span> Semiconducteurs</span>
-            <label class="toggle-switch"><input type="checkbox" id="tog-tech-electronics" onchange="toggleTechType('electronics')"><span class="toggle-slider"></span></label>
+            <span class="toggle-label"><span class="toggle-dot" style="background:#818cf8"></span> Semi-conducteurs (HS 8542)</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-tech-semiconductors" onchange="toggleTechType('semiconductors')"><span class="toggle-slider"></span></label>
           </div>
-          <div class="toggle-row">
-            <span class="toggle-label"><span class="toggle-dot" style="background:#a78bfa"></span> Machines industrielles</span>
+          <div class="toggle-row" style="margin-top:4px">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#06b6d4"></span> Équip. télécom (HS 8517)</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-tech-telecom" onchange="toggleTechType('telecom')"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row" style="margin-top:4px">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#a78bfa"></span> Machines-outils (HS 8457-66)</span>
             <label class="toggle-switch"><input type="checkbox" id="tog-tech-machinery" onchange="toggleTechType('machinery')"><span class="toggle-slider"></span></label>
           </div>
         </div>
@@ -3193,7 +3198,7 @@ let layers = {
   re_mines: null, re_processing: null, re_magnets: null, re_flows: null,
   flows_auto: null, aero_sites: null, auto_sites: null, naval_yards: null, supply_links: null,
 };
-let layerVis = { countries:true, gas:false, oil:false, flows_gas:false, flows_lng:false, flows_oil:false, lng:false, nuclear:false, fields:false, operators:false, re_mines:false, re_processing:false, re_magnets:false, re_flows:false, flows_auto:false, aero_sites:false, auto_sites:false, naval_yards:false, submarine_cables:false, arms_flows:false, cereal_wheat:false, cereal_soy:false, cereal_corn:false, cereal_rice:false, tech_electronics:false, tech_machinery:false, finance_fdi:false, metal_copper:false, metal_lithium:false, metal_cobalt:false, metal_nickel:false, metal_iron_ore:false, metal_copper_ref:false, metal_steel:false, metal_aluminum:false, metal_nickel_ref:false, migration_flows:false, sanctions:false, sovereign_debt:false };
+let layerVis = { countries:true, gas:false, oil:false, flows_gas:false, flows_lng:false, flows_oil:false, lng:false, nuclear:false, fields:false, operators:false, re_mines:false, re_processing:false, re_magnets:false, re_flows:false, flows_auto:false, aero_sites:false, auto_sites:false, naval_yards:false, submarine_cables:false, arms_flows:false, cereal_wheat:false, cereal_soy:false, cereal_corn:false, cereal_rice:false, tech_semiconductors:false, tech_telecom:false, tech_machinery:false, finance_fdi:false, metal_copper:false, metal_lithium:false, metal_cobalt:false, metal_nickel:false, metal_iron_ore:false, metal_copper_ref:false, metal_steel:false, metal_aluminum:false, metal_nickel_ref:false, migration_flows:false, sanctions:false, sovereign_debt:false };
 let aeroTierVis = { oem:true, t1:true, t2:true, t3:true };
 let autoTierVis = { oem:true, t1:true, t2:true, t3:true };
 let worldGeoJSON = null;
@@ -7866,9 +7871,9 @@ function rebuildCerealFlowsLayer() {
 var TECH_FLOWS = [];
 var techFlowsLayerItems = [];
 
-const TECH_COLORS = { electronics:'#818cf8', machinery:'#a78bfa' };
-const TECH_LABELS = { electronics:'Semiconducteurs', machinery:'Machines industrielles' };
-const TECH_UNITS  = { electronics:'Md$', machinery:'Md$' };
+const TECH_COLORS = { semiconductors:'#818cf8', machinery:'#a78bfa', telecom:'#06b6d4' };
+const TECH_LABELS = { semiconductors:'Semi-conducteurs (HS 8542)', machinery:'Machines-outils (HS 8457-66)', telecom:'Équipements télécom (HS 8517)' };
+const TECH_UNITS  = { semiconductors:'Md$', machinery:'Md$', telecom:'Md$' };
 
 function getTechFlowValue(fl, year) {
   if (!fl.hist) return fl.value || 0;
@@ -7886,7 +7891,7 @@ function getTechFlowValue(fl, year) {
 }
 
 function buildTechFlowsLayer(typeFilter) {
-  var activeTypes = typeFilter ? [typeFilter] : ['electronics','machinery'].filter(function(t){ return layerVis['tech_'+t]; });
+  var activeTypes = typeFilter ? [typeFilter] : ['semiconductors','telecom','machinery'].filter(function(t){ return layerVis['tech_'+t]; });
   if (!activeTypes.length) return;
   var year = typeof currentYear !== 'undefined' ? currentYear : 2022;
   var filteredFlows = TECH_FLOWS.filter(function(f){ return activeTypes.indexOf(f.type) >= 0; });
@@ -7936,7 +7941,7 @@ function toggleTechType(type) {
 }
 
 function rebuildTechFlowsLayer() {
-  var anyTech=['electronics','machinery'].some(function(t){return layerVis['tech_'+t];});
+  var anyTech=['semiconductors','telecom','machinery'].some(function(t){return layerVis['tech_'+t];});
   if (!anyTech) return;
   techFlowsLayerItems.forEach(function(item){try{map.removeLayer(item);}catch(e){}});
   techFlowsLayerItems.length=0;
@@ -7955,7 +7960,7 @@ function loadTechFlowsData() {
         return {from:f.from,fromC:f.fromC,to:f.to,toC:f.toC,type:f.type,hist:f.hist||{}};
       });
       console.log('Loaded '+TECH_FLOWS.length+' tech flows ('+json.updated+')');
-      var anyTech=['electronics','machinery'].some(function(t){return layerVis['tech_'+t];});
+      var anyTech=['semiconductors','telecom','machinery'].some(function(t){return layerVis['tech_'+t];});
       if (anyTech) rebuildTechFlowsLayer();
     })
     .catch(function(e){console.warn('Could not load tech_flows.json:',e);});

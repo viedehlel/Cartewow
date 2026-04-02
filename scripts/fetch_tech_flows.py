@@ -8,8 +8,9 @@ Fonctionnement :
   - Retry automatique sur 429 (attente exponentielle : 60s, 120s, 180s)
 
 Types couverts (codes HS) :
-  8542 — Circuits intégrés / semiconducteurs  (electronics)
-  8458+8462+8466 — Tours + Presses + Parties machines-outils (machinery)
+  8542 — Circuits intégrés / semiconducteurs  (semiconductors)
+  8517 — Équipements télécom (routeurs, téléphones, switchs)  (telecom)
+  8457+8458+8462+8466 — Centres usinage + Tours + Presses + Parties  (machinery)
 
 Source : https://comtradeapi.un.org  (nécessite COMTRADE_KEY)
 """
@@ -74,30 +75,36 @@ COORDS = {
 }
 
 EXPORTERS = {
-    "electronics": ["156","410","158","392","528","276","840","702","458"],
-    #                CHN  KOR  TWN  JPN  NLD  DEU  USA  SGP  MYS
-    "machinery":   ["276","840","392","156","410","392","380","756"],
-    #                DEU  USA  JPN  CHN  KOR  JPN  ITA  CHE
+    "semiconductors": ["156","410","158","392","528","276","840","702","458"],
+    #                   CHN  KOR  TWN  JPN  NLD  DEU  USA  SGP  MYS
+    "machinery":      ["276","840","392","156","410","380","756"],
+    #                   DEU  USA  JPN  CHN  KOR  ITA  CHE
+    "telecom":        ["156","840","410","392","276","702","158","246"],
+    #                   CHN  USA  KOR  JPN  DEU  SGP  TWN  FIN
 }
 
 HS_CODES = {
-    "electronics": "8542",              # circuits intégrés / semiconducteurs
-    "machinery":   "8457,8458,8462,8466",  # centres usinage + tours + presses + parties
+    "semiconductors": "8542",              # circuits intégrés / semiconducteurs
+    "machinery":      "8457,8458,8462,8466",  # centres usinage + tours + presses + parties
+    "telecom":        "8517",              # appareils télécoms (routeurs, téléphones, switchs)
 }
 
 TYPE_COLORS = {
-    "electronics": "#818cf8",  # indigo
-    "machinery":   "#a78bfa",  # violet
+    "semiconductors": "#818cf8",  # indigo
+    "machinery":      "#a78bfa",  # violet
+    "telecom":        "#06b6d4",  # cyan
 }
 
 UNITS = {
-    "electronics": "Md$",
-    "machinery":   "Md$",
+    "semiconductors": "Md$",
+    "machinery":      "Md$",
+    "telecom":        "Md$",
 }
 
 THRESHOLDS = {
-    "electronics": 500_000_000,  # 500 M USD — semis sont de gros volumes
-    "machinery":   100_000_000,  # 100 M USD — machines-outils plus niches
+    "semiconductors": 500_000_000,  # 500 M USD — semis sont de gros volumes
+    "telecom":        300_000_000,  # 300 M USD — équipements télécom
+    "machinery":      100_000_000,  # 100 M USD — machines-outils plus niches
 }
 DIVISOR = 1_000_000_000  # → milliards USD
 
