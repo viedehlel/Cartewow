@@ -560,13 +560,21 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
       <!-- GROUPE DÉFENSE -->
       <div class="layer-group">
         <div class="layer-group-header" onclick="toggleGroup('grp-defense')">
-          <span class="layer-group-title">⚔️ Défense</span>
+          <span class="layer-group-title">⚔️ Défense &amp; Géopolitique</span>
           <span class="layer-group-arrow" id="arr-grp-defense">▶</span>
         </div>
         <div class="layer-group-body collapsed" id="grp-defense">
           <div class="toggle-row">
             <span class="toggle-label"><span class="toggle-dot" style="background:#e63946"></span>Ventes d'armes (SIPRI)</span>
             <label class="toggle-switch"><input type="checkbox" id="tog-arms-flows" onchange="toggleArmsFlowsLayer()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row" style="margin-top:4px">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#ff4444"></span>Sanctions actives</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-sanctions" onchange="toggleSanctionsLayer()"><span class="toggle-slider"></span></label>
+          </div>
+          <div class="toggle-row" style="margin-top:4px">
+            <span class="toggle-label"><span class="toggle-dot" style="background:#f59e0b"></span>Dette souveraine</span>
+            <label class="toggle-switch"><input type="checkbox" id="tog-sovereign-debt" onchange="toggleSovereignDebtLayer()"><span class="toggle-slider"></span></label>
           </div>
         </div>
       </div>
@@ -3185,7 +3193,7 @@ let layers = {
   re_mines: null, re_processing: null, re_magnets: null, re_flows: null,
   flows_auto: null, aero_sites: null, auto_sites: null, naval_yards: null, supply_links: null,
 };
-let layerVis = { countries:true, gas:false, oil:false, flows_gas:false, flows_lng:false, flows_oil:false, lng:false, nuclear:false, fields:false, operators:false, re_mines:false, re_processing:false, re_magnets:false, re_flows:false, flows_auto:false, aero_sites:false, auto_sites:false, naval_yards:false, submarine_cables:false, arms_flows:false, cereal_wheat:false, cereal_soy:false, cereal_corn:false, cereal_rice:false, tech_electronics:false, tech_machinery:false, finance_fdi:false, metal_copper:false, metal_lithium:false, metal_cobalt:false, metal_nickel:false, metal_iron_ore:false, metal_copper_ref:false, metal_steel:false, metal_aluminum:false, metal_nickel_ref:false, migration_flows:false };
+let layerVis = { countries:true, gas:false, oil:false, flows_gas:false, flows_lng:false, flows_oil:false, lng:false, nuclear:false, fields:false, operators:false, re_mines:false, re_processing:false, re_magnets:false, re_flows:false, flows_auto:false, aero_sites:false, auto_sites:false, naval_yards:false, submarine_cables:false, arms_flows:false, cereal_wheat:false, cereal_soy:false, cereal_corn:false, cereal_rice:false, tech_electronics:false, tech_machinery:false, finance_fdi:false, metal_copper:false, metal_lithium:false, metal_cobalt:false, metal_nickel:false, metal_iron_ore:false, metal_copper_ref:false, metal_steel:false, metal_aluminum:false, metal_nickel_ref:false, migration_flows:false, sanctions:false, sovereign_debt:false };
 let aeroTierVis = { oem:true, t1:true, t2:true, t3:true };
 let autoTierVis = { oem:true, t1:true, t2:true, t3:true };
 let worldGeoJSON = null;
@@ -4598,6 +4606,8 @@ function renderPanel() {
     renderFieldPanel(selectedFeature.data);
   } else if (selectedFeature.type === 'submarine_cable') {
     renderSubmarineCablePanel(selectedFeature.data);
+  } else if (selectedFeature.type === 'sanctions') {
+    renderSanctionsPanel(selectedFeature.iso3, selectedFeature.data, selectedFeature.name);
   }
 }
 
@@ -4738,6 +4748,7 @@ function renderCountryPanel(key, skipZoom) {
       ${d.notes ? `<div class="info-section"><div class="info-section-title">Notes</div><div class="notes-box">${d.notes}</div></div>` : ''}`;
 
     // Contenu onglet Flux
+    const geopoliticsHtml = buildGeopoliticsSection(d.iso3);
     const tabFlux = `
       ${flowsOutGas.length ? `<div class="info-section"><div class="info-section-title">Exports gaz / GNL (${flowsOutGas.length})</div>${flowRows(flowsOutGas)}</div>` : ''}
       ${flowsOutOil.length ? `<div class="info-section"><div class="info-section-title">Exports pétrole (${flowsOutOil.length})</div>${flowRows(flowsOutOil)}</div>` : ''}
@@ -4747,7 +4758,8 @@ function renderCountryPanel(key, skipZoom) {
       ${(lngExp.length || lngImp.length) ? `<div class="info-section"><div class="info-section-title">Terminaux GNL</div>${lngExp.map(t => `<div class="info-row"><span class="ir-label">🟠 ${t.name}</span><span class="ir-value">Export — ${t.capacity_mt} MT/an</span></div>`).join('')}${lngImp.map(t => `<div class="info-row"><span class="ir-label">🔵 ${t.name}</span><span class="ir-value">Import — ${t.capacity_mt} MT/an</span></div>`).join('')}</div>` : ''}
       ${nukes.length ? `<div class="info-section"><div class="info-section-title">Centrales nucléaires</div>${nukes.map(n => `<div class="info-row"><span class="ir-label">⚛️ ${n.name}</span><span class="ir-value">${n.gw} GW — ${n.reactors} réacteurs — ${n.status}</span></div>`).join('')}</div>` : ''}
       ${fields.length ? `<div class="info-section"><div class="info-section-title">Gisements</div>${fields.map(f => `<div class="info-row"><span class="ir-label">${f.type==='oil'?'🟤':'🔵'} ${f.name}</span><span class="ir-value">${f.production}</span></div>`).join('')}</div>` : ''}
-      ${!flowsOutGas.length && !flowsOutOil.length && !flowsInGas.length && !flowsInOil.length && !pipes.length && !lngExp.length && !lngImp.length && !nukes.length && !fields.length
+      ${geopoliticsHtml}
+      ${!flowsOutGas.length && !flowsOutOil.length && !flowsInGas.length && !flowsInOil.length && !pipes.length && !lngExp.length && !lngImp.length && !nukes.length && !fields.length && !geopoliticsHtml
         ? `<div class="panel-empty" style="padding:24px 0"><p style="font-size:12px">Aucun flux tracé pour ce pays</p></div>` : ''}`;
 
     // Contenu onglet Crise — utilise une fonction globale pour éviter le key stale
@@ -5035,7 +5047,16 @@ function buildDependencySection(countryName, d) {
   var scoreEmoji = cached.score < 20 ? '🟢' : cached.score < 40 ? '🟡' : cached.score < 60 ? '🟠' : cached.score < 75 ? '🔴' : '🚨';
   var scoreLabel = cached.score < 20 ? 'Très indépendant' : cached.score < 40 ? 'Faible dépendance' : cached.score < 60 ? 'Dépendance modérée' : cached.score < 75 ? 'Forte dépendance' : 'Dépendance critique';
 
-  var html = '<div class="dep-score-badge">'
+  var sanctionBadge = '';
+  if (cached.sanctionMult && cached.sanctionMult > 1) {
+    var sanctions = getSanctionsForCountry(iso3);
+    if (sanctions.asTarget.length) {
+      sanctionBadge = '<div style="display:inline-block;background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.4);border-radius:4px;padding:2px 7px;font-size:10px;color:#f85149;margin-bottom:8px">⛔ Sanctions actives — score amplifié ×'+cached.sanctionMult.toFixed(2)+'</div>';
+    }
+  }
+
+  var html = sanctionBadge
+    +'<div class="dep-score-badge">'
     +'<div class="dep-score-number" style="color:'+scoreColor+'">'+cached.score+'</div>'
     +'<div style="flex:1">'
     +'<div class="dep-score-label" style="color:'+scoreColor+'">'+scoreEmoji+' '+scoreLabel+'</div>'
@@ -7158,6 +7179,101 @@ var MIGRATION_PROD_DATA = {
   }
 };
 
+// ============================================================
+// SANCTIONS DATA — régimes de sanctions actifs (statique)
+// Sources : OFAC (USA), UE, ONU, SWIFT
+// severity : 0-1 (1 = embargo total, 0.5 = sanctions sectorielles)
+// ============================================================
+const SANCTIONS_DATA = [
+  // ── USA ──
+  { sanctioner_iso:"USA", target_iso:"RUS", since:2022, scope:["finance","energie","tech","defense"], severity:0.85, label:"CAATSA + Executive Orders post-Ukraine" },
+  { sanctioner_iso:"USA", target_iso:"IRN", since:1979, scope:["finance","energie","commerce"], severity:0.95, label:"JCPOA collapse + OFAC embargo" },
+  { sanctioner_iso:"USA", target_iso:"PRK", since:2006, scope:["finance","commerce","tech"], severity:0.95, label:"Embargo ONU + sanctions bilatérales" },
+  { sanctioner_iso:"USA", target_iso:"CUB", since:1962, scope:["commerce","finance"], severity:0.80, label:"Helms-Burton Act — embargo historique" },
+  { sanctioner_iso:"USA", target_iso:"SYR", since:2011, scope:["finance","commerce","defense"], severity:0.85, label:"Syria Accountability Act + Caesar Act" },
+  { sanctioner_iso:"USA", target_iso:"VEN", since:2017, scope:["finance","energie"], severity:0.70, label:"Sanctions pétrole + gel avoirs PDVSA" },
+  { sanctioner_iso:"USA", target_iso:"BLR", since:2020, scope:["finance","tech"], severity:0.60, label:"BELAACT — post-détournement Ryanair" },
+  { sanctioner_iso:"USA", target_iso:"MMR", since:2021, scope:["defense","finance"], severity:0.55, label:"Burma Act — post-coup militaire 2021" },
+  { sanctioner_iso:"USA", target_iso:"AFG", since:2001, scope:["finance","commerce"], severity:0.50, label:"Gel avoirs Banque centrale + sanctions Taliban" },
+  { sanctioner_iso:"USA", target_iso:"SDN", since:1997, scope:["finance","commerce"], severity:0.55, label:"Sanctions levées partiellement 2017, reprises 2023" },
+  // ── UE ──
+  { sanctioner_iso:"EU", target_iso:"RUS", since:2022, scope:["finance","energie","tech","defense"], severity:0.80, label:"Paquets de sanctions I-XII — gel avoirs, SWIFT" },
+  { sanctioner_iso:"EU", target_iso:"IRN", since:2012, scope:["finance","energie"], severity:0.70, label:"Embargo pétrolier + gel avoirs IRGC" },
+  { sanctioner_iso:"EU", target_iso:"BLR", since:2020, scope:["finance","transport"], severity:0.55, label:"Sanctions post-élections frauduleuses 2020" },
+  { sanctioner_iso:"EU", target_iso:"SYR", since:2011, scope:["finance","commerce","defense"], severity:0.80, label:"Embargo armes + gel avoirs Assad" },
+  { sanctioner_iso:"EU", target_iso:"MMR", since:2021, scope:["defense","finance"], severity:0.50, label:"Sanctions post-coup militaire 2021" },
+  { sanctioner_iso:"EU", target_iso:"ZWE", since:2002, scope:["finance"], severity:0.35, label:"Sanctions partielles levées progressivement" },
+  // ── ONU ──
+  { sanctioner_iso:"UN", target_iso:"PRK", since:2006, scope:["commerce","defense","finance"], severity:0.90, label:"Résolutions 1718, 2270, 2375 — armes + luxe" },
+  { sanctioner_iso:"UN", target_iso:"SOM", since:1992, scope:["defense"], severity:0.40, label:"Embargo armes — partiellement suspendu" },
+  { sanctioner_iso:"UN", target_iso:"LBY", since:2011, scope:["defense","finance"], severity:0.45, label:"Résolution 1970 — gel avoirs Kadhafi" },
+  { sanctioner_iso:"UN", target_iso:"CAF", since:2013, scope:["defense"], severity:0.40, label:"Embargo armes RCA" },
+  { sanctioner_iso:"UN", target_iso:"SDN", since:2005, scope:["defense"], severity:0.40, label:"Résolution 1591 — Darfour" },
+  // ── GBR (post-Brexit) ──
+  { sanctioner_iso:"GBR", target_iso:"RUS", since:2022, scope:["finance","energie","tech"], severity:0.78, label:"UK Russia (Sanctions) Regulations 2022" },
+  { sanctioner_iso:"GBR", target_iso:"IRN", since:2012, scope:["finance","energie"], severity:0.68, label:"Sanctions UK alignées sur UE" },
+  // ── Russie ──
+  { sanctioner_iso:"RUS", target_iso:"UKR", since:2022, scope:["energie","commerce"], severity:0.80, label:"Coupure gaz + embargo produits ukrainiens" },
+  { sanctioner_iso:"RUS", target_iso:"USA", since:2022, scope:["commerce","tech"], severity:0.30, label:"Contre-sanctions — produits agricoles, tech" },
+  { sanctioner_iso:"RUS", target_iso:"DEU", since:2022, scope:["energie"], severity:0.60, label:"Coupure Nord Stream — arme énergie" },
+];
+
+// ============================================================
+// SOVEREIGN DEBT FLOWS — dettes souveraines bilatérales
+// Sources : World Bank IDS, AidData (China), Paris Club
+// amount_bn : milliards USD
+// ============================================================
+const SOVEREIGN_DEBT_FLOWS = [
+  // ── Chine comme créancier ──
+  { creditor_iso:"CHN", debtor_iso:"AGO",  amount_bn:25.0, year:2022, note:"Prêts CDB/Exim Bank — pétrole comme garantie" },
+  { creditor_iso:"CHN", debtor_iso:"ETH",  amount_bn:13.7, year:2022, note:"Chemin de fer Addis-Djibouti, barrages, ports" },
+  { creditor_iso:"CHN", debtor_iso:"PAK",  amount_bn:30.0, year:2022, note:"CPEC — corridor économique Chine-Pakistan" },
+  { creditor_iso:"CHN", debtor_iso:"KEN",  amount_bn:9.0,  year:2022, note:"Standard Gauge Railway Mombasa-Nairobi" },
+  { creditor_iso:"CHN", debtor_iso:"ZMB",  amount_bn:6.0,  year:2022, note:"Infrastructure & mines — défaut 2020" },
+  { creditor_iso:"CHN", debtor_iso:"CMR",  amount_bn:5.5,  year:2022, note:"Prêts Exim Bank — infrastructure" },
+  { creditor_iso:"CHN", debtor_iso:"NGA",  amount_bn:4.3,  year:2022, note:"Chemin de fer Abuja-Kaduna" },
+  { creditor_iso:"CHN", debtor_iso:"MYS",  amount_bn:13.0, year:2022, note:"Pipeline côtier + ECRL" },
+  { creditor_iso:"CHN", debtor_iso:"IDN",  amount_bn:8.5,  year:2022, note:"Jakarta-Bandung high-speed rail" },
+  { creditor_iso:"CHN", debtor_iso:"SRB",  amount_bn:7.2,  year:2022, note:"Autoroute + centrale thermique Kostolac" },
+  { creditor_iso:"CHN", debtor_iso:"BGD",  amount_bn:6.5,  year:2022, note:"Pont Padma + centrales électriques" },
+  { creditor_iso:"CHN", debtor_iso:"MMR",  amount_bn:4.0,  year:2022, note:"Pipeline Kyaukpyu + port eau profonde" },
+  { creditor_iso:"CHN", debtor_iso:"MNG",  amount_bn:3.2,  year:2022, note:"Financement minier + infrastructure" },
+  { creditor_iso:"CHN", debtor_iso:"VEN",  amount_bn:19.0, year:2022, note:"Prêts contre pétrole — en défaut partiel" },
+  { creditor_iso:"CHN", debtor_iso:"ECU",  amount_bn:18.0, year:2022, note:"Prêts CDB contre pétrole brut" },
+  { creditor_iso:"CHN", debtor_iso:"ARG",  amount_bn:11.0, year:2022, note:"Swap yuan + prêts CDB" },
+  { creditor_iso:"CHN", debtor_iso:"COD",  amount_bn:2.5,  year:2022, note:"Mines cobalt/cuivre contre infrastructure" },
+  { creditor_iso:"CHN", debtor_iso:"MOZ",  amount_bn:2.2,  year:2022, note:"Prêts infrastructure + port Nacala" },
+  { creditor_iso:"CHN", debtor_iso:"TZA",  amount_bn:3.8,  year:2022, note:"Port Bagamoyo + chemin de fer" },
+  // ── FMI ──
+  { creditor_iso:"IMF", debtor_iso:"ARG",  amount_bn:44.0, year:2022, note:"Programme de stabilisation 2018-2022" },
+  { creditor_iso:"IMF", debtor_iso:"EGY",  amount_bn:20.0, year:2023, note:"Programme FMI post-crise change" },
+  { creditor_iso:"IMF", debtor_iso:"UKR",  amount_bn:15.6, year:2023, note:"Programme urgence guerre" },
+  { creditor_iso:"IMF", debtor_iso:"PAK",  amount_bn:6.5,  year:2023, note:"Programme Extended Fund Facility" },
+  { creditor_iso:"IMF", debtor_iso:"GHA",  amount_bn:3.0,  year:2023, note:"Programme post-défaut 2022" },
+  { creditor_iso:"IMF", debtor_iso:"TUN",  amount_bn:1.9,  year:2023, note:"Programme en négociation" },
+  { creditor_iso:"IMF", debtor_iso:"ZMB",  amount_bn:1.3,  year:2023, note:"Restructuration post-défaut" },
+  { creditor_iso:"IMF", debtor_iso:"SRB",  amount_bn:2.4,  year:2022, note:"Precautionary and Liquidity Line" },
+  { creditor_iso:"IMF", debtor_iso:"KEN",  amount_bn:2.3,  year:2023, note:"Extended Credit Facility" },
+  // ── USA / USAID ──
+  { creditor_iso:"USA", debtor_iso:"ISR",  amount_bn:3.8,  year:2022, note:"Aide militaire annuelle — FMF grants" },
+  { creditor_iso:"USA", debtor_iso:"EGY",  amount_bn:1.3,  year:2022, note:"Aide militaire FMF annuelle" },
+  { creditor_iso:"USA", debtor_iso:"UKR",  amount_bn:45.0, year:2023, note:"Assistance militaire + économique totale" },
+  { creditor_iso:"USA", debtor_iso:"JOR",  amount_bn:1.5,  year:2022, note:"Aide économique + sécuritaire" },
+  { creditor_iso:"USA", debtor_iso:"AFG",  amount_bn:0.0,  year:2022, note:"Gel avoirs 7 Md$ — Taliban au pouvoir" },
+  // ── Arabie Saoudite / Golfe ──
+  { creditor_iso:"SAU", debtor_iso:"EGY",  amount_bn:10.0, year:2022, note:"Dépôts BCF + soutien balance paiements" },
+  { creditor_iso:"SAU", debtor_iso:"PAK",  amount_bn:4.2,  year:2022, note:"Dépôts SBP + financement pétrole différé" },
+  { creditor_iso:"SAU", debtor_iso:"JOR",  amount_bn:2.5,  year:2022, note:"Soutien budgétaire annuel" },
+  { creditor_iso:"ARE", debtor_iso:"EGY",  amount_bn:22.0, year:2023, note:"Investissements Emaar + fonds ADQ" },
+  { creditor_iso:"ARE", debtor_iso:"PAK",  amount_bn:3.0,  year:2022, note:"Dépôts SBP + accords pétroliers" },
+  // ── Japon (JICA) ──
+  { creditor_iso:"JPN", debtor_iso:"IDN",  amount_bn:18.0, year:2022, note:"JICA ODA — infrastructure Jakarta" },
+  { creditor_iso:"JPN", debtor_iso:"IND",  amount_bn:40.0, year:2022, note:"JICA — Mumbai-Ahmedabad bullet train" },
+  { creditor_iso:"JPN", debtor_iso:"PHI",  amount_bn:9.0,  year:2022, note:"JICA infrastructure Manille" },
+  { creditor_iso:"JPN", debtor_iso:"VNM",  amount_bn:7.5,  year:2022, note:"JICA ODA — Ho Chi Minh métro" },
+  { creditor_iso:"JPN", debtor_iso:"BGD",  amount_bn:6.0,  year:2022, note:"JICA — Dhaka metro + ports" },
+];
+
 var MIGRATION_FLOWS = [
   // Crise syrienne
   {from_iso:"SYR",from:"Syrie",       fromC:[38,35],   to_iso:"TUR",to:"Turquie",     toC:[35,39],   type:"migration", hist:{2012:100,2013:600,2014:1300,2015:2000,2016:2700,2018:3600,2020:3600,2022:3600,2023:3600}},
@@ -7404,6 +7520,215 @@ function loadMigrationsData() {
       if (mc && mc.checked) updateCountriesStyle();
     })
     .catch(function(e){ console.warn('Could not load migrations.json:', e); });
+}
+
+// ============================================================
+// SANCTIONS LAYER
+// ============================================================
+function buildSanctionsLayer() {
+  if (layers.sanctions) layers.sanctions.remove();
+  const group = L.layerGroup();
+
+  // Cercles rouges pulsants sur les pays sanctionnés
+  const targeted = {};
+  SANCTIONS_DATA.forEach(function(s) {
+    if (!targeted[s.target_iso]) targeted[s.target_iso] = { maxSeverity: 0, sanctioners: [], entries: [] };
+    targeted[s.target_iso].maxSeverity = Math.max(targeted[s.target_iso].maxSeverity, s.severity);
+    targeted[s.target_iso].sanctioners.push(s.sanctioner_iso);
+    targeted[s.target_iso].entries.push(s);
+  });
+
+  Object.entries(targeted).forEach(function(entry) {
+    var iso3 = entry[0], info = entry[1];
+    var countryData = null;
+    Object.values(ENERGY_DATA).forEach(function(d){ if(d.iso3===iso3) countryData=d; });
+    if (!countryData || !countryData.centroid) return;
+
+    var c = countryData.centroid;
+    var radius = 8 + info.maxSeverity * 18;
+    var opacity = 0.3 + info.maxSeverity * 0.4;
+    var color = info.maxSeverity > 0.8 ? '#ff1744' : info.maxSeverity > 0.6 ? '#ff5722' : '#ff9800';
+
+    var circle = L.circleMarker([c[1], c[0]], {
+      radius: radius, color: color, weight: 2,
+      fillColor: color, fillOpacity: opacity
+    });
+
+    var sanctionerLabels = [...new Set(info.sanctioners)].join(', ');
+    var scopeAll = [...new Set(info.entries.flatMap(function(e){return e.scope;}))].join(', ');
+    circle.bindTooltip(
+      '<b>⛔ '+countryData.name+'</b><br>'+
+      'Sanctionné par : '+sanctionerLabels+'<br>'+
+      'Secteurs : '+scopeAll+'<br>'+
+      'Sévérité : '+(Math.round(info.maxSeverity*100))+'%',
+      { sticky: true }
+    );
+    circle.on('click', function() {
+      selectedFeature = { type: 'sanctions', iso3: iso3, data: info, name: countryData.name };
+      renderPanel();
+    });
+    group.addLayer(circle);
+  });
+
+  layers.sanctions = group;
+  if (layerVis.sanctions) group.addTo(map);
+}
+
+function toggleSanctionsLayer() {
+  layerVis.sanctions = document.getElementById('tog-sanctions').checked;
+  if (layerVis.sanctions) buildSanctionsLayer();
+  else if (layers.sanctions) layers.sanctions.remove();
+}
+
+function renderSanctionsPanel(iso3, data, name) {
+  var panel = document.getElementById('panel-inner');
+  var rows = data.entries.map(function(s) {
+    var col = s.severity > 0.8 ? '#f85149' : s.severity > 0.6 ? '#ffa726' : '#fbbf24';
+    var since = s.since || '—';
+    return '<div class="info-section" style="margin:6px 0">'
+      +'<div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:4px">'
+      +'<span>'+s.sanctioner_iso+' → '+name+'</span>'
+      +'<span style="color:'+col+'">'+Math.round(s.severity*100)+'% sévérité</span>'
+      +'</div>'
+      +'<div style="height:2px;background:rgba(255,255,255,0.08);border-radius:1px;margin-bottom:4px">'
+      +'<div style="height:2px;width:'+Math.round(s.severity*100)+'%;background:'+col+';border-radius:1px"></div></div>'
+      +'<div style="font-size:10px;color:var(--text-secondary)">'
+      +'<span>Depuis '+since+' · </span><span>'+s.scope.join(', ')+'</span>'
+      +'</div>'
+      +'<div style="font-size:10px;color:var(--text-secondary);margin-top:2px;font-style:italic">'+s.label+'</div>'
+      +'</div>';
+  }).join('');
+
+  panel.innerHTML = '<div style="padding:4px 0">'
+    +'<div class="feat-header">'
+    +'<div><div class="feat-title" style="color:#f85149">⛔ Sanctions — '+name+'</div>'
+    +'<div class="feat-sub">Régimes de sanctions actifs visant ce pays</div></div>'
+    +'</div>'
+    +rows
+    +'</div>';
+}
+
+// ============================================================
+// SOVEREIGN DEBT LAYER
+// ============================================================
+function buildSovereignDebtLayer() {
+  if (layers.sovereign_debt) layers.sovereign_debt.remove();
+  const group = L.layerGroup();
+
+  var coordsCache = {};
+  Object.values(ENERGY_DATA).forEach(function(d){ if(d.iso3 && d.centroid) coordsCache[d.iso3]=d.centroid; });
+  // Coordonnées manuelles pour FMI (pas un pays)
+  coordsCache['IMF'] = [0, 20];
+
+  SOVEREIGN_DEBT_FLOWS.forEach(function(debt) {
+    var fromC = coordsCache[debt.creditor_iso];
+    var toC   = coordsCache[debt.debtor_iso];
+    if (!fromC || !toC) return;
+
+    var weight = debt.amount_bn > 30 ? 4 : debt.amount_bn > 10 ? 3 : debt.amount_bn > 3 ? 2 : 1.5;
+    var color  = debt.creditor_iso === 'CHN' ? '#f59e0b' : debt.creditor_iso === 'IMF' ? '#60a5fa' : debt.creditor_iso === 'USA' ? '#34d399' : '#a78bfa';
+
+    var line = L.polyline(
+      [[fromC[1], fromC[0]], [toC[1], toC[0]]],
+      { color: color, weight: weight, opacity: 0.65, dashArray: '6 4' }
+    );
+    line.bindTooltip(
+      '<b>💰 '+debt.creditor_iso+' → '+debt.debtor_iso+'</b><br>'+
+      debt.amount_bn.toFixed(1)+' Md$ ('+debt.year+')<br>'+
+      '<i>'+debt.note+'</i>',
+      { sticky: true }
+    );
+    group.addLayer(line);
+  });
+
+  layers.sovereign_debt = group;
+  if (layerVis.sovereign_debt) group.addTo(map);
+}
+
+function toggleSovereignDebtLayer() {
+  layerVis.sovereign_debt = document.getElementById('tog-sovereign-debt').checked;
+  if (layerVis.sovereign_debt) buildSovereignDebtLayer();
+  else if (layers.sovereign_debt) layers.sovereign_debt.remove();
+}
+
+// ============================================================
+// HELPERS SANCTIONS / DETTE — utilisés dans panel pays
+// ============================================================
+function getSanctionsForCountry(iso3) {
+  // Retourne { asTarget: [...], asSanctioner: [...] }
+  return {
+    asTarget:     SANCTIONS_DATA.filter(function(s){ return s.target_iso === iso3; }),
+    asSanctioner: SANCTIONS_DATA.filter(function(s){ return s.sanctioner_iso === iso3; })
+  };
+}
+
+function getSovereignDebtForCountry(iso3) {
+  return {
+    asDebtor:   SOVEREIGN_DEBT_FLOWS.filter(function(d){ return d.debtor_iso === iso3; }),
+    asCreditor: SOVEREIGN_DEBT_FLOWS.filter(function(d){ return d.creditor_iso === iso3; })
+  };
+}
+
+function buildGeopoliticsSection(iso3) {
+  if (!iso3) return '';
+  var sanctions = getSanctionsForCountry(iso3);
+  var debt = getSovereignDebtForCountry(iso3);
+  if (!sanctions.asTarget.length && !sanctions.asSanctioner.length && !debt.asDebtor.length && !debt.asCreditor.length) return '';
+
+  var html = '';
+
+  // Sanctions subies
+  if (sanctions.asTarget.length) {
+    var maxSev = Math.max.apply(null, sanctions.asTarget.map(function(s){return s.severity;}));
+    var sevColor = maxSev > 0.8 ? '#f85149' : maxSev > 0.6 ? '#ffa726' : '#fbbf24';
+    html += '<div class="info-section"><div class="info-section-title">⛔ Sanctions subies</div>';
+    sanctions.asTarget.forEach(function(s) {
+      html += '<div class="info-row"><span class="ir-label">'+s.sanctioner_iso+' ('+s.since+')</span>'
+        +'<span class="ir-value" style="color:'+sevColor+'">'+s.scope.join(', ')+'</span></div>'
+        +'<div style="font-size:10px;color:var(--text-secondary);margin:0 0 4px 8px;font-style:italic">'+s.label+'</div>';
+    });
+    html += '</div>';
+  }
+
+  // Sanctions imposées
+  if (sanctions.asSanctioner.length) {
+    html += '<div class="info-section"><div class="info-section-title">🚫 Sanctions imposées</div>';
+    sanctions.asSanctioner.slice(0,5).forEach(function(s) {
+      var col = s.severity > 0.8 ? '#f85149' : '#ffa726';
+      html += '<div class="info-row"><span class="ir-label">→ '+s.target_iso+'</span>'
+        +'<span class="ir-value" style="color:'+col+'">'+Math.round(s.severity*100)+'%</span></div>';
+    });
+    if (sanctions.asSanctioner.length > 5) html += '<div style="font-size:10px;color:var(--text-secondary);margin-bottom:4px">+ '+(sanctions.asSanctioner.length-5)+' autres...</div>';
+    html += '</div>';
+  }
+
+  // Dettes (pays débiteur)
+  if (debt.asDebtor.length) {
+    var totalDebt = debt.asDebtor.reduce(function(s,d){return s+d.amount_bn;},0);
+    html += '<div class="info-section"><div class="info-section-title">💸 Dette souveraine</div>';
+    html += '<div class="info-row"><span class="ir-label">Total créanciers tracés</span><span class="ir-value" style="color:#f59e0b;font-weight:700">'+totalDebt.toFixed(1)+' Md$</span></div>';
+    debt.asDebtor.sort(function(a,b){return b.amount_bn-a.amount_bn;}).slice(0,5).forEach(function(d) {
+      var col = d.creditor_iso==='CHN'?'#f59e0b':d.creditor_iso==='IMF'?'#60a5fa':d.creditor_iso==='USA'?'#34d399':'#a78bfa';
+      html += '<div class="info-row"><span class="ir-label">'+d.creditor_iso+'</span>'
+        +'<span class="ir-value" style="color:'+col+'">'+d.amount_bn.toFixed(1)+' Md$</span></div>'
+        +'<div style="font-size:10px;color:var(--text-secondary);margin:0 0 3px 8px;font-style:italic">'+d.note+'</div>';
+    });
+    html += '</div>';
+  }
+
+  // Créances (pays créancier)
+  if (debt.asCreditor.length) {
+    var totalCred = debt.asCreditor.reduce(function(s,d){return s+d.amount_bn;},0);
+    html += '<div class="info-section"><div class="info-section-title">💰 Créances souveraines</div>';
+    html += '<div class="info-row"><span class="ir-label">Total prêté (tracé)</span><span class="ir-value" style="color:#34d399;font-weight:700">'+totalCred.toFixed(1)+' Md$</span></div>';
+    debt.asCreditor.sort(function(a,b){return b.amount_bn-a.amount_bn;}).slice(0,5).forEach(function(d) {
+      html += '<div class="info-row"><span class="ir-label">→ '+d.debtor_iso+'</span>'
+        +'<span class="ir-value">'+d.amount_bn.toFixed(1)+' Md$</span></div>';
+    });
+    html += '</div>';
+  }
+
+  return html;
 }
 
 function loadEnergyData() {
@@ -8032,7 +8357,18 @@ function computeDepScoreForCountry(countryName, iso3, year) {
     };
   });
 
-  return {score: Math.round(score * 100), domains: scores};
+  // Modificateur sanctions : si le pays est sanctionné, ses dépendances sont amplifiées
+  // (flux bloqués ou sous contrainte → plus difficile à substituer)
+  var sanctionMult = 1.0;
+  if (iso3 && typeof SANCTIONS_DATA !== 'undefined') {
+    var activeTargeted = SANCTIONS_DATA.filter(function(s){ return s.target_iso === iso3; });
+    if (activeTargeted.length > 0) {
+      var maxSev = Math.max.apply(null, activeTargeted.map(function(s){ return s.severity; }));
+      sanctionMult = 1 + maxSev * 0.4; // jusqu'à +40% si embargo total
+    }
+  }
+
+  return {score: Math.min(Math.round(score * sanctionMult * 100), 100), domains: scores, sanctionMult: sanctionMult};
 }
 
 var DEP_SCORES = {};  // {iso3: {score, domains}}
