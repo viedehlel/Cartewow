@@ -4942,19 +4942,30 @@ function computeDepBySupplier(countryName, iso3, year) {
     }
   }
 
-  // Finance (IDE entrants)
-  if (typeof FINANCE_FLOWS !== 'undefined' && FINANCE_FLOWS.length > 0 && iso3) {
-    var finIn = FINANCE_FLOWS.filter(function(f){ return f.toIso3 === iso3; });
-    var finTotal = finIn.reduce(function(s,f){ return s+hv(f,yr); }, 0);
-    if (finTotal > 0) {
-      finIn.forEach(function(f){
-        // Résoudre le nom anglais du fournisseur depuis ENERGY_DATA via iso3
+  // Finance (IDE entrants + dette souveraine fusionnés)
+  if (iso3) {
+    var finAllIn = [];
+    if (typeof FINANCE_FLOWS !== 'undefined' && FINANCE_FLOWS.length > 0) {
+      FINANCE_FLOWS.filter(function(f){ return f.toIso3===iso3; }).forEach(function(f){
+        finAllIn.push({fromIso3: f.fromIso3, from: f.from, vol: hv(f,yr)});
+      });
+    }
+    if (typeof SOVEREIGN_DEBT_FLOWS !== 'undefined') {
+      SOVEREIGN_DEBT_FLOWS.filter(function(d){ return d.debtor_iso===iso3; }).forEach(function(d){
+        finAllIn.push({fromIso3: d.creditor_iso, from: d.creditor_iso, vol: d.amount_bn/10});
+      });
+    }
+    var finTotalAll = finAllIn.reduce(function(s,f){return s+f.vol;},0);
+    if (finTotalAll > 0) {
+      // Agréger par source iso3
+      var finByISO = {};
+      finAllIn.forEach(function(f){ finByISO[f.fromIso3]=(finByISO[f.fromIso3]||0)+f.vol; });
+      Object.entries(finByISO).forEach(function(e){
+        var srcIso = e[0], vol = e[1];
         var supplierName = null;
-        if (f.fromIso3) {
-          Object.values(ENERGY_DATA).forEach(function(d){ if(d.iso3===f.fromIso3) supplierName=d.name; });
-        }
-        if (!supplierName) supplierName = f.from; // fallback nom français si ENERGY_DATA incomplet
-        add(supplierName, 'Finance', hv(f,yr)/finTotal);
+        Object.values(ENERGY_DATA).forEach(function(d){ if(d.iso3===srcIso) supplierName=d.name; });
+        if (!supplierName) supplierName = srcIso;
+        add(supplierName, 'Finance', vol/finTotalAll);
       });
     }
   }
@@ -4992,7 +5003,7 @@ function computeDepBySupplier(countryName, iso3, year) {
   }
 
   // Score total par fournisseur = somme des ratios pondérés × risque du domaine
-  var WEIGHTS = {'Énergie':0.30,'Terres rares':0.15,'Céréales':0.15,'Métaux':0.12,'Automobile':0.08,'Aviation':0.08,'Naval':0.04,'Technologie':0.06,'Finance':0.05,'Armes':0.06,'Migration':0.03};
+  var WEIGHTS = {'Énergie':0.28,'Terres rares':0.14,'Céréales':0.14,'Métaux':0.11,'Automobile':0.07,'Aviation':0.07,'Naval':0.04,'Technologie':0.06,'Finance':0.07,'Armes':0.06,'Migration':0.03,'Numérique':0.05};
   var result = [];
   Object.keys(bySupplier).forEach(function(supplier) {
     var domains = bySupplier[supplier];
@@ -5047,16 +5058,7 @@ function buildDependencySection(countryName, d) {
   var scoreEmoji = cached.score < 20 ? '🟢' : cached.score < 40 ? '🟡' : cached.score < 60 ? '🟠' : cached.score < 75 ? '🔴' : '🚨';
   var scoreLabel = cached.score < 20 ? 'Très indépendant' : cached.score < 40 ? 'Faible dépendance' : cached.score < 60 ? 'Dépendance modérée' : cached.score < 75 ? 'Forte dépendance' : 'Dépendance critique';
 
-  var sanctionBadge = '';
-  if (cached.sanctionMult && cached.sanctionMult > 1) {
-    var sanctions = getSanctionsForCountry(iso3);
-    if (sanctions.asTarget.length) {
-      sanctionBadge = '<div style="display:inline-block;background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.4);border-radius:4px;padding:2px 7px;font-size:10px;color:#f85149;margin-bottom:8px">⛔ Sanctions actives — score amplifié ×'+cached.sanctionMult.toFixed(2)+'</div>';
-    }
-  }
-
-  var html = sanctionBadge
-    +'<div class="dep-score-badge">'
+  var html = '<div class="dep-score-badge">'
     +'<div class="dep-score-number" style="color:'+scoreColor+'">'+cached.score+'</div>'
     +'<div style="flex:1">'
     +'<div class="dep-score-label" style="color:'+scoreColor+'">'+scoreEmoji+' '+scoreLabel+'</div>'
@@ -5068,7 +5070,7 @@ function buildDependencySection(countryName, d) {
 
   // Breakdown par domaine (triés par risque décroissant)
   if (cached.domains && cached.domains.length > 0) {
-    var DOMAIN_ICONS2 = {'Énergie':'⚡','Terres rares':'💎','Céréales':'🌾','Métaux':'🏗️','Automobile':'🚗','Aviation':'✈️','Naval':'⚓','Technologie':'💻','Finance':'💰','Armes':'🔫','Migration':'👥'};
+    var DOMAIN_ICONS2 = {'Énergie':'⚡','Terres rares':'💎','Céréales':'🌾','Métaux':'🏗️','Automobile':'🚗','Aviation':'✈️','Naval':'⚓','Technologie':'💻','Finance':'💰','Armes':'🔫','Migration':'👥','Numérique':'🌐'};
     html += '<div style="font-size:10px;font-weight:600;color:var(--text-secondary);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em">Vulnérabilité par domaine</div>';
     cached.domains.slice(0, 6).forEach(function(dom) {
       var pct = Math.round(dom.raw * 100);
@@ -5126,7 +5128,7 @@ function showSupplierDetail(idx) {
   var s = _depSupplierCache[idx];
   if (!s) return;
   var panel = document.getElementById('panel-inner');
-  var DOMAIN_ICONS = {'Énergie':'⚡','Terres rares':'💎','Céréales':'🌾','Métaux':'🏗️','Automobile':'🚗','Aviation':'✈️','Naval':'⚓','Technologie':'💻','Finance':'💰','Armes':'🔫','Migration':'👥'};
+  var DOMAIN_ICONS = {'Énergie':'⚡','Terres rares':'💎','Céréales':'🌾','Métaux':'🏗️','Automobile':'🚗','Aviation':'✈️','Naval':'⚓','Technologie':'💻','Finance':'💰','Armes':'🔫','Migration':'👥','Numérique':'🌐'};
   var importerName = _depImporterKey && ENERGY_DATA[_depImporterKey] ? ENERGY_DATA[_depImporterKey].name : '?';
 
   // On récupère les domaines enrichis depuis DEP_SCORES si disponible
@@ -8095,6 +8097,7 @@ var BMAD_SUBST = {
   'Finance':      0.65,  // capital peut se rediriger, mais lent et coûteux
   'Armes':        0.20,  // dépendance sécuritaire quasi-irremplaçable à court terme
   'Migration':    0.50,  // main d'œuvre peut partiellement être compensée localement
+  'Numérique':    0.10,  // câbles sous-marins : quasi-impossible à remplacer rapidement
 };
 var BMAD_VELOC = {
   // Vélocité : 1 = crise immédiate si coupure, 0 = peut attendre
@@ -8109,6 +8112,7 @@ var BMAD_VELOC = {
   'Finance':      0.30,  // dépendance financière = risque moyen terme
   'Armes':        0.45,  // rupture d'approvisionnement = vulnérabilité sécuritaire à moyen terme
   'Migration':    0.20,  // flux démographiques évoluent sur le long terme
+  'Numérique':    0.90,  // coupure câble = isolation quasi-immédiate du trafic internet
 };
 
 function computeDepScoreForCountry(countryName, iso3, year) {
@@ -8288,19 +8292,94 @@ function computeDepScoreForCountry(countryName, iso3, year) {
     }
   }
 
-  // --- FINANCE (IDE entrants) ---
-  if (typeof FINANCE_FLOWS !== 'undefined' && FINANCE_FLOWS.length > 0 && iso3) {
-    var finIn  = FINANCE_FLOWS.filter(function(f){ return f.toIso3 === iso3; });
-    var finOut = FINANCE_FLOWS.filter(function(f){ return f.fromIso3 === iso3; });
-    var finImport = finIn.reduce(function(s,f){ return s+hv(f,yr); }, 0);
-    var finExport = finOut.reduce(function(s,f){ return s+hv(f,yr); }, 0);
-    // Exportateur net de capitaux → pas de dépendance financière entrante
+  // --- FINANCE (IDE entrants + dette souveraine) ---
+  // Les deux mesurent la même chose : dépendance envers des capitaux étrangers
+  // IDE = flux annuels (Md$/an) ; dette = stock converti en flux annuel implicite (/10 ans)
+  if (iso3) {
+    var finFlows = []; // {from, vol} normalisés en Md$
+    // IDE entrants (FINANCE_FLOWS)
+    if (typeof FINANCE_FLOWS !== 'undefined' && FINANCE_FLOWS.length > 0) {
+      FINANCE_FLOWS.filter(function(f){ return f.toIso3===iso3; }).forEach(function(f){
+        finFlows.push({from: f.from, fromIso3: f.fromIso3, vol: hv(f,yr)});
+      });
+    }
+    // Dette souveraine entrante (SOVEREIGN_DEBT_FLOWS) — stock → flux annuel implicite ÷10
+    if (typeof SOVEREIGN_DEBT_FLOWS !== 'undefined') {
+      SOVEREIGN_DEBT_FLOWS.filter(function(d){ return d.debtor_iso===iso3; }).forEach(function(d){
+        finFlows.push({from: d.creditor_iso, fromIso3: d.creditor_iso, vol: d.amount_bn / 10});
+      });
+    }
+    // Flux sortants (IDE + prêts accordés)
+    var finOutFlows = [];
+    if (typeof FINANCE_FLOWS !== 'undefined') {
+      FINANCE_FLOWS.filter(function(f){ return f.fromIso3===iso3; }).forEach(function(f){
+        finOutFlows.push({vol: hv(f,yr)});
+      });
+    }
+    if (typeof SOVEREIGN_DEBT_FLOWS !== 'undefined') {
+      SOVEREIGN_DEBT_FLOWS.filter(function(d){ return d.creditor_iso===iso3; }).forEach(function(d){
+        finOutFlows.push({vol: d.amount_bn / 10});
+      });
+    }
+    var finImport = finFlows.reduce(function(s,f){return s+f.vol;},0);
+    var finExport = finOutFlows.reduce(function(s,f){return s+f.vol;},0);
     if (finImport > 0 && finImport > finExport) {
       var iRatio = (finImport - finExport) / finImport;
-      var concen = concentration(finIn, function(f){ return hv(f,yr); });
-      var recip = reciprocity(finIn, finOut, function(f){ return hv(f,yr); });
+      // Concentration : par source (by from)
+      var finBySource = {};
+      finFlows.forEach(function(f){ finBySource[f.from]=(finBySource[f.from]||0)+f.vol; });
+      var finTotal = Object.values(finBySource).reduce(function(s,v){return s+v;},0);
+      var finMax = Math.max.apply(null, Object.values(finBySource));
+      var concen = finTotal > 0 ? finMax/finTotal : 0;
+      var recip = Math.min(finExport/(finImport+0.001), 1);
       var raw = bmadScore(iRatio, concen, 'Finance', recip);
-      scores.push({domain:'Finance', raw:raw, importRatio:iRatio, concentration:concen, weight:0.05});
+      scores.push({domain:'Finance', raw:raw, importRatio:iRatio, concentration:concen, weight:0.07});
+    }
+  }
+
+  // --- NUMÉRIQUE (câbles sous-marins) ---
+  // Dépendance = part du trafic internet passant par des câbles contrôlés par des acteurs étrangers
+  // Proxy : nombre de câbles hyperscaler étrangers atterrissant dans le pays / total cables
+  if (typeof SUBMARINE_CABLES !== 'undefined' && iso3) {
+    var countryData2 = null;
+    Object.values(ENERGY_DATA).forEach(function(x){ if(x.iso3===iso3) countryData2=x; });
+    if (countryData2) {
+      var cName = countryData2.name;
+      // Câbles qui touchent ce pays (landing contient le nom du pays ou du lieu)
+      var cablesLanding = SUBMARINE_CABLES.filter(function(c){
+        return c.landing && c.landing.some(function(l){ return l.indexOf('('+cName+')') !== -1 || l.indexOf(cName) !== -1; });
+      });
+      if (cablesLanding.length > 0) {
+        var totalCapacity = cablesLanding.reduce(function(s,c){ return s+(c.capacity_tbps||0); },0);
+        // Hyperscaler étrangers = câbles appartenant à GAFA (USA) ou autres étrangers
+        var foreignHyper = cablesLanding.filter(function(c){
+          if (c.type !== 'hyperscaler') return false;
+          // Si tous les owners sont des entreprises du même pays que le pays cible, pas étranger
+          var foreignOwner = c.owners && c.owners.some(function(o){
+            var usCompanies = ['Google','Meta','Amazon','Microsoft','Facebook'];
+            var cnCompanies = ['China Mobile','China Telecom','Huawei'];
+            if (iso3 !== 'USA' && usCompanies.some(function(u){ return o.indexOf(u)!==-1; })) return true;
+            if (iso3 !== 'CHN' && cnCompanies.some(function(u){ return o.indexOf(u)!==-1; })) return true;
+            return false;
+          });
+          return foreignOwner;
+        });
+        var foreignCapacity = foreignHyper.reduce(function(s,c){ return s+(c.capacity_tbps||0); },0);
+        var iRatio = totalCapacity > 0 ? foreignCapacity/totalCapacity : 0;
+        if (iRatio > 0.05) {
+          // Concentration : part du premier fournisseur étranger
+          var byOwner = {};
+          foreignHyper.forEach(function(c){
+            if (c.owners) c.owners.forEach(function(o){ byOwner[o]=(byOwner[o]||0)+(c.capacity_tbps||0); });
+          });
+          var ownerVals = Object.values(byOwner);
+          var ownerTotal = ownerVals.reduce(function(s,v){return s+v;},0);
+          var ownerMax = ownerVals.length ? Math.max.apply(null, ownerVals) : 0;
+          var concen = ownerTotal > 0 ? ownerMax/ownerTotal : 0;
+          var raw = bmadScore(iRatio, concen, 'Numérique', 0);
+          scores.push({domain:'Numérique', raw:raw, importRatio:iRatio, concentration:concen, weight:0.05});
+        }
+      }
     }
   }
 
@@ -8357,18 +8436,7 @@ function computeDepScoreForCountry(countryName, iso3, year) {
     };
   });
 
-  // Modificateur sanctions : si le pays est sanctionné, ses dépendances sont amplifiées
-  // (flux bloqués ou sous contrainte → plus difficile à substituer)
-  var sanctionMult = 1.0;
-  if (iso3 && typeof SANCTIONS_DATA !== 'undefined') {
-    var activeTargeted = SANCTIONS_DATA.filter(function(s){ return s.target_iso === iso3; });
-    if (activeTargeted.length > 0) {
-      var maxSev = Math.max.apply(null, activeTargeted.map(function(s){ return s.severity; }));
-      sanctionMult = 1 + maxSev * 0.4; // jusqu'à +40% si embargo total
-    }
-  }
-
-  return {score: Math.min(Math.round(score * sanctionMult * 100), 100), domains: scores, sanctionMult: sanctionMult};
+  return {score: Math.round(score * 100), domains: scores};
 }
 
 var DEP_SCORES = {};  // {iso3: {score, domains}}
