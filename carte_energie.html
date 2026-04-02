@@ -5623,32 +5623,32 @@ function computeSuffering(countryKey) {
 
   // --- CÉRÉALES ---
   const yr2 = typeof currentYear !== 'undefined' ? currentYear : 2022;
-  const cerealFlowsIn = typeof CEREAL_FLOWS !== 'undefined' && typeof getCerealValue !== 'undefined'
-    ? CEREAL_FLOWS.filter(f => flowToMatchesCountry(f.to)).map(f => ({from:f.from, volume:getCerealValue(f,yr2)})) : [];
-  const totalCereal = cerealFlowsIn.reduce((s,f)=>s+(f.volume||0),0);
-  const blockedCereal = cerealFlowsIn.reduce((s,f)=>s+flowBlockedVolume(f,f.volume||0),0);
+  const cerealFlowsInRaw = typeof CEREAL_FLOWS !== 'undefined' && typeof getCerealValue !== 'undefined'
+    ? CEREAL_FLOWS.filter(f => flowToMatchesCountry(f.to)) : [];
+  const totalCereal = cerealFlowsInRaw.reduce((s,f)=>s+getCerealValue(f,yr2),0);
+  const blockedCereal = cerealFlowsInRaw.reduce((s,f)=>s+flowBlockedVolume(f,getCerealValue(f,yr2)),0);
   const cerealScore = totalCereal > 0 ? blockedCereal / totalCereal : 0;
 
   // --- MÉTAUX ---
   function mhv(fl,y){if(!fl.hist)return 0;var k=Object.keys(fl.hist).map(Number).sort((a,b)=>a-b);if(!k.length)return 0;if(y<=k[0])return fl.hist[k[0]];if(y>=k[k.length-1])return fl.hist[k[k.length-1]];for(var i=0;i<k.length-1;i++){if(y>=k[i]&&y<=k[i+1]){var t=(y-k[i])/(k[i+1]-k[i]);return fl.hist[k[i]]*(1-t)+fl.hist[k[i+1]]*t;}}return 0;}
-  const metalFlowsIn = typeof METAL_FLOWS !== 'undefined'
-    ? METAL_FLOWS.filter(f=>flowToMatchesCountry(f.to)).map(f=>({from:f.from,volume:mhv(f,yr2)})) : [];
-  const totalMetal = metalFlowsIn.reduce((s,f)=>s+(f.volume||0),0);
-  const blockedMetal = metalFlowsIn.reduce((s,f)=>s+flowBlockedVolume(f,f.volume||0),0);
+  const metalFlowsInRaw = typeof METAL_FLOWS !== 'undefined'
+    ? METAL_FLOWS.filter(f=>flowToMatchesCountry(f.to)) : [];
+  const totalMetal = metalFlowsInRaw.reduce((s,f)=>s+mhv(f,yr2),0);
+  const blockedMetal = metalFlowsInRaw.reduce((s,f)=>s+flowBlockedVolume(f,mhv(f,yr2)),0);
   const metalScore = totalMetal > 0 ? blockedMetal / totalMetal : 0;
 
   // --- TECH ---
-  const techFlowsIn2 = typeof TECH_FLOWS !== 'undefined' && typeof getTechFlowValue !== 'undefined'
-    ? TECH_FLOWS.filter(f=>flowToMatchesCountry(f.to)).map(f=>({from:f.from,volume:getTechFlowValue(f,yr2)})) : [];
-  const totalTech = techFlowsIn2.reduce((s,f)=>s+(f.volume||0),0);
-  const blockedTech = techFlowsIn2.reduce((s,f)=>s+flowBlockedVolume(f,f.volume||0),0);
+  const techFlowsInRaw = typeof TECH_FLOWS !== 'undefined' && typeof getTechFlowValue !== 'undefined'
+    ? TECH_FLOWS.filter(f=>flowToMatchesCountry(f.to)) : [];
+  const totalTech = techFlowsInRaw.reduce((s,f)=>s+getTechFlowValue(f,yr2),0);
+  const blockedTech = techFlowsInRaw.reduce((s,f)=>s+flowBlockedVolume(f,getTechFlowValue(f,yr2)),0);
   const techScore = totalTech > 0 ? blockedTech / totalTech : 0;
 
   // --- FINANCE (FDI) ---
-  const finFlowsIn = typeof FINANCE_FLOWS !== 'undefined' && typeof getFinanceValue !== 'undefined'
-    ? FINANCE_FLOWS.filter(f=>flowToMatchesCountry(f.to)).map(f=>({from:f.from,volume:getFinanceValue(f,yr2)})) : [];
-  const totalFin = finFlowsIn.reduce((s,f)=>s+(f.volume||0),0);
-  const blockedFin = finFlowsIn.reduce((s,f)=>s+flowBlockedVolume(f,f.volume||0),0);
+  const finFlowsInRaw = typeof FINANCE_FLOWS !== 'undefined' && typeof getFinanceValue !== 'undefined'
+    ? FINANCE_FLOWS.filter(f=>flowToMatchesCountry(f.to)) : [];
+  const totalFin = finFlowsInRaw.reduce((s,f)=>s+getFinanceValue(f,yr2),0);
+  const blockedFin = finFlowsInRaw.reduce((s,f)=>s+flowBlockedVolume(f,getFinanceValue(f,yr2)),0);
   const finScore = totalFin > 0 ? blockedFin / totalFin : 0;
 
   // --- SCORE COMBINÉ (pondéré par les dimensions présentes) ---
