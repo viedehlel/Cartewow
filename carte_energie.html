@@ -1157,6 +1157,8 @@ const FLOWS_DATA = [
   { id:"f060", from:"États-Unis", to:"Pays-Bas", from_centroid:[-95,38], to_centroid:[5.3,52.1], type:"lng", volume:8.3, unit:"bcm/an", year:2022, source:"DOE / Gasunie 2022 (Gate terminal Rotterdam)" },
   { id:"f061", from:"États-Unis", to:"Royaume-Uni", from_centroid:[-95,38], to_centroid:[-2,54], type:"lng", volume:11.0, unit:"bcm/an", year:2022, source:"DOE / National Grid 2022" },
   { id:"f062", from:"Qatar", to:"France", from_centroid:[51.5,25.3], to_centroid:[2.3,46], type:"lng", volume:8.3, unit:"bcm/an", year:2022, source:"QatarEnergy / GRTgaz 2022" },
+  { id:"f_ukr_oil", from:"Europe", to:"Ukraine", from_centroid:[10,50], to_centroid:[32,49], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"IEA / Kpler 2022-2023", notes:"Import pétrole net post-2022 (Russie remplacée par Lituanie, Pologne, Grèce)" },
+  { id:"f_ukr_gas", from:"Europe", to:"Ukraine", from_centroid:[10,50], to_centroid:[32,49], type:"gas_pipeline", volume:7, unit:"bcm/an", year:2022, source:"IEA / GTS Ukraine 2022-2023", notes:"Déficit production/conso : 25 bcm conso - 18 bcm prod = 7 bcm net import" },
   { id:"f063", from:"Qatar", to:"Belgique", from_centroid:[51.5,25.3], to_centroid:[4.5,50.5], type:"lng", volume:5.5, unit:"bcm/an", year:2022, source:"QatarEnergy / Fluxys 2022" },
   { id:"f064", from:"Qatar", to:"Royaume-Uni", from_centroid:[51.5,25.3], to_centroid:[-2,54], type:"lng", volume:6.9, unit:"bcm/an", year:2022, source:"QatarEnergy / GIIGNL 2023" },
   { id:"f065", from:"Qatar", to:"Espagne", from_centroid:[51.5,25.3], to_centroid:[-4,40], type:"lng", volume:4.1, unit:"bcm/an", year:2022, source:"QatarEnergy / Enagas 2022" },
@@ -6551,6 +6553,16 @@ const ARMS_FLOWS = [
   {from_iso:"CHN", from:"Chine", fromC:[104,35], to_iso:"MMR", to:"Myanmar", toC:[96,17],
    hist:{2000:50,2005:80,2010:120,2015:160,2020:190,2022:200,2025:210},
    note:"K-8, BTR-3, drones armes"},
+  // ── UKRAINE (aide militaire depuis 2022) ─────────────────────
+  {from_iso:"USA", from:"États-Unis", fromC:[-100,38], to_iso:"UKR", to:"Ukraine", toC:[32,49],
+   hist:{2014:100,2015:100,2021:300,2022:4000,2023:5500},
+   note:"HIMARS, M1 Abrams, Bradley, Patriot, F-16 (livraison 2024)"},
+  {from_iso:"DEU", from:"Allemagne", fromC:[10,51], to_iso:"UKR", to:"Ukraine", toC:[32,49],
+   hist:{2022:350,2023:800},
+   note:"Leopard 2, IRIS-T SLM, Marder, Gepard"},
+  {from_iso:"GBR", from:"Royaume-Uni", fromC:[-2,54], to_iso:"UKR", to:"Ukraine", toC:[32,49],
+   hist:{2022:300,2023:550},
+   note:"Challenger 2, Storm Shadow, NLAW, Brimstone"},
 ];
 
 function getArmsValue(fl, year) {
@@ -7265,7 +7277,7 @@ const SOVEREIGN_DEBT_FLOWS = [
   // ── USA / USAID ──
   { creditor_iso:"USA", debtor_iso:"ISR",  amount_bn:3.8,  year:2022, note:"Aide militaire annuelle — FMF grants" },
   { creditor_iso:"USA", debtor_iso:"EGY",  amount_bn:1.3,  year:2022, note:"Aide militaire FMF annuelle" },
-  { creditor_iso:"USA", debtor_iso:"UKR",  amount_bn:45.0, year:2023, note:"Assistance militaire + économique totale" },
+  // USA aid Ukraine : aide de guerre non remboursable → exclu du modèle de dette (ne crée pas de dépendance financière structurelle)
   { creditor_iso:"USA", debtor_iso:"JOR",  amount_bn:1.5,  year:2022, note:"Aide économique + sécuritaire" },
   { creditor_iso:"USA", debtor_iso:"AFG",  amount_bn:0.0,  year:2022, note:"Gel avoirs 7 Md$ — Taliban au pouvoir" },
   // ── Arabie Saoudite / Golfe ──
