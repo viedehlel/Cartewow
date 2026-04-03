@@ -321,7 +321,7 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
 
     <div id="timeline-bar" style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:1000;background:rgba(22,27,34,0.92);border:1px solid #30363d;border-radius:10px;padding:10px 20px;display:flex;align-items:center;gap:14px;min-width:480px;backdrop-filter:blur(4px)">
       <span style="font-size:11px;color:#8b949e;white-space:nowrap">1964</span>
-      <input type="range" id="year-slider" min="1964" max="2025" value="2022" step="1" style="flex:1;accent-color:#58a6ff;cursor:pointer">
+      <input type="range" id="year-slider" min="1964" max="2023" value="2022" step="1" style="flex:1;accent-color:#58a6ff;cursor:pointer">
       <span style="font-size:11px;color:#8b949e;white-space:nowrap">2023</span>
       <span style="font-size:13px;font-weight:700;color:#58a6ff;min-width:36px;text-align:center" id="year-label">2022</span>
       <button id="timeline-play" title="Lecture automatique" style="background:none;border:1px solid #30363d;border-radius:4px;color:#e6edf3;cursor:pointer;padding:2px 8px;font-size:14px">▶</button>
@@ -342,7 +342,7 @@ body { background: var(--bg-dark); color: var(--text-primary); font-family: -app
               <label class="toggle-switch"><input type="checkbox" id="mc-oil" value="oil_prod_mbd" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
             </div>
             <div class="toggle-row" style="margin-bottom:2px">
-              <span class="toggle-label" style="font-size:11px"><span class="toggle-dot" style="background:#2980b9"></span>Gaz (Gcm/an)</span>
+              <span class="toggle-label" style="font-size:11px"><span class="toggle-dot" style="background:#2980b9"></span>Gaz (bcm/an)</span>
               <label class="toggle-switch"><input type="checkbox" id="mc-gas" value="gas_prod_bcm" onchange="onMetricChange()"><span class="toggle-slider"></span></label>
             </div>
             <div class="toggle-row" style="margin-bottom:2px">
@@ -4720,10 +4720,10 @@ function renderCountryPanel(key, skipZoom) {
     const tabProd = `
       <div class="metrics-grid">
         <div class="metric-card oil"><div class="mc-label">Pétrole</div><div class="mc-value">${fmtNum(d.oil_prod_mbd)}</div><div class="mc-unit">Mb/j</div></div>
-        <div class="metric-card gas"><div class="mc-label">Gaz</div><div class="mc-value">${fmtNum(d.gas_prod_bcm)}</div><div class="mc-unit">Gcm/an</div></div>
+        <div class="metric-card gas"><div class="mc-label">Gaz</div><div class="mc-value">${fmtNum(d.gas_prod_bcm)}</div><div class="mc-unit">bcm/an</div></div>
         <div class="metric-card nuclear"><div class="mc-label">Nucléaire</div><div class="mc-value">${fmtNum(d.nuclear_twh)}</div><div class="mc-unit">TWh</div></div>
         <div class="metric-card coal"><div class="mc-label">Charbon</div><div class="mc-value">${fmtNum(d.coal_mt)}</div><div class="mc-unit">MT</div></div>
-        <div class="metric-card renew"><div class="mc-label">Renouvelables</div><div class="mc-value">${fmtNum(Math.round(d.renewables_gw * 2.2))}</div><div class="mc-unit">TWh/an</div></div>
+        <div class="metric-card renew"><div class="mc-label">Renouvelables</div><div class="mc-value">${fmtNum(Math.round(d.renewables_gw * 2.2))}</div><div class="mc-unit" title="Capacité installée × ~2 200 h/an (facteur de charge moyen)">TWh/an est.</div></div>
       </div>
       ${bilanHtml}
       ${buildCerealByTypeHtml(d.iso3, currentYear)}
@@ -4805,6 +4805,7 @@ function renderCountryPanel(key, skipZoom) {
         <div>
           <div class="feat-title">${d.name} <span style="font-size:12px;color:var(--text-secondary)">(${d.iso3})</span></div>
           <div class="feat-sub" style="color:#58a6ff">${currentYear}${COUNTRY_HISTORY[key] ? '' : ' · données 2022'}</div>
+          ${d.source_production ? `<div class="feat-sub" style="color:#6e7681;font-size:10px;margin-top:1px">📊 ${d.source_production}</div>` : ''}
         </div>
         <button onclick="deselectCountry()" title="Fermer" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:18px;padding:0 4px;line-height:1;flex-shrink:0">×</button>
       </div>
