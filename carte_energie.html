@@ -1230,7 +1230,35 @@ const FLOWS_DATA = [
   { id:"f127", from:"Équateur", to_iso:"USA",to:"États-Unis", from_centroid:[-78,-2], to_centroid:[-95,38], type:"oil", volume:0.2, unit:"mb/j", year:2022, source:"Kpler / EIA 2022" },
   { id:"f128", from:"Brésil", to:"Inde", from_centroid:[-40,-15], to_centroid:[78,22], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f129", from:"Australie", to:"Japon", from_centroid:[133,-27], to_centroid:[138,37], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"Kpler / DCCEEW 2022" },
-  { id:"f130", from:"Oman", to:"Japon", from_centroid:[57.6,21.5], to_centroid:[138,37], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" }
+  { id:"f130", from:"Oman", to:"Japon", from_centroid:[57.6,21.5], to_centroid:[138,37], type:"oil", volume:0.1, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
+
+  // === JAPON — flux pétrole manquants (gap ~0.65 Mb/j) ===
+  { id:"f131", from:"Qatar", to:"Japon", from_centroid:[51.5,25.3], to_centroid:[138,37], type:"oil", volume:0.10, unit:"mb/j", year:2022, source:"Kpler / IEA Oil Market Report 2022" },
+  { id:"f132", from:"États-Unis", to:"Japon", from_centroid:[-95,38], to_centroid:[138,37], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"EIA Petroleum Supply Monthly / Kpler 2022" },
+  { id:"f133", from:"Kazakhstan", to:"Japon", from_centroid:[66,48], to_centroid:[138,37], type:"oil", volume:0.08, unit:"mb/j", year:2022, source:"Kpler / METI Japan 2022" },
+  { id:"f134", from:"Russie", to:"Japon", from_centroid:[60,58], to_centroid:[138,37], type:"oil", volume:0.10, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (Sakhalin-1, réduction 2023)" },
+
+  // === CORÉE DU SUD — flux pétrole manquants (gap ~1.5 Mb/j) ===
+  { id:"f135", from:"Koweït", to:"Corée du Sud", from_centroid:[47.5,29.3], to_centroid:[128,36], type:"oil", volume:0.30, unit:"mb/j", year:2022, source:"Kpler / KNOC / IEA 2022" },
+  { id:"f136", from:"États-Unis", to:"Corée du Sud", from_centroid:[-95,38], to_centroid:[128,36], type:"oil", volume:0.40, unit:"mb/j", year:2022, source:"EIA Petroleum Supply Monthly / Kpler 2022" },
+  { id:"f137", from:"Russie", to:"Corée du Sud", from_centroid:[60,58], to_centroid:[128,36], type:"oil", volume:0.20, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (ESPO pipeline, réduit 2023)" },
+  { id:"f138", from:"Oman", to:"Corée du Sud", from_centroid:[57.6,21.5], to_centroid:[128,36], type:"oil", volume:0.10, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
+
+  // === TURQUIE — flux gaz manquants (gap ~24 bcm) ===
+  { id:"f139", from:"Iran", to:"Turquie", from_centroid:[53,32], to_centroid:[35,39], type:"gas_pipeline", volume:8.0, unit:"bcm/an", year:2022, source:"NIGC / BOTAŞ / IEA Gas Market Report 2022 (pipeline Tabriz-Ankara)" },
+  { id:"f140", from:"Algérie", to:"Turquie", from_centroid:[3,28], to_centroid:[35,39], type:"lng", volume:3.0, unit:"bcm/an", year:2022, source:"Sonatrach / BOTAŞ / GIIGNL 2023" },
+  { id:"f141", from:"États-Unis", to:"Turquie", from_centroid:[-95,38], to_centroid:[35,39], type:"lng", volume:4.0, unit:"bcm/an", year:2022, source:"DOE LNG Export Report / BOTAŞ 2022" },
+
+  // === PAKISTAN — flux énergie manquants ===
+  { id:"f142", from:"Émirats Arabes Unis", to:"Pakistan", from_centroid:[54,24], to_centroid:[68,30], type:"lng", volume:2.0, unit:"bcm/an", year:2022, source:"ADNOC / OGRA Pakistan 2022 (RLNG terminal Port Qasim)" },
+  { id:"f143", from:"Arabie Saoudite", to:"Pakistan", from_centroid:[45,24], to_centroid:[68,30], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"Aramco / OGRA Pakistan 2022 (accord paiement différé)" },
+  { id:"f144", from:"Koweït", to:"Pakistan", from_centroid:[47.5,29.3], to_centroid:[68,30], type:"oil", volume:0.10, unit:"mb/j", year:2022, source:"Kpler / KPC / OGRA Pakistan 2022" },
+
+  // === ÉGYPTE — flux pétrole importé manquants (~0.2 Mb/j produits raffinés) ===
+  { id:"f145", from:"Arabie Saoudite", to:"Égypte", from_centroid:[45,24], to_centroid:[30,26], type:"oil", volume:0.10, unit:"mb/j", year:2022, source:"Kpler / EGPC / IEA 2022 (produits raffinés)" },
+  { id:"f146", from:"Irak", to:"Égypte", from_centroid:[44,33], to_centroid:[30,26], type:"oil", volume:0.05, unit:"mb/j", year:2022, source:"Kpler / SOMO / EGPC 2022" },
+  { id:"f147", from:"Russie", to:"Égypte", from_centroid:[60,58], to_centroid:[30,26], type:"oil", volume:0.05, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (diesel, fuel oil)" }
+
 // Fin de FLOWS_DATA
 ];
 
