@@ -121,3 +121,47 @@ Généré le 2026-04-04. Flux f131–f147 déjà appliqués (Japon, Corée du Su
 - **Éthiopie :** absente de ENERGY_DATA, présente uniquement en SOVEREIGN_DEBT
 - **Paradoxe Nigeria :** nécessiterait un type "refined_products" distinct
 - **IDs utilisés :** f131–f147 (existants) + f148–f201 (ce rapport). Prochain ID : **f202**
+
+---
+
+# Round 3 — 20 pays supplémentaires (Pays-Bas, Belgique, Grèce, Roumanie, Hongrie, Autriche, Taïwan, Thaïlande, Singapour, Israël, Jordanie, Venezuela, Colombie, Mexique, Rép. tchèque, Finlande, Slovaquie, RDC, Kenya, Tanzanie)
+
+IDs flux : f201–f266. Prochain ID libre : **f267**.
+
+## TABLEAU RÉSUMÉ
+
+| Pays | ISO3 | GAP Pétrole | GAP Gaz | Priorité |
+|---|---|---|---|---|
+| Pays-Bas | NLD | 0.85 Mb/j | 5.7 bcm | HAUTE |
+| Belgique | BEL | 0.60 Mb/j | 0 (transit) | HAUTE |
+| Grèce | GRC | 0.27 Mb/j | 3.9 bcm | HAUTE |
+| Roumanie | ROU | 0.12 Mb/j | 2.0 bcm | MOYENNE |
+| Hongrie | HUN | ~0 (couvert) | 0.5 bcm | MOYENNE |
+| Autriche | AUT | 0.28 Mb/j | 2.5 bcm | MOYENNE |
+| Taïwan | TWN | 1.10 Mb/j | 7.9 bcm | CRITIQUE |
+| Thaïlande | THA | 1.20 Mb/j | pipeline absent | HAUTE |
+| Singapour | SGP | 0.78 Mb/j | 9.5 bcm | CRITIQUE |
+| Israël | ISR | 0.25 Mb/j | n/a | HAUTE |
+| Jordanie | JOR | 0.10 Mb/j | 6.2 bcm | HAUTE |
+| Venezuela | VEN | n/a (export) | 0.5 bcm | FAIBLE |
+| Colombie | COL | n/a (export) | doublon f094 supprimé | FAIBLE |
+| Mexique | MEX | 0.10 Mb/j | f025 corrigé 65→72 bcm | HAUTE |
+| Rép. tchèque | CZE | 0.15 Mb/j | 7.0 bcm | HAUTE |
+| Finlande | FIN | 0.20 Mb/j | 1.0 bcm | HAUTE |
+| Slovaquie | SVK | 0.08 Mb/j | 0 | FAIBLE |
+| RDC | COD | ~0 | 0 | FAIBLE |
+| Kenya | KEN | 0.06 Mb/j | 0 | MOYENNE |
+| Tanzanie | TZA | 0.05 Mb/j | 0 (export gaz) | MOYENNE |
+
+## ACTIONS CORRECTIVES APPLIQUÉES
+
+- **f094 supprimé** — doublon de f126 (Colombia anglais = Colombie français, même flux USA)
+- **f025 corrigé** — USA→Mexique gaz 65 → 72 bcm/an (EIA/SENER 2022)
+
+## CAS CRITIQUES
+
+**Taïwan (TWN)** : 98% énergie importée, aucun flux pétrole ni gaz existant avant ce round. 6 flux ajoutés (f225–f230). Vulnérabilité géopolitique extrême (Détroit de Taïwan).
+
+**Singapour (SGP)** : 100% énergie importée, seul f085 (LNG partiel) existait. 5 flux ajoutés (f236–f240) dont pipelines Malaisie et Indonésie critiques.
+
+**Thaïlande (THA)** : Pipeline Yadana (Myanmar→Thaïlande) existait en tant que pipeline (p28) mais absent de FLOWS_DATA. Ajouté comme f231.
