@@ -1194,7 +1194,7 @@ const FLOWS_DATA = [
   { id:"f092", from:"Indonésie", to:"Chine", from_centroid:[118,-2], to_centroid:[104,35], type:"lng", volume:6.9, unit:"bcm/an", year:2022, source:"Pertamina / GIIGNL 2023" },
   { id:"f093", from:"Kazakhstan", to_iso:"RUS",to:"Russie", from_centroid:[66,48], to_centroid:[60,58], type:"oil", volume:0.7, unit:"mb/j", year:2022, source:"KMG / Transneft 2022 (transit CPC pipeline)" },
   // f094 supprimé — doublon de f126 (Colombia → Colombie, même flux)
-  { id:"f095", from:"Équateur", to_iso:"USA",to:"États-Unis", from_centroid:[-78,-2], to_centroid:[-95,38], type:"oil", volume:0.2, unit:"mb/j", year:2022, source:"Kpler / EIA 2022" },
+  // f095 supprimé — doublon de f127 (Équateur→États-Unis pétrole)
   { id:"f096", from_iso:"VEN",from:"Venezuela", to:"Chine", from_centroid:[-66,8], to_centroid:[104,35], type:"oil", volume:0.3, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f097", from:"Oman", to:"Chine", from_centroid:[57.6,21.5], to_centroid:[104,35], type:"oil", volume:0.4, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
   { id:"f098", from:"Oman", to:"Inde", from_centroid:[57.6,21.5], to_centroid:[78,22], type:"oil", volume:0.2, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
@@ -1442,7 +1442,166 @@ const FLOWS_DATA = [
   // === TANZANIE ===
   { id:"f264", from:"Émirats Arabes Unis", to:"Tanzanie", from_centroid:[54,24], to_centroid:[35,-6], type:"oil", volume:0.02, unit:"mb/j", year:2022, source:"Kpler / ADNOC / EWURA Tanzania 2022 (port Dar es Salam)" },
   { id:"f265", from:"Arabie Saoudite", to:"Tanzanie", from_centroid:[45,24], to_centroid:[35,-6], type:"oil", volume:0.02, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
-  { id:"f266", from:"Inde", to:"Tanzanie", from_centroid:[78,22], to_centroid:[35,-6], type:"oil", volume:0.01, unit:"mb/j", year:2022, source:"Kpler / EWURA Tanzania 2022 (raffineries Jamnagar)" }
+  { id:"f266", from:"Inde", to:"Tanzanie", from_centroid:[78,22], to_centroid:[35,-6], type:"oil", volume:0.01, unit:"mb/j", year:2022, source:"Kpler / EWURA Tanzania 2022 (raffineries Jamnagar)" },
+
+  // === ROUND 4 — pays restants ===
+
+  // NORVÈGE → Espagne gaz (manquant)
+  { id:"f267", from:"Norvège", to:"Espagne", from_centroid:[10,62], to_centroid:[-4,40], type:"gas_pipeline", volume:3.0, unit:"bcm/an", year:2022, source:"Gassco Annual Report 2022 / Enagas (transit via France/Lacq)" },
+
+  // QATAR → Singapour LNG
+  { id:"f268", from:"Qatar", to:"Singapour", from_centroid:[51.5,25.3], to_centroid:[103.8,1.35], type:"lng", volume:2.5, unit:"bcm/an", year:2022, source:"QatarEnergy / EMA Singapore / GIIGNL 2023" },
+
+  // AUSTRALIE — imports pétrole manquants (~0.6 Mb/j)
+  { id:"f269", from:"Arabie Saoudite", to:"Australie", from_centroid:[45,24], to_centroid:[133,-27], type:"oil", volume:0.20, unit:"mb/j", year:2022, source:"Kpler / IEA Oil Market Report 2022 (~20% imports pétroliers Australie)" },
+  { id:"f270", from:"États-Unis", to:"Australie", from_centroid:[-95,38], to_centroid:[133,-27], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"Kpler / EIA / DCCEEW Australia 2022 (condensats WTI Midland)" },
+  { id:"f271", from:"Malaisie", to:"Australie", from_centroid:[112,4], to_centroid:[133,-27], type:"oil", volume:0.12, unit:"mb/j", year:2022, source:"Kpler / PETRONAS / DCCEEW 2022" },
+  { id:"f272", from:"Qatar", to:"Australie", from_centroid:[51.5,25.3], to_centroid:[133,-27], type:"lng", volume:2.5, unit:"bcm/an", year:2022, source:"QatarEnergy / GIIGNL 2023 (réimports LNG côte Est Australie — Victoria/NSW manque gaz domestique)" },
+
+  // QATAR → ÉMIRATS — Dolphin Pipeline (CRITIQUE, 20 bcm/an totalement absent)
+  { id:"f273", from:"Qatar", to:"Émirats Arabes Unis", from_centroid:[51.5,25.3], to_centroid:[54,24], type:"gas_pipeline", volume:20.0, unit:"bcm/an", year:2022, source:"QatarEnergy / Dolphin Energy / IEA Gas Market Report 2022 (Dolphin Pipeline, 2 bcfd, Ras Laffan→Taweelah)" },
+
+  // IRAN → IRAK gaz
+  { id:"f274", from:"Iran", to:"Irak", from_centroid:[53,32], to_centroid:[44,33], type:"gas_pipeline", volume:2.0, unit:"bcm/an", year:2022, source:"NIGC / Ministry of Electricity Iraq / IEA 2022 (gazoduc Khanaqin-Nahr Omar)" },
+
+  // KOWEÏT — LNG import spot
+  { id:"f275", from:"États-Unis", to:"Koweït", from_centroid:[-95,38], to_centroid:[47.5,29.3], type:"lng", volume:1.5, unit:"bcm/an", year:2022, source:"DOE / GIIGNL 2023 / KIPIC Kuwait (terminal Al-Zour LNG)" },
+
+  // LIBYE — exports pétrole vers Chine et France
+  { id:"f276", from:"Libye", to:"Chine", from_centroid:[17,27], to_centroid:[104,35], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"Kpler / NOC Libya / IEA 2022 (Esnaim, Mellitah crude)" },
+  { id:"f277", from:"Libye", to:"France", from_centroid:[17,27], to_centroid:[2.3,46], type:"oil", volume:0.08, unit:"mb/j", year:2022, source:"Kpler / NOC Libya / IEA 2022 (TotalEnergies E&P Libya)" },
+
+  // OMAN — exports LNG vers Japon/Corée
+  { id:"f278", from:"Oman", to:"Japon", from_centroid:[57.6,21.5], to_centroid:[138,37], type:"lng", volume:8.3, unit:"bcm/an", year:2022, source:"OQ / GIIGNL 2023 (Oman LNG plant, contrats long terme Osaka Gas, Tohoku)" },
+  { id:"f279", from:"Oman", to:"Corée du Sud", from_centroid:[57.6,21.5], to_centroid:[128,36], type:"lng", volume:4.1, unit:"bcm/an", year:2022, source:"OQ / KOGAS / GIIGNL 2023" },
+
+  // MALAISIE — imports pétrole
+  { id:"f280", from:"Arabie Saoudite", to:"Malaisie", from_centroid:[45,24], to_centroid:[112,4], type:"oil", volume:0.08, unit:"mb/j", year:2022, source:"Kpler / Aramco / PETRONAS 2022 (Arab Light → Port Dickson)" },
+  { id:"f281", from:"Émirats Arabes Unis", to:"Malaisie", from_centroid:[54,24], to_centroid:[112,4], type:"oil", volume:0.05, unit:"mb/j", year:2022, source:"Kpler / ADNOC / PETRONAS 2022" },
+
+  // MYANMAR — imports pétrole
+  { id:"f282", from:"Chine", to:"Myanmar", from_centroid:[104,35], to_centroid:[96,20], type:"oil", volume:0.02, unit:"mb/j", year:2022, source:"Kpler / CNPC / IEA 2022 (pipeline Kunming-Kyaukphyu, produits raffinés)" },
+
+  // BIÉLORUSSIE — dépendance TOTALE Russie (HAUTE PRIORITÉ)
+  { id:"f283", from:"Russie", to:"Biélorussie", from_centroid:[60,58], to_centroid:[28,53.5], type:"gas_pipeline", volume:17.5, unit:"bcm/an", year:2022, source:"Gazprom / Beltransgaz / IEA 2022 (prix préférentiels; pipeline Yamal-Europe transite aussi)" },
+  { id:"f284", from:"Russie", to:"Biélorussie", from_centroid:[60,58], to_centroid:[28,53.5], type:"oil", volume:0.12, unit:"mb/j", year:2022, source:"Transneft / Belneftekhim / IEA 2022 (Druzhba nord, raffineries Mozyr et Novopolotsk)" },
+
+  // OUZBÉKISTAN — import pétrole résiduel
+  { id:"f285", from:"Russie", to:"Ouzbékistan", from_centroid:[60,58], to_centroid:[63,41], type:"oil", volume:0.04, unit:"mb/j", year:2022, source:"Kpler / IEA Central Asia 2022 (produits pétroliers via pipeline Omsk-Pavlodar)" },
+
+  // DANEMARK — gaz import
+  { id:"f286", from:"Norvège", to:"Danemark", from_centroid:[10,62], to_centroid:[10,56], type:"gas_pipeline", volume:1.0, unit:"bcm/an", year:2022, source:"Gassco / Energinet Denmark / IEA 2022 (interconnexion Nybro)" },
+
+  // SUÈDE — 100% import pétrole + gaz
+  { id:"f287", from:"Norvège", to:"Suède", from_centroid:[10,62], to_centroid:[18,62], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"Kpler / Energimyndigheten / IEA 2022 (tankers côte ouest, raffinerie Preem Lysekil)" },
+  { id:"f288", from:"Arabie Saoudite", to:"Suède", from_centroid:[45,24], to_centroid:[18,62], type:"oil", volume:0.08, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (Arab Light → raffineries Preem)" },
+  { id:"f289", from:"Russie", to:"Suède", from_centroid:[60,58], to_centroid:[18,62], type:"oil", volume:0.05, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (avant embargo EU déc. 2022, Oural Baltique)" },
+  { id:"f290", from:"Danemark", to:"Suède", from_centroid:[10,56], to_centroid:[18,62], type:"gas_pipeline", volume:1.0, unit:"bcm/an", year:2022, source:"Energinet / Energimyndigheten / IEA 2022 (interconnexion Dragør-Klagshamn)" },
+
+  // PORTUGAL — 100% import (HAUTE PRIORITÉ)
+  { id:"f291", from:"Arabie Saoudite", to:"Portugal", from_centroid:[45,24], to_centroid:[-8.2,39.4], type:"oil", volume:0.07, unit:"mb/j", year:2022, source:"Kpler / DGEG Portugal / IEA 2022 (raffinerie Matosinhos)" },
+  { id:"f292", from:"Nigeria", to:"Portugal", from_centroid:[8,9], to_centroid:[-8.2,39.4], type:"oil", volume:0.05, unit:"mb/j", year:2022, source:"Kpler / NNPC / IEA 2022 (Bonny Light)" },
+  { id:"f293", from:"Angola", to:"Portugal", from_centroid:[18,-12], to_centroid:[-8.2,39.4], type:"oil", volume:0.04, unit:"mb/j", year:2022, source:"Kpler / SONANGOL / IEA 2022 (liens historiques)" },
+  { id:"f294", from:"États-Unis", to:"Portugal", from_centroid:[-95,38], to_centroid:[-8.2,39.4], type:"lng", volume:2.5, unit:"bcm/an", year:2022, source:"DOE / REN Portugal / GIIGNL 2023 (Sines LNG terminal)" },
+  { id:"f295", from:"Algérie", to:"Portugal", from_centroid:[3,28], to_centroid:[-8.2,39.4], type:"lng", volume:1.5, unit:"bcm/an", year:2022, source:"Sonatrach / REN Portugal / GIIGNL 2023" },
+  { id:"f296", from:"Nigeria", to:"Portugal", from_centroid:[8,9], to_centroid:[-8.2,39.4], type:"lng", volume:1.2, unit:"bcm/an", year:2022, source:"NNPC / REN Portugal / GIIGNL 2023" },
+
+  // IRLANDE — 100% import
+  { id:"f297", from:"Norvège", to:"Irlande", from_centroid:[10,62], to_centroid:[-8.0,53.2], type:"oil", volume:0.07, unit:"mb/j", year:2022, source:"Kpler / SEAI Ireland / IEA 2022 (tankers, 1er fournisseur ~45%)" },
+  { id:"f298", from:"Royaume-Uni", to:"Irlande", from_centroid:[-2,54], to_centroid:[-8.0,53.2], type:"gas_pipeline", volume:2.5, unit:"bcm/an", year:2022, source:"National Grid UK / GNI Ireland / IEA 2022 (Interconnecteur Moffat-Brighouse Bay)" },
+
+  // BULGARIE — pivot post-Russie
+  { id:"f299", from:"Russie", to:"Bulgarie", from_centroid:[60,58], to_centroid:[25.5,42.7], type:"gas_pipeline", volume:2.0, unit:"bcm/an", year:2022, source:"Bulgargaz / IEA 2022 (TurkStream branche nord, coupé mai 2022 mais transit partiel)" },
+  { id:"f300", from:"Azerbaïdjan", to:"Bulgarie", from_centroid:[47.4,40.4], to_centroid:[25.5,42.7], type:"gas_pipeline", volume:1.0, unit:"bcm/an", year:2022, source:"SOCAR / Bulgargaz / IEA 2022 (ICGB interconnecteur, opérationnel oct. 2022)" },
+  { id:"f301", from:"Russie", to:"Bulgarie", from_centroid:[60,58], to_centroid:[25.5,42.7], type:"oil", volume:0.08, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (raffinerie Lukoil Neftochim Bourgas, exemption embargo EU)" },
+
+  // CROATIE — terminal LNG Krk
+  { id:"f302", from:"États-Unis", to:"Croatie", from_centroid:[-95,38], to_centroid:[16.4,45.1], type:"lng", volume:1.5, unit:"bcm/an", year:2022, source:"DOE / PLINACRO / GIIGNL 2023 (FSRU Krk, opérationnel 2021)" },
+  { id:"f303", from:"Arabie Saoudite", to:"Croatie", from_centroid:[45,24], to_centroid:[16.4,45.1], type:"oil", volume:0.04, unit:"mb/j", year:2022, source:"Kpler / INA Croatia / IEA 2022 (JANAF pipeline, port Omišalj)" },
+
+  // SLOVÉNIE
+  { id:"f304", from:"Russie", to:"Slovénie", from_centroid:[60,58], to_centroid:[14.8,46.1], type:"gas_pipeline", volume:0.7, unit:"bcm/an", year:2022, source:"Geoplin / IEA 2022 (via Autriche, résiduel avant pivot LNG)" },
+  { id:"f305", from:"Arabie Saoudite", to:"Slovénie", from_centroid:[45,24], to_centroid:[14.8,46.1], type:"oil", volume:0.03, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (JANAF pipeline / terminal Omišalj Croatie)" },
+
+  // LITUANIE — transition exemplaire post-Russie
+  { id:"f306", from:"États-Unis", to:"Lituanie", from_centroid:[-95,38], to_centroid:[24.0,55.9], type:"lng", volume:1.5, unit:"bcm/an", year:2022, source:"DOE / Ignitis Lithuania / GIIGNL 2023 (FSRU Independence Klaipėda, ~60% approvisionnement)" },
+  { id:"f307", from:"Norvège", to:"Lituanie", from_centroid:[10,62], to_centroid:[24.0,55.9], type:"lng", volume:0.7, unit:"bcm/an", year:2022, source:"Equinor / Litgas / GIIGNL 2023 (Hammerfest LNG)" },
+  { id:"f308", from:"Arabie Saoudite", to:"Lituanie", from_centroid:[45,24], to_centroid:[24.0,55.9], type:"oil", volume:0.04, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (raffinerie Orlen Lietuva Mažeikiai)" },
+
+  // LETTONIE
+  { id:"f309", from:"États-Unis", to:"Lettonie", from_centroid:[-95,38], to_centroid:[25.0,56.9], type:"lng", volume:1.0, unit:"bcm/an", year:2022, source:"DOE / Latvijas Gāze / GIIGNL 2023 (via FSRU Klaipėda → interconnexion gazoducs baltiques)" },
+  { id:"f310", from:"Norvège", to:"Lettonie", from_centroid:[10,62], to_centroid:[25.0,56.9], type:"oil", volume:0.03, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (tankers Riga, produits légers)" },
+
+  // ESTONIE
+  { id:"f311", from:"États-Unis", to:"Estonie", from_centroid:[-95,38], to_centroid:[25.0,58.7], type:"lng", volume:0.4, unit:"bcm/an", year:2022, source:"DOE / Elering / GIIGNL 2023 (via FSRU Klaipėda → Baltic Connector)" },
+  { id:"f312", from:"Finlande", to:"Estonie", from_centroid:[26,64], to_centroid:[25.0,58.7], type:"gas_pipeline", volume:0.2, unit:"bcm/an", year:2022, source:"Gasgrid Finland / Elering / IEA 2022 (Balticconnector, sabotage oct. 2023)" },
+
+  // LUXEMBOURG
+  { id:"f313", from:"Belgique", to:"Luxembourg", from_centroid:[4.5,50.5], to_centroid:[6.1,49.8], type:"gas_pipeline", volume:0.6, unit:"bcm/an", year:2022, source:"Fluxys / Creos Luxembourg / Eurostat 2022 (transit via réseau belge)" },
+  { id:"f314", from:"Belgique", to:"Luxembourg", from_centroid:[4.5,50.5], to_centroid:[6.1,49.8], type:"oil", volume:0.04, unit:"mb/j", year:2022, source:"Kpler / Eurostat 2022 (produits pétroliers via Anvers)" },
+
+  // SUISSE — 100% import
+  { id:"f315", from:"Arabie Saoudite", to:"Suisse", from_centroid:[45,24], to_centroid:[8.2,46.8], type:"oil", volume:0.08, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (TAL pipeline Gênes/Trieste → raffineries Collombey, Cressier)" },
+  { id:"f316", from:"Norvège", to:"Suisse", from_centroid:[10,62], to_centroid:[8.2,46.8], type:"gas_pipeline", volume:1.5, unit:"bcm/an", year:2022, source:"Gassco / Swissgas / IEA 2022 (transit via France/Allemagne, ~40% approvisionnement)" },
+  { id:"f317", from:"Russie", to:"Suisse", from_centroid:[60,58], to_centroid:[8.2,46.8], type:"gas_pipeline", volume:1.2, unit:"bcm/an", year:2022, source:"Gazprom / Swissgas / IEA 2022 (via Autriche, avant réduction 2022)" },
+  { id:"f318", from:"Algérie", to:"Suisse", from_centroid:[3,28], to_centroid:[8.2,46.8], type:"gas_pipeline", volume:0.5, unit:"bcm/an", year:2022, source:"Sonatrach / Swissgas / IEA 2022 (transit via Italie, TENP)" },
+
+  // SERBIE — TurkStream branche nord
+  { id:"f319", from:"Russie", to:"Serbie", from_centroid:[60,58], to_centroid:[20.9,44.0], type:"gas_pipeline", volume:2.2, unit:"bcm/an", year:2022, source:"Gazprom / Srbijagas / IEA 2022 (TurkStream branche nord via Bulgarie)" },
+  { id:"f320", from:"Russie", to:"Serbie", from_centroid:[60,58], to_centroid:[20.9,44.0], type:"oil", volume:0.04, unit:"mb/j", year:2022, source:"Kpler / NIS Srbija (Gazprom Neft) / IEA 2022 (raffinerie Pančevo)" },
+  { id:"f321", from:"Irak", to:"Serbie", from_centroid:[44,33], to_centroid:[20.9,44.0], type:"oil", volume:0.02, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (Basra Heavy via JANAF pipeline)" },
+
+  // MACÉDOINE DU NORD
+  { id:"f322", from:"Russie", to:"Macédoine du Nord", from_centroid:[60,58], to_centroid:[21.7,41.6], type:"gas_pipeline", volume:0.1, unit:"bcm/an", year:2022, source:"Bulgargaz / Makpetrol / IEA 2022 (transit via Bulgarie)" },
+  { id:"f323", from:"Grèce", to:"Macédoine du Nord", from_centroid:[22,39], to_centroid:[21.7,41.6], type:"oil", volume:0.015, unit:"mb/j", year:2022, source:"Kpler / EVO Macedonia / IEA 2022 (produits raffinés via OKTA Skopje)" },
+
+  // ALBANIE
+  { id:"f324", from:"Azerbaïdjan", to:"Albanie", from_centroid:[47.4,40.4], to_centroid:[20.1,41.1], type:"gas_pipeline", volume:0.15, unit:"bcm/an", year:2022, source:"SOCAR / AKBN Albania / IEA 2022 (off-take TAP, terminal Fier)" },
+  { id:"f325", from:"Grèce", to:"Albanie", from_centroid:[22,39], to_centroid:[20.1,41.1], type:"oil", volume:0.01, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (produits raffinés Thessalonique → Tirana)" },
+
+  // BOSNIE-HERZÉGOVINE
+  { id:"f326", from:"Russie", to:"Bosnie-Herzégovine", from_centroid:[60,58], to_centroid:[17.5,44.2], type:"gas_pipeline", volume:0.4, unit:"bcm/an", year:2022, source:"BH-Gas / IEA 2022 (transit via Serbie/Croatie, Gazprom contrat)" },
+  { id:"f327", from:"Croatie", to:"Bosnie-Herzégovine", from_centroid:[16.4,45.1], to_centroid:[17.5,44.2], type:"oil", volume:0.02, unit:"mb/j", year:2022, source:"Kpler / INA / IEA 2022 (pipeline JANAF branche)" },
+
+  // CAMBODGE
+  { id:"f328", from:"Singapour", to:"Cambodge", from_centroid:[103.8,1.35], to_centroid:[104,12], type:"oil", volume:0.02, unit:"mb/j", year:2022, source:"Kpler / EAC Cambodia / IEA 2022 (produits raffinés, port Sihanoukville)" },
+  { id:"f329", from:"Thaïlande", to:"Cambodge", from_centroid:[101,15], to_centroid:[104,12], type:"oil", volume:0.01, unit:"mb/j", year:2022, source:"Kpler / PPCI Cambodia / IEA 2022 (produits pétroliers terrestre)" },
+
+  // MONGOLIE
+  { id:"f330", from:"Russie", to:"Mongolie", from_centroid:[60,58], to_centroid:[103,47], type:"oil", volume:0.02, unit:"mb/j", year:2022, source:"Kpler / IEA Central Asia 2022 (produits pétroliers raffinés, Rosneft accord bilatéral)" },
+
+  // PÉROU
+  { id:"f331", from:"États-Unis", to:"Pérou", from_centroid:[-95,38], to_centroid:[-76,-10], type:"oil", volume:0.05, unit:"mb/j", year:2022, source:"Kpler / EIA / Osinergmin Peru 2022 (produits raffinés)" },
+  { id:"f332", from:"Équateur", to:"Pérou", from_centroid:[-78,-2], to_centroid:[-76,-10], type:"oil", volume:0.03, unit:"mb/j", year:2022, source:"Kpler / Petroecuador / Osinergmin 2022" },
+
+  // GHANA — WAGP Nigeria
+  { id:"f333", from:"Nigeria", to:"Ghana", from_centroid:[8,9], to_centroid:[-1,8], type:"gas_pipeline", volume:1.5, unit:"bcm/an", year:2022, source:"NNPC / GNPC Ghana / IEA 2022 (West Africa Gas Pipeline WAGP, 678 km)" },
+
+  // MOZAMBIQUE — imports pétrole + export LNG Coral South
+  { id:"f334", from:"Inde", to:"Mozambique", from_centroid:[78,22], to_centroid:[35,-17], type:"oil", volume:0.02, unit:"mb/j", year:2022, source:"Kpler / INP Mozambique / IEA 2022 (produits raffinés Jamnagar→Maputo)" },
+  { id:"f335", from:"Mozambique", to:"Europe", from_centroid:[35,-17], to_centroid:[10,50], type:"lng", volume:3.4, unit:"bcm/an", year:2022, source:"ENI / TotalEnergies / IEA 2022 (Coral South FLNG, 3.4 MT/an)" },
+
+  // OUGANDA
+  { id:"f336", from:"Kenya", to:"Ouganda", from_centroid:[37.5,0.5], to_centroid:[32.3,1.3], type:"oil", volume:0.03, unit:"mb/j", year:2022, source:"Kpler / EPRA Kenya / ERA Uganda 2022 (pipeline Mombasa-Kampala, produits raffinés)" },
+
+  // ZIMBABWE
+  { id:"f337", from:"Afrique du Sud", to:"Zimbabwe", from_centroid:[25,-29], to_centroid:[30,-20], type:"oil", volume:0.015, unit:"mb/j", year:2022, source:"Kpler / ZERA Zimbabwe / IEA Africa 2022 (pipeline Feruka, Durban→Harare)" },
+
+  // ZAMBIE — pipeline TAZAMA
+  { id:"f338", from:"Tanzanie", to:"Zambie", from_centroid:[35,-6], to_centroid:[28,-14], type:"oil", volume:0.02, unit:"mb/j", year:2022, source:"Kpler / TAZAMA Pipelines / ERB Zambia 2022 (TAZAMA pipeline 1 710 km Dar es Salam→Ndola)" },
+
+  // SÉNÉGAL
+  { id:"f339", from:"Nigeria", to:"Sénégal", from_centroid:[8,9], to_centroid:[-14,14.5], type:"oil", volume:0.03, unit:"mb/j", year:2022, source:"Kpler / NNPC / IEA Africa 2022 (produits raffinés, port Dakar)" },
+
+  // CAMEROUN — export FLNG Kribi
+  { id:"f340", from:"Cameroun", to:"Europe", from_centroid:[12,5], to_centroid:[10,50], type:"lng", volume:1.7, unit:"bcm/an", year:2022, source:"Golar LNG / NewAge / IEA Africa 2022 (Kribi FLNG, 1.2 MT/an)" },
+
+  // TRINITÉ-ET-TOBAGO → USA LNG
+  { id:"f341", from:"Trinité-et-Tobago", to:"États-Unis", from_centroid:[-61.2,10.7], to_centroid:[-95,38], type:"lng", volume:4.1, unit:"bcm/an", year:2022, source:"NGC Trinidad / GIIGNL 2023 / EIA (Atlantic LNG trains 2-4)" },
+
+  // NOUVELLE-ZÉLANDE — 100% import pétrole depuis 2022
+  { id:"f342", from:"Australie", to:"Nouvelle-Zélande", from_centroid:[133,-27], to_centroid:[172,-41], type:"oil", volume:0.07, unit:"mb/j", year:2022, source:"Kpler / MBIE New Zealand / IEA 2022 (fermeture raffinerie Marsden Point avr. 2022)" },
+  { id:"f343", from:"Arabie Saoudite", to:"Nouvelle-Zélande", from_centroid:[45,24], to_centroid:[172,-41], type:"oil", volume:0.04, unit:"mb/j", year:2022, source:"Kpler / MBIE New Zealand / IEA 2022" }
 
 // Fin de FLOWS_DATA
 ];
