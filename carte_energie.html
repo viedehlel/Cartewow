@@ -1257,7 +1257,88 @@ const FLOWS_DATA = [
   // === ÉGYPTE — flux pétrole importé manquants (~0.2 Mb/j produits raffinés) ===
   { id:"f145", from:"Arabie Saoudite", to:"Égypte", from_centroid:[45,24], to_centroid:[30,26], type:"oil", volume:0.10, unit:"mb/j", year:2022, source:"Kpler / EGPC / IEA 2022 (produits raffinés)" },
   { id:"f146", from:"Irak", to:"Égypte", from_centroid:[44,33], to_centroid:[30,26], type:"oil", volume:0.05, unit:"mb/j", year:2022, source:"Kpler / SOMO / EGPC 2022" },
-  { id:"f147", from:"Russie", to:"Égypte", from_centroid:[60,58], to_centroid:[30,26], type:"oil", volume:0.05, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (diesel, fuel oil)" }
+  { id:"f147", from:"Russie", to:"Égypte", from_centroid:[60,58], to_centroid:[30,26], type:"oil", volume:0.05, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (diesel, fuel oil)" },
+
+  // === INDE — gaz manquant (~5.6 bcm) ===
+  { id:"f148", from:"Nigeria", to:"Inde", from_centroid:[8,9], to_centroid:[78,22], type:"lng", volume:2.8, unit:"bcm/an", year:2022, source:"NNPC / GIIGNL 2023 / Kpler" },
+  { id:"f149", from:"Malaisie", to:"Inde", from_centroid:[110,3], to_centroid:[78,22], type:"lng", volume:3.5, unit:"bcm/an", year:2022, source:"PETRONAS / GIIGNL 2023" },
+
+  // === CHINE — pétrole + gaz manquants ===
+  { id:"f150", from:"Ouzbékistan", to:"Chine", from_centroid:[63,41], to_centroid:[104,35], type:"gas_pipeline", volume:6.0, unit:"bcm/an", year:2022, source:"Uzbekneftegaz / CNPC / IEA Gas Market Report 2022 (CAGP)" },
+  { id:"f151", from:"Kazakhstan", to:"Chine", from_centroid:[66,48], to_centroid:[104,35], type:"gas_pipeline", volume:5.0, unit:"bcm/an", year:2022, source:"Kazmunaigaz / CNPC / IEA 2022 (CAGP ligne B)" },
+  { id:"f152", from:"Russie", to:"Chine (gaz 2023)", from_centroid:[60,58], to_centroid:[104,35], type:"gas_pipeline", volume:7.0, unit:"bcm/an", year:2023, source:"Gazprom / CNPC / IEA Gas Market Report 2023 (Power of Siberia montée en puissance)" },
+  { id:"f153", from:"Angola", to:"Chine", from_centroid:[18,-12], to_centroid:[104,35], type:"oil", volume:0.30, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (Angola = 2e fournisseur pétrole Chine)" },
+
+  // === ALLEMAGNE — pétrole post-Druzhba + gaz manquants ===
+  { id:"f154", from:"Norvège", to:"Allemagne", from_centroid:[10,62], to_centroid:[10,51], type:"oil", volume:0.25, unit:"mb/j", year:2022, source:"Kpler / Bundesnetzagentur 2022 (NorPipe / Ekofisk)" },
+  { id:"f155", from:"Kazakhstan", to:"Allemagne", from_centroid:[66,48], to_centroid:[10,51], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (Caspian Pipeline / transit Druzhba)" },
+  { id:"f156", from:"États-Unis", to:"Allemagne", from_centroid:[-95,38], to_centroid:[10,51], type:"oil", volume:0.20, unit:"mb/j", year:2022, source:"EIA / Kpler 2022 (hausse post-sanctions Russie)" },
+  { id:"f157", from:"Qatar", to:"Allemagne", from_centroid:[51.5,25.3], to_centroid:[10,51], type:"lng", volume:5.0, unit:"bcm/an", year:2023, source:"QatarEnergy / Bundesnetzagentur 2023 (accord LNG long terme signé 2022)" },
+
+  // === FRANCE — pétrole absent (CRITIQUE) ===
+  { id:"f158", from:"Arabie Saoudite", to:"France", from_centroid:[45,24], to_centroid:[2.3,46], type:"oil", volume:0.25, unit:"mb/j", year:2022, source:"Kpler / IEA Oil Market Report 2022" },
+  { id:"f159", from:"Irak", to:"France", from_centroid:[44,33], to_centroid:[2.3,46], type:"oil", volume:0.20, unit:"mb/j", year:2022, source:"Kpler / SOMO / IEA 2022" },
+  { id:"f160", from:"Norvège", to:"France", from_centroid:[10,62], to_centroid:[2.3,46], type:"oil", volume:0.20, unit:"mb/j", year:2022, source:"Kpler / Gassco / IEA 2022" },
+  { id:"f161", from:"Angola", to:"France", from_centroid:[18,-12], to_centroid:[2.3,46], type:"oil", volume:0.10, unit:"mb/j", year:2022, source:"Kpler / SONANGOL / IEA 2022" },
+  { id:"f162", from:"Russie", to:"France", from_centroid:[60,58], to_centroid:[2.3,46], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"Kpler / IEA 2022 (avant embargo EU juin 2023)" },
+
+  // === ESPAGNE — pétrole manquant (~1 Mb/j) ===
+  { id:"f163", from:"Arabie Saoudite", to:"Espagne", from_centroid:[45,24], to_centroid:[-4,40], type:"oil", volume:0.25, unit:"mb/j", year:2022, source:"Kpler / IEA / Cores Spain 2022" },
+  { id:"f164", from:"Irak", to:"Espagne", from_centroid:[44,33], to_centroid:[-4,40], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"Kpler / SOMO / IEA 2022" },
+  { id:"f165", from:"Nigeria", to:"Espagne", from_centroid:[8,9], to_centroid:[-4,40], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"Kpler / NNPC / Cores Spain 2022" },
+  { id:"f166", from:"Angola", to:"Espagne", from_centroid:[18,-12], to_centroid:[-4,40], type:"oil", volume:0.10, unit:"mb/j", year:2022, source:"Kpler / SONANGOL 2022" },
+  { id:"f167", from:"Mexique", to:"Espagne", from_centroid:[-102,24], to_centroid:[-4,40], type:"oil", volume:0.08, unit:"mb/j", year:2022, source:"Kpler / Pemex / IEA 2022" },
+
+  // === ITALIE — pétrole manquant (~0.7 Mb/j) ===
+  { id:"f168", from:"Arabie Saoudite", to:"Italie", from_centroid:[45,24], to_centroid:[13,42], type:"oil", volume:0.20, unit:"mb/j", year:2022, source:"Kpler / Snam / IEA 2022" },
+  { id:"f169", from:"Irak", to:"Italie", from_centroid:[44,33], to_centroid:[13,42], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"Kpler / SOMO / IEA 2022" },
+  { id:"f170", from:"Kazakhstan", to:"Italie", from_centroid:[66,48], to_centroid:[13,42], type:"oil", volume:0.10, unit:"mb/j", year:2022, source:"Kpler / KMG / IEA 2022 (via BTC-Ceyhan-tankers)" },
+  { id:"f171", from:"Azerbaïdjan", to:"Italie", from_centroid:[47.4,40.4], to_centroid:[13,42], type:"oil", volume:0.10, unit:"mb/j", year:2022, source:"SOCAR / IEA 2022 (BTC pipeline → tankers Méditerranée)" },
+
+  // === ROYAUME-UNI — pétrole manquant (~0.4 Mb/j) ===
+  { id:"f172", from:"Norvège", to:"Royaume-Uni", from_centroid:[10,62], to_centroid:[-2,54], type:"oil", volume:0.25, unit:"mb/j", year:2022, source:"Kpler / NSTA UK / Gassco 2022 (NORPIPE + Forties)" },
+  { id:"f173", from:"États-Unis", to:"Royaume-Uni", from_centroid:[-95,38], to_centroid:[-2,54], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"EIA / Kpler 2022 (WTI Midland → raffineries UK)" },
+
+  // === POLOGNE — gaz + pétrole (CRITIQUE) ===
+  { id:"f174", from:"Norvège", to:"Pologne", from_centroid:[10,62], to_centroid:[20,52], type:"gas_pipeline", volume:7.5, unit:"bcm/an", year:2022, source:"Gassco / GAZ-SYSTEM / IEA 2022 (Baltic Pipe, opérationnel oct. 2022)" },
+  { id:"f175", from:"États-Unis", to:"Pologne", from_centroid:[-95,38], to_centroid:[20,52], type:"lng", volume:4.0, unit:"bcm/an", year:2022, source:"DOE / GAZ-SYSTEM / GIIGNL 2023 (terminal Świnoujście)" },
+  { id:"f176", from:"Qatar", to:"Pologne", from_centroid:[51.5,25.3], to_centroid:[20,52], type:"lng", volume:2.0, unit:"bcm/an", year:2022, source:"QatarEnergy / PGNiG / GIIGNL 2023" },
+  { id:"f177", from:"Arabie Saoudite", to:"Pologne", from_centroid:[45,24], to_centroid:[20,52], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"Kpler / PERN / IEA 2022" },
+  { id:"f178", from:"Norvège", to:"Pologne", from_centroid:[10,62], to_centroid:[20,52], type:"oil", volume:0.10, unit:"mb/j", year:2022, source:"Kpler / PERN 2022 (pipeline Gdańsk)" },
+
+  // === INDONÉSIE — pétrole manquant (0.9 Mb/j, importateur net depuis 2014) ===
+  { id:"f179", from:"Arabie Saoudite", to:"Indonésie", from_centroid:[45,24], to_centroid:[118,-0.8], type:"oil", volume:0.20, unit:"mb/j", year:2022, source:"Kpler / Pertamina / IEA 2022" },
+  { id:"f180", from:"Émirats Arabes Unis", to:"Indonésie", from_centroid:[54,24], to_centroid:[118,-0.8], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"Kpler / Pertamina / IEA 2022" },
+  { id:"f181", from:"Malaisie", to:"Indonésie", from_centroid:[110,3], to_centroid:[118,-0.8], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"Kpler / PETRONAS / IEA 2022" },
+  { id:"f182", from:"Nigeria", to:"Indonésie", from_centroid:[8,9], to_centroid:[118,-0.8], type:"oil", volume:0.10, unit:"mb/j", year:2022, source:"Kpler / NNPC / IEA 2022" },
+
+  // === BANGLADESH — LNG + pétrole (CRITIQUE) ===
+  { id:"f183", from:"Qatar", to:"Bangladesh", from_centroid:[51.5,25.3], to_centroid:[90,23.5], type:"lng", volume:2.5, unit:"bcm/an", year:2022, source:"QatarEnergy / Petrobangla / GIIGNL 2023" },
+  { id:"f184", from:"Oman", to:"Bangladesh", from_centroid:[57.6,21.5], to_centroid:[90,23.5], type:"lng", volume:1.5, unit:"bcm/an", year:2022, source:"OQ / Petrobangla / GIIGNL 2023" },
+  { id:"f185", from:"Arabie Saoudite", to:"Bangladesh", from_centroid:[45,24], to_centroid:[90,23.5], type:"oil", volume:0.07, unit:"mb/j", year:2022, source:"Kpler / BPC Bangladesh / IEA 2022" },
+  { id:"f186", from:"Émirats Arabes Unis", to:"Bangladesh", from_centroid:[54,24], to_centroid:[90,23.5], type:"oil", volume:0.04, unit:"mb/j", year:2022, source:"Kpler / ADNOC / IEA 2022" },
+
+  // === MAROC — énergie 100% importée ===
+  { id:"f187", from:"Arabie Saoudite", to:"Maroc", from_centroid:[45,24], to_centroid:[-5,32], type:"oil", volume:0.08, unit:"mb/j", year:2022, source:"Kpler / ONHYM Maroc / IEA 2022" },
+  { id:"f188", from:"Russie", to:"Maroc", from_centroid:[60,58], to_centroid:[-5,32], type:"oil", volume:0.04, unit:"mb/j", year:2022, source:"Kpler / IEA 2022" },
+  { id:"f189", from:"États-Unis", to:"Maroc", from_centroid:[-95,38], to_centroid:[-5,32], type:"lng", volume:1.0, unit:"bcm/an", year:2022, source:"DOE / ONEE Maroc / GIIGNL 2023" },
+
+  // === VIETNAM — pétrole manquant (~0.25 Mb/j) ===
+  { id:"f190", from:"Malaisie", to:"Vietnam", from_centroid:[110,3], to_centroid:[107,16], type:"oil", volume:0.08, unit:"mb/j", year:2022, source:"Kpler / PETRONAS / IEA 2022" },
+  { id:"f191", from:"Koweït", to:"Vietnam", from_centroid:[47.5,29.3], to_centroid:[107,16], type:"oil", volume:0.06, unit:"mb/j", year:2022, source:"Kpler / KPC / IEA 2022" },
+  { id:"f192", from:"Arabie Saoudite", to:"Vietnam", from_centroid:[45,24], to_centroid:[107,16], type:"oil", volume:0.05, unit:"mb/j", year:2022, source:"Kpler / Aramco / IEA 2022" },
+
+  // === PHILIPPINES — pétrole 98% importé (CRITIQUE) ===
+  { id:"f193", from:"Arabie Saoudite", to:"Philippines", from_centroid:[45,24], to_centroid:[122,12], type:"oil", volume:0.10, unit:"mb/j", year:2022, source:"Kpler / DOE Philippines / IEA 2022" },
+  { id:"f194", from:"Émirats Arabes Unis", to:"Philippines", from_centroid:[54,24], to_centroid:[122,12], type:"oil", volume:0.08, unit:"mb/j", year:2022, source:"Kpler / ADNOC / DOE Philippines 2022" },
+  { id:"f195", from:"Koweït", to:"Philippines", from_centroid:[47.5,29.3], to_centroid:[122,12], type:"oil", volume:0.07, unit:"mb/j", year:2022, source:"Kpler / KPC / DOE Philippines 2022" },
+  { id:"f196", from:"Australie", to:"Philippines", from_centroid:[133,-27], to_centroid:[122,12], type:"oil", volume:0.06, unit:"mb/j", year:2022, source:"Kpler / DCCEEW / DOE Philippines 2022" },
+
+  // === AFRIQUE DU SUD — pétrole 100% importé + gaz Mozambique ===
+  { id:"f197", from:"Arabie Saoudite", to:"Afrique du Sud", from_centroid:[45,24], to_centroid:[25,-29], type:"oil", volume:0.15, unit:"mb/j", year:2022, source:"Kpler / NERSA / IEA 2022" },
+  { id:"f198", from:"Nigeria", to:"Afrique du Sud", from_centroid:[8,9], to_centroid:[25,-29], type:"oil", volume:0.12, unit:"mb/j", year:2022, source:"Kpler / NNPC / IEA 2022" },
+  { id:"f199", from:"Angola", to:"Afrique du Sud", from_centroid:[18,-12], to_centroid:[25,-29], type:"oil", volume:0.10, unit:"mb/j", year:2022, source:"Kpler / SONANGOL / IEA 2022" },
+  { id:"f200", from:"Mozambique", to:"Afrique du Sud", from_centroid:[35,-17], to_centroid:[25,-29], type:"gas_pipeline", volume:3.8, unit:"bcm/an", year:2022, source:"ENH Mozambique / Sasol / IEA 2022 (ROMPCO pipeline)" }
 
 // Fin de FLOWS_DATA
 ];
